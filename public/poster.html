@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClientBot WhatsApp — Poster Design</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0b131e;
+    }
+    .poster-container {
+      max-width: 680px;
+      aspect-ratio: 4 / 5;
+    }
+    .glow-teal {
+      box-shadow: 0 0 60px -10px rgba(18, 140, 126, 0.35);
+    }
+    .glow-badge {
+      box-shadow: 0 4px 20px -2px rgba(16, 185, 129, 0.25);
+    }
+    @media print {
+      body {
+        background: transparent;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .poster-container {
+        max-width: 100% !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen py-8 px-4 flex flex-col items-center justify-center text-slate-100">
+
+  <!-- Action Bar -->
+  <div class="mb-6 flex items-center gap-3 no-print">
+    <button onclick="window.print()" class="flex items-center gap-2 bg-[#128C7E] hover:bg-[#0d6e63] text-white px-5 py-2.5 rounded-xl font-semibold text-sm shadow-lg transition">
+      <i data-lucide="printer" class="h-4 w-4"></i> Print / Save as PDF
+    </button>
+    <a href="/index.html" class="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-slate-300 px-5 py-2.5 rounded-xl font-medium text-sm transition">
+      <i data-lucide="arrow-left" class="h-4 w-4"></i> Back to Dashboard
+    </a>
+  </div>
+
+  <!-- Poster Canvas -->
+  <div class="poster-container w-full bg-gradient-to-b from-[#0f1d27] via-[#09151e] to-[#04090e] rounded-3xl p-8 sm:p-10 border border-slate-800/80 shadow-2xl relative overflow-hidden flex flex-col justify-between glow-teal">
+    
+    <!-- Background Ambient Glows -->
+    <div class="absolute -top-24 -right-24 w-80 h-80 bg-[#128C7E]/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Header Section -->
+    <div class="relative z-10">
+      <!-- Top Branding Pill -->
+      <div class="flex items-center justify-between gap-3 mb-6">
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold tracking-wide">
+          <i data-lucide="sparkles" class="h-3.5 w-3.5"></i>
+          <span>Official Meta Cloud API Assistant</span>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-bold tracking-wider text-slate-400 uppercase">
+          <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span> 24/7 Available
+        </div>
+      </div>
+
+      <!-- Main Catchy Hook -->
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight">
+        Turn your WhatsApp into your <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
+          #1 Salesperson that never sleeps!
+        </span>
+      </h1>
+
+      <!-- Pain Point Question -->
+      <p class="mt-4 text-sm sm:text-base text-slate-300 font-medium leading-relaxed bg-slate-800/40 border border-slate-700/50 p-3.5 rounded-2xl">
+        🌙 <span class="text-amber-300 font-semibold">Tired of losing clients</span> because you couldn't reply fast enough at 11 PM? With <strong class="text-white">ClientBot WhatsApp</strong>, your business operates around the clock:
+      </p>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="relative z-10 my-6 space-y-3">
+      
+      <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/30 transition">
+        <div class="h-6 w-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">✓</div>
+        <p class="text-xs sm:text-sm text-slate-200">
+          <strong class="text-white">Takes orders &amp; calculates delivery</strong> automatically with direct cart checkout
+        </p>
+      </div>
+
+      <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/30 transition">
+        <div class="h-6 w-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">✓</div>
+        <p class="text-xs sm:text-sm text-slate-200">
+          <strong class="text-white">Books tables &amp; appointments</strong> right inside the chat with zero friction
+        </p>
+      </div>
+
+      <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/30 transition">
+        <div class="h-6 w-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">✓</div>
+        <p class="text-xs sm:text-sm text-slate-200">
+          <strong class="text-white">Answers location, hours &amp; pricing</strong> in under 1.2 seconds
+        </p>
+      </div>
+
+      <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/30 transition">
+        <div class="h-6 w-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">✓</div>
+        <p class="text-xs sm:text-sm text-slate-200">
+          <strong class="text-white">Speaks natural Arabic &amp; English</strong> (Egyptian dialect, Franco &amp; MSA)
+        </p>
+      </div>
+
+      <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/30 transition">
+        <div class="h-6 w-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">✓</div>
+        <p class="text-xs sm:text-sm text-slate-200">
+          <strong class="text-white">Alerts your staff for instant live takeover</strong> whenever personal attention is needed
+        </p>
+      </div>
+
+      <div class="flex items-start gap-3 p-3 rounded-xl bg-slate-900/60 border border-slate-800/80 hover:border-emerald-500/30 transition">
+        <div class="h-6 w-6 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 font-bold">✓</div>
+        <p class="text-xs sm:text-sm text-slate-200">
+          <strong class="text-white">Tracks sales, revenue, and peak hours</strong> on a clean visual executive dashboard
+        </p>
+      </div>
+
+    </div>
+
+    <!-- Bottom Footer Call to Action -->
+    <div class="relative z-10 pt-4 border-t border-slate-800/80">
+      <p class="text-xs text-slate-400 mb-3 text-center">
+        Whether you run a <span class="text-slate-200 font-semibold">café, restaurant, clinic, or retail store</span> — start automating today.
+      </p>
+
+      <div class="rounded-2xl p-4 bg-gradient-to-r from-emerald-600 via-[#128C7E] to-teal-600 flex flex-col sm:flex-row items-center justify-between gap-3 text-white glow-badge">
+        <div class="text-center sm:text-left">
+          <p class="text-xs font-medium text-emerald-100 uppercase tracking-wider">Ready to see it in action?</p>
+          <h3 class="text-base font-bold">Get a 5-Minute Live Interactive Demo</h3>
+        </div>
+        <div class="bg-white text-slate-950 font-bold px-4 py-2 rounded-xl text-xs uppercase tracking-wide shrink-0 shadow">
+          Send Us a DM 💬
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

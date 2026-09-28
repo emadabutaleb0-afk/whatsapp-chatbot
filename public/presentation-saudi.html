@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>كلاينت بوت واتساب — العرض التقديمي التنفيذي (النسخة السعودية)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #08121a;
+      color: #0f172a;
+    }
+    
+    /* 16:9 Slide Aspect Ratio for Desktop & Print */
+    .slide {
+      width: 100%;
+      max-width: 1100px;
+      aspect-ratio: 16 / 9;
+      margin: 0 auto 3rem auto;
+      background: #ffffff;
+      border-radius: 1.25rem;
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 2.75rem 3.5rem;
+      position: relative;
+      overflow: hidden;
+      page-break-after: always;
+      break-after: page;
+    }
+
+    .slide-dark {
+      background: linear-gradient(135deg, #06191f 0%, #0a252a 50%, #041014 100%);
+      color: #ffffff;
+    }
+
+    .glow-saudi {
+      box-shadow: 0 0 50px -10px rgba(16, 185, 129, 0.3);
+    }
+
+    @media print {
+      body {
+        background: transparent !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .slide {
+        max-width: 100% !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        padding: 2.5rem 3.5rem !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        box-sizing: border-box !important;
+      }
+      @page {
+        size: landscape;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body class="py-10 px-4">
+
+  <!-- Floating Sticky Action Header -->
+  <header class="no-print fixed top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-slate-900/90 backdrop-blur-md border border-emerald-500/30 px-5 py-2.5 rounded-2xl shadow-2xl">
+    <div class="flex items-center gap-2 text-white text-xs font-bold mr-1">
+      <span class="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      <span>العرض التنفيذي المخصص للسوق السعودي 🇸🇦</span>
+    </div>
+    <button onclick="window.print()" class="flex items-center gap-2 bg-[#128C7E] hover:bg-[#0d6e63] text-white px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+      <i data-lucide="download" class="h-4 w-4"></i> تصدير العرض كـ PDF
+    </button>
+    <a href="/presentation.html" class="flex items-center gap-1.5 text-slate-300 hover:text-white px-3 py-2 rounded-xl text-xs font-medium transition">
+      <span>English Version</span>
+    </a>
+    <a href="/index.html" class="flex items-center gap-1.5 text-slate-300 hover:text-white px-3 py-2 rounded-xl text-xs font-medium transition">
+      <i data-lucide="layout-dashboard" class="h-4 w-4"></i> لوحة التحكم
+    </a>
+  </header>
+
+  <div class="pt-8 no-print text-center mb-8">
+    <p class="text-xs text-emerald-400 font-bold uppercase tracking-widest">ClientBot Enterprise KSA · النسخة الموجهة للمملكة العربية السعودية</p>
+    <h1 class="text-xl font-extrabold text-white mt-1">نظام الذكاء الاصطناعي وإدارة مبيعات الواتساب المؤتمت بالكامل</h1>
+    <p class="text-xs text-slate-400 mt-1">تصفح الشرائح الـ 12 أدناه أو اضغط على <strong class="text-emerald-400">تصدير العرض كـ PDF</strong> للحفظ والطباعة بجودة احترافية.</p>
+  </div>
+
+  <!-- ==================== SLIDE 1: COVER ==================== -->
+  <section class="slide slide-dark">
+    <!-- Top Branding -->
+    <div class="flex items-center justify-between border-b border-emerald-900/50 pb-4">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">
+          <i data-lucide="message-square" class="h-6 w-6"></i>
+        </div>
+        <div>
+          <span class="text-lg font-black text-white">كلاينت بوت <span class="text-emerald-400">السعودية</span></span>
+          <p class="text-[11px] text-emerald-300/80 font-semibold tracking-wider">ClientBot KSA · WhatsApp Cloud API</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 text-xs text-slate-300 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700">
+        <span>🇸🇦 مصمم خصيصاً لقطاع الأعمال في المملكة</span>
+      </div>
+    </div>
+
+    <!-- Center Hero -->
+    <div class="my-auto py-4">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-bold mb-4">
+        <i data-lucide="sparkles" class="h-4 w-4"></i>
+        <span>أول مساعد واتساب يفهم اللهجة السعودية بعفوية وذكاء</span>
+      </div>
+      <h2 class="text-4xl sm:text-5xl font-black text-white leading-tight tracking-tight">
+        حوّل واتساب مشروعك إلى <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-l from-emerald-400 via-teal-300 to-cyan-300">
+          مسؤول مبيعات شغال 24 ساعة بدون توقف!
+        </span>
+      </h2>
+      <p class="mt-4 text-base text-slate-300 max-w-2xl leading-relaxed font-medium">
+        منظومة متكاملة لأتمتة طلبات الدليفري، وحجوزات الطاولات والمواعيد، والرد الفوري باللهجة السعودية، مع تدخل بشري فوري ولوحة تحكم لقياس المبيعات والإيرادات بالريال السعودي.
+      </p>
+    </div>
+
+    <!-- Bottom Metrics Preview -->
+    <div class="grid grid-cols-4 gap-4 pt-4 border-t border-emerald-950/80">
+      <div>
+        <p class="text-3xl font-black text-emerald-400">+94%</p>
+        <p class="text-xs text-slate-400 font-bold mt-0.5">نسبة الأتمتة والرد الذاتي</p>
+      </div>
+      <div>
+        <p class="text-3xl font-black text-white">&lt; 1.2 ثانية</p>
+        <p class="text-xs text-slate-400 font-bold mt-0.5">سرعة الاستجابة اللحظية</p>
+      </div>
+      <div>
+        <p class="text-3xl font-black text-white">24 / 7</p>
+        <p class="text-xs text-slate-400 font-bold mt-0.5">شغال طول اليوم وفي الويكند</p>
+      </div>
+      <div>
+        <p class="text-3xl font-black text-teal-300">سعودي 100%</p>
+        <p class="text-xs text-slate-400 font-bold mt-0.5">يفهم اللهجة النجدية والغربية والشرقية</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 2: THE PROBLEM IN KSA ==================== -->
+  <section class="slide">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">تحديات السوق السعودي</span>
+      <span class="text-xs font-bold text-slate-400">شريحة 02</span>
+    </div>
+
+    <div class="my-auto py-2">
+      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">كم عميل يضيع منك يومياً بسبب تأخر الرد في الواتساب؟</h2>
+      <p class="text-sm text-slate-500 mt-1 max-w-2xl font-medium">في السعودية، الواتساب هو قناة الشراء والتواصل الأولى.. وتأخير الرد 10 دقائق يعني توجه العميل فوراً للمنافس!</p>
+
+      <div class="grid grid-cols-3 gap-6 mt-6">
+        <div class="p-5 rounded-2xl bg-rose-50/70 border border-rose-200 flex flex-col justify-between">
+          <div>
+            <div class="h-10 w-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold mb-3">
+              <i data-lucide="clock-alert" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-extrabold text-rose-950">تأخر الرد في أوقات الذروة والليل</h3>
+            <p class="text-xs text-rose-900/80 mt-2 leading-relaxed font-medium">
+              العميل يرسل الساعة 11 بالليل يطلب أو يستفسر عن موقع الفرع بالرياض، وما يلقى رد إلا ثاني يوم الصباح.. وهنا تكون الصفقة ضاعت.
+            </p>
+          </div>
+          <p class="text-xs font-bold text-rose-600 mt-4">82% من عملاء المملكة يفضلون الشراء الفوري</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-amber-50/70 border border-amber-200 flex flex-col justify-between">
+          <div>
+            <div class="h-10 w-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold mb-3">
+              <i data-lucide="repeat" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-extrabold text-amber-950">إرهاق الموظفين بالأسئلة المكررة</h3>
+            <p class="text-xs text-amber-900/80 mt-2 leading-relaxed font-medium">
+              فريق العمل يقضي 70% من وقته يكرر نفس الأجوبة: "وين موقعكم؟"، "متى تقفلون اليوم؟"، "عندكم توصيل للنرجس؟"، "بكم الفلات وايت؟".
+            </p>
+          </div>
+          <p class="text-xs font-bold text-amber-700 mt-4">إهدار 45 ساعة شهرياً لكل موظف خدمة</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+          <div>
+            <div class="h-10 w-10 rounded-xl bg-slate-200 text-slate-800 flex items-center justify-center font-bold mb-3">
+              <i data-lucide="calculator" class="h-5 w-5"></i>
+            </div>
+            <h3 class="text-base font-extrabold text-slate-900">غياب البيانات ومتابعة المبيعات</h3>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed font-medium">
+              تطبيق WhatsApp Business العادي ما يعطيك إحصائيات دقيقة عن حجم المبيعات بالريال، ولا أوقات الذروة، ولا سجل مشتريات العملاء الـ VIP.
+            </p>
+          </div>
+          <p class="text-xs font-bold text-slate-700 mt-4">غياب الرؤية يمنع التوسع المنظم</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+      <span>منظومة كلاينت بوت السعودية</span>
+      <span>تشخيص المشكلة وحاجة السوق</span>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 3: THE SAUDI SOLUTION ==================== -->
+  <section class="slide">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">الحل التقني المتكامل</span>
+      <span class="text-xs font-bold text-slate-400">شريحة 03</span>
+    </div>
+
+    <div class="my-auto py-2">
+      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">نظام تشغيلي ذكي مصمم لبيئة الأعمال السعودية</h2>
+      <p class="text-sm text-slate-500 mt-1 font-medium">يربط رقم الواتساب الرسمي مباشرة بمحرك ذكاء اصطناعي ولوحة تحكم سحابية فورية.</p>
+
+      <div class="grid grid-cols-4 gap-4 mt-6">
+        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3">
+              <i data-lucide="badge-check" class="h-4 w-4"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-900">Meta Cloud API الرسمي</h4>
+            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed font-medium">
+              ربط معتمد رسمياً عبر سحابة Meta. أمان كامل ومستقر بنسبة 100% وبدون أي مخاطرة بحظر الرقم، مع دعم الرسائل غير المحدودة.
+            </p>
+          </div>
+          <span class="mt-3 text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded w-max">موثق ومعتمد</span>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="h-8 w-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center mb-3">
+              <i data-lucide="bot" class="h-4 w-4"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-900">ذكاء سعودي طبيعي</h4>
+            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed font-medium">
+              يرد كأنه موظف سعودي محترف: "أبشر"، "سم"، "حياك الله"، "يا هلا"، يفهم الكلمات المحلية ومرادفات الدفع (مدى، تابي، تمارا، Apple Pay).
+            </p>
+          </div>
+          <span class="mt-3 text-[10px] font-bold text-teal-700 bg-teal-50 px-2 py-0.5 rounded w-max">معالجة لهجات طبيعية</span>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="h-8 w-8 rounded-lg bg-sky-50 text-sky-700 flex items-center justify-center mb-3">
+              <i data-lucide="headset" class="h-4 w-4"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-900">صندوق وارد موحد للفريق</h4>
+            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed font-medium">
+              شاشة موحدة لموظفي خدمة العملاء. يقدر الموظف يدخل ويكمل المحادثة بنفسه بضغطة زر واحدة (تدخل بشري فوري) بدون لخبطة البوت.
+            </p>
+          </div>
+          <span class="mt-3 text-[10px] font-bold text-sky-700 bg-sky-50 px-2 py-0.5 rounded w-max">Live Takeover</span>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="h-8 w-8 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center mb-3">
+              <i data-lucide="line-chart" class="h-4 w-4"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-900">لوحة تحكم تنفيذية</h4>
+            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed font-medium">
+              شاشة واحدة تتابع فيها المبيعات بالريال السعودي، والطلبات، والحجوزات، وأوقات الذروة، وتقارير أداء المساعد الآلي.
+            </p>
+          </div>
+          <span class="mt-3 text-[10px] font-bold text-purple-700 bg-purple-50 px-2 py-0.5 rounded w-max">تقارير لحظية</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+      <span>معمارية النظام</span>
+      <span>البنية التقنية الموثوقة</span>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 4: ORDERS & CHECKOUT (KSA) ==================== -->
+  <section class="slide">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">الميزة الأولى · التجارة والمبيعات المباشرة</span>
+      <span class="text-xs font-bold text-slate-400">شريحة 04</span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8 my-auto py-2 items-center">
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold mb-3">
+          <i data-lucide="shopping-bag" class="h-3.5 w-3.5 text-emerald-600"></i> أوردرات ودليفري مباشر في المحادثة
+        </div>
+        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">سلة المشتريات والطلب المباشر داخل الواتساب</h2>
+        <p class="text-xs text-slate-600 mt-2.5 leading-relaxed font-medium">
+          العميل ما يحتاج يحمل تطبيق جديد ولا يفتح موقع ثقيل. البوت يرسل الأصناف بالأسعار والصور، يجمع السلة، يحسب رسوم التوصيل للحي، ويسجل الطلب فوراً.
+        </p>
+
+        <ul class="mt-4 space-y-2.5 text-xs text-slate-700 font-medium">
+          <li class="flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="h-4 w-4 text-emerald-600"></i>
+            <span><strong>منيو ذكي ومتجدد:</strong> استعراض الأصناف، الأسعار بالريال السعودي، وتوفر المخزون فوراً.</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="h-4 w-4 text-emerald-600"></i>
+            <span><strong>حساب التوصيل حسب الحي:</strong> (مثلاً: العليا، الملقا، النرجس، الياسمين) مع احتساب الضريبة.</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="h-4 w-4 text-emerald-600"></i>
+            <span><strong>تسجيل الملاحظات الخاصة:</strong> "حليب قليل الدسم"، "بدون سكر"، "اتصال عند الوصول".</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i data-lucide="check-circle-2" class="h-4 w-4 text-emerald-600"></i>
+            <span><strong>رقم طلب تسلسلي:</strong> إصدار رقم طلب فوري مثل (<code>ORD-0142</code>) لمتابعة التجهيز والتوصيل.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Preview Mockup Card -->
+      <div class="bg-slate-900 rounded-2xl p-5 text-white shadow-xl border border-slate-800">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+          <div class="flex items-center gap-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-emerald-400"></span>
+            <span class="text-xs font-bold">تجربة طلب حقيقية عبر الواتساب</span>
+          </div>
+          <span class="text-[10px] text-emerald-300 font-bold bg-emerald-950 px-2.5 py-0.5 rounded border border-emerald-800/60">ORD-0142</span>
+        </div>
+        <div class="space-y-2 text-xs">
+          <div class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
+            <p class="text-slate-400 text-[10px]">عبدالرحمن الدوسري (+966 50 123 4567):</p>
+            <p class="text-slate-200 mt-0.5">"يا هلا، أبي اطلب 2 فلات وايت و1 كوكيز شوكولاتة للتوصيل بحي النرجس"</p>
+          </div>
+          <div class="bg-teal-950/60 p-2.5 rounded-xl border border-teal-700/60">
+            <p class="text-emerald-400 font-bold text-[10px]">المساعد الذكي (ClientBot):</p>
+            <p class="text-slate-200 mt-0.5 leading-relaxed">
+              "يا هلا وغلا أستاذ عبدالرحمن! أبشر، تم تسجيل طلبك:<br>
+              • 2× فلات وايت (36 ر.س)<br>
+              • 1× كوكيز دبل شوكليت (14 ر.س)<br>
+              • توصيل حي النرجس (15 ر.س)<br>
+              <strong>الإجمالي: 65 ريال سعودي</strong><br>
+              الدفع متاح: مدى، Apple Pay، أو عند الاستلام. جاري تجهيز طلبك الآن! ☕"
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+      <span>إدارة المبيعات والتوصيل</span>
+      <span>مبيعات المحادثات السريعة</span>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 5: TABLE & APPOINTMENT BOOKINGS (KSA) ==================== -->
+  <section class="slide">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">الميزة الثانية · الحجوزات والمواعيد</span>
+      <span class="text-xs font-bold text-slate-400">شريحة 05</span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8 my-auto py-2 items-center">
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-800 text-xs font-bold mb-3">
+          <i data-lucide="calendar-check" class="h-3.5 w-3.5 text-sky-600"></i> حجز طاولات ومواعيد عيادات وخدمات
+        </div>
+        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">أتمتة الحجوزات للمطاعم والكافيهات والعيادات</h2>
+        <p class="text-xs text-slate-600 mt-2.5 leading-relaxed font-medium">
+          انسَ تسجيل الحجوزات في الدفاتر أو ضياع المواعيد في الويكند. البوت ينسق الموعد، عدد الأفراد، والتفضيلات، ويرسل لوكيشن الفرع في ثواني.
+        </p>
+
+        <div class="grid grid-cols-2 gap-3 mt-4 text-xs font-medium">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <p class="font-bold text-slate-900">تأكيد عدد الأفراد</p>
+            <p class="text-[11px] text-slate-500 mt-1">تطبيق سياسة الحجز تلقائياً (مثلاً عائلات، أفراد، أو غرف اجتماعات خاصة).</p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <p class="font-bold text-slate-900">فهم المواعيد بدقة</p>
+            <p class="text-[11px] text-slate-500 mt-1">يفهم التعبيرات السعودية: "بكرة بعد المغرب"، "الجمعة بعد العشاء"، "الليلة 9 ونص".</p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <p class="font-bold text-slate-900">تأكيد فوري مع لوكيشن الفرع</p>
+            <p class="text-[11px] text-slate-500 mt-1">إرسال تفاصيل الحجز مع رابط Google Maps للفرع مباشرة في الشات.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <p class="font-bold text-slate-900">لوحة إدارة الحجوزات</p>
+            <p class="text-[11px] text-slate-500 mt-1">الموظفون يقدرون يؤكدون الحضور أو يلغون الحجز بضغطة واحدة من لوحة التحكم.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 rounded-2xl p-5 text-white shadow-xl border border-slate-800">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+          <div class="flex items-center gap-2">
+            <i data-lucide="calendar" class="h-4 w-4 text-sky-400"></i>
+            <span class="text-xs font-bold">الحجوزات القادمة في فرع العليا</span>
+          </div>
+          <span class="text-[10px] text-sky-300 font-bold bg-sky-950 px-2.5 py-0.5 rounded border border-sky-800">حجوزات اليوم</span>
+        </div>
+        <div class="space-y-2.5 text-xs">
+          <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
+            <div>
+              <p class="font-bold text-slate-100">طاولة 4 أشخاص · سارة العتيبي</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">اليوم 8:30 مساءً · جلسة خارجية مفضلة · +966 55 987 6543</p>
+            </div>
+            <span class="bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded text-[10px] font-bold">مؤكد</span>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
+            <div>
+              <p class="font-bold text-slate-100">جلسة عمل 6 أشخاص · فهد القحطاني</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">غداً 5:00 عصراً · متوفر أفياش وشاشة عرض · +966 50 444 3322</p>
+            </div>
+            <span class="bg-emerald-500/20 text-emerald-400 px-2.5 py-1 rounded text-[10px] font-bold">مؤكد</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+      <span>تنظيم المواعيد والضيافة</span>
+      <span>جدولة الحجوزات الذكية</span>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 6: SAUDI DIALECT & AUTO LEARNING ==================== -->
+  <section class="slide">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">الميزة الثالثة · الذكاء اللغوي</span>
+      <span class="text-xs font-bold text-slate-400">شريحة 06</span>
+    </div>
+
+    <div class="my-auto py-2">
+      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">يتحدث بلهجة عميلك الطبيعية ويتعلم باستمرار</h2>
+      <p class="text-sm text-slate-500 mt-1 max-w-2xl font-medium">
+        العميل السعودي ما يحب البوتات الجامدة اللي ترد بقوائم أرقام مملة. كلاينت بوت يتكلم باحترافية وبأسلوب ودود يعكس كرم الضيافة السعودية.
+      </p>
+
+      <div class="grid grid-cols-3 gap-6 mt-6">
+        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
+          <div class="h-8 w-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3">
+            <i data-lucide="sparkles" class="h-4 w-4"></i>
+          </div>
+          <h4 class="text-sm font-bold text-slate-900">مرونة لغوية كاملة</h4>
+          <p class="text-xs text-slate-500 mt-1.5 leading-relaxed font-medium">
+            يتعامل مع كل لهجات مناطق المملكة (نجد، الحجاز، الشرقية، الجنوب) بالإضافة للعربية الفصحى واللغة الإنجليزية بدون أي ارتباك.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
+          <div class="h-8 w-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center mb-3">
+            <i data-lucide="lightbulb" class="h-4 w-4"></i>
+          </div>
+          <h4 class="text-sm font-bold text-slate-900">التعلم الذاتي بضغطة زر</h4>
+          <p class="text-xs text-slate-500 mt-1.5 leading-relaxed font-medium">
+            أي سؤال جديد يسأله العميل وما يكون مسجل، يظهر فوراً في لوحة التحكم. ضغطة زر واحدة منك تحوله لجواب دائم ومعتمد للبوت.
+          </p>
+        </div>
+
+        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
+          <div class="h-8 w-8 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center mb-3">
+            <i data-lucide="book-open" class="h-4 w-4"></i>
+          </div>
+          <h4 class="text-sm font-bold text-slate-900">قاعدة معرفة شاملة</h4>
+          <p class="text-xs text-slate-500 mt-1.5 leading-relaxed font-medium">
+            يحفظ أوقات دوام رمضان والأعياد، طرق الدفع المعتمدة (مدى، فيزا، تابي)، سياسة الاستبدال، وسرعة شبكة الواي فاي للزوار.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+      <span>الذكاء الاصطناعي التوليدي</span>
+      <span>ملاءمة الثقافة المحلية</span>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 7: LIVE CHAT & TAKEOVER ==================== -->
+  <section class="slide">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">الميزة الرابعة · فريق العمل والتدخل البشري</span>
+      <span class="text-xs font-bold text-slate-400">شريحة 07</span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8 my-auto py-2 items-center">
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold mb-3">
+          <i data-lucide="user-check" class="h-3.5 w-3.5 text-emerald-600"></i> التدخل البشري المباشر (Live Takeover)
+        </div>
+        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">سرعة الذكاء الاصطناعي مع لمسة موظفيك الإنسانية</h2>
+        <p class="text-xs text-slate-600 mt-2 leading-relaxed font-medium">
+          الذكاء الاصطناعي يتولى 90%+ من الأسئلة الروتينية، لكن لو العميل عنده استفسار خاص أو طلب التحدث مع الإدارة، موظفك يقدر يتدخل فوراً بدون ما يتلخبط البوت.
+        </p>
+
+        <ul class="mt-4 space-y-2 text-xs text-slate-700 font-medium">
+          <li class="flex items-center gap-2">
+            <i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i>
+            <span><strong>إيقاف البوت بضغطة زر:</strong> إيقاف الرد الآلي للعميل مؤقتاً لتتولى المحادثة بنفسك.</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i>
+            <span><strong>تذاكر الدعم العاجلة (Tickets):</strong> رصد تلقائي للعملاء المتضايقين وتنبيه الإدارة فوراً.</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i>
+            <span><strong>قوالب ردود جاهزة:</strong> إرسال لوكيشن الفرع، رقم الآيبان، أو بطاقة الحساب في ثانية.</span>
+          </li>
+          <li class="flex items-center gap-2">
+            <i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i>
+            <span><strong>عمل جماعي دون مشاركة الجوال:</strong> كل موظفي الكول سنتر والفرع يردون من متصفحهم.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="bg-slate-900 rounded-2xl p-5 text-white shadow-xl border border-slate-800">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+          <span class="text-xs font-bold">صندوق المحادثات الحية الموحد</span>
+          <span class="text-[10px] text-amber-300 font-bold bg-amber-950 px-2.5 py-0.5 rounded border border-amber-800">تدخل بشري نشط</span>
+        </div>
+        <div class="space-y-3 text-xs">
+          <div class="flex items-center justify-between p-2.5 bg-slate-800/80 rounded-xl">
+            <div>
+              <p class="font-bold text-slate-100">محمد الشمري (+966 54 888 7766)</p>
+              <p class="text-[11px] text-slate-400 mt-0.5">"ممكن اتواصل مع المشرف لو سمحتوا؟"</p>
+            </div>
+            <button class="bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold px-3 py-1 rounded-lg transition">إعادة للبوت</button>
+          </div>
+          <div class="p-3 bg-slate-800/50 rounded-xl border border-slate-700/40 text-[11px] text-slate-300">
+            <p class="text-emerald-400 font-bold text-xs mb-1">اقتراح المساعد الذكي للموظف:</p>
+            "العميل طلب التحدث مع المشرف بخصوص حجز مناسبة خاصة. الرد المقترح: مرحباً أستاذ محمد، معك مشرف الفرع مباشرة، كيف أقدر أخدمك في مناسبتكم؟"
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+      <span>إدارة العمليات المشتركة</span>
+      <span>خدمة عملاء بمستوى عالمي</span>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 8: 360 SAUDI CRM ==================== -->
+  <section class="slide">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">الميزة الخامسة · إدارة العملاء (CRM)</span>
+      <span class="text-xs font-bold text-slate-400">شريحة 08</span>
+    </div>
+
+    <div class="grid grid-cols-2 gap-8 my-auto py-2 items-center">
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 text-purple-800 text-xs font-bold mb-3">
+          <i data-lucide="contact-2" class="h-3.5 w-3.5 text-purple-600"></i> ملف موحد 360° لكل عميل
+        </div>
+        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">اعرف تاريخ العميل ومشترياته قبل حتى ما ترد عليه!</h2>
+        <p class="text-xs text-slate-600 mt-2 leading-relaxed font-medium">
+          النظام يبني ملفاً شاملاً لكل رقم جوال سعودي، يربط محادثاته، إجمالي مدفوعاته بالريال، طلباته السابقة، وتفضيلاته الخاصة تلقائياً.
+        </p>
+
+        <div class="grid grid-cols-2 gap-3 mt-4 text-xs font-medium">
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <p class="font-bold text-slate-900">تمييز عملاء الـ VIP</p>
+            <p class="text-[11px] text-slate-500 mt-1">تحديد فوري للعملاء الأكثر طلباً ومشترياتهم تتجاوز 500 ريال سعودي.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <p class="font-bold text-slate-900">حفظ الملاحظات الغذائية</p>
+            <p class="text-[11px] text-slate-500 mt-1">يحفظ تفضيلات مثل: "حليب نباتي"، "بدون مكسرات"، "توصيل للعمل فقط".</p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <p class="font-bold text-slate-900">سجل المدفوعات والطلبات</p>
+            <p class="text-[11px] text-slate-500 mt-1">معرفة متوسط قيمة السلة وعدد المرات التي كرر فيها العميل الشراء.</p>
+          </div>
+          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+            <p class="font-bold text-slate-900">ملخص الذكاء الاصطناعي</p>
+            <p class="text-[11px] text-slate-500 mt-1">توليد نبذة سريعة في سطرين تقرأها في ثواني وتعرف كيف ترضي العميل.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-slate-900 rounded-2xl p-5 text-white shadow-xl border border-slate-800">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+          <div class="flex items-center gap-2">
+            <div class="h-6 w-6 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-xs">ن س</div>
+            <span class="text-xs font-bold">نورة السبيعي (+966 55 111 2233)</span>
+          </div>
+          <span class="bg-purple-500/20 text-purple-300 border border-purple-800 text-[10px] font-bold px-2.5 py-0.5 rounded">عميل VIP متميز ⭐</span>
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center mb-3">
+          <div class="bg-slate-800/80 p-2 rounded-xl">
+            <p class="text-slate-400 text-[10px]">إجمالي المشتريات</p>
+            <p class="text-sm font-bold text-emerald-400">840 ر.س</p>
+          </div>
+          <div class="bg-slate-800/80 p-2 rounded-xl">
+            <p class="text-slate-400 text-[10px]">الطلبات المكتملة</p>
+            <p class="text-sm font-bold text-white">7 طلبات</p>
+          </div>
+          <div class="bg-slate-800/80 p-2 rounded-xl">
+            <p class="text-slate-400 text-[10px]">حجوزات الطاولات</p>
+            <p class="text-sm font-bold text-sky-400">3 حجوزات</p>
+          </div>
+        </div>
+        <div class="p-2.5 rounded-xl bg-slate-800/60 text-[11px] text-slate-300 border border-slate-700/60 leading-relaxed">
+          <p class="text-purple-400 font-bold mb-0.5">ملخص المساعد التنفيذي:</p>
+          "نورة عميلة دائمة تطلب أسبوعياً لمقر عملها بحي العليا. مشروبها المفضل v60 كولومبي مع كيكة الزعفران. لا توجد أي شكاوى سابقة ومعدل رضاها 100%."
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+      <span>بيانات العملاء والولاء</span>
+      <span>تعظيم القيمة الدائمة للعميل (LTV)</span>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 9: COMMAND CENTER (SAR METRICS) ==================== -->
+  <section class="slide">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">الميزة السادسة · لوحة المؤشرات والإحصائيات</span>
+      <span class="text-xs font-bold text-slate-400">شريحة 09</span>
+    </div>
+
+    <div class="my-auto py-2">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">غرفة التحكم التنفيذية وتقارير الإيرادات</h2>
+          <p class="text-xs text-slate-500 mt-1 font-medium">متابعة لحظية لحجم المحادثات، والإيرادات بالريال السعودي، وسرعة الاستجابة، ورضا العملاء.</p>
+        </div>
+        <div class="flex gap-2">
+          <span class="bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold px-2.5 py-1 rounded-lg">8 مؤشرات أداء KSA</span>
+          <span class="bg-slate-100 text-slate-700 text-xs font-bold px-2.5 py-1 rounded-lg">تصدير Excel و PDF</span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-4 gap-3 mt-4">
+        <div class="p-3 rounded-xl border border-slate-200 bg-white">
+          <p class="text-[11px] font-bold text-slate-500">المحادثات المنجزة</p>
+          <p class="text-xl font-extrabold text-slate-900 mt-1">1,480</p>
+          <p class="text-[10px] text-emerald-600 font-bold mt-0.5">▲ +24% مقارنة بالشهر السابق</p>
+        </div>
+        <div class="p-3 rounded-xl border border-slate-200 bg-white">
+          <p class="text-[11px] font-bold text-slate-500">معدل الأتمتة الذاتي</p>
+          <p class="text-xl font-extrabold text-emerald-600 mt-1">95%</p>
+          <p class="text-[10px] text-slate-400 font-medium mt-0.5">1,406 أوتوماتيك · 74 للموظفين</p>
+        </div>
+        <div class="p-3 rounded-xl border border-slate-200 bg-white">
+          <p class="text-[11px] font-bold text-slate-500">مبيعات الواتساب المباشرة</p>
+          <p class="text-xl font-extrabold text-slate-900 mt-1">42,850 ر.س</p>
+          <p class="text-[10px] text-slate-400 font-medium mt-0.5">إيراد مباشر من سلة الشات</p>
+        </div>
+        <div class="p-3 rounded-xl border border-slate-200 bg-white">
+          <p class="text-[11px] font-bold text-slate-500">معدل رضا العملاء (CSAT)</p>
+          <p class="text-xl font-extrabold text-teal-600 mt-1">97%</p>
+          <p class="text-[10px] text-emerald-600 font-bold mt-0.5">تقييم إيجابي من العملاء</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-3 gap-4 mt-4 text-xs font-medium">
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 col-span-2">
+          <p class="font-bold text-slate-900 mb-1">مخطط أوقات الذروة على مدار الـ 24 ساعة</p>
+          <p class="text-[11px] text-slate-500 leading-relaxed">
+            يحدد لك بدقة ساعات الضغط والطلبات المسائية (مثلاً من 7 إلى 10 مساءً)، لتجهيز طاقم الباريستا والمطبخ وسيارات التوصيل مسبقاً.
+          </p>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+          <p class="font-bold text-slate-900 mb-1">تقارير تنفيذية رسمية</p>
+          <p class="text-[11px] text-slate-500 leading-relaxed">
+            تصدير تقرير شامل بضغطة زر كملف PDF رسمي لتقديمه للإدارة والشركاء مع جداول CSV لتحليلها في إكسل.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+      <span>مؤشرات الأداء الرئيسية</span>
+      <span>اتخاذ قرارات مبنية على الأرقام</span>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 10: TEAM ROLES & BROADCAST (KSA) ==================== -->
+  <section class="slide">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">الميزة السابعة · صلاحيات الفريق والحملات</span>
+      <span class="text-xs font-bold text-slate-400">شريحة 10</span>
+    </div>
+
+    <div class="my-auto py-2">
+      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">صلاحيات محددة لفريقك وحملات تسويقية مجدولة</h2>
+      <p class="text-sm text-slate-500 mt-1 font-medium">تحكم كامل في من يرى المحادثات ويعدل الأسعار مع إمكانية إعادة استهداف العملاء القدامى.</p>
+
+      <div class="grid grid-cols-2 gap-6 mt-6">
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="h-9 w-9 rounded-xl bg-teal-100 text-teal-800 flex items-center justify-center font-bold mb-3">
+            <i data-lucide="shield-check" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">إدارة صلاحيات الموظفين (RBAC)</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed font-medium">
+            توزيع مهام دقيق يحمي سرية إعدادات الشركة:
+          </p>
+          <div class="mt-3 space-y-2 text-xs font-medium">
+            <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200">
+              <span class="font-bold text-slate-900">مدير النظام (Admin)</span>
+              <span class="text-slate-500 text-[11px]">تحكم كامل، ربط الواتساب، والتقارير المالية</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200">
+              <span class="font-bold text-slate-900">مشرف / محرر (Editor)</span>
+              <span class="text-slate-500 text-[11px]">الرد المباشر، وتأكيد الطلبات والحجوزات</span>
+            </div>
+            <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200">
+              <span class="font-bold text-slate-900">مشاهد (Viewer)</span>
+              <span class="text-slate-500 text-[11px]">متابعة الأداء وتصدير التقارير دون تعديل</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
+          <div class="h-9 w-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold mb-3">
+            <i data-lucide="megaphone" class="h-5 w-5"></i>
+          </div>
+          <h3 class="text-base font-bold text-slate-900">حملات إعادة الاستهداف والبرودكاست</h3>
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed font-medium">
+            إرسال رسائل ترويجية معتمدة وموجهة لشرائح محددة:
+          </p>
+          <div class="mt-3 space-y-2 text-xs font-medium">
+            <div class="p-2.5 rounded-lg bg-white border border-slate-200">
+              <p class="font-bold text-slate-900">تقسيم العملاء حسب الاهتمام</p>
+              <p class="text-[11px] text-slate-500 mt-0.5">إرسال العروض لعملاء الـ VIP فقط، أو لمن طلبوا سابقاً من فروع معينة.</p>
+            </div>
+            <div class="p-2.5 rounded-lg bg-white border border-slate-200">
+              <p class="font-bold text-slate-900">عروض نهاية الأسبوع والمناسبات</p>
+              <p class="text-[11px] text-slate-500 mt-0.5">تفعيل حملات اليوم الوطني، يوم التأسيس، أو خصومات الويكند في ثواني.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+      <span>أمان التشغيل والتسويق</span>
+      <span>توسيع قاعدة العملاء النشطين</span>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 11: ROI & BUSINESS IMPACT ==================== -->
+  <section class="slide">
+    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">العائد على الاستثمار (ROI)</span>
+      <span class="text-xs font-bold text-slate-400">شريحة 11</span>
+    </div>
+
+    <div class="my-auto py-2">
+      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">أثر مالي وتشغيلي فوري وملموس من أول أسبوع</h2>
+      <p class="text-sm text-slate-500 mt-1 font-medium">أرقام حقيقية تنعكس مباشرة على صافي أرباح مشروعك في المملكة.</p>
+
+      <div class="grid grid-cols-4 gap-5 mt-6">
+        <div class="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-200 text-center">
+          <p class="text-4xl font-black text-emerald-600">+35%</p>
+          <h4 class="text-sm font-extrabold text-slate-900 mt-2">زيادة في مبيعات الفترات المسائية</h4>
+          <p class="text-xs text-slate-500 mt-1 font-medium">اقتناص طلبات الليل المتأخرة والصباح الباكر قبل فتح المنافسين.</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-teal-50/70 border border-teal-200 text-center">
+          <p class="text-4xl font-black text-teal-600">70%</p>
+          <h4 class="text-sm font-extrabold text-slate-900 mt-2">توفير في تكلفة موظفي الكول سنتر</h4>
+          <p class="text-xs text-slate-500 mt-1 font-medium">تقليص الحاجة لتوظيف شفتات إضافية للرد على استفسارات المنيو واللوكيشن.</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-sky-50/70 border border-sky-200 text-center">
+          <p class="text-4xl font-black text-sky-600">97%</p>
+          <h4 class="text-sm font-extrabold text-slate-900 mt-2">رضا عملاء فائق ومراجعات إيجابية</h4>
+          <p class="text-xs text-slate-500 mt-1 font-medium">الرد الفوري المهذب يترك انطباعاً احترافياً وفخماً لدى العميل السعودي.</p>
+        </div>
+
+        <div class="p-5 rounded-2xl bg-purple-50/70 border border-purple-200 text-center">
+          <p class="text-4xl font-black text-purple-600">0 دقيقة</p>
+          <h4 class="text-sm font-extrabold text-slate-900 mt-2">انقطاع أو إجازات</h4>
+          <p class="text-xs text-slate-500 mt-1 font-medium">يعمل خلال إجازات العيد ومواسم الضغط بدون أي بطء أو تأخير.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+      <span>الجدوى الاقتصادية</span>
+      <span>مؤشرات نمو الأعمال في المملكة</span>
+    </div>
+  </section>
+
+  <!-- ==================== SLIDE 12: GET STARTED (KSA CTA) ==================== -->
+  <section class="slide slide-dark">
+    <div class="flex items-center justify-between border-b border-emerald-900/50 pb-4">
+      <div class="flex items-center gap-3">
+        <div class="h-8 w-8 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 font-bold">
+          <i data-lucide="check-circle" class="h-4 w-4"></i>
+        </div>
+        <span class="text-sm font-bold text-white">خطة الإطلاق السريع لمشروعك بالسعودية</span>
+      </div>
+      <span class="text-xs text-emerald-300 font-bold bg-emerald-950 px-3 py-1 rounded-full border border-emerald-800">تشغيل خلال 15 دقيقة فقط ⚡</span>
+    </div>
+
+    <div class="my-auto py-2">
+      <h2 class="text-4xl font-black text-white tracking-tight">ابدأ اليوم.. الربط أسرع مما تتخيل!</h2>
+      <p class="text-sm text-slate-300 mt-1 max-w-xl font-medium">ما تحتاج أي تجهيزات برمجية معقدة ولا خوادم مكلفة. الربط سحابي فوري بخطوات بسيطة:</p>
+
+      <div class="grid grid-cols-3 gap-5 mt-6">
+        <div class="p-4 rounded-xl bg-slate-800/70 border border-slate-700/60 text-right">
+          <span class="text-xs font-bold text-emerald-400 uppercase">الخطوة 01</span>
+          <h4 class="text-sm font-bold text-white mt-1">ربط رقم الواتساب الرسمي</h4>
+          <p class="text-xs text-slate-300 mt-1 font-medium leading-relaxed">ربط حساب الأعمال عبر Meta Cloud API الرسمي والحصول على التوثيق المعتمد.</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-800/70 border border-slate-700/60 text-right">
+          <span class="text-xs font-bold text-emerald-400 uppercase">الخطوة 02</span>
+          <h4 class="text-sm font-bold text-white mt-1">إدخال المنيو والأسعار والفروع</h4>
+          <p class="text-xs text-slate-300 mt-1 font-medium leading-relaxed">تحديد فروعك (الرياض، جدة، الخبر...)، أسعار التوصيل، وقائمة المنتجات.</p>
+        </div>
+        <div class="p-4 rounded-xl bg-slate-800/70 border border-slate-700/60 text-right">
+          <span class="text-xs font-bold text-emerald-400 uppercase">الخطوة 03</span>
+          <h4 class="text-sm font-bold text-white mt-1">البوت شغال وفريقك يتابع!</h4>
+          <p class="text-xs text-slate-300 mt-1 font-medium leading-relaxed">المساعد يتلقى الطلبات والردود تلقائياً وموظفوك يتابعون الأرباح من الشاشة.</p>
+        </div>
+      </div>
+
+      <div class="mt-8 p-5 rounded-2xl bg-gradient-to-r from-emerald-600 via-[#128C7E] to-teal-700 flex items-center justify-between text-white shadow-xl glow-saudi">
+        <div class="text-right">
+          <h3 class="text-lg font-black">جاهز تجرّب كلاينت بوت الآن على واتساب مشروعك؟</h3>
+          <p class="text-xs text-emerald-100 mt-0.5 font-medium">اطلب تجربة حية تفاعلية مدتها 5 دقائق وشوف كيف يرد البوت على استفسارات عملائك.</p>
+        </div>
+        <div class="bg-white text-slate-950 px-6 py-3 rounded-xl font-black text-xs uppercase tracking-wide shrink-0 shadow-lg cursor-pointer">
+          احجز تجربة حية مجانية الآن 🇸🇦
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-4 border-t border-emerald-950/80 flex items-center justify-between text-xs text-slate-400">
+      <span>كلاينت بوت السعودية — منصة أتمتة الواتساب للشركات</span>
+      <span>الرياض، المملكة العربية السعودية · +966 50 000 0000</span>
+    </div>
+  </section>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

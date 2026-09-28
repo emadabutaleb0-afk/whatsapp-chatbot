@@ -1,0 +1,1156 @@
+{
+  "config": {
+    "business": {
+      "name": "Nour Coffee House",
+      "tagline": "Specialty coffee & fresh pastries",
+      "about": "Artisanal roastery and specialty coffee shop serving single-origin coffees, handcrafted brews, and fresh daily pastries in downtown.",
+      "hours": "Mon–Thu: 8:00 AM – 10:00 PM\nFri–Sat: 8:00 AM – 12:00 AM\nSunday: closed",
+      "location": "12 Nile St., 2nd floor, next to City Bank — Downtown",
+      "mapsUrl": "https://maps.app.goo.gl/example",
+      "phone": "+20 100 000 0000",
+      "delivery": "Delivery within 5 km, 30–45 min, 25 EGP fee.",
+      "payment": "Cash, Visa, Mastercard, InstaPay.",
+      "policies": "Returns within 14 days with receipt. Table reservations for 6+ people only.",
+      "faqs": "Free high-speed Wi-Fi available. Power outlets at every table. Quiet work environment on weekdays.",
+      "language": "Reply in the same language the client writes in.",
+      "tone": "Friendly, concise and professional.",
+      "latitude": 30.0444,
+      "longitude": 31.2357
+    },
+    "products": [
+      {
+        "name": "Flat white",
+        "price": "65 EGP",
+        "category": "Hot drinks",
+        "stock": "In stock",
+        "image": "",
+        "description": "Double shot with steamed milk, 8oz"
+      },
+      {
+        "name": "Spanish Latte (Iced)",
+        "price": "85 EGP",
+        "category": "Cold drinks",
+        "stock": "In stock",
+        "image": "",
+        "description": "Espresso with sweetened condensed milk and fresh milk over ice"
+      },
+      {
+        "name": "V60 Specialty Drip",
+        "price": "75 EGP",
+        "category": "Single Origin",
+        "stock": "In stock",
+        "image": "",
+        "description": "Choice of Ethiopian Yirgacheffe or Colombian Huila"
+      },
+      {
+        "name": "Almond Croissant",
+        "price": "55 EGP",
+        "category": "Bakery",
+        "stock": "In stock",
+        "image": "",
+        "description": "Twice-baked French butter croissant with almond frangipane"
+      }
+    ],
+    "whatsapp": {
+      "phoneNumberId": "7794189252778687",
+      "verifyToken": "my-secret-verify-token",
+      "accessToken": "",
+      "autoReply": true,
+      "fallback": "I'm not sure about that one — let me check with the team and get back to you shortly.",
+      "model": "gpt-5-nano"
+    },
+    "faqEntries": [
+      {
+        "id": "faq1",
+        "question": "What are your opening hours?",
+        "answer": "We're open Mon–Thu from 8:00 AM to 10:00 PM, Fri–Sat from 8:00 AM to midnight, and closed on Sundays.",
+        "aliases": "are you open now?\nwhat time do you close?\nwhen do you open?",
+        "mode": "exact"
+      },
+      {
+        "id": "faq2",
+        "question": "Where are you located?",
+        "answer": "We are at 12 Nile St., 2nd floor, right next to City Bank in Downtown. Map: https://maps.app.goo.gl/example",
+        "aliases": "what is your address?\nhow do I find you?\nwhere is the shop?",
+        "mode": "exact"
+      },
+      {
+        "id": "faq3",
+        "question": "Do you offer delivery?",
+        "answer": "Yes! We deliver within 5 km in 30–45 minutes for a 25 EGP delivery fee.",
+        "aliases": "can I order delivery?\ndo you deliver to my home?\nhow much is delivery fee?",
+        "mode": "exact"
+      },
+      {
+        "id": "faq4",
+        "question": "What payment methods do you accept?",
+        "answer": "We accept Cash, Visa, Mastercard, and InstaPay.",
+        "aliases": "do you accept cards?\ncan I pay with instapay?\ndo you take cash?",
+        "mode": "exact"
+      }
+    ]
+  },
+  "logs": [
+    {
+      "id": "msg_mul8yqj7wvzr",
+      "at": 1790599927507,
+      "from": "17863559966",
+      "name": "Jessica Laverdetman",
+      "incoming": "Hi!",
+      "reply": "Hello! Welcome to Nour Coffee House! ☕ How can I help you today with our hours, location, or menu?",
+      "status": "not_configured",
+      "error": "WhatsApp Cloud API Phone ID or Access Token not configured.",
+      "faqHit": false,
+      "isFallback": false,
+      "responseTimeMs": 3
+    }
+  ],
+  "demoMetrics": {
+    "days": 30,
+    "totals": {
+      "messages": 599,
+      "faqHits": 431,
+      "fallbacks": 32,
+      "pos": 442,
+      "neg": 0,
+      "neutral": 157
+    },
+    "business": {
+      "totalOrders": 4,
+      "totalRevenue": 450,
+      "totalReservations": 1,
+      "totalGuests": 4,
+      "totalCustomers": 36,
+      "repeatRate": 42,
+      "openHandoffs": 1,
+      "autoRate": 95
+    },
+    "series": [
+      {
+        "date": "2026-08-25",
+        "messages": 25,
+        "faqHits": 18,
+        "fallbacks": 2,
+        "msCount": 25,
+        "msTotal": 23875,
+        "pos": 19,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-08-26",
+        "messages": 23,
+        "faqHits": 19,
+        "fallbacks": 1,
+        "msCount": 23,
+        "msTotal": 16169,
+        "pos": 17,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-08-27",
+        "messages": 19,
+        "faqHits": 13,
+        "fallbacks": 1,
+        "msCount": 19,
+        "msTotal": 28386,
+        "pos": 14,
+        "neg": 0,
+        "neutral": 5
+      },
+      {
+        "date": "2026-08-28",
+        "messages": 30,
+        "faqHits": 20,
+        "fallbacks": 2,
+        "msCount": 30,
+        "msTotal": 40020,
+        "pos": 22,
+        "neg": 0,
+        "neutral": 8
+      },
+      {
+        "date": "2026-08-29",
+        "messages": 29,
+        "faqHits": 20,
+        "fallbacks": 2,
+        "msCount": 29,
+        "msTotal": 38396,
+        "pos": 22,
+        "neg": 0,
+        "neutral": 7
+      },
+      {
+        "date": "2026-08-30",
+        "messages": 11,
+        "faqHits": 8,
+        "fallbacks": 0,
+        "msCount": 11,
+        "msTotal": 15565,
+        "pos": 8,
+        "neg": 0,
+        "neutral": 3
+      },
+      {
+        "date": "2026-08-31",
+        "messages": 9,
+        "faqHits": 6,
+        "fallbacks": 0,
+        "msCount": 9,
+        "msTotal": 13473,
+        "pos": 6,
+        "neg": 0,
+        "neutral": 3
+      },
+      {
+        "date": "2026-09-01",
+        "messages": 10,
+        "faqHits": 7,
+        "fallbacks": 0,
+        "msCount": 10,
+        "msTotal": 7510,
+        "pos": 7,
+        "neg": 0,
+        "neutral": 3
+      },
+      {
+        "date": "2026-09-02",
+        "messages": 11,
+        "faqHits": 8,
+        "fallbacks": 0,
+        "msCount": 11,
+        "msTotal": 9878,
+        "pos": 8,
+        "neg": 0,
+        "neutral": 3
+      },
+      {
+        "date": "2026-09-03",
+        "messages": 14,
+        "faqHits": 9,
+        "fallbacks": 1,
+        "msCount": 14,
+        "msTotal": 12222,
+        "pos": 10,
+        "neg": 0,
+        "neutral": 4
+      },
+      {
+        "date": "2026-09-04",
+        "messages": 27,
+        "faqHits": 18,
+        "fallbacks": 2,
+        "msCount": 27,
+        "msTotal": 39042,
+        "pos": 20,
+        "neg": 0,
+        "neutral": 7
+      },
+      {
+        "date": "2026-09-05",
+        "messages": 32,
+        "faqHits": 25,
+        "fallbacks": 2,
+        "msCount": 32,
+        "msTotal": 46048,
+        "pos": 24,
+        "neg": 0,
+        "neutral": 8
+      },
+      {
+        "date": "2026-09-06",
+        "messages": 19,
+        "faqHits": 13,
+        "fallbacks": 1,
+        "msCount": 19,
+        "msTotal": 26980,
+        "pos": 14,
+        "neg": 0,
+        "neutral": 5
+      },
+      {
+        "date": "2026-09-07",
+        "messages": 24,
+        "faqHits": 19,
+        "fallbacks": 1,
+        "msCount": 24,
+        "msTotal": 21648,
+        "pos": 18,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-09-08",
+        "messages": 22,
+        "faqHits": 15,
+        "fallbacks": 1,
+        "msCount": 22,
+        "msTotal": 15532,
+        "pos": 16,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-09-09",
+        "messages": 19,
+        "faqHits": 13,
+        "fallbacks": 1,
+        "msCount": 19,
+        "msTotal": 21508,
+        "pos": 14,
+        "neg": 0,
+        "neutral": 5
+      },
+      {
+        "date": "2026-09-10",
+        "messages": 19,
+        "faqHits": 14,
+        "fallbacks": 1,
+        "msCount": 19,
+        "msTotal": 26163,
+        "pos": 14,
+        "neg": 0,
+        "neutral": 5
+      },
+      {
+        "date": "2026-09-11",
+        "messages": 26,
+        "faqHits": 18,
+        "fallbacks": 2,
+        "msCount": 26,
+        "msTotal": 33722,
+        "pos": 19,
+        "neg": 0,
+        "neutral": 7
+      },
+      {
+        "date": "2026-09-12",
+        "messages": 20,
+        "faqHits": 13,
+        "fallbacks": 1,
+        "msCount": 20,
+        "msTotal": 21480,
+        "pos": 15,
+        "neg": 0,
+        "neutral": 5
+      },
+      {
+        "date": "2026-09-13",
+        "messages": 11,
+        "faqHits": 7,
+        "fallbacks": 0,
+        "msCount": 11,
+        "msTotal": 10065,
+        "pos": 8,
+        "neg": 0,
+        "neutral": 3
+      },
+      {
+        "date": "2026-09-14",
+        "messages": 12,
+        "faqHits": 8,
+        "fallbacks": 0,
+        "msCount": 12,
+        "msTotal": 9192,
+        "pos": 9,
+        "neg": 0,
+        "neutral": 3
+      },
+      {
+        "date": "2026-09-15",
+        "messages": 10,
+        "faqHits": 7,
+        "fallbacks": 0,
+        "msCount": 10,
+        "msTotal": 11510,
+        "pos": 7,
+        "neg": 0,
+        "neutral": 3
+      },
+      {
+        "date": "2026-09-16",
+        "messages": 15,
+        "faqHits": 12,
+        "fallbacks": 1,
+        "msCount": 15,
+        "msTotal": 20760,
+        "pos": 11,
+        "neg": 0,
+        "neutral": 4
+      },
+      {
+        "date": "2026-09-17",
+        "messages": 15,
+        "faqHits": 10,
+        "fallbacks": 1,
+        "msCount": 15,
+        "msTotal": 13005,
+        "pos": 11,
+        "neg": 0,
+        "neutral": 4
+      },
+      {
+        "date": "2026-09-18",
+        "messages": 32,
+        "faqHits": 23,
+        "fallbacks": 2,
+        "msCount": 32,
+        "msTotal": 41152,
+        "pos": 24,
+        "neg": 0,
+        "neutral": 8
+      },
+      {
+        "date": "2026-09-19",
+        "messages": 33,
+        "faqHits": 26,
+        "fallbacks": 2,
+        "msCount": 33,
+        "msTotal": 45177,
+        "pos": 25,
+        "neg": 0,
+        "neutral": 8
+      },
+      {
+        "date": "2026-09-20",
+        "messages": 25,
+        "faqHits": 17,
+        "fallbacks": 2,
+        "msCount": 25,
+        "msTotal": 27050,
+        "pos": 19,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-09-21",
+        "messages": 21,
+        "faqHits": 17,
+        "fallbacks": 1,
+        "msCount": 21,
+        "msTotal": 29442,
+        "pos": 15,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-09-22",
+        "messages": 22,
+        "faqHits": 17,
+        "fallbacks": 1,
+        "msCount": 22,
+        "msTotal": 23496,
+        "pos": 16,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-09-23",
+        "messages": 14,
+        "faqHits": 11,
+        "fallbacks": 1,
+        "msCount": 14,
+        "msTotal": 18256,
+        "pos": 10,
+        "neg": 0,
+        "neutral": 4
+      }
+    ],
+    "hourly": [
+      {
+        "hour": 0,
+        "label": "00:00",
+        "messages": 6,
+        "faqHits": 4,
+        "fallbacks": 2
+      },
+      {
+        "hour": 1,
+        "label": "01:00",
+        "messages": 6,
+        "faqHits": 4,
+        "fallbacks": 2
+      },
+      {
+        "hour": 2,
+        "label": "02:00",
+        "messages": 3,
+        "faqHits": 2,
+        "fallbacks": 1
+      },
+      {
+        "hour": 3,
+        "label": "03:00",
+        "messages": 3,
+        "faqHits": 2,
+        "fallbacks": 1
+      },
+      {
+        "hour": 4,
+        "label": "04:00",
+        "messages": 3,
+        "faqHits": 2,
+        "fallbacks": 1
+      },
+      {
+        "hour": 5,
+        "label": "05:00",
+        "messages": 6,
+        "faqHits": 4,
+        "fallbacks": 2
+      },
+      {
+        "hour": 6,
+        "label": "06:00",
+        "messages": 12,
+        "faqHits": 9,
+        "fallbacks": 3
+      },
+      {
+        "hour": 7,
+        "label": "07:00",
+        "messages": 24,
+        "faqHits": 17,
+        "fallbacks": 7
+      },
+      {
+        "hour": 8,
+        "label": "08:00",
+        "messages": 42,
+        "faqHits": 30,
+        "fallbacks": 12
+      },
+      {
+        "hour": 9,
+        "label": "09:00",
+        "messages": 48,
+        "faqHits": 35,
+        "fallbacks": 13
+      },
+      {
+        "hour": 10,
+        "label": "10:00",
+        "messages": 54,
+        "faqHits": 39,
+        "fallbacks": 15
+      },
+      {
+        "hour": 11,
+        "label": "11:00",
+        "messages": 48,
+        "faqHits": 35,
+        "fallbacks": 13
+      },
+      {
+        "hour": 12,
+        "label": "12:00",
+        "messages": 42,
+        "faqHits": 30,
+        "fallbacks": 12
+      },
+      {
+        "hour": 13,
+        "label": "13:00",
+        "messages": 36,
+        "faqHits": 26,
+        "fallbacks": 10
+      },
+      {
+        "hour": 14,
+        "label": "14:00",
+        "messages": 30,
+        "faqHits": 22,
+        "fallbacks": 8
+      },
+      {
+        "hour": 15,
+        "label": "15:00",
+        "messages": 36,
+        "faqHits": 26,
+        "fallbacks": 10
+      },
+      {
+        "hour": 16,
+        "label": "16:00",
+        "messages": 42,
+        "faqHits": 30,
+        "fallbacks": 12
+      },
+      {
+        "hour": 17,
+        "label": "17:00",
+        "messages": 54,
+        "faqHits": 39,
+        "fallbacks": 15
+      },
+      {
+        "hour": 18,
+        "label": "18:00",
+        "messages": 66,
+        "faqHits": 48,
+        "fallbacks": 18
+      },
+      {
+        "hour": 19,
+        "label": "19:00",
+        "messages": 60,
+        "faqHits": 43,
+        "fallbacks": 17
+      },
+      {
+        "hour": 20,
+        "label": "20:00",
+        "messages": 48,
+        "faqHits": 35,
+        "fallbacks": 13
+      },
+      {
+        "hour": 21,
+        "label": "21:00",
+        "messages": 36,
+        "faqHits": 26,
+        "fallbacks": 10
+      },
+      {
+        "hour": 22,
+        "label": "22:00",
+        "messages": 24,
+        "faqHits": 17,
+        "fallbacks": 7
+      },
+      {
+        "hour": 23,
+        "label": "23:00",
+        "messages": 12,
+        "faqHits": 9,
+        "fallbacks": 3
+      }
+    ],
+    "avgMs": 1180,
+    "topics": [
+      {
+        "label": "Opening hours",
+        "count": 173
+      },
+      {
+        "label": "Products & prices",
+        "count": 161
+      },
+      {
+        "label": "Orders & checkout",
+        "count": 119
+      },
+      {
+        "label": "Table bookings",
+        "count": 83
+      },
+      {
+        "label": "Location & maps",
+        "count": 59
+      }
+    ],
+    "topQuestions": [
+      {
+        "question": "What time do you close tonight?",
+        "count": 54
+      },
+      {
+        "question": "Where are you located exactly?",
+        "count": 42
+      },
+      {
+        "question": "How much is the flat white?",
+        "count": 36
+      },
+      {
+        "question": "Can I book a table for 4 tomorrow?",
+        "count": 30
+      },
+      {
+        "question": "عايز اطلب دليفري للمهندسين",
+        "count": 24
+      },
+      {
+        "question": "Do you accept InstaPay?",
+        "count": 21
+      }
+    ],
+    "unanswered": [
+      {
+        "question": "Do you offer whole coffee beans in 1kg bags?",
+        "count": 5
+      },
+      {
+        "question": "Can we reserve the entire rooftop for an event?",
+        "count": 3
+      },
+      {
+        "question": "Do you have vegan gluten-free bakery items?",
+        "count": 2
+      }
+    ],
+    "recentActivity": [
+      {
+        "id": "ticket_mucp4pzqaqcf",
+        "type": "handoff",
+        "title": "Staff Handover · Client",
+        "detail": "Requested human support",
+        "timestamp": 1790082885014,
+        "badgeClass": "bg-rose-50 text-rose-700",
+        "badgeText": "open",
+        "icon": "user-check"
+      },
+      {
+        "id": "res_mucn3gtafvm9",
+        "type": "reservation",
+        "title": "Table for 4 · Preview Client",
+        "detail": "Tomorrow Evening at 4  at Tomorrow Evening at 4  · Standard booking",
+        "timestamp": 1790079467230,
+        "badgeClass": "bg-teal-50 text-teal-700",
+        "badgeText": "confirmed",
+        "icon": "calendar"
+      },
+      {
+        "id": "ord_mucn3gq28t75",
+        "type": "order",
+        "title": "Order ORD-0001 · Preview Client",
+        "detail": "210 EGP (شامل 25 EGP توصيل) · Status: confirmed",
+        "timestamp": 1790079467114,
+        "badgeClass": "bg-amber-50 text-amber-700",
+        "badgeText": "confirmed",
+        "icon": "shopping-bag"
+      }
+    ],
+    "insights": [
+      {
+        "category": "Peak Hours Alert",
+        "icon": "clock",
+        "title": "High customer volume between 6:00 PM – 9:00 PM",
+        "description": "Over 31% of daily inquiries, food orders, and bookings arrive in the evening. Keep response templates and delivery staff ready.",
+        "tone": "info"
+      },
+      {
+        "category": "Automation Opportunity",
+        "icon": "sparkles",
+        "title": "3 recurring questions need FAQ answers",
+        "description": "Clients frequently ask about \"Do you offer whole coffee beans in 1kg bags?\". Adding this as an exact FAQ entry could boost auto-resolution to 99%.",
+        "tone": "action",
+        "actionQuestion": "Do you offer whole coffee beans in 1kg bags?"
+      },
+      {
+        "category": "Revenue & Orders",
+        "icon": "trending-up",
+        "title": "1 orders logged via WhatsApp (210 EGP)",
+        "description": "WhatsApp cart checkout is actively converting conversations into sales. Most popular item is Flat White.",
+        "tone": "success"
+      },
+      {
+        "category": "Bot Response Speed",
+        "icon": "zap",
+        "title": "Avg. response time: 1.2s",
+        "description": "Your assistant responds 94% faster than human agents, preventing drop-offs and abandoned inquiries.",
+        "tone": "success"
+      }
+    ]
+  },
+  "unanswered": [],
+  "orders": [
+    {
+      "id": "ord_mul7k3imi4zd",
+      "orderNumber": "ORD-0004",
+      "clientPhone": "201012345678",
+      "clientName": "Preview Client",
+      "items": [
+        {
+          "name": "Almond Croissant",
+          "qty": 1,
+          "price": "55 EGP",
+          "subtotal": "55 EGP"
+        }
+      ],
+      "total": "80 EGP (includes 25 EGP delivery)",
+      "address": "Pending address from chat",
+      "notes": "",
+      "status": "pending",
+      "at": 1790597564878
+    },
+    {
+      "id": "ord_mul7jmtwwujo",
+      "orderNumber": "ORD-0003",
+      "clientPhone": "201012345678",
+      "clientName": "Preview Client",
+      "items": [
+        {
+          "name": "Almond Croissant",
+          "qty": 1,
+          "price": "55 EGP",
+          "subtotal": "55 EGP"
+        }
+      ],
+      "total": "80 EGP (includes 25 EGP delivery)",
+      "address": "Pending address from chat",
+      "notes": "",
+      "status": "pending",
+      "at": 1790597543252
+    },
+    {
+      "id": "ord_mul7i0ff4ylq",
+      "orderNumber": "ORD-0002",
+      "clientPhone": "201012345678",
+      "clientName": "Preview Client",
+      "items": [
+        {
+          "name": "Almond Croissant",
+          "qty": 1,
+          "price": "55 EGP",
+          "subtotal": "55 EGP"
+        }
+      ],
+      "total": "80 EGP (includes 25 EGP delivery)",
+      "address": "Pending address from chat",
+      "notes": "",
+      "status": "pending",
+      "at": 1790597467563
+    },
+    {
+      "id": "ord_mucn3gq28t75",
+      "orderNumber": "ORD-0001",
+      "clientPhone": "201012345678",
+      "clientName": "Preview Client",
+      "items": [
+        {
+          "name": "Flat white",
+          "qty": 2,
+          "price": "65 EGP",
+          "subtotal": "130 EGP"
+        },
+        {
+          "name": "Almond Croissant",
+          "qty": 1,
+          "price": "55 EGP",
+          "subtotal": "55 EGP"
+        }
+      ],
+      "total": "210 EGP (شامل 25 EGP توصيل)",
+      "address": "عنوان العميل عبر الواتساب",
+      "notes": "",
+      "status": "confirmed",
+      "at": 1790079467114,
+      "updatedAt": 1790163860457
+    }
+  ],
+  "reservations": [
+    {
+      "id": "res_mucn3gtafvm9",
+      "clientPhone": "201012345678",
+      "clientName": "Preview Client",
+      "partySize": 4,
+      "date": "Tomorrow Evening at 4 ",
+      "time": "Tomorrow Evening at 4 ",
+      "notes": "",
+      "status": "confirmed",
+      "at": 1790079467230
+    }
+  ],
+  "customers": {
+    "201012345678": {
+      "phone": "201012345678",
+      "name": "Human Agent",
+      "tags": [
+        "New Client",
+        "Buyer",
+        "Reservation Guest",
+        "Regular"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 4,
+      "totalSpent": 21265,
+      "createdAt": 1790079403830,
+      "lastSeen": 1790596596293,
+      "messageCount": 3
+    },
+    "201198765432": {
+      "phone": "201198765432",
+      "name": "Sara Karim",
+      "tags": [
+        "New Client"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "createdAt": 1790083381761,
+      "lastSeen": 1790083381761
+    },
+    "201255556666": {
+      "phone": "201255556666",
+      "name": "Omar Sherif",
+      "tags": [
+        "New Client"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "createdAt": 1790083381761,
+      "lastSeen": 1790083381761
+    },
+    "201099887766": {
+      "phone": "201099887766",
+      "name": "Fatima Zahra",
+      "tags": [
+        "New Client"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "createdAt": 1790083381761,
+      "lastSeen": 1790083381761
+    },
+    "17863559966": {
+      "phone": "17863559966",
+      "name": "Jessica Laverdetman",
+      "tags": [
+        "New Client"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "createdAt": 1790599927508,
+      "lastSeen": 1790599927508,
+      "messageCount": 1
+    }
+  },
+  "campaigns": [
+    {
+      "id": "camp_mul7s19imh96",
+      "title": "Broadcast",
+      "message": "خصم 15% على جميع المشروبات الساخنة هذا الاسبوع! ☕",
+      "targetTag": "all",
+      "sentCount": 4,
+      "status": "sent",
+      "at": 1790597935206
+    },
+    {
+      "id": "camp_mucn23wrozmk",
+      "title": "خصم نهاية الاسبوع",
+      "message": "خصم 15% على جميع المشروبات الساخنة هذا الاسبوع! ☕",
+      "targetTag": "all",
+      "sentCount": 1,
+      "status": "sent",
+      "at": 1790079403851
+    }
+  ],
+  "teamMembers": [
+    {
+      "id": "team_1",
+      "name": "Emad Hamza (Owner)",
+      "email": "owner@business.com",
+      "role": "admin",
+      "status": "active",
+      "addedAt": 1787488346194
+    },
+    {
+      "id": "team_2",
+      "name": "Omar Sherif (Support)",
+      "email": "omar@business.com",
+      "role": "editor",
+      "status": "active",
+      "addedAt": 1788870746194
+    },
+    {
+      "id": "team_3",
+      "name": "Laila Mostafa (Analyst)",
+      "email": "laila@business.com",
+      "role": "viewer",
+      "status": "active",
+      "addedAt": 1789648346194
+    }
+  ],
+  "templates": [
+    {
+      "id": "tpl_welcome",
+      "scenario": "welcome",
+      "name": "Welcome Greeting",
+      "description": "Sent on first contact or greeting",
+      "content": "Welcome to {business_name}! How can our friendly team help you today?",
+      "enabled": true
+    },
+    {
+      "id": "tpl_out_of_hours",
+      "scenario": "out_of_hours",
+      "name": "Out of Hours Message",
+      "description": "Sent when clients message after closing time",
+      "content": "We're currently closed! Our opening hours are:\n{hours}\nWe will reply to your message first thing in the morning! 🌙",
+      "enabled": true
+    },
+    {
+      "id": "tpl_order_confirm",
+      "scenario": "order_confirm",
+      "name": "Order Confirmation",
+      "description": "Sent when client confirms delivery order",
+      "content": "Your order {order_number} has been confirmed! 🛍️\nTotal: {total}\nExpected delivery time: 30-45 minutes. Thank you for choosing {business_name}!",
+      "enabled": true
+    },
+    {
+      "id": "tpl_booking_confirm",
+      "scenario": "booking_confirm",
+      "name": "Table Reservation Confirmation",
+      "description": "Sent when table reservation is placed",
+      "content": "Your table reservation for {party_size} guests on {time} is confirmed! 📅\nWe look forward to welcoming you at {business_name}.",
+      "enabled": true
+    },
+    {
+      "id": "tpl_human_handover",
+      "scenario": "human_handover",
+      "name": "Human Agent Handover",
+      "description": "Sent when customer requests human agent",
+      "content": "We have connected you with our team. A staff member will reply here shortly! 👨‍💼",
+      "enabled": true
+    },
+    {
+      "id": "tpl_location_pin",
+      "scenario": "location_pin",
+      "name": "Location & Map Pin",
+      "description": "Sent when client requests shop address",
+      "content": "We are located at: {address}.\nGoogle Maps location: {map_url} 📍",
+      "enabled": true
+    }
+  ],
+  "articles": [
+    {
+      "id": "art_refund_policy",
+      "title": "Refund, Return & Cancellation Policy",
+      "category": "Billing & Orders",
+      "tags": [
+        "refund",
+        "return",
+        "cancel",
+        "money back",
+        "استرجاع",
+        "استرداد",
+        "الغاء"
+      ],
+      "content": "Customers can cancel orders free of charge within 10 minutes of placement. For cold/hot beverages and prepared food, refunds are issued immediately if the wrong item or damaged packaging was received. For retail coffee beans and equipment, unopened items can be returned within 14 days with original receipt. Refunds are processed to original payment method or instant store credit within 24-48 hours.",
+      "updatedAt": 1789478034606
+    },
+    {
+      "id": "art_delivery_zones",
+      "title": "Delivery Zones, Timelines & Minimum Spend",
+      "category": "Delivery & Pickup",
+      "tags": [
+        "delivery",
+        "zones",
+        "shipping",
+        "areas",
+        "توصيل",
+        "مناطق",
+        "دليفري"
+      ],
+      "content": "We deliver within a 10 km radius of our downtown branch including Zamalek, Dokki, Mohandessin, Maadi, and New Cairo (via express courier). Delivery times average 30 to 45 minutes for standard coffee and pastries. Minimum order for delivery is 100 EGP. Free delivery applies on all orders exceeding 300 EGP.",
+      "updatedAt": 1789650834606
+    },
+    {
+      "id": "art_payment_methods",
+      "title": "Accepted Payment Methods & Billing Troubleshooting",
+      "category": "Billing & Orders",
+      "tags": [
+        "payment",
+        "instapay",
+        "vodafone cash",
+        "credit card",
+        "دفع",
+        "انستاباي",
+        "فيزا"
+      ],
+      "content": "We accept Cash on Delivery, Visa / MasterCard credit and debit cards, InstaPay (nourcoffee@instapay), and Vodafone Cash / Mobile Wallets (+201099887766). If an electronic transaction fails, do not re-attempt immediately; send your payment transaction screenshot here and our finance team will manually confirm within 5 minutes.",
+      "updatedAt": 1789823634606
+    },
+    {
+      "id": "art_special_events",
+      "title": "Private Events, Catering & Co-Working Bookings",
+      "category": "Services & Events",
+      "tags": [
+        "catering",
+        "events",
+        "meeting room",
+        "work",
+        "حفلات",
+        "اجتماعات",
+        "مساحة عمل"
+      ],
+      "content": "Our mezzanine floor is available for private meetings and workshops for groups up to 25 people. High-speed 500 Mbps fiber Wi-Fi and presentation screens are complimentary. Espresso bar catering is available for corporate events and weddings. Booking requests require 48-hour advance notice.",
+      "updatedAt": 1789910034606
+    }
+  ],
+  "handoffTickets": [
+    {
+      "id": "ticket_mucp4pzqaqcf",
+      "phone": "201012345678",
+      "name": "Preview Client",
+      "issueSummary": "Customer reported an escalation/complaint: \"عايز اكلم حد ضروري عندي مشكلة في الاوردر متأخر\"",
+      "sentiment": "Frustrated",
+      "lastMessage": "عايز اكلم حد ضروري عندي مشكلة في الاوردر متأخر",
+      "intentType": "HUMAN_TAKEOVER",
+      "status": "open",
+      "createdAt": 1790082885014
+    }
+  ],
+  "knowledgeGaps": [
+    {
+      "id": "gap_wifi_password",
+      "question": "What is the guest Wi-Fi network and password? / هل في واي فاي؟",
+      "frequency": 24,
+      "category": "Store Amenities",
+      "suggestedTitle": "Guest Wi-Fi Access & Network Credentials",
+      "suggestedDraft": "We provide free high-speed 500 Mbps fiber Wi-Fi. Network Name: NourCoffee_Guest, Password: CoffeeAndCode2026. Works on all laptops and phones.",
+      "status": "addressed",
+      "detectedAt": 1789737650698,
+      "addressedAt": 1790083323246,
+      "linkedArticleId": "art_test_123"
+    },
+    {
+      "id": "gap_vegan_dairy_free",
+      "question": "Do you offer oat milk, almond milk, or dairy-free options for drinks? / في لبن نباتي؟",
+      "frequency": 19,
+      "category": "Menu & Ingredients",
+      "suggestedTitle": "Plant-Based & Dairy-Free Milk Substitutes",
+      "suggestedDraft": "Yes! We offer Barista-grade Oat Milk, Almond Milk, and Coconut Milk for +15 EGP on any hot or iced drink. Completely vegan and lactose-free.",
+      "status": "addressed",
+      "detectedAt": 1789824050698,
+      "addressedAt": 1790083381736,
+      "linkedArticleId": "art_test_123"
+    },
+    {
+      "id": "gap_parking_spots",
+      "question": "Is there parking available near the branch? / في ركنة أو جراج قريب؟",
+      "frequency": 15,
+      "category": "Location & Access",
+      "suggestedTitle": "Parking Facilities & Nearby Garages",
+      "suggestedDraft": "Street parking is available directly in front of the café along Tahrir St. An underground public parking garage is also located 100 meters away.",
+      "status": "open",
+      "detectedAt": 1789910450698,
+      "addressedAt": null
+    },
+    {
+      "id": "gap_gift_cards",
+      "question": "Do you sell physical or digital gift cards for friends? / في كروت هدايا؟",
+      "frequency": 11,
+      "category": "Loyalty & Gifts",
+      "suggestedTitle": "Gift Cards & Digital Balance Vouchers",
+      "suggestedDraft": "Yes, physical gift cards are sold at our cash register in 250, 500, and 1000 EGP denominations. Digital gift balances can also be gifted directly via WhatsApp.",
+      "status": "addressed",
+      "detectedAt": 1789392050698,
+      "addressedAt": 1789996850698
+    }
+  ]
+}

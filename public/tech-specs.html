@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClientBot — Technical Architecture & Server Specifications</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #0b1118;
+      color: #0f172a;
+    }
+    @media print {
+      body {
+        background: transparent !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .spec-container {
+        box-shadow: none !important;
+        border: none !important;
+        margin: 0 !important;
+        max-width: 100% !important;
+      }
+    }
+  </style>
+</head>
+<body class="py-10 px-4 min-h-screen flex flex-col items-center">
+
+  <!-- Top Action Bar -->
+  <div class="mb-6 flex items-center justify-between w-full max-w-4xl no-print">
+    <div class="flex items-center gap-2 text-slate-300 text-xs font-semibold">
+      <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
+      <span>System Technical Documentation</span>
+    </div>
+    <div class="flex items-center gap-3">
+      <button onclick="window.print()" class="flex items-center gap-2 bg-[#128C7E] hover:bg-[#0d6e63] text-white px-4 py-2 rounded-xl text-xs font-bold shadow transition">
+        <i data-lucide="printer" class="h-4 w-4"></i> Print / Save as PDF
+      </button>
+      <a href="/index.html" class="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 px-4 py-2 rounded-xl text-xs font-medium transition">
+        <i data-lucide="arrow-left" class="h-4 w-4"></i> Back to Dashboard
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Technical Whitepaper Container -->
+  <main class="spec-container w-full max-w-4xl bg-white rounded-3xl p-8 sm:p-12 shadow-2xl border border-slate-200">
+    
+    <!-- Document Header -->
+    <header class="border-b border-slate-200 pb-6 mb-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-50 border border-teal-200 text-teal-800 text-xs font-bold mb-3">
+          <i data-lucide="cpu" class="h-3.5 w-3.5 text-teal-600"></i>
+          <span>Architecture &amp; Infrastructure Whitepaper</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">ClientBot WhatsApp System Specifications</h1>
+        <p class="text-sm text-slate-500 mt-1.5">Languages, Frameworks, Integrations &amp; Recommended Server Sizing</p>
+      </div>
+      <div class="text-left sm:text-right shrink-0">
+        <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-lg">Production Ready · v1.0.0</span>
+        <p class="text-[11px] text-slate-400 mt-1">Official Meta Cloud API Compatible</p>
+      </div>
+    </header>
+
+    <!-- Section 1: Languages & NLP Engine -->
+    <section class="mb-10">
+      <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-4">
+        <i data-lucide="languages" class="h-5 w-5 text-[#128C7E]"></i> 1. Programming &amp; Natural Languages
+      </h2>
+      <div class="grid sm:grid-cols-2 gap-4">
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+          <h3 class="text-sm font-bold text-slate-900">Codebase &amp; Runtime</h3>
+          <ul class="mt-2 space-y-1.5 text-xs text-slate-600">
+            <li>• <strong>Core Language:</strong> Modern JavaScript (ES Modules: <code>import/export</code>).</li>
+            <li>• <strong>Backend Runtime:</strong> Node.js (v18.x, v20.x, v22+ LTS).</li>
+            <li>• <strong>Frontend Engine:</strong> Vanilla ES6+ SPA (Zero heavy React/Vue dependencies for ultra-fast load time).</li>
+            <li>• <strong>Markup &amp; Styles:</strong> HTML5, Tailwind CSS, Custom SVG Charting.</li>
+          </ul>
+        </div>
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+          <h3 class="text-sm font-bold text-slate-900">Supported Natural Languages</h3>
+          <ul class="mt-2 space-y-1.5 text-xs text-slate-600">
+            <li>• <strong>Arabic (Gulf / Saudi Dialect):</strong> Native fluency (أبشر، يا هلا، سم).</li>
+            <li>• <strong>Arabic (Egyptian Dialect):</strong> Conversational fluency (أوامرك، تحت أمرك).</li>
+            <li>• <strong>Franco-Arab (Arabizi):</strong> Understands romanized Arabic chat.</li>
+            <li>• <strong>English:</strong> Professional US / UK bilingual support.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Technical Architecture -->
+    <section class="mb-10">
+      <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-4">
+        <i data-lucide="layers" class="h-5 w-5 text-[#128C7E]"></i> 2. Technical Stack &amp; Software Components
+      </h2>
+      <div class="overflow-hidden rounded-2xl border border-slate-200">
+        <table class="w-full text-left text-xs">
+          <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+            <tr>
+              <th class="p-3">Layer / Component</th>
+              <th class="p-3">Technology Used</th>
+              <th class="p-3">Purpose &amp; Characteristics</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-100 text-slate-600">
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">HTTP &amp; Webhook API</td>
+              <td class="p-3"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-teal-700 font-bold">Express.js 4.21</code></td>
+              <td class="p-3">Handles Meta webhook payloads, CORS, REST endpoints, and static asset delivery.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">WhatsApp Gateway</td>
+              <td class="p-3"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-emerald-700 font-bold">Meta Cloud API v21.0</code></td>
+              <td class="p-3">Official WhatsApp Business Cloud integration with HMAC-SHA256 signature verification.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">Database &amp; Persistence</td>
+              <td class="p-3"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-purple-700 font-bold">Atomic JSON Store</code></td>
+              <td class="p-3">Sequential Promise queue with atomic swap. Zero DB daemon overhead, easily migratable to Postgres/MongoDB.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">AI &amp; Semantic NLP</td>
+              <td class="p-3"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-sky-700 font-bold">GPT LLM Engine</code></td>
+              <td class="p-3">Contextual domain prompt engineering with business guardrails and live learning.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">Charting &amp; Graphs</td>
+              <td class="p-3"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-700 font-bold">Custom Native SVG</code></td>
+              <td class="p-3">Zero Chart.js/D3 bloat. High-performance responsive vector charts with tooltip titles.</td>
+            </tr>
+            <tr>
+              <td class="p-3 font-semibold text-slate-900">Reports Export</td>
+              <td class="p-3"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-slate-700 font-bold">CSV UTF-8 BOM &amp; PDF</code></td>
+              <td class="p-3">Direct Excel-ready spreadsheet export and formatted PDF print stylesheets.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 3: Server Hardware Specs -->
+    <section class="mb-10">
+      <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-4">
+        <i data-lucide="server" class="h-5 w-5 text-[#128C7E]"></i> 3. Server Sizing &amp; Hardware Requirements
+      </h2>
+
+      <div class="grid sm:grid-cols-2 gap-5">
+        <!-- Tier 1 -->
+        <div class="p-5 rounded-2xl border-2 border-emerald-500/30 bg-emerald-50/20">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-extrabold text-slate-900">Standard / Single Business Tier</h3>
+            <span class="text-[10px] font-bold bg-emerald-600 text-white px-2.5 py-0.5 rounded-full">Up to 5,000 msgs/day</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">Ideal for cafes, restaurants, clinics, local stores, and growing businesses.</p>
+          <ul class="space-y-2 text-xs text-slate-700">
+            <li class="flex items-center justify-between border-b border-emerald-200/50 pb-1.5">
+              <span class="text-slate-500">vCPU</span>
+              <strong class="font-bold text-slate-900">1 vCPU (2.0 GHz+)</strong>
+            </li>
+            <li class="flex items-center justify-between border-b border-emerald-200/50 pb-1.5">
+              <span class="text-slate-500">RAM (Memory)</span>
+              <strong class="font-bold text-slate-900">512 MB – 1 GB RAM</strong>
+            </li>
+            <li class="flex items-center justify-between border-b border-emerald-200/50 pb-1.5">
+              <span class="text-slate-500">Disk Space</span>
+              <strong class="font-bold text-slate-900">10 GB SSD / NVMe</strong>
+            </li>
+            <li class="flex items-center justify-between border-b border-emerald-200/50 pb-1.5">
+              <span class="text-slate-500">Estimated Cost</span>
+              <strong class="font-bold text-emerald-700">$4 – $6 / month (Hetzner, DO, AWS Lightsail)</strong>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Tier 2 -->
+        <div class="p-5 rounded-2xl border-2 border-slate-300 bg-slate-50/50">
+          <div class="flex items-center justify-between mb-3">
+            <h3 class="text-sm font-extrabold text-slate-900">High-Volume Enterprise Tier</h3>
+            <span class="text-[10px] font-bold bg-slate-800 text-white px-2.5 py-0.5 rounded-full">50,000+ msgs/day</span>
+          </div>
+          <p class="text-xs text-slate-500 mb-4">Ideal for franchise chains, high-traffic retail, and large customer care centers.</p>
+          <ul class="space-y-2 text-xs text-slate-700">
+            <li class="flex items-center justify-between border-b border-slate-200 pb-1.5">
+              <span class="text-slate-500">vCPU</span>
+              <strong class="font-bold text-slate-900">2 – 4 vCPUs</strong>
+            </li>
+            <li class="flex items-center justify-between border-b border-slate-200 pb-1.5">
+              <span class="text-slate-500">RAM (Memory)</span>
+              <strong class="font-bold text-slate-900">2 GB – 4 GB RAM</strong>
+            </li>
+            <li class="flex items-center justify-between border-b border-slate-200 pb-1.5">
+              <span class="text-slate-500">Disk Space</span>
+              <strong class="font-bold text-slate-900">25 – 50 GB NVMe SSD</strong>
+            </li>
+            <li class="flex items-center justify-between border-b border-slate-200 pb-1.5">
+              <span class="text-slate-500">Estimated Cost</span>
+              <strong class="font-bold text-slate-900">$12 – $24 / month</strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Deployment & Operating Requirements -->
+    <section class="mb-8">
+      <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2 mb-4">
+        <i data-lucide="shield-check" class="h-5 w-5 text-[#128C7E]"></i> 4. Operating System &amp; Network Prerequisites
+      </h2>
+      <div class="grid sm:grid-cols-3 gap-3 text-xs">
+        <div class="p-3.5 rounded-xl border border-slate-200 bg-white">
+          <p class="font-bold text-slate-900">Supported Operating Systems</p>
+          <p class="text-slate-500 mt-1 leading-relaxed">Ubuntu 22.04 LTS, Debian 12, Alpine Linux, or Windows Server 2019/2022.</p>
+        </div>
+        <div class="p-3.5 rounded-xl border border-slate-200 bg-white">
+          <p class="font-bold text-slate-900">HTTPS &amp; SSL Certificate</p>
+          <p class="text-slate-500 mt-1 leading-relaxed">Mandatory for Meta Webhook verification (via free Let's Encrypt, Cloudflare, or Nginx).</p>
+        </div>
+        <div class="p-3.5 rounded-xl border border-slate-200 bg-white">
+          <p class="font-bold text-slate-900">Process Management</p>
+          <p class="text-slate-500 mt-1 leading-relaxed">Runs 24/7 via PM2 (<code>pm2 start server.js</code>), Systemd service, or Docker container.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Summary Box -->
+    <footer class="pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+      <div class="flex items-center gap-2">
+        <i data-lucide="check-circle-2" class="h-4 w-4 text-emerald-600"></i>
+        <span>Designed for zero runtime lock-in and minimal infrastructure overhead.</span>
+      </div>
+      <p class="font-semibold text-slate-700">ClientBot Enterprise System Whitepaper</p>
+    </footer>
+
+  </main>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClientBot — WhatsApp Business AI Suite</title>
+  <meta name="description" content="An AI assistant that answers your clients on WhatsApp, takes orders, books reservations, and lets staff chat live.">
+  <meta name="theme-color" content="#128C7E">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Puter.js for free AI access (OpenAI & GPT models) -->
+  <script src="https://js.puter.com/v2/"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'] },
+          colors: { brand: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#128C7E', 600: '#0f7a6e', 700: '#0d6b5e', 800: '#065f46', 900: '#064e3b' } },
+          animation: { 'fade-in': 'fadeIn 0.3s ease', 'slide-up': 'slideUp 0.3s ease', 'scale-in': 'scaleIn 0.25s cubic-bezier(0.21,1.02,0.73,1)' },
+          keyframes: { fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } }, slideUp: { from: { opacity: '0', transform: 'translateY(8px)' }, to: { opacity: '1', transform: 'translateY(0)' } } }
+        }
+      }
+    }
+  </script>
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* Critical loading styles */
+    .app-loader { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; background: #f8fafc; transition: opacity 0.4s ease; }
+    .app-loader.done { opacity: 0; pointer-events: none; }
+    .loader-spinner { width: 40px; height: 40px; border: 3px solid #e2e8f0; border-top-color: #128C7E; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased font-sans">
+
+<!-- Loading Screen -->
+<div id="appLoader" class="app-loader">
+  <div class="text-center">
+    <div class="loader-spinner mx-auto mb-4"></div>
+    <p class="text-sm font-medium text-slate-500">Loading ClientBot...</p>
+  </div>
+</div>
+
+<!-- Toast notification -->
+<div id="toast" class="fixed bottom-6 right-6 z-50 hidden rounded-xl border px-4 py-3 text-sm shadow-lg transition-all toast-enhanced flex items-center gap-2"></div>
+
+<!-- ============ APP SHELL ============ -->
+<div id="app" class="flex h-[100dvh] w-full">
+
+  <!-- Sidebar -->
+  <aside class="hidden w-[264px] shrink-0 flex-col border-r border-slate-200 bg-white md:flex">
+    <div class="flex items-center gap-2.5 px-5 py-4">
+      <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-[#128C7E] to-[#0ea5e9] text-white shadow-md shadow-[#128C7E]/20">
+        <i data-lucide="message-circle-more" class="h-5 w-5"></i>
+      </div>
+      <div class="min-w-0">
+        <p class="truncate text-sm font-bold leading-tight text-slate-900">ClientBot</p>
+        <p id="sideBizName" class="truncate text-[11px] text-slate-400">Set up your business</p>
+      </div>
+    </div>
+
+    <nav class="px-3 space-y-0.5 overflow-y-auto max-h-[calc(100dvh-130px)]" id="navDesktop">
+      <button data-view="dashboard" class="nav-item active"><i data-lucide="layout-dashboard" class="h-4 w-4"></i><span>Dashboard</span></button>
+      <button data-view="orders" class="nav-item">
+        <i data-lucide="shopping-bag" class="h-4 w-4 text-emerald-600"></i>
+        <span>Orders</span>
+        <span id="ordersCountBadge" class="ml-auto rounded-full bg-emerald-100 text-emerald-700 px-1.5 py-0.2 text-[10px] font-bold">3</span>
+      </button>
+      <button data-view="reservations" class="nav-item"><i data-lucide="calendar" class="h-4 w-4 text-blue-600"></i><span>Bookings</span></button>
+      <button data-view="livechat" class="nav-item"><i data-lucide="headset" class="h-4 w-4 text-amber-600"></i><span>Live Chat</span></button>
+      <button data-view="broadcast" class="nav-item"><i data-lucide="megaphone" class="h-4 w-4 text-purple-600"></i><span>Broadcasts</span></button>
+      <button data-view="chat" class="nav-item"><i data-lucide="messages-square" class="h-4 w-4"></i><span>Assistant Preview</span></button>
+      <button data-view="faq" class="nav-item"><i data-lucide="book-open-check" class="h-4 w-4"></i><span>FAQ answers</span><span id="faqCount" class="ml-auto rounded-full bg-slate-100 px-1.5 text-[10px] font-semibold text-slate-500">0</span></button>
+      <button data-view="helpcenter" class="nav-item"><i data-lucide="book-marked" class="h-4 w-4 text-emerald-600"></i><span>Help Center</span><span id="articlesCountBadge" class="ml-auto rounded-full bg-slate-100 px-1.5 text-[10px] font-semibold text-slate-500">4</span></button>
+      <button data-view="business" class="nav-item"><i data-lucide="store" class="h-4 w-4"></i><span>Business info</span></button>
+      <button data-view="products" class="nav-item"><i data-lucide="tag" class="h-4 w-4"></i><span>Products &amp; prices</span></button>
+      <button data-view="whatsapp" class="nav-item"><i data-lucide="link" class="h-4 w-4"></i><span>Connect WhatsApp</span></button>
+      <button data-view="team" class="nav-item"><i data-lucide="users" class="h-4 w-4 text-indigo-600"></i><span>Team &amp; Roles</span></button>
+      <button data-view="templates" class="nav-item"><i data-lucide="layout-template" class="h-4 w-4 text-teal-600"></i><span>Templates</span></button>
+      <button data-view="logs" class="nav-item"><i data-lucide="inbox" class="h-4 w-4"></i><span>Client messages</span></button>
+    </nav>
+
+    <!-- Conversation list (chat view only) -->
+    <div id="convPanel" class="mt-2 hidden min-h-0 flex-1 flex-col border-t border-slate-200 pt-3">
+      <div class="flex items-center justify-between px-5 pb-2">
+        <p class="text-[11px] font-semibold uppercase tracking-wider text-slate-400">Conversations</p>
+        <button id="newChatSide" class="rounded-md p-1 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700" title="New conversation">
+          <i data-lucide="plus" class="h-4 w-4"></i>
+        </button>
+      </div>
+      <div id="convList" class="min-h-0 flex-1 space-y-0.5 overflow-y-auto px-3 pb-3"></div>
+    </div>
+
+    <!-- Spacer when not in chat -->
+    <div class="flex-1"></div>
+
+    <div class="border-t border-slate-200 p-3">
+      <div class="flex items-center gap-2.5 rounded-lg px-2 py-1.5 bg-slate-50/50">
+        <div id="avatar" class="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#128C7E]/20 to-[#0ea5e9]/15 text-xs font-bold text-[#128C7E] ring-2 ring-[#128C7E]/10">CB</div>
+        <div class="min-w-0 flex-1">
+          <div class="flex items-center justify-between">
+            <p id="userName" class="truncate text-sm font-medium text-slate-900">Admin</p>
+            <span id="userRoleBadge" class="text-[10px] font-bold uppercase rounded px-1.5 py-0.5 bg-emerald-100 text-emerald-800">ADMIN</span>
+          </div>
+          <p id="botState" class="truncate text-xs text-slate-500">● Not connected</p>
+        </div>
+      </div>
+      <div class="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+        <span class="font-medium">Active Role:</span>
+        <select id="activeRoleSelect" class="rounded border border-slate-200 bg-white px-1.5 py-0.5 text-xs font-medium text-slate-700 outline-none focus:border-[#128C7E]">
+          <option value="admin">Full Admin</option>
+          <option value="editor">FAQ / Agent</option>
+          <option value="viewer">View-Only</option>
+        </select>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="flex min-w-0 flex-1 flex-col overflow-hidden">
+    <!-- Mobile top bar -->
+    <header class="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 md:hidden">
+      <div class="flex items-center gap-2">
+        <button id="mobileMenuBtn" class="rounded-lg p-2 text-slate-500 hover:bg-slate-100" title="Menu">
+          <i data-lucide="menu" class="h-5 w-5"></i>
+        </button>
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#128C7E] text-white">
+          <i data-lucide="message-circle-more" class="h-4 w-4"></i>
+        </div>
+        <p class="text-sm font-semibold">ClientBot</p>
+      </div>
+      <div class="flex items-center gap-1">
+        <button id="mobileConvBtn" class="rounded-lg p-2 text-slate-500 hover:bg-slate-100" title="Conversations"><i data-lucide="history" class="h-4 w-4"></i></button>
+      </div>
+    </header>
+
+    <!-- ===== DASHBOARD VIEW ===== -->
+    <section data-pane="dashboard" class="pane min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-6xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 tracking-tight">Dashboard</h2>
+            <p class="mt-1 text-sm text-slate-500">How your assistant is performing with real clients.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <div class="flex overflow-hidden rounded-lg border border-slate-200 bg-white" id="rangeGroup">
+              <button data-range="1" class="range-btn">Today</button>
+              <button data-range="7" class="range-btn">7d</button>
+              <button data-range="14" class="range-btn">14d</button>
+              <button data-range="30" class="range-btn active">30d</button>
+              <button data-range="90" class="range-btn">90d</button>
+            </div>
+            <div class="flex items-center gap-1">
+              <button id="exportMetricsCSVBtn" class="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs font-medium text-slate-700 transition hover:bg-slate-50" title="Export Dashboard Metrics to CSV">
+                <i data-lucide="file-spreadsheet" class="h-3.5 w-3.5 text-emerald-600"></i><span class="hidden sm:inline">CSV</span>
+              </button>
+              <button id="exportMetricsPDFBtn" class="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs font-medium text-slate-700 transition hover:bg-slate-50" title="Print / Export Dashboard Report to PDF">
+                <i data-lucide="file-text" class="h-3.5 w-3.5 text-rose-600"></i><span class="hidden sm:inline">PDF</span>
+              </button>
+            </div>
+            <button id="refreshMetrics" class="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
+              <i data-lucide="refresh-cw" class="h-4 w-4"></i><span class="hidden sm:inline">Refresh</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- AI Assistant Smart Recommendations -->
+        <div id="aiInsightsPanel" class="mb-5"></div>
+
+        <!-- Executive 8-KPI Performance & Business Grid -->
+        <div id="metricCards" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"></div>
+
+        <div class="mt-4 grid gap-4 lg:grid-cols-3">
+          <div class="card lg:col-span-2">
+            <div class="mb-4 flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-slate-900">Messages handled</h3>
+              <div class="flex items-center gap-3 text-[11px] text-slate-500">
+                <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-sm bg-[#128C7E]"></span> Messages</span>
+                <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-sm bg-slate-300"></span> FAQ matched</span>
+              </div>
+            </div>
+            <div id="volumeChart" class="chart-wrap"></div>
+          </div>
+
+          <div class="card">
+            <h3 class="mb-4 text-sm font-semibold text-slate-900">Client satisfaction</h3>
+            <div id="satGauge"></div>
+            <div id="satChart" class="chart-wrap mt-4"></div>
+            <p class="mt-3 text-[11px] leading-relaxed text-slate-400">Estimated from how clients react and reply after the bot answers.</p>
+          </div>
+
+          <!-- Peak Messaging Hours (24h Activity) -->
+          <div class="card lg:col-span-2">
+            <div class="mb-4 flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-semibold text-slate-900">Peak Messaging Hours (24h Activity)</h3>
+                <p class="text-xs text-slate-400">Client message volume distribution across the day</p>
+              </div>
+              <div class="flex items-center gap-3 text-[11px] text-slate-500">
+                <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-sm bg-[#0ea5e9]"></span> Regular hours</span>
+                <span class="flex items-center gap-1"><span class="h-2 w-2 rounded-sm bg-amber-500"></span> Peak rush</span>
+              </div>
+            </div>
+            <div id="hourlyChart" class="chart-wrap"></div>
+          </div>
+
+          <!-- Live Activity Feed -->
+          <div class="card">
+            <div class="mb-4 flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-semibold text-slate-900">Live Activity Feed</h3>
+                <p class="text-xs text-slate-400">Recent WhatsApp events &amp; client actions</p>
+              </div>
+              <span class="flex items-center gap-1 text-[11px] font-medium text-emerald-600">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Live
+              </span>
+            </div>
+            <div id="recentActivityList" class="space-y-2"></div>
+          </div>
+
+          <div class="card lg:col-span-2">
+            <h3 class="mb-4 text-sm font-semibold text-slate-900">Average response time</h3>
+            <div id="rtChart" class="chart-wrap"></div>
+          </div>
+
+          <div class="card">
+            <h3 class="mb-4 text-sm font-semibold text-slate-900">What clients ask about</h3>
+            <div id="topicList" class="space-y-3"></div>
+          </div>
+
+          <div class="card lg:col-span-2">
+            <div class="mb-4 flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-slate-900">Most common questions</h3>
+              <span class="text-[11px] text-slate-400">Tap to turn into an FAQ answer</span>
+            </div>
+            <div id="topQuestions" class="space-y-2"></div>
+          </div>
+
+          <div class="card">
+            <div class="mb-4 flex items-center justify-between">
+              <h3 class="text-sm font-semibold text-slate-900">Unanswered questions</h3>
+              <button id="clearUnanswered" class="text-[11px] text-slate-400 hover:text-slate-700">Clear</button>
+            </div>
+            <div id="unansweredList" class="space-y-2"></div>
+          </div>
+        </div>
+
+        <div class="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3">
+          <i data-lucide="info" class="h-4 w-4 shrink-0 text-slate-400"></i>
+          <p class="min-w-0 flex-1 text-xs text-slate-500">Metrics are collected from live WhatsApp conversations. Want to see how the dashboard looks with data?</p>
+          <button id="seedDemo" class="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-slate-50">Load sample data</button>
+          <button id="resetMetrics" class="rounded-lg px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-50">Reset metrics</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ORDERS VIEW ===== -->
+    <section data-pane="orders" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-5xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Orders &amp; Cart Checkout</h2>
+            <p class="mt-1 text-sm text-slate-500">Incoming client orders automatically taken by the AI on WhatsApp.</p>
+          </div>
+          <button id="refreshOrdersBtn" class="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+            <i data-lucide="refresh-cw" class="h-4 w-4"></i> Refresh Orders
+          </button>
+        </header>
+        <div id="ordersList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- ===== RESERVATIONS VIEW ===== -->
+    <section data-pane="reservations" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-4xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Table Bookings &amp; Appointments</h2>
+            <p class="mt-1 text-sm text-slate-500">Confirmed client reservations booked automatically through WhatsApp.</p>
+          </div>
+          <button id="refreshResBtn" class="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+            <i data-lucide="refresh-cw" class="h-4 w-4"></i> Refresh Bookings
+          </button>
+        </header>
+        <div id="reservationsList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- ===== LIVE CHAT & TAKEOVER VIEW ===== -->
+    <section data-pane="livechat" class="pane hidden min-h-0 flex-1 flex-row">
+      <!-- Left sidebar: Client conversations -->
+      <div class="w-80 shrink-0 border-r border-slate-200 bg-white flex flex-col">
+        <div class="p-3.5 border-b border-slate-200 flex items-center justify-between">
+          <p class="text-sm font-semibold text-slate-900">Live WhatsApp Inbox</p>
+          <button id="refreshLiveChatBtn" class="p-1 text-slate-400 hover:text-slate-700" title="Refresh"><i data-lucide="refresh-cw" class="h-3.5 w-3.5"></i></button>
+        </div>
+        <div id="liveConvList" class="min-h-0 flex-1 overflow-y-auto"></div>
+      </div>
+
+      <!-- Right chat thread & live reply composer -->
+      <div class="min-w-0 flex-1 flex flex-col bg-slate-50">
+        <div class="p-3.5 border-b border-slate-200 bg-white flex items-center justify-between">
+          <div>
+            <p id="liveClientName" class="text-sm font-semibold text-slate-900">Select Conversation</p>
+            <p id="liveClientPhone" class="text-xs text-slate-500 font-mono">—</p>
+          </div>
+          <label class="flex items-center gap-2 text-xs font-medium bg-amber-50 text-amber-800 border border-amber-200 rounded-lg px-2.5 py-1 cursor-pointer">
+            <input id="takeoverToggle" type="checkbox" class="accent-amber-600 h-3.5 w-3.5">
+            <span>Pause AI (Human Takeover)</span>
+          </label>
+        </div>
+
+        <div id="liveMessagesThread" class="min-h-0 flex-1 overflow-y-auto p-4 space-y-2"></div>
+
+        <!-- AI Agent Copilot Toolbar -->
+        <div class="px-3 py-1.5 border-t border-slate-200 bg-white/95 flex flex-wrap items-center justify-between gap-1.5 text-xs">
+          <div class="flex items-center gap-1.5">
+            <button id="copilotDraftBtn" type="button" class="flex items-center gap-1 rounded-lg bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-emerald-800 font-medium hover:bg-emerald-100 transition shadow-xs" title="Draft response based on customer context">
+              <i data-lucide="sparkles" class="h-3.5 w-3.5 text-amber-500"></i> AI Draft
+            </button>
+            <div class="flex items-center gap-1">
+              <select id="copilotToneSelect" class="rounded border border-slate-200 bg-white px-2 py-1 text-xs text-slate-700 outline-none hover:border-slate-300">
+                <option value="">Improve Tone…</option>
+                <option value="polite">🙏 More Polite</option>
+                <option value="concise">⚡ Shorter / Direct</option>
+                <option value="warm">😊 Warm &amp; Friendly</option>
+                <option value="detailed">📋 Detailed with Steps</option>
+              </select>
+            </div>
+            <button id="copilotTranslateBtn" type="button" class="flex items-center gap-1 rounded border border-slate-200 bg-white px-2 py-1 text-slate-700 hover:bg-slate-50 font-medium transition" title="Instant Multilingual Translation">
+              <i data-lucide="globe" class="h-3.5 w-3.5 text-blue-500"></i> Translate
+            </button>
+          </div>
+          <div>
+            <button id="copilotInsertKnowledgeBtn" type="button" class="flex items-center gap-1 rounded border border-slate-200 bg-white px-2 py-1 text-slate-600 hover:bg-slate-50 font-medium transition" title="Insert Knowledge Base Snippet">
+              <i data-lucide="book-open" class="h-3.5 w-3.5 text-emerald-600"></i> Help Articles
+            </button>
+          </div>
+        </div>
+
+        <form id="liveReplyForm" class="p-3 border-t border-slate-200 bg-white flex gap-2">
+          <input id="liveReplyInput" class="inp flex-1" placeholder="Type a reply to send on WhatsApp as staff…">
+          <button id="liveSendBtn" type="submit" class="rounded-lg bg-[#128C7E] px-4 py-2 text-sm font-medium text-white hover:bg-[#0f7a6e] flex items-center gap-1.5 shadow-sm">
+            <i data-lucide="send" class="h-4 w-4"></i> Send
+          </button>
+        </form>
+      </div>
+
+      <!-- Right Drawer: Unified Customer Context -->
+      <div id="customerContextPanel" class="w-72 shrink-0 border-l border-slate-200 bg-white flex flex-col p-4 overflow-y-auto hidden xl:flex">
+        <div class="pb-3 border-b border-slate-100 flex items-center justify-between">
+          <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Unified Customer Profile</p>
+          <span id="custVipBadge" class="rounded bg-amber-50 text-amber-800 border border-amber-200 text-[10px] font-bold uppercase px-1.5 py-0.2 hidden">VIP</span>
+        </div>
+        
+        <div class="mt-3 flex items-center gap-2.5">
+          <div class="flex h-10 w-10 items-center justify-center rounded-full bg-[#128C7E]/10 text-[#128C7E] font-bold text-sm" id="custAvatar">CL</div>
+          <div class="min-w-0 flex-1">
+            <p id="custProfileName" class="text-sm font-semibold text-slate-900 truncate">Select Client</p>
+            <p id="custProfilePhone" class="text-xs text-slate-400 font-mono">—</p>
+          </div>
+        </div>
+
+        <!-- AI Executive Summary -->
+        <div class="mt-4 rounded-xl border border-indigo-100 bg-indigo-50/50 p-3">
+          <div class="flex items-center gap-1.5 text-indigo-900 font-bold text-xs mb-1">
+            <i data-lucide="bot" class="h-3.5 w-3.5 text-indigo-600"></i>
+            <span>AI Interaction Dossier</span>
+          </div>
+          <p id="custAiSummary" class="text-xs text-slate-700 leading-relaxed">Select a conversation to inspect the AI-unified customer profile.</p>
+        </div>
+
+        <!-- Key Metrics -->
+        <div class="mt-4 grid grid-cols-2 gap-2">
+          <div class="rounded-lg border border-slate-100 bg-slate-50 p-2.5">
+            <span class="text-[10px] text-slate-400 block font-medium">Orders</span>
+            <p id="custTotalOrders" class="text-base font-bold text-slate-900">0</p>
+          </div>
+          <div class="rounded-lg border border-slate-100 bg-slate-50 p-2.5">
+            <span class="text-[10px] text-slate-400 block font-medium">Total Spend</span>
+            <p id="custTotalSpend" class="text-base font-bold text-slate-900">0 EGP</p>
+          </div>
+        </div>
+
+        <!-- Language & Sentiment -->
+        <div class="mt-4 space-y-2 text-xs">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400 font-medium">Preferred Language:</span>
+            <span id="custLanguageBadge" class="font-semibold text-slate-800">Arabic / English</span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-400 font-medium">Sentiment Trend:</span>
+            <span id="custSentimentTrend" class="rounded bg-emerald-50 text-emerald-700 font-semibold px-2 py-0.5 text-[11px]">Satisfied</span>
+          </div>
+        </div>
+
+        <!-- Recurring Issues & Tags -->
+        <div class="mt-4 pt-3 border-t border-slate-100">
+          <p class="text-[11px] font-semibold text-slate-500 mb-2">Recurring Interests &amp; Issues:</p>
+          <div id="custRecurringIssues" class="flex flex-wrap gap-1">
+            <span class="rounded bg-slate-100 text-slate-600 px-2 py-0.5 text-[10px]">None recorded</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BROADCAST VIEW ===== -->
+    <section data-pane="broadcast" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-4xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Broadcast Campaigns &amp; CRM</h2>
+            <p class="mt-1 text-sm text-slate-500">Send special offers, holiday announcements, and reminders directly on WhatsApp.</p>
+          </div>
+          <button id="refreshBroadcastBtn" class="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+            <i data-lucide="refresh-cw" class="h-4 w-4"></i> Refresh
+          </button>
+        </header>
+
+        <!-- Stats -->
+        <div class="grid gap-3 sm:grid-cols-3 mb-6">
+          <div class="card p-3.5">
+            <p class="text-xs text-slate-500 font-medium">Total Audience</p>
+            <p id="statTotalAudience" class="text-2xl font-bold text-slate-900 mt-1">0</p>
+          </div>
+          <div class="card p-3.5">
+            <p class="text-xs text-slate-500 font-medium">Verified Buyers</p>
+            <p id="statBuyers" class="text-2xl font-bold text-emerald-600 mt-1">0</p>
+          </div>
+          <div class="card p-3.5">
+            <p class="text-xs text-slate-500 font-medium">Regular Clients</p>
+            <p id="statRegulars" class="text-2xl font-bold text-blue-600 mt-1">0</p>
+          </div>
+        </div>
+
+        <div class="grid gap-6 md:grid-cols-2">
+          <!-- Campaign Composer -->
+          <div class="card">
+            <h3 class="card-title"><i data-lucide="send" class="h-4 w-4 text-[#128C7E]"></i> New Broadcast</h3>
+            <form id="broadcastForm" class="space-y-4">
+              <label class="field">
+                <span>Campaign Title (Internal Reference)</span>
+                <input id="campTitle" class="inp" placeholder="Weekend Special 15% Off">
+              </label>
+              <label class="field">
+                <span>Target Audience</span>
+                <select id="campTag" class="inp">
+                  <option value="all">All Clients (Entire Audience)</option>
+                  <option value="Buyer">Verified Buyers</option>
+                  <option value="Regular">Regular Clients (3+ orders)</option>
+                  <option value="Reservation Guest">Reservation Guests</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>WhatsApp Message Content</span>
+                <textarea id="campMessage" rows="4" class="inp" placeholder="Hello! Enjoy 15% off your favorite specialty coffee this weekend at Nour Coffee House! ☕"></textarea>
+              </label>
+              <button id="sendBroadcastBtn" type="submit" class="w-full rounded-lg bg-[#128C7E] px-4 py-2.5 text-sm font-medium text-white hover:bg-[#0f7a6e] flex items-center justify-center gap-2 shadow-sm">
+                <i data-lucide="send" class="h-4 w-4"></i> Send Broadcast
+              </button>
+            </form>
+          </div>
+
+          <!-- Campaign History -->
+          <div>
+            <h3 class="text-sm font-semibold text-slate-900 mb-3 flex items-center gap-2">
+              <i data-lucide="history" class="h-4 w-4 text-slate-500"></i> Sent Campaigns
+            </h3>
+            <div id="campaignsHistory" class="space-y-2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ VIEW ===== -->
+    <section data-pane="faq" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-4xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">FAQ answers</h2>
+            <p class="mt-1 text-sm text-slate-500">Your preferred wording for repeated questions. These take priority over everything else.</p>
+          </div>
+          <div class="flex gap-2">
+            <button id="suggestFaqBtn" class="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
+              <i data-lucide="sparkles" class="h-4 w-4 text-[#128C7E]"></i> Suggest from my info
+            </button>
+            <button id="addFaqBtn" class="flex items-center gap-1.5 rounded-lg bg-[#128C7E] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#0f7a6e]">
+              <i data-lucide="plus" class="h-4 w-4"></i> Add question
+            </button>
+          </div>
+        </header>
+
+        <div class="mb-4 flex flex-wrap items-center gap-2">
+          <div class="flex min-w-[220px] flex-1 items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2">
+            <i data-lucide="search" class="h-4 w-4 text-slate-400"></i>
+            <input id="faqSearch" class="flex-1 bg-transparent text-sm outline-none placeholder:text-slate-400" placeholder="Search questions…">
+          </div>
+          <p id="faqStats" class="text-xs text-slate-500"></p>
+        </div>
+
+        <div id="faqList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- ===== CHAT PREVIEW VIEW ===== -->
+    <section data-pane="chat" class="pane hidden min-h-0 flex-1 flex-col">
+      <div class="hidden items-center justify-between border-b border-slate-200 bg-white px-6 py-3.5 md:flex">
+        <div>
+          <h2 class="text-sm font-semibold text-slate-900">Assistant preview</h2>
+          <p class="text-xs text-slate-500">Ask anything a client would ask — this is the exact bot that replies on WhatsApp.</p>
+        </div>
+        <button id="newChatBtn" class="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
+          <i data-lucide="plus" class="h-4 w-4"></i> New conversation
+        </button>
+      </div>
+
+      <div id="messages" class="min-h-0 flex-1 overflow-y-auto px-4 py-6 md:px-8"></div>
+
+      <div class="border-t border-slate-200 bg-white px-4 py-3 md:px-8 md:py-4">
+        <div id="suggestions" class="mb-3 flex flex-wrap gap-2"></div>
+        <form id="composer" class="flex items-end gap-2">
+          <div class="flex flex-1 items-end rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-[#128C7E] focus-within:bg-white transition-all">
+            <textarea id="input" rows="1" placeholder="Ask about hours, location, products or prices…"
+              class="max-h-40 flex-1 resize-none bg-transparent text-sm leading-6 outline-none placeholder:text-slate-400"></textarea>
+          </div>
+          <button id="sendBtn" type="submit" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#128C7E] to-[#0f7a6e] text-white transition hover:shadow-lg hover:shadow-[#128C7E]/30 active:scale-95 shadow-md shadow-[#128C7E]/20">
+            <i data-lucide="arrow-up" class="h-4 w-4"></i>
+          </button>
+          <button id="stopBtn" type="button" class="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50">
+            <i data-lucide="square" class="h-4 w-4"></i>
+          </button>
+        </form>
+        <div class="mt-2 flex items-center justify-between">
+          <p class="text-[11px] text-slate-400">Multilingual & Egyptian Dialect Tuning Active.</p>
+          <span class="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-600">Active Mode: Order &amp; Booking Bot</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BUSINESS VIEW ===== -->
+    <section data-pane="business" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-3xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6">
+          <h2 class="text-xl font-semibold text-slate-900">Business info</h2>
+          <p class="mt-1 text-sm text-slate-500">This is the only knowledge your bot uses. Be precise — it never invents details.</p>
+        </header>
+
+        <div class="space-y-4">
+          <div class="card">
+            <h3 class="card-title"><i data-lucide="store" class="h-4 w-4 text-[#128C7E]"></i> Identity</h3>
+            <div class="grid gap-4 md:grid-cols-2">
+              <label class="field"><span>Business name</span><input id="f_name" class="inp" placeholder="Nour Coffee House"></label>
+              <label class="field"><span>Tagline</span><input id="f_tagline" class="inp" placeholder="Specialty coffee &amp; fresh pastries"></label>
+            </div>
+            <label class="field mt-4"><span>About the business</span><textarea id="f_about" rows="3" class="inp" placeholder="What you sell, who you serve, anything a new client should know."></textarea></label>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title"><i data-lucide="clock" class="h-4 w-4 text-[#128C7E]"></i> Timing</h3>
+            <label class="field"><span>Opening hours</span><textarea id="f_hours" rows="4" class="inp" placeholder="Mon–Thu: 8:00 AM – 10:00 PM&#10;Fri–Sat: 8:00 AM – 12:00 AM&#10;Sunday: closed"></textarea></label>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title"><i data-lucide="map-pin" class="h-4 w-4 text-[#128C7E]"></i> Location, Maps &amp; GPS Pin</h3>
+            <label class="field"><span>Address / how to find you</span><textarea id="f_location" rows="3" class="inp" placeholder="12 Nile St., 2nd floor, next to City Bank — Downtown"></textarea></label>
+            <div class="mt-4 grid gap-4 md:grid-cols-2">
+              <label class="field"><span>Google Maps link</span><input id="f_maps" class="inp" placeholder="https://maps.app.goo.gl/…"></label>
+              <label class="field"><span>Phone number</span><input id="f_phone" class="inp" placeholder="+20 100 000 0000"></label>
+            </div>
+            <div class="mt-4 grid gap-4 md:grid-cols-2">
+              <label class="field"><span>Latitude (for WhatsApp GPS Pin)</span><input id="f_lat" type="number" step="0.0001" class="inp" placeholder="30.0444"></label>
+              <label class="field"><span>Longitude (for WhatsApp GPS Pin)</span><input id="f_lng" type="number" step="0.0001" class="inp" placeholder="31.2357"></label>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title"><i data-lucide="truck" class="h-4 w-4 text-[#128C7E]"></i> Orders &amp; policies</h3>
+            <div class="grid gap-4 md:grid-cols-2">
+              <label class="field"><span>Delivery &amp; shipping</span><textarea id="f_delivery" rows="3" class="inp" placeholder="Delivery within 5 km, 30–45 min, 25 EGP fee."></textarea></label>
+              <label class="field"><span>Payment methods</span><textarea id="f_payment" rows="3" class="inp" placeholder="Cash, Visa, Mastercard, InstaPay."></textarea></label>
+            </div>
+            <label class="field mt-4"><span>Policies (returns, booking, warranty)</span><textarea id="f_policies" rows="3" class="inp" placeholder="Returns within 14 days with receipt. Table reservations for 2+ people."></textarea></label>
+            <label class="field mt-4"><span>Extra notes for the bot</span><textarea id="f_faqs" rows="3" class="inp" placeholder="Anything else the bot should know."></textarea></label>
+          </div>
+
+          <div class="card">
+            <h3 class="card-title"><i data-lucide="sparkles" class="h-4 w-4 text-[#128C7E]"></i> Voice &amp; Dialect</h3>
+            <div class="grid gap-4 md:grid-cols-2">
+              <label class="field"><span>Language &amp; Dialect rule</span><input id="f_language" class="inp" placeholder="Reply in the same dialect (Egyptian, Arabic, English, Franco)."></label>
+              <label class="field"><span>Tone</span><input id="f_tone" class="inp" placeholder="Friendly, concise and professional."></label>
+            </div>
+            <label class="field mt-4"><span>When the bot doesn't know</span><input id="f_fallback" class="inp" placeholder="Let me check with the team and get back to you shortly."></label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PRODUCTS VIEW ===== -->
+    <section data-pane="products" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-4xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Products &amp; prices</h2>
+            <p class="mt-1 text-sm text-slate-500">Exact names, prices, and photo links the bot quotes to clients.</p>
+          </div>
+          <button id="addProductBtn" class="flex items-center gap-1.5 rounded-lg bg-[#128C7E] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#0f7a6e] shadow-sm">
+            <i data-lucide="plus" class="h-4 w-4"></i> Add product
+          </button>
+        </header>
+        <div id="productList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- ===== WHATSAPP VIEW ===== -->
+    <section data-pane="whatsapp" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-3xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6">
+          <h2 class="text-xl font-semibold text-slate-900">Connect WhatsApp</h2>
+          <p class="mt-1 text-sm text-slate-500">Link your WhatsApp Business number so clients get answered automatically, 24/7.</p>
+        </header>
+
+        <div class="mb-4 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-white p-4 hover:border-slate-300 transition-colors">
+          <span id="waStatusDot" class="h-3 w-3 rounded-full bg-slate-300 ring-4 ring-slate-100"></span>
+          <div class="min-w-0 flex-1">
+            <p id="waStatusText" class="text-sm font-medium text-slate-900">Not connected</p>
+            <p class="text-xs text-slate-500">Auto-reply runs on your server, answering incoming WhatsApp messages 24/7.</p>
+          </div>
+          <label class="flex cursor-pointer items-center gap-2 text-sm text-slate-700">
+            <input id="f_autoReply" type="checkbox" class="h-4 w-4 accent-[#128C7E]">
+            <span class="font-medium">Auto-reply</span>
+          </label>
+        </div>
+
+        <div class="card">
+          <h3 class="card-title"><i data-lucide="key-round" class="h-4 w-4 text-[#128C7E]"></i> WhatsApp Cloud API credentials</h3>
+          <div class="grid gap-4 md:grid-cols-2">
+            <label class="field"><span>Phone number ID</span><input id="f_phoneId" class="inp" placeholder="1234567890123456"></label>
+            <label class="field"><span>Verify token (you choose it)</span><input id="f_verify" class="inp" placeholder="my-secret-verify-token"></label>
+          </div>
+          <label class="field mt-4"><span>Permanent access token</span><input id="f_token" type="password" class="inp" placeholder="EAAG…"></label>
+          <p class="mt-2 text-xs text-slate-500">Stored securely and never displayed in full after saving.</p>
+        </div>
+
+        <div class="card mt-4">
+          <h3 class="card-title"><i data-lucide="webhook" class="h-4 w-4 text-[#128C7E]"></i> Webhook setup</h3>
+          <p class="text-sm text-slate-500">In Meta → WhatsApp → Configuration, paste these two values and subscribe to the <code class="rounded bg-slate-100 px-1 py-0.5 text-[12px] font-mono">messages</code> field.</p>
+          <div class="mt-4 space-y-3">
+            <div>
+              <p class="mb-1 text-xs font-medium text-slate-500">Callback URL</p>
+              <div class="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
+                <code id="webhookUrl" class="min-w-0 flex-1 truncate text-[12px] font-mono text-slate-700">http://localhost:3005/webhook</code>
+                <button class="copy-btn shrink-0 rounded-md p-1.5 text-slate-500 hover:bg-white" data-copy="webhookUrl" title="Copy URL"><i data-lucide="copy" class="h-4 w-4"></i></button>
+              </div>
+            </div>
+            <div>
+              <p class="mb-1 text-xs font-medium text-slate-500">Verify token</p>
+              <div class="flex items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2">
+                <code id="verifyEcho" class="min-w-0 flex-1 truncate text-[12px] font-mono text-slate-700">my-secret-verify-token</code>
+                <button class="copy-btn shrink-0 rounded-md p-1.5 text-slate-500 hover:bg-white" data-copy="verifyEcho" title="Copy Token"><i data-lucide="copy" class="h-4 w-4"></i></button>
+              </div>
+            </div>
+          </div>
+          <ol class="mt-5 space-y-2 border-t border-slate-200 pt-4 text-sm text-slate-600">
+            <li><span class="step">1</span> Create a Meta app at <a href="https://developers.facebook.com" target="_blank" class="text-[#128C7E] underline">developers.facebook.com</a> and add the <strong>WhatsApp</strong> product.</li>
+            <li><span class="step">2</span> Copy the <strong>Phone number ID</strong> and generate a <strong>permanent access token</strong>; paste both above and save.</li>
+            <li><span class="step">3</span> Paste your public callback URL and verify token into Meta and click <strong>Verify and save</strong>.</li>
+            <li><span class="step">4</span> Subscribe to the <strong>messages</strong> webhook field — clients are now answered automatically 24/7!</li>
+          </ol>
+        </div>
+
+        <div class="card mt-4">
+          <h3 class="card-title"><i data-lucide="send" class="h-4 w-4 text-[#128C7E]"></i> Send a test message</h3>
+          <div class="flex flex-wrap items-end gap-3">
+            <label class="field min-w-[200px] flex-1"><span>WhatsApp number (with country code)</span><input id="testNumber" class="inp" placeholder="201000000000"></label>
+            <button id="testSendBtn" class="rounded-lg border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50">Send test</button>
+          </div>
+          <p id="testResult" class="mt-3 hidden text-sm"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LOGS VIEW ===== -->
+    <section data-pane="logs" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-4xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Client messages</h2>
+            <p class="mt-1 text-sm text-slate-500">Every WhatsApp question and the answer your bot sent.</p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center gap-1">
+              <button id="exportLogsCSVBtn" class="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs font-medium text-slate-700 transition hover:bg-slate-50" title="Export Client Messages to CSV">
+                <i data-lucide="file-spreadsheet" class="h-3.5 w-3.5 text-emerald-600"></i><span class="hidden sm:inline">CSV</span>
+              </button>
+              <button id="exportLogsPDFBtn" class="flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-2.5 py-2 text-xs font-medium text-slate-700 transition hover:bg-slate-50" title="Print / Export Client Messages to PDF">
+                <i data-lucide="file-text" class="h-3.5 w-3.5 text-rose-600"></i><span class="hidden sm:inline">PDF</span>
+              </button>
+            </div>
+            <button id="refreshLogs" class="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
+              <i data-lucide="refresh-cw" class="h-4 w-4"></i> Refresh
+            </button>
+            <button id="clearLogs" class="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-50">
+              <i data-lucide="trash-2" class="h-4 w-4"></i> Clear
+            </button>
+          </div>
+        </header>
+        <div id="logList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- ===== TEAM & ROLES VIEW ===== -->
+    <section data-pane="team" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-4xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Team &amp; Permissions</h2>
+            <p class="mt-1 text-sm text-slate-500">Invite staff and managers with role-based access control (Admin, FAQ / Support Agent, View-Only).</p>
+          </div>
+          <button id="inviteMemberBtn" class="flex items-center gap-1.5 rounded-lg bg-[#128C7E] px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-[#0f766e]">
+            <i data-lucide="user-plus" class="h-4 w-4"></i> Invite Member
+          </button>
+        </header>
+
+        <div class="mb-6 grid gap-3 sm:grid-cols-3">
+          <div class="card p-3.5 border-l-4 border-l-emerald-500">
+            <span class="text-xs font-bold text-emerald-800 uppercase tracking-wide">Full Admin</span>
+            <p class="mt-1 text-xs text-slate-600">Unrestricted access: manage WhatsApp credentials, edit business identity, invite members, view analytics.</p>
+          </div>
+          <div class="card p-3.5 border-l-4 border-l-blue-500">
+            <span class="text-xs font-bold text-blue-800 uppercase tracking-wide">FAQ &amp; Support Agent</span>
+            <p class="mt-1 text-xs text-slate-600">Can manage FAQ entries, products, handle two-way live chat, and view orders/bookings. WhatsApp credentials locked.</p>
+          </div>
+          <div class="card p-3.5 border-l-4 border-l-slate-400">
+            <span class="text-xs font-bold text-slate-700 uppercase tracking-wide">View-Only</span>
+            <p class="mt-1 text-xs text-slate-600">Read-only auditing: inspect conversations, view live dashboard analytics, and export reports.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="mb-4 flex items-center justify-between">
+            <h3 class="text-sm font-semibold text-slate-900">Active Team Members</h3>
+            <span class="text-xs text-slate-400">Manage member privileges</span>
+          </div>
+          <div id="teamMemberList"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TEMPLATES LIBRARY VIEW ===== -->
+    <section data-pane="templates" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-4xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <h2 class="text-xl font-semibold text-slate-900">Message Templates Library</h2>
+            <p class="mt-1 text-sm text-slate-500">Pre-written message templates for common scenarios that the AI or human staff uses.</p>
+          </div>
+          <button id="refreshTemplatesBtn" class="flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
+            <i data-lucide="refresh-cw" class="h-4 w-4"></i> Refresh
+          </button>
+        </header>
+
+        <div id="templatesList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- ===== HELP CENTER & CONVERSATIONAL AUTOMATION VIEW ===== -->
+    <section data-pane="helpcenter" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-5xl px-4 py-6 md:px-8 md:py-8">
+        <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="rounded bg-gradient-to-r from-emerald-600 to-[#128C7E] px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">ClientBot AI</span>
+              <h2 class="text-xl font-semibold text-slate-900">Help Center &amp; Conversational Knowledge</h2>
+            </div>
+            <p class="text-sm text-slate-500">Learns from your knowledge base, policies, and past customer interactions to resolve inquiries autonomously.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="autoLearnBtn" class="flex items-center gap-1.5 rounded-lg border border-amber-300 bg-amber-50/70 px-3.5 py-2 text-sm font-medium text-amber-900 shadow-sm transition hover:bg-amber-100">
+              <i data-lucide="sparkles" class="h-4 w-4 text-amber-600"></i>
+              <span>Auto-Learn from Past Chats</span>
+            </button>
+            <button id="addArticleBtn" class="flex items-center gap-1.5 rounded-lg bg-[#128C7E] px-3.5 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-[#0f766e] save-sensitive">
+              <i data-lucide="plus" class="h-4 w-4"></i>
+              <span>Add Article</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Knowledge Gaps Optimizer Banner -->
+        <div class="mb-6 rounded-2xl border border-indigo-200 bg-gradient-to-r from-indigo-50/70 to-slate-50 p-4 shadow-sm">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+            <div class="flex items-center gap-2">
+              <span class="flex h-7 w-7 items-center justify-center rounded-lg bg-indigo-600 text-white shadow-xs">
+                <i data-lucide="scan-search" class="h-4 w-4"></i>
+              </span>
+              <div>
+                <h3 class="text-sm font-semibold text-slate-900">Knowledge Base Optimization &amp; AI-Surfaced Gaps</h3>
+                <p class="text-xs text-slate-500">ClientBot AI surfaces missing help articles to optimize self-service and proactively reduce ticket volume.</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-xs">
+              <span class="rounded-full bg-indigo-100 text-indigo-800 px-2.5 py-0.5 font-semibold" id="gapsResolutionRate">Loading…</span>
+              <button id="toggleGapsFilter" class="text-indigo-600 hover:text-indigo-800 font-semibold underline text-xs">Filter: Open Gaps</button>
+            </div>
+          </div>
+          <div id="knowledgeGapsContainer" class="space-y-2.5"></div>
+        </div>
+
+        <!-- Search & Category Filters -->
+        <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-1.5" id="helpCategoryFilter">
+            <button data-help-cat="all" class="rounded-full bg-[#128C7E] px-3 py-1 text-xs font-medium text-white active">All Articles</button>
+          </div>
+          <div class="relative min-w-[220px]">
+            <i data-lucide="search" class="absolute left-3 top-2.5 h-4 w-4 text-slate-400"></i>
+            <input id="helpSearchInput" type="text" placeholder="Search knowledge base…" class="w-full rounded-lg border border-slate-200 bg-white py-1.5 pl-9 pr-3 text-xs outline-none focus:border-[#128C7E]">
+          </div>
+        </div>
+
+        <!-- Articles Grid / List -->
+        <div id="articlesList" class="space-y-3.5"></div>
+      </div>
+    </section>
+
+    <!-- Mobile bottom nav -->
+    <nav class="flex border-t border-slate-200 bg-white md:hidden" id="navMobile">
+      <button data-view="dashboard" class="tab-item active"><i data-lucide="layout-dashboard" class="h-5 w-5"></i><span>Stats</span></button>
+      <button data-view="orders" class="tab-item"><i data-lucide="shopping-bag" class="h-5 w-5"></i><span>Orders</span></button>
+      <button data-view="livechat" class="tab-item"><i data-lucide="headset" class="h-5 w-5"></i><span>Live</span></button>
+      <button data-view="reservations" class="tab-item"><i data-lucide="calendar" class="h-5 w-5"></i><span>Book</span></button>
+      <button data-view="chat" class="tab-item"><i data-lucide="messages-square" class="h-5 w-5"></i><span>Preview</span></button>
+      <button data-view="whatsapp" class="tab-item"><i data-lucide="link" class="h-5 w-5"></i><span>Connect</span></button>
+    </nav>
+  </main>
+</div>
+
+<!-- Mobile Navigation Drawer -->
+<div id="mobileMenuDrawer" class="fixed inset-0 z-50 hidden md:hidden">
+  <div id="mobileMenuOverlay" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"></div>
+  <div id="mobileMenuPanel" class="absolute inset-y-0 left-0 w-72 bg-white shadow-2xl flex flex-col transform transition-transform duration-300">
+    <div class="flex items-center justify-between px-4 py-4 border-b border-slate-200">
+      <div class="flex items-center gap-2.5">
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#128C7E] to-[#0ea5e9] text-white shadow-md">
+          <i data-lucide="message-circle-more" class="h-5 w-5"></i>
+        </div>
+        <p class="text-sm font-bold text-slate-900">ClientBot</p>
+      </div>
+      <button id="closeMobileMenu" class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700">
+        <i data-lucide="x" class="h-5 w-5"></i>
+      </button>
+    </div>
+    <nav class="flex-1 overflow-y-auto px-3 py-2 space-y-0.5" id="navMobileDrawer">
+      <button data-view="dashboard" class="nav-item active"><i data-lucide="layout-dashboard" class="h-4 w-4"></i><span>Dashboard</span></button>
+      <button data-view="orders" class="nav-item"><i data-lucide="shopping-bag" class="h-4 w-4 text-emerald-600"></i><span>Orders</span></button>
+      <button data-view="reservations" class="nav-item"><i data-lucide="calendar" class="h-4 w-4 text-blue-600"></i><span>Bookings</span></button>
+      <button data-view="livechat" class="nav-item"><i data-lucide="headset" class="h-4 w-4 text-amber-600"></i><span>Live Chat</span></button>
+      <button data-view="broadcast" class="nav-item"><i data-lucide="megaphone" class="h-4 w-4 text-purple-600"></i><span>Broadcasts</span></button>
+      <button data-view="chat" class="nav-item"><i data-lucide="messages-square" class="h-4 w-4"></i><span>Assistant Preview</span></button>
+      <button data-view="faq" class="nav-item"><i data-lucide="book-open-check" class="h-4 w-4"></i><span>FAQ answers</span></button>
+      <button data-view="helpcenter" class="nav-item"><i data-lucide="book-marked" class="h-4 w-4 text-emerald-600"></i><span>Help Center</span></button>
+      <button data-view="business" class="nav-item"><i data-lucide="store" class="h-4 w-4"></i><span>Business info</span></button>
+      <button data-view="products" class="nav-item"><i data-lucide="tag" class="h-4 w-4"></i><span>Products &amp; prices</span></button>
+      <button data-view="whatsapp" class="nav-item"><i data-lucide="link" class="h-4 w-4"></i><span>Connect WhatsApp</span></button>
+      <button data-view="team" class="nav-item"><i data-lucide="users" class="h-4 w-4 text-indigo-600"></i><span>Team &amp; Roles</span></button>
+      <button data-view="templates" class="nav-item"><i data-lucide="layout-template" class="h-4 w-4 text-teal-600"></i><span>Templates</span></button>
+      <button data-view="logs" class="nav-item"><i data-lucide="inbox" class="h-4 w-4"></i><span>Client messages</span></button>
+    </nav>
+  </div>
+</div>
+
+<!-- Mobile conversation sheet -->
+<div id="convSheet" class="fixed inset-0 z-40 hidden bg-slate-900/30 md:hidden">
+  <div class="absolute inset-x-0 bottom-0 max-h-[70vh] overflow-hidden rounded-t-2xl bg-white">
+    <div class="flex items-center justify-between border-b border-slate-200 px-4 py-3">
+      <p class="text-sm font-semibold text-slate-900">Conversations</p>
+      <div class="flex gap-1">
+        <button id="newChatSheet" class="rounded-md p-1.5 text-slate-500 hover:bg-slate-100"><i data-lucide="plus" class="h-4 w-4"></i></button>
+        <button id="closeSheet" class="rounded-md p-1.5 text-slate-500 hover:bg-slate-100"><i data-lucide="x" class="h-4 w-4"></i></button>
+      </div>
+    </div>
+    <div id="convListMobile" class="max-h-[55vh] space-y-0.5 overflow-y-auto p-3"></div>
+  </div>
+</div>
+
+<!-- Save bar -->
+<div id="saveBar" class="pointer-events-none fixed bottom-6 left-1/2 z-30 hidden -translate-x-1/2">
+  <div class="pointer-events-auto flex items-center gap-3 rounded-full border border-slate-200 bg-white/95 backdrop-blur-lg px-5 py-3 shadow-xl shadow-slate-900/10">
+    <span class="flex h-2 w-2 rounded-full bg-amber-400 animate-pulse"></span>
+    <span id="saveMsg" class="text-sm font-medium text-slate-700">Unsaved changes</span>
+    <button id="saveBtn" class="rounded-full bg-gradient-to-r from-[#128C7E] to-[#0f7a6e] px-5 py-1.5 text-sm font-semibold text-white transition hover:shadow-lg hover:shadow-[#128C7E]/25 active:scale-[0.97]">Save</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<!-- Invite Member Modal -->
+<div id="inviteModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 hidden">
+  <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl animate-scaleIn">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <h3 class="text-base font-semibold text-slate-900">Invite Team Member</h3>
+      <button id="closeInviteModal" class="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"><i data-lucide="x" class="h-4 w-4"></i></button>
+    </div>
+    <form id="inviteMemberForm" class="mt-4 space-y-4">
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Full Name</label>
+        <input id="invName" required class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#128C7E]" placeholder="e.g. Sarah Jenkins">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Email Address</label>
+        <input id="invEmail" type="email" required class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#128C7E]" placeholder="sarah@example.com">
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Permission Level</label>
+        <select id="invRole" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#128C7E]">
+          <option value="editor">FAQ &amp; Support Agent (Edit FAQs, manage live chat)</option>
+          <option value="viewer">View-Only (Read conversations &amp; analytics)</option>
+          <option value="admin">Full Admin (Full control)</option>
+        </select>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="document.getElementById('inviteModal').classList.add('hidden')" class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">Cancel</button>
+        <button type="submit" class="rounded-lg bg-[#128C7E] px-4 py-2 text-sm font-medium text-white shadow hover:bg-[#0f766e]">Send Invitation</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Template Modal -->
+<div id="editTplModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 hidden">
+  <div class="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl animate-scaleIn">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <div>
+        <h3 id="editTplTitle" class="text-base font-semibold text-slate-900">Edit Template</h3>
+        <p id="editTplDesc" class="text-xs text-slate-500 mt-0.5"></p>
+      </div>
+      <button id="closeTplModal" class="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"><i data-lucide="x" class="h-4 w-4"></i></button>
+    </div>
+    <form id="editTplForm" class="mt-4 space-y-4">
+      <div>
+        <div class="flex items-center justify-between mb-1.5">
+          <label class="block text-xs font-semibold text-slate-600">Template Text</label>
+          <span class="text-[11px] text-slate-400">Click variable to insert</span>
+        </div>
+        <div id="tplVarChips" class="flex flex-wrap gap-1.5 mb-2.5">
+          <button type="button" data-var="{business_name}" class="rounded bg-slate-100 px-2 py-0.5 text-[11px] font-mono text-slate-700 hover:bg-emerald-50 hover:text-emerald-700">{business_name}</button>
+          <button type="button" data-var="{hours}" class="rounded bg-slate-100 px-2 py-0.5 text-[11px] font-mono text-slate-700 hover:bg-emerald-50 hover:text-emerald-700">{hours}</button>
+          <button type="button" data-var="{phone}" class="rounded bg-slate-100 px-2 py-0.5 text-[11px] font-mono text-slate-700 hover:bg-emerald-50 hover:text-emerald-700">{phone}</button>
+          <button type="button" data-var="{address}" class="rounded bg-slate-100 px-2 py-0.5 text-[11px] font-mono text-slate-700 hover:bg-emerald-50 hover:text-emerald-700">{address}</button>
+          <button type="button" data-var="{customer_name}" class="rounded bg-slate-100 px-2 py-0.5 text-[11px] font-mono text-slate-700 hover:bg-emerald-50 hover:text-emerald-700">{customer_name}</button>
+          <button type="button" data-var="{maps_url}" class="rounded bg-slate-100 px-2 py-0.5 text-[11px] font-mono text-slate-700 hover:bg-emerald-50 hover:text-emerald-700">{maps_url}</button>
+        </div>
+        <textarea id="editTplContent" rows="5" required class="w-full rounded-lg border border-slate-200 p-3 text-sm font-sans outline-none focus:border-[#128C7E] leading-relaxed"></textarea>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="document.getElementById('editTplModal').classList.add('hidden')" class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">Cancel</button>
+        <button type="submit" class="rounded-lg bg-[#128C7E] px-4 py-2 text-sm font-medium text-white shadow hover:bg-[#0f766e]">Save Template</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Add / Edit Article Modal -->
+<div id="articleModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 hidden">
+  <div class="w-full max-w-xl rounded-2xl bg-white p-6 shadow-xl animate-scaleIn max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <h3 id="articleModalTitle" class="text-base font-semibold text-slate-900">New Knowledge Base Article</h3>
+      <button id="closeArticleModal" class="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"><i data-lucide="x" class="h-4 w-4"></i></button>
+    </div>
+    <form id="articleForm" class="mt-4 space-y-4">
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Article Title / Question</label>
+        <input id="artTitle" required class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#128C7E]" placeholder="e.g. Refund, Return &amp; Cancellation Policy">
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Category</label>
+          <input id="artCategory" required class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#128C7E]" placeholder="e.g. Billing &amp; Orders">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-600 mb-1">Keywords / Tags (comma-separated)</label>
+          <input id="artTags" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#128C7E]" placeholder="refund, return, استرجاع">
+        </div>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Detailed Content &amp; Resolution Guidelines</label>
+        <textarea id="artContent" rows="6" required class="w-full rounded-lg border border-slate-200 p-3 text-sm font-sans outline-none focus:border-[#128C7E] leading-relaxed" placeholder="Write the authoritative resolution details for the AI to learn and quote…"></textarea>
+      </div>
+      <div class="flex justify-end gap-2 pt-2">
+        <button type="button" onclick="document.getElementById('articleModal').classList.add('hidden')" class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-50">Cancel</button>
+        <button type="submit" class="rounded-lg bg-[#128C7E] px-4 py-2 text-sm font-medium text-white shadow hover:bg-[#0f766e]">Save Article</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Auto-Learn from Past Chats Modal -->
+<div id="autoLearnModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 hidden">
+  <div class="w-full max-w-2xl rounded-2xl bg-white p-6 shadow-xl animate-scaleIn max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <div>
+        <div class="flex items-center gap-2">
+          <span class="flex h-6 w-6 items-center justify-center rounded-full bg-amber-500 text-white text-xs"><i data-lucide="sparkles" class="h-3.5 w-3.5"></i></span>
+          <h3 class="text-base font-semibold text-slate-900">ClientBot AI · Auto-Learned Knowledge Candidates</h3>
+        </div>
+        <p id="autoLearnMeta" class="text-xs text-slate-500 mt-1"></p>
+      </div>
+      <button id="closeAutoLearnModal" class="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"><i data-lucide="x" class="h-4 w-4"></i></button>
+    </div>
+    <div class="mt-4">
+      <p class="text-xs text-slate-600 mb-3 leading-relaxed">
+        ClientBot AI analyzed your past conversation logs and synthesized common customer questions that currently lack an official knowledge base entry. Review and add them with 1 click:
+      </p>
+      <div id="autoLearnList" class="space-y-3 max-h-[55vh] overflow-y-auto pr-1"></div>
+    </div>
+    <div class="flex justify-end pt-4 border-t border-slate-100 mt-4">
+      <button type="button" onclick="document.getElementById('autoLearnModal').classList.add('hidden')" class="rounded-lg border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">Done</button>
+    </div>
+  </div>
+<!-- Quick Translate Modal -->
+<div id="translateModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 hidden">
+  <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-xl animate-scaleIn">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <div class="flex items-center gap-2">
+        <i data-lucide="globe" class="h-4 w-4 text-blue-600"></i>
+        <h3 class="text-base font-semibold text-slate-900">Instant AI Translator</h3>
+      </div>
+      <button id="closeTranslateModal" class="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"><i data-lucide="x" class="h-4 w-4"></i></button>
+    </div>
+    <div class="mt-4 space-y-3">
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Target Language</label>
+        <select id="targetLangSelect" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm outline-none focus:border-[#128C7E]">
+          <option value="en">English (US / UK)</option>
+          <option value="ar">Arabic (Egyptian / Standard)</option>
+          <option value="fr">French (Français)</option>
+          <option value="de">German (Deutsch)</option>
+          <option value="es">Spanish (Español)</option>
+          <option value="it">Italian (Italiano)</option>
+          <option value="tr">Turkish (Türkçe)</option>
+          <option value="ru">Russian (Русский)</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Original Text</label>
+        <textarea id="translateSourceText" rows="3" class="w-full rounded-lg border border-slate-200 p-2.5 text-xs outline-none focus:border-[#128C7E]"></textarea>
+      </div>
+      <div>
+        <label class="block text-xs font-semibold text-slate-600 mb-1">Translated Output</label>
+        <textarea id="translateResultText" rows="3" readonly class="w-full rounded-lg border border-slate-200 bg-slate-50 p-2.5 text-xs text-slate-800 outline-none"></textarea>
+      </div>
+      <div class="flex justify-between items-center pt-2">
+        <button id="executeTranslateBtn" type="button" class="rounded-lg bg-blue-600 px-3.5 py-1.5 text-xs font-medium text-white hover:bg-blue-700">Translate</button>
+        <button id="applyTranslationBtn" type="button" class="rounded-lg bg-[#128C7E] px-4 py-1.5 text-xs font-medium text-white hover:bg-[#0f766e]">Insert into Reply</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Insert Knowledge Modal -->
+<div id="insertKnowledgeModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 p-4 hidden">
+  <div class="w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl animate-scaleIn max-h-[85vh] overflow-y-auto">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+      <div class="flex items-center gap-2">
+        <i data-lucide="book-open" class="h-4 w-4 text-emerald-600"></i>
+        <h3 class="text-base font-semibold text-slate-900">Insert Knowledge Article</h3>
+      </div>
+      <button id="closeInsertKnowledgeModal" class="rounded-lg p-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"><i data-lucide="x" class="h-4 w-4"></i></button>
+    </div>
+    <div class="mt-4">
+      <input id="quickKnowledgeSearch" type="text" placeholder="Type to filter articles…" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-xs outline-none focus:border-[#128C7E] mb-3">
+      <div id="quickKnowledgeList" class="space-y-2.5 max-h-[50vh] overflow-y-auto"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

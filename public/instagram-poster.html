@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClientBot — Instagram Poster Design</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Cairo:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #060c14;
+    }
+    .poster-square {
+      width: 100%;
+      max-width: 600px;
+      aspect-ratio: 1 / 1;
+    }
+    .glass-card {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .glass-pill {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(52, 211, 153, 0.25);
+    }
+    .glow-neon {
+      box-shadow: 0 0 50px -5px rgba(37, 211, 102, 0.35);
+    }
+    @media print {
+      body {
+        background: transparent !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .poster-square {
+        max-width: 100% !important;
+        margin: 0 !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen py-10 px-4 flex flex-col items-center justify-center text-white">
+
+  <!-- Control Header -->
+  <div class="mb-6 flex items-center gap-3 no-print">
+    <button onclick="window.print()" class="flex items-center gap-2 bg-[#25D366] hover:bg-[#1faa52] text-slate-950 font-extrabold px-5 py-2.5 rounded-xl text-xs uppercase tracking-wider shadow-lg transition">
+      <i data-lucide="printer" class="h-4 w-4"></i> Print / Save as PDF
+    </button>
+    <button id="langToggleBtn" onclick="toggleLang()" class="flex items-center gap-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 px-4 py-2.5 rounded-xl text-xs font-bold transition">
+      <i data-lucide="languages" class="h-4 w-4"></i> <span id="langBtnText">النسخة العربية 🇸🇦</span>
+    </button>
+    <a href="/index.html" class="flex items-center gap-1.5 bg-slate-900 border border-slate-700 hover:bg-slate-800 text-slate-300 px-4 py-2.5 rounded-xl text-xs font-medium transition">
+      <i data-lucide="arrow-left" class="h-4 w-4"></i> Dashboard
+    </a>
+  </div>
+
+  <!-- Instagram 1:1 Square Canvas -->
+  <div id="posterBox" class="poster-square rounded-[2.5rem] p-7 sm:p-9 relative overflow-hidden flex flex-col justify-between glow-neon border border-emerald-500/20 bg-gradient-to-br from-[#07131e] via-[#091b24] to-[#040b10] shadow-2xl">
+    
+    <!-- Neon Lighting Glows -->
+    <div class="absolute -top-20 -right-20 w-72 h-72 bg-emerald-500/25 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-20 -left-20 w-72 h-72 bg-teal-500/20 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <!-- Top Branding -->
+    <div class="relative z-10 flex items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="h-9 w-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-400 text-slate-950 flex items-center justify-center font-black shadow-md">
+          <i data-lucide="message-circle" class="h-5 w-5"></i>
+        </div>
+        <div>
+          <span class="text-sm font-black tracking-tight text-white">ClientBot <span class="text-emerald-400">AI</span></span>
+          <p class="text-[10px] text-slate-400 uppercase tracking-widest font-semibold">WhatsApp Business Assistant</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1.5 px-3 py-1 rounded-full glass-card border border-emerald-500/30 text-emerald-300 text-[11px] font-bold">
+        <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span id="badgeText">Official Meta Cloud API</span>
+      </div>
+    </div>
+
+    <!-- Center Headline & Phone Mockup Banner -->
+    <div class="relative z-10 my-auto py-2">
+      <h1 id="headlineText" class="text-2xl sm:text-3xl font-black text-white leading-tight tracking-tight text-center">
+        Stop Losing WhatsApp Sales <br>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-300">
+          While You Sleep! 🌙⚡
+        </span>
+      </h1>
+      
+      <p id="subheadText" class="text-xs text-slate-300 text-center mt-2 font-medium max-w-sm mx-auto">
+        Your 24/7 AI Sales Assistant that takes orders, books tables, and replies in seconds.
+      </p>
+
+      <!-- 4 Floating Feature Pills Grid -->
+      <div class="grid grid-cols-2 gap-2.5 mt-5">
+        <div class="glass-pill p-2.5 rounded-2xl flex items-center gap-2.5">
+          <div class="h-7 w-7 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+            <i data-lucide="zap" class="h-4 w-4"></i>
+          </div>
+          <div class="min-w-0">
+            <p id="feat1Title" class="text-xs font-bold text-white truncate">24/7 Instant Replies</p>
+            <p id="feat1Sub" class="text-[10px] text-slate-400 truncate">&lt; 1.2s response time</p>
+          </div>
+        </div>
+
+        <div class="glass-pill p-2.5 rounded-2xl flex items-center gap-2.5">
+          <div class="h-7 w-7 rounded-xl bg-teal-500/20 text-teal-400 flex items-center justify-center shrink-0">
+            <i data-lucide="shopping-bag" class="h-4 w-4"></i>
+          </div>
+          <div class="min-w-0">
+            <p id="feat2Title" class="text-xs font-bold text-white truncate">In-Chat Orders &amp; Cart</p>
+            <p id="feat2Sub" class="text-[10px] text-slate-400 truncate">Delivery calculated live</p>
+          </div>
+        </div>
+
+        <div class="glass-pill p-2.5 rounded-2xl flex items-center gap-2.5">
+          <div class="h-7 w-7 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center shrink-0">
+            <i data-lucide="calendar" class="h-4 w-4"></i>
+          </div>
+          <div class="min-w-0">
+            <p id="feat3Title" class="text-xs font-bold text-white truncate">Table Reservations</p>
+            <p id="feat3Sub" class="text-[10px] text-slate-400 truncate">Auto-booking calendar</p>
+          </div>
+        </div>
+
+        <div class="glass-pill p-2.5 rounded-2xl flex items-center gap-2.5">
+          <div class="h-7 w-7 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
+            <i data-lucide="user-check" class="h-4 w-4"></i>
+          </div>
+          <div class="min-w-0">
+            <p id="feat4Title" class="text-xs font-bold text-white truncate">Human Live Takeover</p>
+            <p id="feat4Sub" class="text-[10px] text-slate-400 truncate">Staff jumps in anytime</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom CTA Bar -->
+    <div class="relative z-10 pt-3 border-t border-slate-800/80">
+      <div class="rounded-2xl p-3.5 bg-gradient-to-r from-emerald-500 via-teal-400 to-[#25D366] text-slate-950 flex items-center justify-between shadow-xl">
+        <div class="flex items-center gap-2.5">
+          <div class="h-7 w-7 rounded-lg bg-slate-950 text-white flex items-center justify-center font-bold text-xs">
+            <i data-lucide="arrow-up-right" class="h-4 w-4 text-emerald-400"></i>
+          </div>
+          <div>
+            <p id="ctaSmall" class="text-[10px] font-extrabold uppercase tracking-wider text-slate-900">Want to test it live?</p>
+            <p id="ctaMain" class="text-xs sm:text-sm font-black">Tap Link in Bio for Free 5-Min Demo</p>
+          </div>
+        </div>
+        <div class="bg-slate-950 text-white text-[11px] font-black px-3.5 py-1.5 rounded-xl uppercase tracking-wider shrink-0 shadow">
+          Try Now 👆
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    let isArabic = false;
+
+    function toggleLang() {
+      isArabic = !isArabic;
+      const box = document.getElementById('posterBox');
+      const langBtnText = document.getElementById('langBtnText');
+      
+      if (isArabic) {
+        box.setAttribute('dir', 'rtl');
+        box.style.fontFamily = "'Cairo', sans-serif";
+        langBtnText.textContent = 'English Version 🇺🇸';
+
+        document.getElementById('badgeText').textContent = 'معتمد رسمي من Meta';
+        document.getElementById('headlineText').innerHTML = `
+          لا تضيّع مبيعات الواتساب <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-l from-emerald-400 via-teal-300 to-cyan-300">
+            وأنت نايم بالليل! 🌙⚡
+          </span>
+        `;
+        document.getElementById('subheadText').textContent = 'مساعدك الذكي شغال 24 ساعة يستقبل الطلبات، يحجز الطاولات، ويرد في ثانية!';
+        
+        document.getElementById('feat1Title').textContent = 'رد فوري باللهجة السعودية';
+        document.getElementById('feat1Sub').textContent = 'سرعة رد أقل من 1.2 ثانية';
+
+        document.getElementById('feat2Title').textContent = 'أوردرات ودليفري مباشر';
+        document.getElementById('feat2Sub').textContent = 'حساب التوصيل والسلة آلياً';
+
+        document.getElementById('feat3Title').textContent = 'حجز طاولات ومواعيد';
+        document.getElementById('feat3Sub').textContent = 'تأكيد الحجز ولوكيشن الفرع';
+
+        document.getElementById('feat4Title').textContent = 'تدخل بشري مباشر';
+        document.getElementById('feat4Sub').textContent = 'فريقك يدخل في أي لحظة';
+
+        document.getElementById('ctaSmall').textContent = 'حابب تجرّب البوت لايف؟';
+        document.getElementById('ctaMain').textContent = 'اضغط على الرابط بالبايو لتجربة مجانية';
+      } else {
+        box.removeAttribute('dir');
+        box.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
+        langBtnText.textContent = 'النسخة العربية 🇸🇦';
+
+        document.getElementById('badgeText').textContent = 'Official Meta Cloud API';
+        document.getElementById('headlineText').innerHTML = `
+          Stop Losing WhatsApp Sales <br>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-300">
+            While You Sleep! 🌙⚡
+          </span>
+        `;
+        document.getElementById('subheadText').textContent = 'Your 24/7 AI Sales Assistant that takes orders, books tables, and replies in seconds.';
+
+        document.getElementById('feat1Title').textContent = '24/7 Instant Replies';
+        document.getElementById('feat1Sub').textContent = '< 1.2s response time';
+
+        document.getElementById('feat2Title').textContent = 'In-Chat Orders & Cart';
+        document.getElementById('feat2Sub').textContent = 'Delivery calculated live';
+
+        document.getElementById('feat3Title').textContent = 'Table Reservations';
+        document.getElementById('feat3Sub').textContent = 'Auto-booking calendar';
+
+        document.getElementById('feat4Title').textContent = 'Human Live Takeover';
+        document.getElementById('feat4Sub').textContent = 'Staff jumps in anytime';
+
+        document.getElementById('ctaSmall').textContent = 'Want to test it live?';
+        document.getElementById('ctaMain').textContent = 'Tap Link in Bio for Free 5-Min Demo';
+      }
+
+      lucide.createIcons();
+    }
+
+    lucide.createIcons();
+  </script>
+</body>
+</html>
