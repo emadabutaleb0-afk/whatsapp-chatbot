@@ -248,9 +248,42 @@ export async function sendMessage(text) {
     const resp = await api.chat(userMsg.content, history);
     typing.remove();
 
+    let finalReply = resp.reply;
+
+    // If server responded with a generic fallback and browser has Puter.js loaded, use unlimited Puter AI
+    if (resp.isFallback && window.puter?.ai?.chat) {
+      try {
+        const cfg = ctx.state.config || {};
+        const b = cfg.business || {};
+        const isArabic = /[\u0600-\u06FF]/.test(userMsg.content);
+        const sysPrompt = `You are a helpful customer service representative for "${b.name || 'Nour Coffee House'}".
+Description: ${b.description || 'Specialty cafe'}
+Hours: ${b.hours || '8:00 AM - 12:00 AM'}
+Location: ${b.location || 'Downtown Cairo'}
+Delivery: ${b.delivery || 'Available'}
+Menu/Products: ${(cfg.products || []).map(p => `${p.name} (${p.price})`).join(', ')}
+
+Answer customer inquiries accurately, politely, and naturally in ${isArabic ? 'Egyptian Arabic' : 'English'}. Keep responses friendly and concise.`;
+
+        const puterMessages = [
+          { role: 'system', content: sysPrompt },
+          ...history.slice(-4),
+          { role: 'user', content: userMsg.content }
+        ];
+
+        const pRes = await window.puter.ai.chat(puterMessages, { model: 'gpt-5.4-nano' });
+        const pText = pRes?.message?.content || (typeof pRes === 'string' ? pRes : pRes?.text);
+        if (pText && String(pText).trim()) {
+          finalReply = String(pText).trim();
+        }
+      } catch (pErr) {
+        console.warn('Puter browser chat fallback failed:', pErr);
+      }
+    }
+
     const botMsg = {
       role: 'assistant',
-      content: resp.reply || (ctx.state.config?.whatsapp?.fallback || "I'm checking with the team."),
+      content: finalReply || (ctx.state.config?.whatsapp?.fallback || "I'm checking with the team."),
       at: Date.now()
     };
     ctx.state.messages.push(botMsg);

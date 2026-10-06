@@ -78,14 +78,35 @@ export function initLiveChat() {
     try {
       const incomingMsgs = (conv.messages || []).filter(m => m.incoming);
       const lastIncoming = incomingMsgs.length ? incomingMsgs[incomingMsgs.length - 1].incoming : '';
-      const res = await api.callCopilotDraft({
-        customerName: conv.name,
-        lastMessage: lastIncoming,
-        history: conv.messages
-      });
+
+      let draftText = '';
+      if (window.puter?.ai?.chat) {
+        try {
+          const isArabic = /[\u0600-\u06FF]/.test(lastIncoming);
+          const cName = conv.name && conv.name !== 'Client' ? conv.name : (isArabic ? 'يا فندم' : 'there');
+          const prompt = `You are an AI customer support copilot. Draft a warm, helpful response to the client "${cName}" who just said: "${lastIncoming}". Match language (${isArabic ? 'Egyptian Arabic' : 'English'}). Return ONLY the suggested reply message text without extra remarks or quotes.`;
+          const puterRes = await window.puter.ai.chat(prompt, { model: 'gpt-5.4-nano' });
+          const content = puterRes?.message?.content || (typeof puterRes === 'string' ? puterRes : puterRes?.text);
+          if (content && String(content).trim()) {
+            draftText = String(content).trim();
+          }
+        } catch (puterErr) {
+          console.warn('Puter browser copilot draft fallback:', puterErr);
+        }
+      }
+
+      if (!draftText) {
+        const res = await api.callCopilotDraft({
+          customerName: conv.name,
+          lastMessage: lastIncoming,
+          history: conv.messages
+        });
+        draftText = res.draft;
+      }
+
       const input = $('liveReplyInput');
-      if (input && res.draft) {
-        input.value = res.draft;
+      if (input && draftText) {
+        input.value = draftText;
         input.focus();
         toast('✨ AI Copilot drafted a reply based on conversation context!');
       }
@@ -113,9 +134,27 @@ export function initLiveChat() {
     }
 
     try {
-      const res = await api.callCopilotImprove({ text, tone });
-      if (input && res.improved) {
-        input.value = res.improved;
+      let improvedText = '';
+      if (window.puter?.ai?.chat) {
+        try {
+          const prompt = `Rewrite the following customer service message in a "${tone}" tone. Keep the exact meaning and language intact. Output ONLY the rewritten message:\n\n${text}`;
+          const puterRes = await window.puter.ai.chat(prompt, { model: 'gpt-5.4-nano' });
+          const content = puterRes?.message?.content || (typeof puterRes === 'string' ? puterRes : puterRes?.text);
+          if (content && String(content).trim()) {
+            improvedText = String(content).trim();
+          }
+        } catch (puterErr) {
+          console.warn('Puter browser tone rewrite fallback:', puterErr);
+        }
+      }
+
+      if (!improvedText) {
+        const res = await api.callCopilotImprove({ text, tone });
+        improvedText = res.improved;
+      }
+
+      if (input && improvedText) {
+        input.value = improvedText;
         input.focus();
         toast(`✨ Draft rewritten in ${tone} tone!`);
       }

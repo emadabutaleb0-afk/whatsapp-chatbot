@@ -41,6 +41,14 @@ async function boot() {
   const whEl = $('webhookUrl');
   if (whEl) whEl.textContent = webhookDisplay;
 
+  // Auto-sync Puter.js auth token to backend if available in browser
+  try {
+    const puterToken = window.puter?.authToken || localStorage.getItem('puter_auth_token') || sessionStorage.getItem('puter_auth_token');
+    if (puterToken) {
+      api.syncPuterToken(puterToken).catch(() => {});
+    }
+  } catch (e) {}
+
   wireUI();
 
   const context = {

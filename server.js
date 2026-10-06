@@ -855,10 +855,10 @@ app.post('/api/copilot/draft', async (req, res) => {
   }
 });
 
-app.post('/api/copilot/improve', (req, res) => {
+app.post('/api/copilot/improve', async (req, res) => {
   try {
     const { text, tone } = req.body;
-    const improved = improveCopilotDraft(text, tone || 'polite');
+    const improved = await improveCopilotDraft(text, tone || 'polite');
     res.json({ ok: true, improved });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -870,6 +870,22 @@ app.post('/api/copilot/translate', async (req, res) => {
     const { text, targetLang } = req.body;
     const translated = await translateContent(text, targetLang || 'en');
     res.json({ ok: true, translated });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= Puter.js Token Sync API ================= */
+
+app.post('/api/puter/sync-token', (req, res) => {
+  try {
+    const { token } = req.body;
+    if (token) {
+      process.env.PUTER_AUTH_TOKEN = token;
+      console.log('[Puter.js] Received and synced auth token from client browser.');
+      return res.json({ ok: true, synced: true });
+    }
+    res.json({ ok: true, synced: false });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

@@ -127,6 +127,11 @@ export const api = {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   }),
+  syncPuterToken: (token) => call('/api/puter/sync-token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ token })
+  }),
   // Knowledge Base Gaps
   callGetKnowledgeGaps: () => call('/api/knowledge-gaps'),
   callAddressKnowledgeGap: (id, articleId) => call(`/api/knowledge-gaps/${id}/address`, {

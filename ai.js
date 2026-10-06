@@ -724,6 +724,31 @@ export async function generateCopilotDraft({ customerName, lastMessage, history 
   const isArabic = /[\u0600-\u06FF]/.test(lastMessage || '');
   const cName = customerName && customerName !== 'Client' ? customerName : (isArabic ? 'يا فندم' : 'there');
 
+  // Try Puter AI first
+  const puterToken = process.env.PUTER_AUTH_TOKEN || process.env.PUTER_API_KEY;
+  if (puterToken) {
+    try {
+      puter.setAuthToken(puterToken);
+      const articleSnippets = (articles || []).slice(0, 5).map(a => `- ${a.title}: ${a.content}`).join('\n');
+      const histText = (history || []).slice(-4).map(h => `${h.role || (h.incoming ? 'Client' : 'Agent')}: ${h.content || h.incoming || h.reply}`).join('\n');
+      const prompt = `You are an expert customer service copilot for "${businessName}".
+Customer Name: ${cName}
+Recent conversation:
+${histText}
+Latest customer message: "${lastMessage}"
+
+Available Knowledge:
+${articleSnippets || 'Standard cafe services, hours, menu.'}
+
+Draft a warm, polite, and helpful response to send to this customer right now. Match the language (${isArabic ? 'Egyptian Arabic' : 'English'}). Provide ONLY the suggested message text, with no preamble or explanations.`;
+      const res = await puter.ai.chat(prompt, { model: process.env.PUTER_MODEL || 'gpt-5.4-nano' });
+      const text = res?.message?.content || (typeof res === 'string' ? res : res?.text);
+      if (text && String(text).trim()) return String(text).trim();
+    } catch (e) {
+      console.warn('Puter copilot draft fallback:', e.message);
+    }
+  }
+
   // 1. If customer has a complaint / delay issue
   if (/(تأخير|مشكلة|شكوى|زفت|سيء|تأخر|غلط|late|delay|wrong|broken|issue|problem)/i.test(norm)) {
     return isArabic
@@ -759,10 +784,24 @@ export async function generateCopilotDraft({ customerName, lastMessage, history 
     : `Hello ${cName}! This is ${businessName} customer support. We are happy to help you! Could you please share more details about your request so we can assist you right away? ☕`;
 }
 
-export function improveCopilotDraft(draftText, tone = 'polite') {
+export async function improveCopilotDraft(draftText, tone = 'polite') {
   const isArabic = /[\u0600-\u06FF]/.test(draftText || '');
   const clean = String(draftText || '').trim();
   if (!clean) return draftText;
+
+  // Try Puter AI first
+  const puterToken = process.env.PUTER_AUTH_TOKEN || process.env.PUTER_API_KEY;
+  if (puterToken) {
+    try {
+      puter.setAuthToken(puterToken);
+      const prompt = `Rewrite the following customer service message in a "${tone}" tone (${tone === 'polite' ? 'courteous, appreciative, professional' : tone === 'warm' ? 'friendly, welcoming, enthusiastic' : tone === 'concise' ? 'direct, brief, to the point' : 'thorough, step-by-step resolution'}). Keep the original language and meaning intact. Provide ONLY the rewritten text:\n\n${clean}`;
+      const res = await puter.ai.chat(prompt, { model: process.env.PUTER_MODEL || 'gpt-5.4-nano' });
+      const text = res?.message?.content || (typeof res === 'string' ? res : res?.text);
+      if (text && String(text).trim()) return String(text).trim();
+    } catch (e) {
+      console.warn('Puter copilot improve fallback:', e.message);
+    }
+  }
 
   switch (tone) {
     case 'polite':
