@@ -73,6 +73,13 @@ const PORT = process.env.PORT || 3005;
 
 app.use(cors());
 app.use(express.json());
+// Gracefully catch malformed JSON payloads from external requests/webhooks
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError && err.status === 400 && 'body' in err) {
+    return res.status(400).json({ error: 'Malformed JSON payload' });
+  }
+  next(err);
+});
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
