@@ -63,8 +63,8 @@ export async function loadBroadcast() {
 function renderBroadcast() {
   // Update audience stats
   const totalClients = customers.length;
-  const buyerClients = customers.filter(c => (c.tags || []).includes('Buyer')).length;
-  const regularClients = customers.filter(c => (c.tags || []).includes('Regular')).length;
+  const buyerClients = customers.filter(c => (c.tags || []).includes('Car Buyer') || (c.tags || []).includes('Buyer')).length;
+  const regularClients = customers.filter(c => (c.tags || []).includes('VIP Collector') || (c.tags || []).includes('Test Drive Guest') || (c.tags || []).includes('Regular')).length;
 
   const totalEl = $('statTotalAudience');
   const buyersEl = $('statBuyers');

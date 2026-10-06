@@ -667,47 +667,47 @@ app.post('/api/faq/suggest', async (req, res) => {
   try {
     const config = getConfig();
     const b = config.business || {};
-    const products = config.products || [];
+    const cars = config.products || [];
 
     const suggestions = [
       {
-        question: `What are the opening hours for ${b.name || 'your shop'}?`,
-        answer: b.hours ? `Our opening hours are:\n${b.hours}` : 'We are open daily.',
-        aliases: 'are you open now?\nwhat time do you close?\nمواعيد العمل ايه\nفاتحين دلوقتي؟',
+        question: `What are the opening hours for ${b.name || 'your showroom'}?`,
+        answer: b.hours ? `Our showroom opening hours are:\n${b.hours}\nVisit us anytime or schedule a test drive in advance! 🚗` : 'We are open Saturday through Thursday 9 AM to 11 PM, Friday 1:30 PM to 11 PM.',
+        aliases: 'مواعيد المعرض ايه\nفاتحين دلوقتي؟\nشغالين الجمعة؟\nare you open now?\nwhat time do you open?',
         mode: 'exact'
       },
       {
-        question: `Where is ${b.name || 'your branch'} located?`,
-        answer: `We are located at ${b.location || 'our main location'}.${b.mapsUrl ? ' Google Maps link: ' + b.mapsUrl : ''}`,
-        aliases: 'what is your address?\nhow do I find you?\nعنوانكم فين\nمكانكم فين بالضبط',
+        question: `Where is ${b.name || 'your showroom'} located?`,
+        answer: `We are located at ${b.location || 'our main showroom'}.${b.mapsUrl ? ' Google Maps link: ' + b.mapsUrl : ''}`,
+        aliases: 'what is your showroom address?\nhow do I visit you?\nعنوان المعرض فين\nمكانكم فين بالضبط',
         mode: 'exact'
       },
       {
-        question: 'Do you offer delivery?',
-        answer: b.delivery || 'Yes, we offer delivery within 5 km.',
-        aliases: 'can you deliver?\ndo you ship?\nفي توصيل؟\nعندكم دليفري؟',
+        question: 'Do you offer installment & auto financing plans?',
+        answer: b.payment || 'Yes! We offer installment plans starting at 20% down payment with tenures up to 7 years in partnership with major banks.',
+        aliases: 'في تقسيط؟\nنظام التقسيط ايه\nاقل مقدم كام\ncar finance\nauto loan',
         mode: 'exact'
       },
       {
-        question: 'What payment methods do you accept?',
-        answer: b.payment || 'We accept cash, Visa, and InstaPay.',
-        aliases: 'can I pay with card?\ndo you take cash?\nطرق الدفع ايه\nبتقبلوا انستاباي؟',
+        question: 'Can I trade in or exchange my current car?',
+        answer: 'Yes! We offer direct trade-in (Trade-In). We appraise your current vehicle at fair market value and apply it as a down payment toward any new or used car from our showroom.',
+        aliases: 'عايز ابدل عربيتي\nفي استبدال؟\ntrade in my car\ncar exchange',
         mode: 'exact'
       },
       {
-        question: 'Can I book a table in advance?',
-        answer: 'Yes! Just message us your party size and desired date/time (e.g. "Book a table for 4 tomorrow at 8 PM") and we will confirm it for you instantly.',
-        aliases: 'table reservation\nاحجزلي ترابيزة\nعايز احجز',
+        question: 'Can I book a test drive before buying?',
+        answer: 'Yes! Complimentary test drives are available for all vehicles in our showroom. Just message us your preferred car model, day, and time to confirm your appointment.',
+        aliases: 'حجز تجربة قيادة\nعايز اجرب العربية\ntest drive\nbook test drive',
         mode: 'exact'
       }
     ];
 
-    if (products.length > 0) {
-      const p = products[0];
+    if (cars.length > 0) {
+      const c = cars[0];
       suggestions.push({
-        question: `How much is the ${p.name}?`,
-        answer: `Our ${p.name} is ${p.price || 'available'}.${p.description ? ' ' + p.description : ''}`,
-        aliases: `price of ${p.name}\nhow much for ${p.name}\nبكام ${p.name}`,
+        question: `How much is the ${c.name}?`,
+        answer: `The ${c.name} is ${c.price || 'available upon request'}.${c.description ? ' ' + c.description : ''}`,
+        aliases: `price of ${c.name}\nhow much for ${c.name}\nبكام ${c.name}`,
         mode: 'exact'
       });
     }
@@ -854,7 +854,7 @@ app.post('/api/copilot/draft', async (req, res) => {
       lastMessage,
       history: history || [],
       articles,
-      businessName: (config.business && config.business.name) || 'Nour Coffee House'
+      businessName: (config.business && config.business.name) || 'Al-Fares Motors'
     });
     res.json({ ok: true, draft });
   } catch (err) {

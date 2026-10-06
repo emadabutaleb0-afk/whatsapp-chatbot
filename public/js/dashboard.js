@@ -258,20 +258,20 @@ function renderDashboard() {
     metricCard('smile', 'Satisfaction (CSAT)', sat === null ? '—' : Math.round(sat) + '%',
       sat === null ? '<span class="text-slate-400">Waiting for reactions</span>' : deltaHTML(satHalf.curr, satHalf.prev, { suffix: ' pts' })),
 
-    // 5. Orders placed
-    metricCard('shopping-bag', 'WhatsApp Orders', (b.totalOrders || 0).toString(),
-      `<span class="cursor-pointer font-medium text-emerald-600 hover:underline" data-nav="orders">View incoming orders →</span>`),
+    // 5. Car Bookings placed
+    metricCard('check-circle-2', 'Car Bookings', (b.totalOrders || 0).toString(),
+      `<span class="cursor-pointer font-medium text-emerald-600 hover:underline" data-nav="orders">View car bookings →</span>`),
 
     // 6. Direct revenue
-    metricCard('badge-dollar-sign', 'WhatsApp Revenue', `${(b.totalRevenue || 0).toLocaleString()} <span class="text-sm font-normal text-slate-500">EGP</span>`,
-      `<span class="text-slate-400">Direct conversational sales</span>`),
+    metricCard('badge-dollar-sign', 'Dealership Volume', `${(b.totalRevenue || 0).toLocaleString()} <span class="text-sm font-normal text-slate-500">EGP</span>`,
+      `<span class="text-slate-400">Total vehicle bookings</span>`),
 
-    // 7. Table reservations
-    metricCard('calendar-check', 'Table Bookings', (b.totalReservations || 0).toString(),
-      `<span class="cursor-pointer font-medium text-emerald-600 hover:underline" data-nav="reservations">${b.totalGuests || 0} covers booked →</span>`),
+    // 7. Test drives & Showroom visits
+    metricCard('gauge', 'Test Drives', (b.totalReservations || 0).toString(),
+      `<span class="cursor-pointer font-medium text-emerald-600 hover:underline" data-nav="reservations">${b.totalGuests || 0} scheduled viewings →</span>`),
 
     // 8. Active clients
-    metricCard('users', 'Active Clients', (b.totalCustomers || 0).toString(),
+    metricCard('users', 'Car Buyers & Clients', (b.totalCustomers || 0).toString(),
       `<span class="text-slate-400">${b.repeatRate || 0}% returning clients</span>`)
   ].join('');
 

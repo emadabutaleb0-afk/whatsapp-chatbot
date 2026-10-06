@@ -117,9 +117,9 @@ function renderOrders() {
   if (!orders.length) {
     host.innerHTML = `
     <div class="rounded-xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
-      <i data-lucide="shopping-bag" class="mx-auto h-6 w-6 text-slate-300"></i>
-      <p class="mt-3 text-sm font-medium text-slate-700">No client orders yet</p>
-      <p class="mx-auto mt-1 max-w-sm text-sm text-slate-500">When clients order via WhatsApp (e.g. "I want 2 flat whites and a croissant"), orders appear here in real-time.</p>
+      <i data-lucide="car" class="mx-auto h-6 w-6 text-slate-300"></i>
+      <p class="mt-3 text-sm font-medium text-slate-700">No car purchase bookings yet</p>
+      <p class="mx-auto mt-1 max-w-sm text-sm text-slate-500">When clients request to purchase or reserve a car via WhatsApp (e.g. "عايز احجز مرسيدس C200 زيرو"), bookings appear here in real-time.</p>
     </div>`;
   } else {
     host.innerHTML = orders.map(orderCardHTML).join('');

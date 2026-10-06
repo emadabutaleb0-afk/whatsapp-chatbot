@@ -95,9 +95,9 @@ function renderReservations() {
   if (!reservations.length) {
     host.innerHTML = `
     <div class="rounded-xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
-      <i data-lucide="calendar" class="mx-auto h-6 w-6 text-slate-300"></i>
-      <p class="mt-3 text-sm font-medium text-slate-700">No reservations booked yet</p>
-      <p class="mx-auto mt-1 max-w-sm text-sm text-slate-500">When clients ask to book a table on WhatsApp (e.g. "Book a table for 4 tomorrow at 8 PM"), bookings appear here.</p>
+      <i data-lucide="gauge" class="mx-auto h-6 w-6 text-slate-300"></i>
+      <p class="mt-3 text-sm font-medium text-slate-700">No test drive appointments scheduled yet</p>
+      <p class="mx-auto mt-1 max-w-sm text-sm text-slate-500">When clients ask to schedule a test drive or vehicle viewing on WhatsApp (e.g. "حجز تجربة قيادة لتويوتا كورولا بكره"), appointments appear here.</p>
     </div>`;
   } else {
     host.innerHTML = reservations.map(reservationCardHTML).join('');

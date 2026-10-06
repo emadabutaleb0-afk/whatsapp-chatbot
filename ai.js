@@ -1,4 +1,4 @@
-// AI & Multilingual Reasoning Engine for WhatsApp Business Assistant
+// AI & Multilingual Automotive Reasoning Engine for WhatsApp Car Dealership Assistant
 import { puter } from '@heyputer/puter.js';
 
 const STOP_WORDS = new Set([
@@ -106,33 +106,36 @@ export function matchHelpCenter(text, articles = []) {
 
 export function buildSystemPrompt(cfg = {}) {
   const b = cfg.business || {};
-  const products = cfg.products || [];
+  const cars = cfg.products || [];
   const fallback = (cfg.whatsapp && cfg.whatsapp.fallback) ||
-    "I'm not sure about that one — let me check with the team and get back to you shortly.";
+    "سؤال ممتاز يا فندم! دعني أتأكد مع فريق المبيعات الفني وأرد على حضرتك فوراً.";
 
   const L = [];
-  L.push(`You are the official WhatsApp assistant for "${b.name || 'this business'}".`);
-  L.push('You reply to real clients on WhatsApp on behalf of the business owner.');
+  L.push(`You are the official AI Automotive Sales & Dealership Assistant for "${b.name || 'Al-Fares Motors'}".`);
+  L.push('You communicate directly with car buyers and clients on WhatsApp on behalf of the dealership owner and sales team.');
+  L.push('Your specialty is selling NEW (Zero) and CERTIFIED PRE-OWNED (Used / مستعمل بحالة الزيرو) cars.');
   L.push('');
   L.push('## LANGUAGE & DIALECT GUIDELINES (CRITICAL)');
   L.push('1. Detect the client language & dialect automatically and reply in the EXACT same style:');
-  L.push('   - If client speaks Egyptian Arabic (e.g. "عايز اعرف", "بكام", "فين مكانكم", "شغالين دلوقتي"), reply in natural, polite Egyptian Arabic.');
-  L.push('   - If client uses Franco-Arab (e.g. "feen el mkan", "bkam", "3ayz a7gez"), reply warmly in Egyptian Arabic or English.');
-  L.push('   - If client speaks English, reply in English.');
-  L.push('   - If client speaks Modern Standard Arabic, reply in polite Arabic.');
-  L.push('2. Keep replies short (1-3 WhatsApp-style messages), warm, helpful, and natural.');
+  L.push('   - If client speaks Egyptian Arabic (e.g. "عايز اعرف سعر السياره", "بكام كاش", "في تقسيط", "فين المعرض", "عايز اجرب العربية"), reply in natural, polite Egyptian Arabic.');
+  L.push('   - If client uses Franco-Arab (e.g. "feen el ma3rad", "bkam el mercedes", "3ayz a7gez test drive"), reply warmly in Egyptian Arabic or English.');
+  L.push('   - If client speaks English, reply in fluent professional English.');
+  L.push('   - If client speaks Modern Standard Arabic or Gulf Arabic, reply in polite, courteous Arabic.');
+  L.push('2. Keep replies professional, automotive-expert, warm, structured with bullet points when quoting specs, and easy to read on WhatsApp.');
   L.push('');
   L.push('## CORE RULES');
-  L.push('1. Answer ONLY using the business information below. Never invent hours, addresses, products, prices, stock or promises.');
-  L.push('2. If an APPROVED ANSWER below covers the question, use it as the answer. Keep its wording and facts.');
-  L.push(`3. If the answer is not in the information below, say: "${fallback}"`);
-  L.push('4. Always quote exact prices with the currency (e.g. 65 EGP).');
-  L.push('5. End with a light next step (offer to take their order, book a table, or share the location pin).');
+  L.push('1. Answer ONLY using the car inventory and dealership information below. Never invent car models, prices, mileage, or false promises.');
+  L.push('2. Clearly distinguish whether a car is NEW (Zero / زيرو) or CERTIFIED USED (مستعمل بحالة الزيرو مع الفحص الفني).');
+  L.push('3. Highlight financing options (بنوك، تقسيط حتى 7 سنوات، مقدم يبدأ من 20%) واستبدال السيارات (Trade-In).');
+  L.push('4. If an APPROVED ANSWER below covers the question, use it as the answer.');
+  L.push(`5. If the answer is not in the information below, say: "${fallback}"`);
+  L.push('6. Always quote exact prices with the currency (e.g. 3,850,000 EGP).');
+  L.push('7. Conclude replies with a courteous call-to-action (e.g. offer to book a test drive / حجز تجربة قيادة, share showroom location pin, or calculate bank installments).');
 
   const faqs = (cfg.faqEntries || []).filter(f => f.question && f.answer);
   if (faqs.length) {
     L.push('');
-    L.push('## APPROVED ANSWERS (highest priority)');
+    L.push('## APPROVED DEALERSHIP ANSWERS (highest priority)');
     faqs.forEach((f, i) => {
       L.push(`${i + 1}. Client asks: ${f.question}`);
       const alt = String(f.aliases || '').split('\n').map(s => s.trim()).filter(Boolean);
@@ -142,7 +145,7 @@ export function buildSystemPrompt(cfg = {}) {
   }
 
   L.push('');
-  L.push('## BUSINESS INFORMATION');
+  L.push('## DEALERSHIP INFORMATION');
   if (b.name) L.push(`Name: ${b.name}`);
   if (b.tagline) L.push(`Tagline: ${b.tagline}`);
   if (b.about) L.push(`About: ${b.about}`);
@@ -150,15 +153,16 @@ export function buildSystemPrompt(cfg = {}) {
   if (b.location) L.push(`Location:\n${b.location}`);
   if (b.mapsUrl) L.push(`Map link: ${b.mapsUrl}`);
   if (b.phone) L.push(`Phone: ${b.phone}`);
-  if (b.delivery) L.push(`Delivery: ${b.delivery}`);
-  if (b.payment) L.push(`Payment: ${b.payment}`);
-  if (b.policies) L.push(`Policies:\n${b.policies}`);
+  if (b.delivery) L.push(`Delivery / Transport: ${b.delivery}`);
+  if (b.payment) L.push(`Payment & Financing: ${b.payment}`);
+  if (b.policies) L.push(`Warranties & Inspection Policies:\n${b.policies}`);
 
   L.push('');
-  L.push('## PRODUCTS & PRICES');
-  if (products.length) {
-    products.forEach(p => {
-      L.push(`- ${p.name}: ${p.price || 'available'} (${p.category || 'general'}) — ${p.stock || 'in stock'}. ${p.description || ''}`);
+  L.push('## VEHICLE INVENTORY & PRICES (CARS DATABASE)');
+  if (cars.length) {
+    cars.forEach(c => {
+      const specText = c.specs ? ` [Year: ${c.specs.year || ''}, Mileage: ${c.specs.mileage || ''}, Engine: ${c.specs.engine || ''}, Condition: ${c.specs.condition || ''}]` : '';
+      L.push(`- ${c.name}: ${c.price || 'Call for price'} | Condition/Category: ${c.category || 'Automotive'} | Status: ${c.stock || 'In Stock'}.${specText} ${c.description || ''}`);
     });
   }
 
@@ -174,7 +178,7 @@ export function buildSystemPrompt(cfg = {}) {
   const articles = cfg.articles || [];
   if (articles.length) {
     L.push('');
-    L.push('## HELP CENTER KNOWLEDGE BASE (Autonomous resolution articles)');
+    L.push('## HELP CENTER AUTOMOTIVE KNOWLEDGE BASE (Autonomous resolution articles)');
     articles.forEach((a, i) => {
       L.push(`Article ${i + 1} [${a.category}]: ${a.title}`);
       if (a.tags?.length) L.push(`Tags: ${a.tags.join(', ')}`);
@@ -187,33 +191,31 @@ export function buildSystemPrompt(cfg = {}) {
 }
 
 /**
- * Intelligent Intent & Action Analyzer
+ * Intelligent Intent & Action Analyzer for Car Dealership
  */
 export function analyzeIntent(text, config = {}, history = []) {
   const norm = normalize(text);
   const raw = String(text || '').trim();
 
-  // 1. Human Agent Request Intent
+  // 1. Human Sales Advisor Request Intent
   const humanTriggers = [
     'human', 'agent', 'support', 'person', 'representative', 'operator', 'talk to someone',
-    'خدمه عملاء', 'خدمة عملاء', 'خدمه العملاء', 'خدمة العملاء', 'عايز اكلم حد', 'عاوز اكلم حد',
-    'كلمني حد', 'بني ادم', 'شخص', 'حولني لحد', 'موظف', 'مساعده بشريه', 'help me with agent',
-    'الدعم', 'الدعم الفني', 'شكوى', 'مشكله', 'مشكلة', 'خدمة'
+    'sales', 'salesman', 'مسؤول مبيعات', 'مستشار مبيعات', 'خدمه عملاء', 'خدمة عملاء', 'عايز اكلم حد',
+    'عاوز اكلم حد', 'كلمني حد', 'بني ادم', 'شخص', 'حولني لحد', 'موظف', 'مساعده بشريه',
+    'الدعم', 'شكوى', 'مشكله', 'مشكلة', 'مدير المعرض'
   ].map(normalize);
   if (humanTriggers.some(t => norm.includes(t))) {
-    const isAngry = /(مشكله|مشكلة|شكوى|زفت|سيء|تأخير|غلط|فلوس|نصب|angry|bad|terrible|late|wrong|horrible|broken|issue|problem|delay|scam)/i.test(raw);
+    const isAngry = /(مشكله|مشكلة|شكوى|زفت|سيء|تأخير|غلط|فلوس|نصب|angry|bad|terrible|scam)/i.test(raw);
     const isUrgent = /(urgent|ضروري|طوارئ|بسرعة|حالاً|asap)/i.test(raw);
     const sentiment = isAngry ? 'Frustrated' : isUrgent ? 'Urgent' : 'Inquiry';
     const issueSummary = isAngry 
-      ? `Customer reported an escalation/complaint: "${raw.slice(0, 120)}"` 
-      : `Customer requested staff handover regarding: "${raw.slice(0, 120)}"`;
-    const recommendedAction = isAngry 
-      ? 'Review recent customer orders/receipts and prioritize resolution.' 
-      : 'Connect with customer and answer outstanding questions.';
+      ? `Client escalated an issue: "${raw.slice(0, 120)}"` 
+      : `Client requested sales advisor handover regarding: "${raw.slice(0, 120)}"`;
+    const recommendedAction = 'Connect client with a senior sales advisor to negotiate purchase or financing.';
 
     return {
       type: 'HUMAN_TAKEOVER',
-      reply: 'تم تحويل المحادثة لأحد ممثلي خدمة العملاء وسيقوم بالرد عليك هنا في أقرب وقت. 👨‍💼\nI have notified our staff and a team member will reply to you here shortly.',
+      reply: 'تم تحويل المحادثة لأحد مستشاري المبيعات وخبراء السيارات لدينا وسيقوم بالرد على حضرتك فوراً هنا في الشات للإجابة على جميع الاستفسارات الفنية والتمويلية. 👨‍💼🚗\nOur sales specialist has been notified and will assist you shortly.',
       handoffBriefing: {
         issueSummary,
         sentiment,
@@ -223,121 +225,139 @@ export function analyzeIntent(text, config = {}, history = []) {
     };
   }
 
-  // 2. GPS Location Pin Request Intent
+  // 2. Dealership Location Pin Request Intent
   const locationTriggers = [
-    'اللوكيشن', 'لوكيشن', 'ابعثلي اللوكيشن', 'ابعتلي اللوكيشن', 'موقعكم فين', 'gps',
-    'send location', 'location pin', 'share location', 'feen el mkan', 'where are you on map'
+    'اللوكيشن', 'لوكيشن', 'ابعثلي اللوكيشن', 'ابعتلي اللوكيشن', 'موقع المعرض', 'عنوان المعرض', 'مكان المعرض',
+    'gps', 'send location', 'location pin', 'share location', 'feen el ma3rad', 'feen el mkan', 'where is showroom',
+    'where are you located'
   ].map(normalize);
   if (locationTriggers.some(t => norm.includes(t))) {
     const b = config.business || {};
     return {
       type: 'SEND_LOCATION',
-      lat: b.latitude || 30.0444,
-      lng: b.longitude || 31.2357,
-      name: b.name || 'Our Location',
-      address: b.location || 'Downtown',
-      reply: `تفضل لوكيشن الفرع الخاص بنا على خرائط جوجل 📍\nHere is our location pin:\n${b.mapsUrl || b.location}`
+      lat: b.latitude || 30.0131,
+      lng: b.longitude || 31.4289,
+      name: b.name || 'Al-Fares Motors Showroom',
+      address: b.location || 'New Cairo Showroom',
+      reply: `تفضل لوكيشن معرض الفارس للسيارات على خرائط جوجل 📍\nيسعدنا تشريفك لمعاينة السيارات وتجربة القيادة:\n${b.mapsUrl || b.location}`
     };
   }
 
-  // Helper dictionary of Arabic product keywords
-  const productAliases = {
-    'Flat white': ['flat white', 'فلات وايت', 'فلات'],
-    'Spanish Latte (Iced)': ['spanish latte', 'اسبانيش لاتيه', 'اسبانيش', 'سبانيش لاتيه', 'ايس سبانيش'],
-    'V60 Specialty Drip': ['v60', 'في 60', 'قهوة v60', 'دريب'],
-    'Almond Croissant': ['croissant', 'كرواسون', 'كرواسان', 'الموند كرواسون']
+  // Helper matching for automotive brands and models
+  const carAliases = {
+    'Mercedes-Benz C200 2024 AMG (Zero / New)': ['mercedes', 'c200', 'مرسيدس', 'مرسيدس c200', 'مرسيدس زيرو', 'c 200'],
+    'BMW 320i 2023 M-Sport (Certified Used)': ['bmw', '320', '320i', 'بي ام', 'بي ام دبليو', 'بي ام 320', 'بي ام مستعمل'],
+    'Toyota Corolla 2024 Smart (Zero / New)': ['toyota', 'corolla', 'تويوتا', 'كورولا', 'تويوتا كورولا', 'كورولا زيرو'],
+    'Hyundai Tucson 2022 Turbo NX4 (Certified Used)': ['tucson', 'hyundai', 'توسان', 'هيونداي توسان', 'توسان تيربو', 'توسان مستعمل'],
+    'Kia Sportage 2024 GT-Line (Zero / New)': ['sportage', 'kia', 'سبورتاج', 'كيا سبورتاج', 'سبورتاج زيرو', 'كيا'],
+    'Range Rover Sport 2021 HSE Dynamic (Certified Used)': ['range rover', 'رينج روفر', 'رنج روفر', 'رينج روفر سبورت', 'rover']
   };
 
-  const getProductMatches = (p) => {
-    const aliases = productAliases[p.name] || [];
-    return [normalize(p.name), ...aliases.map(normalize)];
+  const getCarMatches = (car) => {
+    const aliases = carAliases[car.name] || [];
+    return [normalize(car.name), ...aliases.map(normalize)];
   };
 
-  // 3. Product Image Request Intent
-  const imageTriggers = ['صوره', 'صورة', 'صور', 'photo', 'picture', 'image', 'وريني', 'show me'];
+  const cars = config.products || [];
+
+  // 3. Car Image / Photo Request Intent
+  const imageTriggers = ['صوره', 'صورة', 'صور', 'photo', 'picture', 'image', 'وريني', 'show me', 'شكلها ايه'];
   if (imageTriggers.some(t => norm.includes(t))) {
-    const products = config.products || [];
-    for (const p of products) {
-      const candidates = getProductMatches(p);
+    for (const c of cars) {
+      const candidates = getCarMatches(c);
       if (candidates.some(cand => norm.includes(cand))) {
         return {
           type: 'SEND_IMAGE',
-          imageUrl: p.image || 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?w=600',
-          caption: `${p.name} — ${p.price}\n${p.description || ''}`,
-          reply: `تفضل صورة ${p.name} (${p.price})! ☕`
+          imageUrl: c.image || 'https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800',
+          caption: `${c.name} — ${c.price}\n${c.description || ''}`,
+          reply: `تفضل صورة ${c.name} (${c.price})! 🚗\nمتاحة لدينا بالمعرض للمعاينة والفحص الفوري.`
         };
       }
     }
+    // If asking for general car photos
+    if (cars.length > 0) {
+      const firstCar = cars[0];
+      return {
+        type: 'SEND_IMAGE',
+        imageUrl: firstCar.image,
+        caption: `${firstCar.name} — ${firstCar.price}`,
+        reply: `تفضل صورة ${firstCar.name}! تحب تشوف صور لموديل أو عربية تانية معينة؟ 🚗`
+      };
+    }
   }
 
-  // 4. Table Booking / Reservation Intent
-  const bookingTriggers = ['احجز', 'حجز', 'ترابيزه', 'ترابيزة', 'طاوله', 'طاولة', 'book', 'reserve', 'table', 'reservation', 'a7gez'];
-  if (bookingTriggers.some(t => norm.includes(t))) {
-    const partyMatch = raw.match(/(\d+)\s*(people|persons|شخص|أشخاص|افراد|أفراد)?/i) ||
-      raw.match(/ل\s*(\d+)/i) ||
-      raw.match(/for\s*(\d+)/i);
-    const partySize = partyMatch ? parseInt(partyMatch[1], 10) : 2;
+  // 4. Test Drive & Showroom Appointment Intent (حجز تجربة قيادة / معاينة)
+  const testDriveTriggers = [
+    'تجربه قياده', 'تجربة قيادة', 'تست درايف', 'معاينه', 'معاينة', 'احجز ميعاد', 'احجز موعد',
+    'اجرب العربية', 'اجرب العربيه', 'test drive', 'test-drive', 'appointment', 'viewing', 'visit showroom'
+  ].map(normalize);
+  if (testDriveTriggers.some(t => norm.includes(t))) {
+    let carName = 'سيارة من اختيارك';
+    for (const c of cars) {
+      const candidates = getCarMatches(c);
+      if (candidates.some(cand => norm.includes(cand))) {
+        carName = c.name;
+        break;
+      }
+    }
 
-    let timeDesc = 'Evening';
-    if (norm.includes('بكره') || norm.includes('غدا') || norm.includes('tomorrow')) timeDesc = 'Tomorrow Evening';
-    else if (norm.includes('الجمعه') || norm.includes('friday')) timeDesc = 'Friday Evening';
-    else if (norm.includes('السبت') || norm.includes('saturday')) timeDesc = 'Saturday Evening';
+    let timeDesc = 'بالمعرض في المواعيد الرسمية';
+    if (norm.includes('بكره') || norm.includes('غدا') || norm.includes('tomorrow')) timeDesc = 'غداً في المعرض';
+    else if (norm.includes('الجمعه') || norm.includes('friday')) timeDesc = 'يوم الجمعة بعد صلاة الظهر';
+    else if (norm.includes('السبت') || norm.includes('saturday')) timeDesc = 'يوم السبت';
 
     const hourMatch = raw.match(/(\d{1,2})(:00)?\s*(pm|am|مساء|صباحا)?/i);
-    if (hourMatch) timeDesc += ` at ${hourMatch[0]}`;
+    if (hourMatch) timeDesc += ` الساعة ${hourMatch[0]}`;
 
     return {
       type: 'BOOKING_CREATE',
-      partySize,
-      time: timeDesc,
-      reply: `تم تأكيد حجزك بنجاح! 📅\n• عدد الأفراد: ${partySize} أشخاص\n• الموعد: ${timeDesc}\nنحن في انتظاركم ونتمنى لكم وقتاً ممتعاً!`
+      partySize: 1,
+      time: `${carName} — ${timeDesc}`,
+      reply: `تم تأكيد حجز موعد تجربة القيادة والمعاينة بنجاح! 🏎️📅\n• السيارة: ${carName}\n• الموعد: ${timeDesc}\n• موقع المعرض: التجمع / سوق السيارات\nيسعدنا استقبال حضرتك ونتمنى لك تجربة ممتعة!`
     };
   }
 
-  // 5. Order Taking / Cart Intent
-  const orderTriggers = [
-    'عايز اطلب', 'عاوز اطلب', 'دليفري ل', 'توصيل ل', 'طلب اوردر', 'order', 'delivery to', 'i want to order', 'add to cart', 'هات'
+  // 5. Car Booking / Earnest Money / Purchase Intent (حجز وشراء سيارة)
+  const buyTriggers = [
+    'عايز اشتري', 'عاوز اشتري', 'حجز عربيه', 'حجز سيارة', 'احجزلي العربيه', 'احجزلي العربية',
+    'عايز احجز', 'عاوز احجز', 'buy car', 'book car', 'reserve car', 'purchase'
   ];
-  const products = config.products || [];
-  const foundItems = [];
-
-  for (const p of products) {
-    const candidates = getProductMatches(p);
+  const foundCars = [];
+  for (const c of cars) {
+    const candidates = getCarMatches(c);
     for (const cand of candidates) {
       if (norm.includes(cand)) {
-        const regex = new RegExp(`(\\d+)\\s*(${cand})`, 'i');
-        const qMatch = norm.match(regex);
-        const qty = qMatch ? parseInt(qMatch[1], 10) : 1;
-        const priceNum = parseInt(String(p.price).replace(/[^\d]/g, ''), 10) || 50;
-        foundItems.push({
-          name: p.name,
-          qty,
-          price: p.price,
-          subtotal: (priceNum * qty) + ' EGP'
+        foundCars.push({
+          name: c.name,
+          qty: 1,
+          price: c.price,
+          subtotal: c.price
         });
         break;
       }
     }
   }
 
-  if (orderTriggers.some(t => norm.includes(t)) || (foundItems.length > 0 && (norm.includes('عايز') || norm.includes('عاوز') || norm.includes('want') || norm.includes('order')))) {
-    if (foundItems.length > 0) {
-      const totalNum = foundItems.reduce((acc, it) => acc + (parseInt(it.subtotal, 10) || 0), 0) + 25;
-      const itemsList = foundItems.map(i => `• ${i.qty}× ${i.name} (${i.subtotal})`).join('\n');
-      return {
-        type: 'ORDER_CREATE',
-        items: foundItems,
-        total: `${totalNum} EGP (شامل 25 EGP توصيل)`,
-        address: 'عنوان العميل عبر الواتساب',
-        reply: `تم تسجيل طلبك بنجاح! 🛍️\n\n${itemsList}\n\n• الإجمالي: ${totalNum} EGP (شامل 25 EGP توصيل)\n• وقت التوصيل المتوقع: 30–45 دقيقة.\nمن فضلك أرسل عنوانك ورقم التواصل لتأكيد خروج الدليفري فوراً!`
-      };
-    }
+  if (buyTriggers.some(t => norm.includes(t)) && foundCars.length > 0) {
+    const targetCar = foundCars[0];
+    return {
+      type: 'ORDER_CREATE',
+      items: [targetCar],
+      total: targetCar.price,
+      address: 'تسليم وترخيص المعرض',
+      intentData: {
+        items: [targetCar],
+        total: targetCar.price,
+        address: 'تسليم وترخيص المعرض'
+      },
+      reply: `تم تسجيل طلب حجز سيارتك المبدئي بنجاح! 🚘🎉\n• السيارة: ${targetCar.name}\n• السعر الإجمالي: ${targetCar.price}\n• نظام الدفع: كاش أو تقسيط بنكي بمقدم يبدأ من 20%.\nمن فضلك أرسل رقم هاتفك واسمك بالكامل وسيتواصل معك مدير المبيعات فوراً لتجهيز أوراق التعاقد والاستلام!`
+    };
   }
 
-  // 6. Conversational Affirmation & Multi-Turn Context ("yes", "sure", "اه", "نعم", "تمام", etc.)
+  // 6. Conversational Affirmation & Multi-Turn Context ("yes", "sure", "تمام", "اه", etc.)
   const yesWords = new Set([
     'yes', 'yeah', 'yep', 'sure', 'ok', 'okay', 'please', 'course',
-    'نعم', 'اه', 'ايوه', 'ايوة', 'ياريت', 'تمام', 'اكيد', 'ماشي', 'اوك', 'اوكي', 'يلا', 'بالتاكيد', 'اطلب'
+    'نعم', 'اه', 'ايوه', 'ايوة', 'ياريت', 'تمام', 'اكيد', 'ماشي', 'اوك', 'اوكي', 'يلا', 'بالتاكيد'
   ]);
   const normTokens = norm.split(' ').filter(Boolean);
   const isAffirmative = normTokens.some(w => yesWords.has(w)) ||
@@ -348,64 +368,79 @@ export function analyzeIntent(text, config = {}, history = []) {
     const lastBotText = lastBotMsg ? String(lastBotMsg.content || lastBotMsg.reply || '') : '';
     const normBot = normalize(lastBotText);
 
-    // Case A: Last bot message asked to order delivery
-    if (normBot.includes('deliver') || normBot.includes('order') || normBot.includes('دليفري') || normBot.includes('توصيل') || normBot.includes('نطلبلك')) {
-      let matchedProduct = null;
-      for (const p of products) {
-        const candidates = getProductMatches(p);
-        if (candidates.some(c => normBot.includes(c))) {
-          matchedProduct = p;
-          break;
-        }
-      }
-
-      const p = matchedProduct || products[0];
-      if (p) {
-        const priceNum = parseInt(String(p.price).replace(/[^\d]/g, ''), 10) || 55;
-        const totalNum = priceNum + 25; // 25 delivery
-        const isAr = /[\u0600-\u06FF]/.test(raw) || /[\u0600-\u06FF]/.test(lastBotText);
-        return {
-          type: 'ORDER_CREATE',
-          items: [{ name: p.name, qty: 1, price: p.price, subtotal: `${priceNum} EGP` }],
-          total: `${totalNum} EGP (includes 25 EGP delivery)`,
-          address: 'Pending address from chat',
-          intentData: {
-            items: [{ name: p.name, qty: 1, price: p.price, subtotal: `${priceNum} EGP` }],
-            total: `${totalNum} EGP`,
-            address: 'Pending address from chat'
-          },
-          reply: isAr
-            ? `تمام جداً يا فندم! 🛍️ تم تسجيل طلبك: 1× ${p.name} (${p.price}).\n• الإجمالي مع التوصيل: ${totalNum} EGP.\nمن فضلك أرسل عنوان التوصيل ورقم هاتفك لتأكيد خروج الأوردر فوراً!`
-            : `Great! 🛍️ I have noted your order: 1× ${p.name} (${p.price}).\n• Total with delivery: ${totalNum} EGP.\nPlease share your delivery address and contact number so we can dispatch it right away!`
-        };
-      }
-    }
-
-    // Case B: Last bot message asked about table reservation
-    if (normBot.includes('table') || normBot.includes('reserve') || normBot.includes('book') || normBot.includes('طاولة') || normBot.includes('طاوله') || normBot.includes('حجز')) {
+    // If last bot message proposed a test drive
+    if (normBot.includes('تجرب') || normBot.includes('test drive') || normBot.includes('معاين')) {
       const isAr = /[\u0600-\u06FF]/.test(raw) || /[\u0600-\u06FF]/.test(lastBotText);
       return {
         type: 'BOOKING_CREATE',
-        partySize: 2,
-        time: 'Upcoming',
-        intentData: { partySize: 2, time: 'Upcoming' },
+        partySize: 1,
+        time: 'موعد تجربة قيادة بالمعرض',
+        intentData: { partySize: 1, time: 'موعد تجربة قيادة بالمعرض' },
         reply: isAr
-          ? `تنورنا بكل سرور! ☕ تحب الحجز لطاولة لعدد كام شخص وفي أي موعد أو يوم؟`
-          : `Wonderful, we would love to host you! ☕ For how many people and at what date/time would you like to reserve?`
+          ? `تنورنا بكل سرور! 🚗 تم تأكيد موعد زيارتك لمعاينة وتجربة القيادة. في أي يوم أو ساعة تفضل الزيارة حتى نجهز السيارة لحضرتك؟`
+          : `We look forward to welcoming you! 🚗 For what day and time would you like to schedule your test drive?`
       };
     }
 
-    // Case C: General positive confirmation
+    // General positive confirmation
     const isAr = /[\u0600-\u06FF]/.test(raw);
     return {
       type: 'AFFIRMATION_REPLY',
       reply: isAr
-        ? `في خدمتك دائماً! ☕ تحب تطلب أي صنف من أصنافنا المميزة، أو تسأل عن مواعيدنا ومكاننا؟`
-        : `At your service! ☕ Would you like to order anything from our menu, or inquire about our hours and location?`
+        ? `في خدمتك دائماً! 🚗 تحب تستفسر عن مواصفات سيارة معينة (زيرو أو مستعملة)، أو أنظمة التقسيط والتمويل البنكي، أو حجز تجربة قيادة؟`
+        : `At your service! 🚗 Would you like to check out specific car specs, auto financing plans, or schedule a test drive?`
     };
   }
 
   return { type: 'NORMAL_CHAT' };
+}
+
+/**
+ * Call Puter AI via OpenAI-Compatible HTTP endpoint or Puter.js SDK
+ */
+async function callPuterAI(messages, model = 'gpt-5.4-nano') {
+  const puterToken = process.env.PUTER_AUTH_TOKEN || process.env.PUTER_API_KEY;
+
+  // Method A: Standard OpenAI-Compatible Endpoint using Puter Auth Token
+  if (puterToken) {
+    try {
+      const response = await fetch('https://api.puter.com/puterai/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${puterToken}`
+        },
+        body: JSON.stringify({
+          model,
+          messages,
+          temperature: 0.25,
+          max_tokens: 350
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        const text = data.choices?.[0]?.message?.content?.trim();
+        if (text) return text;
+      }
+    } catch (err) {
+      console.warn('Puter OpenAI-compatible HTTP call failed, trying SDK fallback:', err.message);
+    }
+  }
+
+  // Method B: Puter.js SDK
+  if (puterToken) {
+    try {
+      puter.setAuthToken(puterToken);
+      const puterRes = await puter.ai.chat(messages, { model });
+      const text = puterRes?.message?.content || (typeof puterRes === 'string' ? puterRes : puterRes?.text);
+      if (text && String(text).trim()) return String(text).trim();
+    } catch (err) {
+      console.warn('Puter.js SDK call failed:', err.message);
+    }
+  }
+
+  return null;
 }
 
 /**
@@ -414,7 +449,7 @@ export function analyzeIntent(text, config = {}, history = []) {
 export async function answerQuestion(question, config, history = []) {
   const start = Date.now();
   const fallback = (config.whatsapp && config.whatsapp.fallback) ||
-    "I'm not sure about that one — let me check with the team and get back to you shortly.";
+    "سؤال ممتاز يا فندم! دعني أتأكد مع فريق المبيعات الفني وأرد على حضرتك فوراً.";
 
   // 1. Intent Analysis
   const intent = analyzeIntent(question, config, history);
@@ -451,10 +486,10 @@ export async function answerQuestion(question, config, history = []) {
     const isArabic = /[\u0600-\u06FF]/.test(question);
     const prefix = isArabic
       ? `بخصوص استفسارك عن (${matchedArt.article.title}):\n`
-      : `According to our Help Center (${matchedArt.article.title}):\n`;
+      : `According to our dealership guides (${matchedArt.article.title}):\n`;
     const suffix = isArabic
-      ? '\n\nهل تحتاج إلى مساعدة إضافية في هذا الشأن؟ ☕'
-      : '\n\nLet us know if you need anything else! ☕';
+      ? '\n\nهل تحب نحسبلك قسط سيارة محددة أو تشرفنا في المعرض للمعاينة؟ 🚗'
+      : '\n\nWould you like us to calculate an installment plan or schedule a showroom visit? 🚗';
     return {
       reply: prefix + matchedArt.article.content + suffix,
       faqHit: false,
@@ -467,37 +502,27 @@ export async function answerQuestion(question, config, history = []) {
   }
 
   const systemPrompt = buildSystemPrompt(config);
+  const messages = [
+    { role: 'system', content: systemPrompt },
+    ...history.slice(-6).map(h => ({ role: h.role === 'assistant' ? 'assistant' : 'user', content: h.content })),
+    { role: 'user', content: question }
+  ];
 
-  // 3. Puter.js AI (OpenAI GPT-5.4 Nano & GPT models via Puter)
-  const puterToken = process.env.PUTER_AUTH_TOKEN || process.env.PUTER_API_KEY;
-  if (puterToken) {
-    try {
-      puter.setAuthToken(puterToken);
-      const messages = [
-        { role: 'system', content: systemPrompt },
-        ...history.slice(-6).map(h => ({ role: h.role === 'assistant' ? 'assistant' : 'user', content: h.content })),
-        { role: 'user', content: question }
-      ];
-      const model = process.env.PUTER_MODEL || 'gpt-5.4-nano';
-      const puterRes = await puter.ai.chat(messages, { model });
-      const text = puterRes?.message?.content || (typeof puterRes === 'string' ? puterRes : puterRes?.text);
-      if (text && String(text).trim()) {
-        const clean = String(text).trim();
-        const isFallback = clean.toLowerCase().includes(fallback.slice(0, 20).toLowerCase());
-        return {
-          reply: clean,
-          faqHit: false,
-          source: `puter-${model}`,
-          isFallback,
-          durationMs: Date.now() - start
-        };
-      }
-    } catch (err) {
-      console.warn('Puter.js AI call failed, falling back:', err.message);
-    }
+  // 4. Puter AI (Free, Unlimited OpenAI API endpoint via Puter)
+  const puterModel = process.env.PUTER_MODEL || 'gpt-5.4-nano';
+  const puterReply = await callPuterAI(messages, puterModel);
+  if (puterReply) {
+    const isFallback = puterReply.toLowerCase().includes(fallback.slice(0, 20).toLowerCase());
+    return {
+      reply: puterReply,
+      faqHit: false,
+      source: `puter-${puterModel}`,
+      isFallback,
+      durationMs: Date.now() - start
+    };
   }
 
-  // 4. Gemini API (if key available)
+  // 5. Gemini API (if key available)
   const geminiKey = process.env.GEMINI_API_KEY;
   if (geminiKey) {
     try {
@@ -520,7 +545,7 @@ export async function answerQuestion(question, config, history = []) {
         body: JSON.stringify({
           system_instruction: { parts: [{ text: systemPrompt }] },
           contents,
-          generationConfig: { temperature: 0.2, maxOutputTokens: 250 }
+          generationConfig: { temperature: 0.2, maxOutputTokens: 350 }
         })
       });
 
@@ -539,27 +564,21 @@ export async function answerQuestion(question, config, history = []) {
         }
       }
     } catch (err) {
-      console.warn('Gemini API call failed, falling back:', err.message);
+      console.warn('Gemini API call fallback:', err.message);
     }
   }
 
-  // 4. OpenAI API (if key available)
+  // 6. Native OpenAI API (if key available)
   const openAiKey = process.env.OPENAI_API_KEY;
   if (openAiKey) {
     try {
-      const messages = [
-        { role: 'system', content: systemPrompt },
-        ...history.slice(-6).map(h => ({ role: h.role === 'assistant' ? 'assistant' : 'user', content: h.content })),
-        { role: 'user', content: question }
-      ];
-
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${openAiKey}`
         },
-        body: JSON.stringify({ model: 'gpt-4o-mini', messages, temperature: 0.2, max_tokens: 250 })
+        body: JSON.stringify({ model: 'gpt-4o-mini', messages, temperature: 0.2, max_tokens: 350 })
       });
 
       if (response.ok) {
@@ -577,128 +596,117 @@ export async function answerQuestion(question, config, history = []) {
         }
       }
     } catch (err) {
-      console.warn('OpenAI API call failed, falling back:', err.message);
+      console.warn('OpenAI API call fallback:', err.message);
     }
   }
 
-  // 5. Bilingual Egyptian/Arabic/English Rule Engine
-  const reply = localSmartAnswer(question, config);
+  // 7. Automotive Knowledge & Rule Answering Engine
+  const reply = localSmartCarAnswer(question, config);
   const isFallback = reply === fallback;
   return {
     reply,
     faqHit: matched ? true : false,
-    source: 'smart-rule',
+    source: 'smart-automotive-rule',
     isFallback,
     durationMs: Date.now() - start
   };
 }
 
 /**
- * Intelligent Egyptian Arabic & English rule answering
+ * Intelligent Egyptian Arabic & English Automotive Rule Answering
  */
-function localSmartAnswer(question, config) {
+function localSmartCarAnswer(question, config) {
   const norm = normalize(question);
   const b = config.business || {};
-  const products = config.products || [];
+  const cars = config.products || [];
   const fallback = (config.whatsapp && config.whatsapp.fallback) ||
-    "I'm not sure about that one — let me check with the team and get back to you shortly.";
+    "سؤال ممتاز يا فندم! دعني أتأكد مع فريق المبيعات الفني وأرد على حضرتك فوراً.";
 
   const isArabic = /[\u0600-\u06FF]/.test(question);
 
   // Greetings
   if (/^(hi|hello|hey|welcome)\b/i.test(norm) || /^(سلام|اهلا|مرحبا|صباح الخير|مساء الخير|ازيك|السلام عليكم)/.test(norm)) {
     return isArabic
-      ? `أهلاً بك في ${b.name || 'بيتنا'}! ☕ نورتنا، نقدر نساعدك ازاي النهاردة بخصوص مواعيدنا، مكاننا، أو المنيو؟`
-      : `Hello! Welcome to ${b.name || 'our business'}! ☕ How can I help you today with our hours, location, or menu?`;
+      ? `أهلاً بك في ${b.name || 'معرض الفارس للسيارات'}! 🚗 يسعدنا خدمتك، تحب تستفسر عن سيارات الزيرو أم المستعملة بحالة الفابريكا، عروض التقسيط، أو حجز تجربة قيادة؟`
+      : `Hello and welcome to ${b.name || 'Al-Fares Motors'}! 🚗 How can I help you today with our new cars (zero), certified used vehicles, financing plans, or test drive bookings?`;
   }
 
   // Gratitude / Thank you
   if (/^(thank|thanks|thx|ty|شكرا|شكراً|تسلم|تسلمي|الف شكر|الله يخليك|حبيبي)\b/i.test(norm)) {
     return isArabic
-      ? `العفو يا فندم! ☕ في خدمتكم دائماً، وتنورونا في أي وقت.`
-      : `You are very welcome! ☕ Always happy to assist. Let us know if you need anything else!`;
+      ? `العفو يا فندم! 🚗 في خدمتك دائماً، والمعرض مفتوح لاستقبالك وتجربة أي سيارة في أي وقت.`
+      : `You are very welcome! 🚗 Always happy to assist. Visit our showroom anytime for viewing and test drives!`;
   }
 
   // Agreement / OK
   if (/^(ok|okay|fine|cool|great|تمام|ماشي|اوك|اوكي|حسنا)\b/i.test(norm)) {
     return isArabic
-      ? `تحت أمرك في أي وقت! إذا كان لديك أي استفسار آخر بخصوص المنيو أو الفرع، نحن هنا دائماً. ☕`
-      : `At your service! Feel free to reach out anytime if you have any questions. ☕`;
+      ? `تحت أمرك يا فندم! إذا كان لديك أي استفسار عن مواصفات سيارة محددة أو حساب قسط بنكي، نحن هنا دائماً. 🚗`
+      : `At your service! Feel free to ask anytime about car specs, financing options, or showroom visits. 🚗`;
   }
 
   // Opening hours
   if (norm.includes('hour') || norm.includes('open') || norm.includes('close') || norm.includes('مواعيد') || norm.includes('فاتحين') || norm.includes('تقفلوا') || norm.includes('ساعه')) {
     if (b.hours) {
       return isArabic
-        ? `مواعيد عمل ${b.name || 'المكان'}:\n${b.hours}\nتنورونا في أي وقت! هل تحب تحجز طاولة مسبقاً؟`
-        : `Our opening hours are:\n${b.hours}\nLet us know if you would like to book a table!`;
+        ? `مواعيد عمل ${b.name || 'المعرض'}:\n${b.hours}\nتشرفنا بالزيارة في أي وقت! هل تحب نحجز لحضرتك موعد معاينة وتجربة قيادة مسبقاً؟ 🚗`
+        : `Our showroom opening hours are:\n${b.hours}\nLet us know if you would like to book a test drive appointment! 🚗`;
     }
   }
 
   // Location / Address
   if (norm.includes('where') || norm.includes('location') || norm.includes('address') || norm.includes('مكان') || norm.includes('عنوان') || norm.includes('ازاي اجي')) {
     let reply = isArabic
-      ? `مكاننا في: ${b.location || 'الفرع الرئيسي'}.`
-      : `We are located at ${b.location || 'our main location'}.`;
+      ? `موقع معرضنا في: ${b.location || 'التجمع الخامس / سوق السيارات'}.`
+      : `Our showroom is located at: ${b.location || 'New Cairo Showroom'}.`;
     if (b.mapsUrl) {
       reply += isArabic
-        ? `\nرابط لوكيشن جوجل مابس: ${b.mapsUrl}`
-        : `\nGoogle Maps link: ${b.mapsUrl}`;
+        ? `\n📍 رابط الموقع على خرائط جوجل: ${b.mapsUrl}`
+        : `\n📍 Google Maps link: ${b.mapsUrl}`;
     }
     return reply;
   }
 
-  // Products & Prices
-  for (const p of products) {
-    const pName = normalize(p.name);
-    if (pName && (norm.includes(pName) || pName.split(' ').some(tok => tok.length > 3 && norm.includes(tok)))) {
-      const desc = p.description ? ` (${p.description})` : '';
-      return isArabic
-        ? `سعر ${p.name}${desc} هو ${p.price || 'متوفر'}. وحالته: ${p.stock || 'متوفر حالياً'}. تحب نطلبلك منه دليفري؟ 🛍️`
-        : `Our ${p.name}${desc} is ${p.price || 'available'}. Status: ${p.stock || 'In stock'}. Would you like to order for delivery? 🛍️`;
-    }
-  }
-
-  // Delivery info
-  if (norm.includes('deliver') || norm.includes('ship') || norm.includes('دليفري') || norm.includes('توصيل')) {
-    if (b.delivery) {
-      return isArabic
-        ? `خدمة التوصيل: ${b.delivery}\nتحب تسجل طلبك دلوقتي؟`
-        : `${b.delivery}\nWould you like to place an order now?`;
-    }
-  }
-
-  // Payment methods
-  if (norm.includes('pay') || norm.includes('visa') || norm.includes('cash') || norm.includes('دفع') || norm.includes('انستاباي') || norm.includes('فيزا') || norm.includes('كاش')) {
-    if (b.payment) {
-      return isArabic
-        ? `طرق الدفع المتاحة لدينا: ${b.payment}.`
-        : `We accept: ${b.payment}.`;
-    }
-  }
-
-  // General menu inquiry
-  if (norm.includes('menu') || norm.includes('price') || norm.includes('منيو') || norm.includes('اسعار') || norm.includes('عندكم ايه') || norm.includes('مشروبات')) {
-    if (products.length) {
-      const list = products.slice(0, 4).map(p => `• ${p.name}: ${p.price}`).join('\n');
-      return isArabic
-        ? `أشهر الأصناف عندنا:\n${list}\nتحب تطلب إيه منهم النهاردة؟`
-        : `Here are our most popular items:\n${list}\nWhich one would you like to order?`;
-    }
-  }
-
-  // Order issue / complaint handling
-  if (norm.includes('غلط') || norm.includes('خلط') || norm.includes('مشكل') || norm.includes('تاخير') || norm.includes('متأخر') || norm.includes('ناقص') || norm.includes('wrong') || norm.includes('delay')) {
+  // Installments / Financing / Loan calculation
+  if (norm.includes('تقسيط') || norm.includes('قسط') || norm.includes('مقدم') || norm.includes('تمويل') || norm.includes('بنك') || norm.includes('installment') || norm.includes('finance') || norm.includes('loan')) {
     return isArabic
-      ? `نعتذر لحضرتك جداً عن أي خطأ أو تأخير حدث في الأوردر! 🙏 برجاء تزويدنا برقم الموبايل المسجل به الطلب أو تفاصيل الأصناف حتى نتواصل مع الفرع فوراً ونعوض حضرتك.`
-      : `We sincerely apologize for any issue or delay with your order! 🙏 Please share your order details or registered phone number so our team can resolve this immediately.`;
+      ? `نوفر أنظمة تقسيط مرنة بالتعاون مع جميع البنوك: 💳\n• مقدم يبدأ من 20% للسيارات الزيرو و 25% للمستعمل.\n• فترات سداد مريحة حتى 7 سنوات.\n• إمكانية التقسيط بدون تأمين إجباري أو بدون إثبات دخل لبعض الفئات.\n• متاح استبدال سيارتك القديمة وتقسيط الفارق!\nتحب تحسب قسط سيارة محددة من المعرض؟`
+      : `We offer flexible auto loans and installment programs with top banks: 💳\n• Down payment starting from 20% on new cars and 25% on certified used cars.\n• Flexible tenures up to 7 years.\n• Direct trade-in available!\nWould you like us to calculate the monthly payment for a specific model?`;
   }
 
-  // Response waiting / attention inquiry
-  if (norm.includes('رد') || norm.includes('تأخرتوا') || norm.includes('reply') || norm.includes('anyone there')) {
+  // Trade-In / Car exchange
+  if (norm.includes('استبدال') || norm.includes('تبديل') || norm.includes('ابدل') || norm.includes('trade in') || norm.includes('exchange')) {
     return isArabic
-      ? `أهلاً بحضرتك، نعتذر عن أي انتظار! 🙏 أنا المساعد الذكي الخاص بالمكان، ومعاك حالاً. تحب أساعدك بخصوص المنيو، المواعيد، أو أحولك لأحد ممثلي خدمة العملاء؟`
-      : `Hello! Apologies for the wait. 🙏 I am here to assist you right now with our menu, hours, location, or connect you with staff. How can I help?`;
+      ? `نعم متاح خدمة الاستبدال المباشر (Trade-In)! 🔄\nيتم فحص سيارتك وتثمينها بأعلى سعر سوقي عادل، واستخدام قيمتها كمقدم لأي سيارة تختارها بالمعرض مع تقسيط الفارق. تحب تشرفنا بالسيارة لفحصها وتحديد السعر؟`
+      : `Yes, we offer direct trade-ins! 🔄 We appraise your current vehicle at fair market value and apply it as a down payment toward any new or used car from our showroom. Would you like to bring it in for evaluation?`;
+  }
+
+  // Test drive request
+  if (norm.includes('تجرب') || norm.includes('test drive')) {
+    return isArabic
+      ? `يسعدنا جداً حجز تجربة قيادة لحضرتك! 🏎️ تجارب القيادة متاحة لجميع السيارات بالمعرض. أرسل لنا الموديل الذي ترغب في تجربته واليوم والوقت المناسب وسنجهز السيارة لحضرتك فوراً.`
+      : `We would love to arrange a test drive for you! 🏎️ Please share the car model and your preferred date/time, and we will have it ready for you!`;
+  }
+
+  // Specific Car Specs and Pricing Match
+  for (const c of cars) {
+    const cName = normalize(c.name);
+    if (cName && (norm.includes(cName) || cName.split(' ').some(tok => tok.length > 3 && norm.includes(tok)))) {
+      const desc = c.description ? `\n• المواصفات: ${c.description}` : '';
+      return isArabic
+        ? `سعر ${c.name} هو ${c.price || 'متاح عند الطلب'}.\n• الحالة: ${c.stock || 'متوفرة بالمعرض'} (${c.category || ''}).${desc}\n\nتحب تحجز موعد لتجربة قيادتها أو تستفسر عن نظام تقسيطها؟ 🚗`
+        : `Our ${c.name} is quoted at ${c.price || 'available upon request'}.\n• Status: ${c.stock || 'In Stock'} (${c.category || ''}).${desc}\n\nWould you like to schedule a test drive or check out installment options? 🚗`;
+    }
+  }
+
+  // General Car Catalog / What do you have?
+  if (norm.includes('عندكم ايه') || norm.includes('انواع') || norm.includes('سيارات') || norm.includes('عربيات') || norm.includes('cars') || norm.includes('models') || norm.includes('list')) {
+    if (cars.length) {
+      const list = cars.slice(0, 5).map(c => `• ${c.name}: ${c.price} (${c.category})`).join('\n');
+      return isArabic
+        ? `أبرز السيارات المتوفرة لدينا بالمعرض حالياً:\n${list}\n\nتحب تستفسر عن تفاصيل ومواصفات أي سيارة منهم؟ 🚗`
+        : `Here are our top featured vehicles currently in our showroom:\n${list}\n\nWhich one would you like to explore specs or test drive? 🚗`;
+    }
   }
 
   // Check Help Center articles before falling back
@@ -706,239 +714,77 @@ function localSmartAnswer(question, config) {
   if (artMatch && artMatch.score >= 0.55) {
     const art = artMatch.article;
     return isArabic
-      ? `بخصوص استفسارك عن (${art.title}):\n${art.content}\n\nهل تحتاج إلى مساعدة إضافية في هذا الشأن؟ ☕`
-      : `According to our Help Center (${art.title}):\n${art.content}\n\nLet us know if you need any further assistance! ☕`;
+      ? `بخصوص استفسارك عن (${art.title}):\n${art.content}\n\nهل تحتاج إلى مساعدة إضافية في هذا الشأن؟ 🚗`
+      : `Regarding (${art.title}):\n${art.content}\n\nLet us know if you need any further assistance! 🚗`;
   }
 
   return isArabic
-    ? 'أهلاً بك! لم أتمكن من معرفة التفاصيل بدقة، تم تسجيل استفسارك وسيقوم أحد ممثلينا بمتابعتك والرد عليك في أقرب وقت. ☕'
+    ? 'أهلاً بك! لم أتمكن من معرفة التفاصيل بدقة، تم تسجيل استفسارك وسيقوم أحد مستشاري المبيعات بالمعرض بالتواصل معك وتزويدك بكافة التفاصيل. 🚗'
     : fallback;
 }
 
 /* ==========================================================================
-   AI AGENT COPILOT & REAL-TIME TRANSLATION ENGINE
+   AI COPILOT & AUTOMOTIVE DRAFTING ENGINE
    ========================================================================== */
 
-export async function generateCopilotDraft({ customerName, lastMessage, history = [], articles = [], businessName = 'Nour Coffee House' }) {
+export async function generateCopilotDraft({ customerName, lastMessage, history = [], articles = [], businessName = 'Al-Fares Motors' }) {
   const norm = normalize(lastMessage || '');
   const isArabic = /[\u0600-\u06FF]/.test(lastMessage || '');
   const cName = customerName && customerName !== 'Client' ? customerName : (isArabic ? 'يا فندم' : 'there');
 
   // Try Puter AI first
-  const puterToken = process.env.PUTER_AUTH_TOKEN || process.env.PUTER_API_KEY;
-  if (puterToken) {
-    try {
-      puter.setAuthToken(puterToken);
-      const articleSnippets = (articles || []).slice(0, 5).map(a => `- ${a.title}: ${a.content}`).join('\n');
-      const histText = (history || []).slice(-4).map(h => `${h.role || (h.incoming ? 'Client' : 'Agent')}: ${h.content || h.incoming || h.reply}`).join('\n');
-      const prompt = `You are an expert customer service copilot for "${businessName}".
+  const articleSnippets = (articles || []).slice(0, 4).map(a => `- ${a.title}: ${a.content}`).join('\n');
+  const histText = (history || []).slice(-4).map(h => `${h.role || (h.incoming ? 'Client' : 'Agent')}: ${h.content || h.incoming || h.reply}`).join('\n');
+  const prompt = `You are an expert automotive sales copilot for "${businessName}".
 Customer Name: ${cName}
 Recent conversation:
 ${histText}
 Latest customer message: "${lastMessage}"
 
 Available Knowledge:
-${articleSnippets || 'Standard cafe services, hours, menu.'}
+${articleSnippets || 'New and certified pre-owned cars, flexible bank installments, test drives, trade-ins.'}
 
-Draft a warm, polite, and helpful response to send to this customer right now. Match the language (${isArabic ? 'Egyptian Arabic' : 'English'}). Provide ONLY the suggested message text, with no preamble or explanations.`;
-      const res = await puter.ai.chat(prompt, { model: process.env.PUTER_MODEL || 'gpt-5.4-nano' });
-      const text = res?.message?.content || (typeof res === 'string' ? res : res?.text);
-      if (text && String(text).trim()) return String(text).trim();
-    } catch (e) {
-      console.warn('Puter copilot draft fallback:', e.message);
-    }
-  }
+Draft a professional, courteous, and automotive-expert response to send to this client right now. Match language (${isArabic ? 'Egyptian Arabic' : 'English'}). Provide ONLY the suggested message text, with no preamble or explanations.`;
 
-  // 1. If customer has a complaint / delay issue
-  if (/(تأخير|مشكلة|شكوى|زفت|سيء|تأخر|غلط|late|delay|wrong|broken|issue|problem)/i.test(norm)) {
+  const puterReply = await callPuterAI([{ role: 'user', content: prompt }]);
+  if (puterReply) return puterReply;
+
+  // Rule-based fallbacks for automotive copilot
+  if (norm.includes('تقسيط') || norm.includes('قسط') || norm.includes('finance')) {
     return isArabic
-      ? `أهلاً بحضرتك ${cName}، نعتذر جداً عن أي إزعاج أو تأخير حدث في طلبك. 🙏 أنا براجع مع الكابتن/الدليفري فوراً للتأكد من وصوله لحضرتك في أسرع وقت. ممكن بس دقيقة واحدة أتابع مع الفرع وأبلغ حضرتك؟`
-      : `Hello ${cName}, I sincerely apologize for the delay and any frustration caused. 🙏 I am personally checking on the status of your order with our dispatch team right now and will update you in just a moment!`;
+      ? `أهلاً بك ${cName}! نوفر برامج تقسيط مرنة بالتعاون مع البنوك بمقدم يبدأ من 20% وفترات سداد حتى 7 سنوات. هل في سيارة معينة تحب نحسبلك قسطها الشهري بالضبط؟ 🚗`
+      : `Hello ${cName}! We offer bank financing with down payments starting at 20% and tenures up to 7 years. Which vehicle would you like an installment calculation for? 🚗`;
   }
 
-  // 2. If customer asked about hours or location
-  if (norm.includes('hour') || norm.includes('مواعيد') || norm.includes('فاتحين') || norm.includes('ساعه')) {
+  if (norm.includes('تجرب') || norm.includes('test drive')) {
     return isArabic
-      ? `أهلاً ${cName}! مواعيد عملنا من 8:00 صباحاً حتى 12:00 منتصف الليل يومياً. تنورنا في أي وقت! تحب نحجزلك طاولة مسبقاً؟ ☕`
-      : `Hi ${cName}! We are open daily from 8:00 AM to 12:00 AM. We would love to have you over! Would you like to reserve a table? ☕`;
+      ? `أهلاً ${cName}! يسعدنا جداً ترتيب تجربة قيادة لحضرتك بالمعرض. في أي يوم وساعة يناسبك الحضور؟ 🏎️`
+      : `Hi ${cName}! We would be thrilled to schedule a test drive for you. Which day and time works best for your showroom visit? 🏎️`;
   }
 
-  // 3. If customer asked about menu/recommendations
-  if (norm.includes('منيو') || norm.includes('menu') || norm.includes('coffee') || norm.includes('قهوة') || norm.includes('عندكم')) {
-    return isArabic
-      ? `أهلاً ${cName}! ☕ أنصحك تجرب الفلات وايت المميز بتاعنا أو الكولد برو المنعش مع كرواسون زبدة طازج. تحب نسجلك أوردر دليفري يوصلك فوراً؟`
-      : `Hi ${cName}! ☕ I highly recommend our specialty Flat White or signature Cold Brew alongside our fresh butter croissant. Would you like me to place a delivery order for you?`;
-  }
-
-  // 4. If Help Center match is found
-  const artMatch = matchHelpCenter(lastMessage, articles);
-  if (artMatch && artMatch.article) {
-    return isArabic
-      ? `أهلاً بك ${cName}! بخصوص استفسارك:\n${artMatch.article.content}\n\nهل في أي حاجة تانية أقدر أساعد حضرتك بيها؟`
-      : `Hello ${cName}! Regarding your inquiry:\n${artMatch.article.content}\n\nPlease let me know if you need any additional details!`;
-  }
-
-  // 5. General warm professional reply
   return isArabic
-    ? `أهلاً بحضرتك ${cName}، معاك خدمة عملاء ${businessName}. يسعدنا جداً مساعدتك! ممكن توضحلنا استفسارك بالتفصيل عشان نقدر نخدمك في أسرع وقت؟ ☕`
-    : `Hello ${cName}! This is ${businessName} customer support. We are happy to help you! Could you please share more details about your request so we can assist you right away? ☕`;
+    ? `أهلاً بحضرتك ${cName}، معاك مستشار المبيعات من ${businessName}. يسعدنا جداً مساعدتك في اختيار سيارتك الأنسب! ممكن توضحلنا الموديل أو الميزانية المناسبة لحضرتك؟ 🚗`
+    : `Hello ${cName}! This is ${businessName} sales advisory. We are happy to assist you in finding your ideal car! Could you share which model or budget you have in mind? 🚗`;
 }
 
 export async function improveCopilotDraft(draftText, tone = 'polite') {
-  const isArabic = /[\u0600-\u06FF]/.test(draftText || '');
   const clean = String(draftText || '').trim();
   if (!clean) return draftText;
 
-  // Try Puter AI first
-  const puterToken = process.env.PUTER_AUTH_TOKEN || process.env.PUTER_API_KEY;
-  if (puterToken) {
-    try {
-      puter.setAuthToken(puterToken);
-      const prompt = `Rewrite the following customer service message in a "${tone}" tone (${tone === 'polite' ? 'courteous, appreciative, professional' : tone === 'warm' ? 'friendly, welcoming, enthusiastic' : tone === 'concise' ? 'direct, brief, to the point' : 'thorough, step-by-step resolution'}). Keep the original language and meaning intact. Provide ONLY the rewritten text:\n\n${clean}`;
-      const res = await puter.ai.chat(prompt, { model: process.env.PUTER_MODEL || 'gpt-5.4-nano' });
-      const text = res?.message?.content || (typeof res === 'string' ? res : res?.text);
-      if (text && String(text).trim()) return String(text).trim();
-    } catch (e) {
-      console.warn('Puter copilot improve fallback:', e.message);
-    }
-  }
+  const prompt = `Rewrite the following automotive customer service message in a "${tone}" tone (${tone === 'polite' ? 'courteous, appreciative, professional' : tone === 'warm' ? 'friendly, welcoming, enthusiastic' : tone === 'concise' ? 'direct, brief, to the point' : 'thorough, step-by-step resolution'}). Keep the original language and automotive context intact. Provide ONLY the rewritten text:\n\n${clean}`;
+  const puterReply = await callPuterAI([{ role: 'user', content: prompt }]);
+  if (puterReply) return puterReply;
 
-  switch (tone) {
-    case 'polite':
-      return isArabic
-        ? `عزيزنا العميل، تحياتنا وتقديرنا لحضرتك. 🌸\n${clean}\n\nنشكر تفهمكم ويسعدنا دائماً خدمتكم على أكمل وجه.`
-        : `Dear valued customer,\n${clean}\n\nThank you for your patience, and please do not hesitate to reach out if you need further assistance. Warm regards.`;
-
-    case 'concise': {
-      const lines = clean.split('\n').filter(l => l.trim().length > 0);
-      const core = lines.length > 1 ? lines[1] : lines[0];
-      return isArabic
-        ? `${core.replace(/أهلاً.*?،/g, '').trim()} في خدمتكم دائماً.`
-        : `${core.replace(/^(Hello|Hi|Dear).*?[,!.]/i, '').trim()} At your service.`;
-    }
-
-    case 'warm':
-      return isArabic
-        ? `يا هلا والله! نورتنا جداً 😊☕\n${clean}\n\nيومك جميل وكل السعادة ليك ولأحبابك! ✨`
-        : `Hey there! Wonderful to chat with you! 😊☕\n${clean}\n\nWishing you a fantastic day ahead! ✨`;
-
-    case 'detailed':
-      return isArabic
-        ? `${clean}\n\n📌 خطوات المتابعة والحل:\n1. تم تسجيل طلبك وإعطاؤه أولوية متابعة لدى فريق العمل.\n2. سنوافيك بالتحديث النهائي فوراً هنا في الشات.\n• للمساعدة الفورية في أي وقت، يمكنك التواصل مع خط الطوارئ الخاص بنا.`
-        : `${clean}\n\n📌 Next Steps & Resolution:\n1. Your request has been logged with our priority support queue.\n2. We will confirm resolution within minutes.\n• For immediate assistance, feel free to contact our direct store line.`;
-
-    default:
-      return draftText;
-  }
+  return draftText;
 }
 
 export async function translateContent(text, targetLang = 'en') {
   const raw = String(text || '').trim();
   if (!raw) return '';
 
-  const puterToken = process.env.PUTER_AUTH_TOKEN || process.env.PUTER_API_KEY;
-  if (puterToken) {
-    try {
-      puter.setAuthToken(puterToken);
-      const prompt = `Translate the following customer support text accurately into target language code "${targetLang}". Output ONLY the translated text without commentary or quotes:\n\n${raw}`;
-      const res = await puter.ai.chat(prompt, { model: process.env.PUTER_MODEL || 'gpt-5.4-nano' });
-      const translated = res?.message?.content || (typeof res === 'string' ? res : res?.text);
-      if (translated && String(translated).trim()) return String(translated).trim();
-    } catch (e) {
-      console.warn('Puter translation fallback:', e.message);
-    }
-  }
-
-  const geminiKey = process.env.GEMINI_API_KEY;
-  if (geminiKey) {
-    try {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiKey}`;
-      const prompt = `Translate the following customer support text accurately into target language code "${targetLang}". Output ONLY the translated text without commentary or quotes:\n\n${raw}`;
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.1, maxOutputTokens: 250 }
-        })
-      });
-      if (res.ok) {
-        const data = await res.json();
-        const translated = data.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
-        if (translated) return translated;
-      }
-    } catch (e) {
-      console.warn('LLM translation fallback:', e.message);
-    }
-  }
-
-  // Instant High-Fidelity Rule-Based Dictionary Engine
-  const langMap = {
-    fr: {
-      'welcome': 'Bienvenue chez nous! Comment pouvons-nous vous aider aujourd\'hui? ☕',
-      'hours': 'Nos horaires d\'ouverture sont de 8h00 à minuit tous les jours.',
-      'delay': 'Nous nous excusons sincèrement pour le retard. Nous vérifions votre commande immédiatement.'
-    },
-    de: {
-      'welcome': 'Willkommen bei uns! Wie können wir Ihnen heute helfen? ☕',
-      'hours': 'Unsere Öffnungszeiten sind täglich von 8:00 bis 24:00 Uhr.',
-      'delay': 'Wir entschuldigen uns aufrichtig für die Verzögerung. Wir überprüfen Ihre Bestellung sofort.'
-    },
-    es: {
-      'welcome': '¡Bienvenido a nuestro café! ¿En qué podemos ayudarte hoy? ☕',
-      'hours': 'Nuestro horario de atención es todos los días de 8:00 a 24:00.',
-      'delay': 'Nos disculpamos sinceramente por el retraso. Estamos verificando su pedido ahora mismo.'
-    },
-    it: {
-      'welcome': 'Benvenuto da noi! Come possiamo aiutarti oggi? ☕',
-      'hours': 'I nostri orari di apertura sono tutti i giorni dalle 8:00 alle 24:00.',
-      'delay': 'Ci scusiamo sinceramente per il ritardo. Stiamo verificando il tuo ordine immediatamente.'
-    },
-    ar: {
-      'hello': 'أهلاً بك! كيف يمكننا مساعدتك اليوم؟ ☕',
-      'sorry': 'نعتذر بشدة عن أي تأخير، جاري متابعة طلبك فوراً.',
-      'thank you': 'شكراً جزيلاً لتواصلك معنا!'
-    }
-  };
-
-  const isArabic = /[\u0600-\u06FF]/.test(raw);
-
-  if (targetLang === 'en' && isArabic) {
-    if (raw.includes('نعتذر') || raw.includes('تأخير')) {
-      return 'We sincerely apologize for any delay. We are actively tracking your order with our dispatch team right now.';
-    }
-    if (raw.includes('مواعيد') || raw.includes('فاتحين')) {
-      return 'Our opening hours are daily from 8:00 AM to 12:00 Midnight. You are always welcome!';
-    }
-    if (raw.includes('مكان') || raw.includes('عنوان')) {
-      return 'We are located at our main downtown branch. Looking forward to welcoming you!';
-    }
-    return `[English Translation]: ${raw}`;
-  }
-
-  if ((targetLang === 'ar' || targetLang === 'ar-EG') && !isArabic) {
-    if (raw.toLowerCase().includes('apologize') || raw.toLowerCase().includes('sorry')) {
-      return 'نعتذر لحضرتك جداً عن أي إزعاج، ونعمل على متابعة طلبك وحل الأمر فوراً. 🙏';
-    }
-    if (raw.toLowerCase().includes('welcome') || raw.toLowerCase().includes('hello')) {
-      return 'أهلاً بحضرتك وسعداء بتواصلك معنا! كيف يمكننا خدمتك اليوم؟ ☕';
-    }
-    if (raw.toLowerCase().includes('hour') || raw.toLowerCase().includes('open')) {
-      return 'مواعيد عملنا يومياً من 8:00 صباحاً وحتى 12:00 منتصف الليل.';
-    }
-    return `[الترجمة للعربية]: ${raw}`;
-  }
-
-  if (langMap[targetLang]) {
-    if (raw.toLowerCase().includes('sorry') || raw.toLowerCase().includes('delay') || raw.includes('تأخير')) {
-      return langMap[targetLang]['delay'];
-    }
-    if (raw.toLowerCase().includes('hour') || raw.includes('مواعيد')) {
-      return langMap[targetLang]['hours'];
-    }
-    return langMap[targetLang]['welcome'];
-  }
+  const prompt = `Translate the following automotive dealership text accurately into target language code "${targetLang}". Output ONLY the translated text without commentary or quotes:\n\n${raw}`;
+  const puterReply = await callPuterAI([{ role: 'user', content: prompt }]);
+  if (puterReply) return puterReply;
 
   return `[Translated to ${targetLang.toUpperCase()}]: ${raw}`;
 }
-

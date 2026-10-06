@@ -27,20 +27,20 @@ async function runTestSuite() {
 
     // Test 2: getConfig
     const cfg = db.getConfig();
-    assert(cfg && cfg.business && cfg.business.name === 'Nour Coffee House', '2. getConfig() returns valid business profile');
+    assert(cfg && cfg.business && cfg.business.name.includes('الفارس للسيارات'), '2. getConfig() returns valid business profile for Al-Fares Motors');
     assert(typeof cfg.whatsapp?.hasAccessToken === 'boolean', '2b. getConfig() provides hasAccessToken boolean flag');
 
     // Test 3: saveConfig
-    const updatedCfg = await db.saveConfig({ business: { tagline: 'Premium Specialty Coffee & Pastries' } });
-    assert(updatedCfg.business.tagline === 'Premium Specialty Coffee & Pastries', '3. saveConfig() updates business configuration');
+    const updatedCfg = await db.saveConfig({ business: { tagline: 'أفضل وجهة لشراء واستبدال السيارات الزيرو والمستعملة' } });
+    assert(updatedCfg.business.tagline === 'أفضل وجهة لشراء واستبدال السيارات الزيرو والمستعملة', '3. saveConfig() updates business configuration');
 
     // Test 4: Logs & Customer Auto-Creation
     const testPhone = '201099998888';
     const log = await db.addLog({
       from: testPhone,
       name: 'Test Customer',
-      incoming: 'What are your hours?',
-      reply: 'We are open 8 AM to 10 PM.',
+      incoming: 'عايز اعرف تفاصيل مرسيدس C200 زيرو والتقسيط',
+      reply: 'أهلاً بك! مرسيدس C200 AMG موديل 2024 متوفرة بسعر 3,450,000 ج.م مع تقسيط حتى 5 سنوات.',
       status: 'sent',
       responseTimeMs: 250
     });
@@ -54,7 +54,7 @@ async function runTestSuite() {
     assert(cust && cust.phone === testPhone && cust.name === 'Test Customer', '5. getCustomer() retrieves customer auto-created from log');
     assert(cust.messageCount >= 1, '5b. Customer messageCount incremented');
 
-    const updatedCust = await db.updateCustomer(testPhone, { tags: ['VIP', 'Special'] });
+    const updatedCust = await db.updateCustomer(testPhone, { tags: ['VIP', 'Car Buyer'] });
     assert(updatedCust.tags.includes('VIP'), '5c. updateCustomer() updates customer tags');
 
     const allCusts = db.getAllCustomers();
@@ -71,52 +71,53 @@ async function runTestSuite() {
     const convs = db.getCustomerConversations();
     assert(Array.isArray(convs) && convs.some(c => c.phone === testPhone), '7. getCustomerConversations() groups chats by phone');
 
-    // Test 8: Orders & Revenue
+    // Test 8: Orders & Revenue (Car Purchase / Deposit Bookings)
     const order = await db.createOrder({
       clientPhone: testPhone,
       clientName: 'Test Customer',
-      items: [{ name: 'Flat white', qty: 2, price: '65 EGP', subtotal: '130 EGP' }],
-      total: '130 EGP',
-      address: '10 Test St'
+      items: [{ name: 'Mercedes-Benz C200 AMG 2024 (Deposit)', qty: 1, price: '100,000 EGP', subtotal: '100,000 EGP' }],
+      total: '100,000 EGP',
+      address: 'معرض الفارس للسيارات - التجمع الخامس'
     });
-    assert(order && order.orderNumber.startsWith('ORD-'), '8. createOrder() creates order with ORD- sequence');
-    assert(db.parseOrderAmount(order.total) === 130, '8b. parseOrderAmount() correctly parses total');
+    assert(order && (order.orderNumber.startsWith('ORD-') || order.orderNumber.startsWith('CAR-')), '8. createOrder() creates order with sequence');
+    assert(db.parseOrderAmount(order.total) === 100000, '8b. parseOrderAmount() correctly parses total');
 
     const updatedOrder = await db.updateOrderStatus(order.id, 'confirmed');
     assert(updatedOrder.status === 'confirmed', '8c. updateOrderStatus() updates order status');
 
-    // Test 9: Reservations
+    // Test 9: Test Drive & Showroom Appointments
     const res = await db.createReservation({
       clientPhone: testPhone,
       clientName: 'Test Customer',
-      partySize: 3,
-      date: 'Tomorrow',
-      time: '6:00 PM'
+      partySize: 2,
+      date: 'غداً',
+      time: '5:00 PM',
+      carModel: 'BMW 320i M-Sport'
     });
-    assert(res && res.partySize === 3, '9. createReservation() creates booking with party size');
+    assert(res && res.partySize === 2, '9. createReservation() creates test drive appointment');
     const updatedRes = await db.updateReservationStatus(res.id, 'completed');
     assert(updatedRes.status === 'completed', '9b. updateReservationStatus() updates status');
 
     // Test 10: Broadcast Campaigns
     const camp = await db.createCampaign({
-      title: 'Test Promo',
-      message: 'Exclusive 20% off today!',
+      title: 'عروض تقسيط سيارات 2024',
+      message: 'تقسيط بدون مقدم على موديلات مختارة لفترة محدودة!',
       targetTag: 'all',
       sentCount: 25
     });
-    assert(camp && camp.title === 'Test Promo', '10. createCampaign() creates campaign');
+    assert(camp && camp.title === 'عروض تقسيط سيارات 2024', '10. createCampaign() creates campaign');
     const camps = db.getCampaigns();
     assert(camps.some(c => c.id === camp.id), '10b. getCampaigns() lists campaign');
 
     // Test 11: Metrics & Unanswered Questions
-    await db.recordUnanswered('Do you have cold brew on tap?');
+    await db.recordUnanswered('هل يوجد بورش ماكان 2023 مستعملة؟');
     const metrics = await db.getMetrics(7);
     assert(metrics && metrics.days === 7, '11. getMetrics(7) returns 7-day metrics');
     assert(Array.isArray(metrics.hourly) && metrics.hourly.length === 24, '11b. Metrics include 24-hour distribution');
     assert(metrics.business && typeof metrics.business.totalRevenue === 'number', '11c. Business revenue calculated');
 
     // Test 12: Team RBAC
-    const member = await db.inviteTeamMember({ name: 'Staff Member', email: 'staff@test.com', role: 'editor' });
+    const member = await db.inviteTeamMember({ name: 'Car Sales Advisor', email: 'sales@alfaresmotors.com', role: 'editor' });
     assert(member && member.role === 'editor', '12. inviteTeamMember() adds editor');
     const roleUpdated = await db.updateMemberRole(member.id, 'admin');
     assert(roleUpdated.role === 'admin', '12b. updateMemberRole() updates role to admin');
@@ -124,8 +125,8 @@ async function runTestSuite() {
     assert(!db.getTeamMembers().some(m => m.id === member.id), '12c. removeTeamMember() removes member');
 
     // Test 13: Message Templates
-    const rendered = db.renderTemplate('welcome', { business_name: 'Nour Coffee' });
-    assert(rendered.includes('Nour Coffee'), '13. renderTemplate() correctly replaces template variables');
+    const rendered = db.renderTemplate('welcome', { business_name: 'الفارس للسيارات' });
+    assert(rendered.includes('الفارس للسيارات'), '13. renderTemplate() correctly replaces template variables');
 
     const newTpl = await db.addTemplate({ scenario: 'test_tpl', name: 'Test Template', content: 'Hi {name}!' });
     assert(db.renderTemplate('test_tpl', { name: 'Alex' }) === 'Hi Alex!', '13b. addTemplate() creates working template');
@@ -133,10 +134,10 @@ async function runTestSuite() {
 
     // Test 14: Knowledge Base Articles
     const article = await db.addArticle({
-      title: 'Specialty Roasting Guide',
-      category: 'Coffee Education',
-      tags: ['roast', 'beans'],
-      content: 'We roast small batches weekly.'
+      title: 'دليل فحص السيارات المستعملة (150 نقطة)',
+      category: 'فحص وضمان',
+      tags: ['فحص', 'ضمان', 'مستعمل'],
+      content: 'يتم فحص الهيكل والمحرك وناقل الحركة وكمبيوتر السيارة.'
     });
     assert(article && article.id, '14. addArticle() adds knowledge base article');
     await db.updateArticle(article.id, { title: 'Master Specialty Roasting Guide' });

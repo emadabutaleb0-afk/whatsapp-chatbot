@@ -1,1156 +1,1146 @@
 {
   "config": {
     "business": {
-      "name": "Nour Coffee House",
-      "tagline": "Specialty coffee & fresh pastries",
-      "about": "Artisanal roastery and specialty coffee shop serving single-origin coffees, handcrafted brews, and fresh daily pastries in downtown.",
-      "hours": "Mon–Thu: 8:00 AM – 10:00 PM\nFri–Sat: 8:00 AM – 12:00 AM\nSunday: closed",
-      "location": "12 Nile St., 2nd floor, next to City Bank — Downtown",
-      "mapsUrl": "https://maps.app.goo.gl/example",
-      "phone": "+20 100 000 0000",
-      "delivery": "Delivery within 5 km, 30–45 min, 25 EGP fee.",
-      "payment": "Cash, Visa, Mastercard, InstaPay.",
-      "policies": "Returns within 14 days with receipt. Table reservations for 6+ people only.",
-      "faqs": "Free high-speed Wi-Fi available. Power outlets at every table. Quiet work environment on weekdays.",
-      "language": "Reply in the same language the client writes in.",
-      "tone": "Friendly, concise and professional.",
-      "latitude": 30.0444,
-      "longitude": 31.2357
+      "name": "Al-Fares Motors | الفارس للسيارات",
+      "tagline": "أفضل وجهة لشراء واستبدال السيارات الزيرو والمستعملة",
+      "about": "Al-Fares Motors is your premier automotive dealership specializing in brand-new and certified pre-owned vehicles with comprehensive multi-point inspection, flexible bank installment plans, official manufacturer warranties, and direct trade-in options.",
+      "hours": "Saturday–Thursday: 9:00 AM – 11:00 PM\nFriday: 1:30 PM – 11:00 PM",
+      "location": "Plot 45, Auto Market District, Ring Road Entrance, New Cairo / Downtown Showroom",
+      "mapsUrl": "https://maps.app.goo.gl/alfaresmotors",
+      "phone": "+20 100 888 9900",
+      "delivery": "Nationwide vehicle delivery on flatbed carrier within 24-48 hours. Showroom pickup & private test drives available.",
+      "payment": "Cash, Direct Bank Transfer, Visa / Mastercard, Islamic & Conventional Auto Loans (Installments up to 7 years with 20% down payment), Direct Trade-in (تبديل وتقسيط الفارق).",
+      "policies": "Comprehensive 150-point inspection certificate included with all pre-owned cars. 3-year warranty on new cars. 6-month engine & transmission warranty on certified used cars. Fair market trade-in valuation.",
+      "faqs": "Test drives require a valid national ID and driver license. Instant loan approval partnerships with all major banks. Full registration and license paperwork assistance provided.",
+      "language": "Reply naturally and politely in Egyptian Arabic, Standard Arabic, English, or Franco-Arab according to the client language.",
+      "tone": "Professional, trustworthy, helpful, automotive-expert and courteous.",
+      "latitude": 30.0131,
+      "longitude": 31.4289
     },
     "products": [
       {
-        "name": "Flat white",
-        "price": "65 EGP",
-        "category": "Hot drinks",
-        "stock": "In stock",
-        "image": "",
-        "description": "Double shot with steamed milk, 8oz"
+        "id": "car_1",
+        "name": "Mercedes-Benz C200 2024 AMG (Zero / New)",
+        "price": "3,850,000 EGP",
+        "category": "New Cars (Zero)",
+        "stock": "In Stock (Showroom)",
+        "description": "Brand new 2024 zero km, 1.5L Turbo Mild-Hybrid, AMG Line interior & exterior, Panoramic sunroof, Burmester 3D Sound, Digital Light headlights, 360 Cameras, Official Agent Warranty.",
+        "image": "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&auto=format&fit=crop&q=80",
+        "specs": {
+          "condition": "New (Zero)",
+          "year": 2024,
+          "mileage": "0 km",
+          "engine": "1.5L Turbo 204 hp",
+          "transmission": "9G-Tronic Automatic",
+          "fuel": "Petrol",
+          "color": "Obsidian Black / Polar White",
+          "warranty": "3 Years Agency Warranty"
+        }
       },
       {
-        "name": "Spanish Latte (Iced)",
-        "price": "85 EGP",
-        "category": "Cold drinks",
-        "stock": "In stock",
-        "image": "",
-        "description": "Espresso with sweetened condensed milk and fresh milk over ice"
+        "id": "car_2",
+        "name": "BMW 320i 2023 M-Sport (Certified Used)",
+        "price": "2,650,000 EGP",
+        "category": "Used Cars (مستعمل بحالة الزيرو)",
+        "stock": "Available (1 Unit)",
+        "description": "Used 28,000 km, pristine factory paint (فابريكا بالكامل), full dealer service history, M-Sport Package, Harman Kardon audio, BMW Live Cockpit Professional, 19\" M wheels.",
+        "image": "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop&q=80",
+        "specs": {
+          "condition": "Used",
+          "year": 2023,
+          "mileage": "28,000 km",
+          "engine": "2.0L TwinPower Turbo 184 hp",
+          "transmission": "8-Speed Steptronic Sport",
+          "fuel": "Petrol",
+          "color": "Portimao Blue / Cognac Leather",
+          "warranty": "6 Months Dealership Engine Warranty"
+        }
       },
       {
-        "name": "V60 Specialty Drip",
-        "price": "75 EGP",
-        "category": "Single Origin",
-        "stock": "In stock",
-        "image": "",
-        "description": "Choice of Ethiopian Yirgacheffe or Colombian Huila"
+        "id": "car_3",
+        "name": "Toyota Corolla 2024 Smart (Zero / New)",
+        "price": "1,450,000 EGP",
+        "category": "New Cars (Zero)",
+        "stock": "In Stock (Multiple Colors)",
+        "description": "Brand new 2024 zero km, 1.6L Dual VVT-i, Smart Entry & Push Start, 8-inch Touchscreen with Apple CarPlay & Android Auto, Sunroof, Dual-zone Climate Control, 16\" Alloy rims.",
+        "image": "https://images.unsplash.com/photo-1623869675781-80aa31012a5a?w=800&auto=format&fit=crop&q=80",
+        "specs": {
+          "condition": "New (Zero)",
+          "year": 2024,
+          "mileage": "0 km",
+          "engine": "1.6L 120 hp",
+          "transmission": "CVT Automatic",
+          "fuel": "Petrol",
+          "color": "Silver / Super White / Celestite Grey",
+          "warranty": "5 Years / 150,000 km Agency Warranty"
+        }
       },
       {
-        "name": "Almond Croissant",
-        "price": "55 EGP",
-        "category": "Bakery",
-        "stock": "In stock",
-        "image": "",
-        "description": "Twice-baked French butter croissant with almond frangipane"
+        "id": "car_4",
+        "name": "Hyundai Tucson 2022 Turbo NX4 (Certified Used)",
+        "price": "1,580,000 EGP",
+        "category": "Used Cars (مستعمل بحالة الزيرو)",
+        "stock": "Available (1 Unit)",
+        "description": "Used 45,000 km, Top line with Panoramic roof, 100% factory original paint (فابريكا دواخل وخوارج), full agency service book, ventilated electric leather seats, smart power tailgate.",
+        "image": "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&auto=format&fit=crop&q=80",
+        "specs": {
+          "condition": "Used",
+          "year": 2022,
+          "mileage": "45,000 km",
+          "engine": "1.6L T-GDI 180 hp",
+          "transmission": "7-Speed DCT Dual Clutch",
+          "fuel": "Petrol",
+          "color": "Dark Knight Gray / Black Leather",
+          "warranty": "Certified 150-Point Technical Report"
+        }
+      },
+      {
+        "id": "car_5",
+        "name": "Kia Sportage 2024 GT-Line (Zero / New)",
+        "price": "1,950,000 EGP",
+        "category": "New Cars (Zero)",
+        "stock": "In Stock (Showroom)",
+        "description": "Brand new zero km, 1.6 Turbo 180 hp, GT-Line sports styling, Curved dual 12.3\" displays, 19\" alloy wheels, full driver assistance safety suite, wireless phone charging.",
+        "image": "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop&q=80",
+        "specs": {
+          "condition": "New (Zero)",
+          "year": 2024,
+          "mileage": "0 km",
+          "engine": "1.6L Turbo 180 hp",
+          "transmission": "7-Speed DCT",
+          "fuel": "Petrol",
+          "color": "Infra Red / Pearl White",
+          "warranty": "5 Years Agency Warranty"
+        }
+      },
+      {
+        "id": "car_6",
+        "name": "Range Rover Sport 2021 HSE Dynamic (Certified Used)",
+        "price": "4,900,000 EGP",
+        "category": "Used Cars (مستعمل بحالة الزيرو)",
+        "stock": "Available (1 Unit)",
+        "description": "Certified pre-owned 38,000 km, V6 Supercharged, Meridian Surround Audio, Soft-close doors, Adaptive Air Suspension, Head-Up Display, immaculate condition.",
+        "image": "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&auto=format&fit=crop&q=80",
+        "specs": {
+          "condition": "Used",
+          "year": 2021,
+          "mileage": "38,000 km",
+          "engine": "3.0L V6 Supercharged 360 hp",
+          "transmission": "8-Speed Automatic AWD",
+          "fuel": "Petrol",
+          "color": "Santorini Black / Ebony & Tan Leather",
+          "warranty": "1-Year Extended Powertrain Warranty"
+        }
       }
     ],
     "whatsapp": {
-      "phoneNumberId": "7794189252778687",
+      "phoneNumberId": "",
       "verifyToken": "my-secret-verify-token",
       "accessToken": "",
       "autoReply": true,
-      "fallback": "I'm not sure about that one — let me check with the team and get back to you shortly.",
-      "model": "gpt-5-nano"
+      "fallback": "سؤال ممتاز يا فندم! دعني أتأكد مع فريق المبيعات الفني وأرد على حضرتك فوراً.",
+      "model": "gpt-5.4-nano"
     },
     "faqEntries": [
       {
         "id": "faq1",
-        "question": "What are your opening hours?",
-        "answer": "We're open Mon–Thu from 8:00 AM to 10:00 PM, Fri–Sat from 8:00 AM to midnight, and closed on Sundays.",
-        "aliases": "are you open now?\nwhat time do you close?\nwhen do you open?",
+        "question": "What are your showroom opening hours? / ما هي مواعيد عمل المعرض؟",
+        "answer": "معرض الفارس للسيارات يرحب بحضراتكم يومياً:\n• السبت إلى الخميس: من 9:00 صباحاً حتى 11:00 مساءً.\n• الجمعة: من 1:30 ظهراً حتى 11:00 مساءً.\nيسعدنا زيارتكم في أي وقت أو حجز موعد معاينة وتجربة قيادة مسبقاً! 🚗",
+        "aliases": "مواعيد العمل ايه\nفاتحين دلوقتي؟\nشغالين الجمعة؟\nwhat time do you open?\nare you open today?",
         "mode": "exact"
       },
       {
         "id": "faq2",
-        "question": "Where are you located?",
-        "answer": "We are at 12 Nile St., 2nd floor, right next to City Bank in Downtown. Map: https://maps.app.goo.gl/example",
-        "aliases": "what is your address?\nhow do I find you?\nwhere is the shop?",
+        "question": "Where is your car showroom located? / أين يقع المعرض بالتحديد؟",
+        "answer": "فرعنا الرئيسي:\n📍 قطعة 45، منطقة سوق السيارات، مدخل الطريق الدائري، التجمع / القاهرة الجديدة.\nرابط لوكيشن خرائط جوجل: https://maps.app.goo.gl/alfaresmotors\nيسعدنا استقبالكم وسياراتنا جاهزة للمعينة والفحص!",
+        "aliases": "عنوان المعرض فين\nازاي اجي المعرض\nفين مكانكم بالضبط\nshow room address\nwhere are you located?",
         "mode": "exact"
       },
       {
         "id": "faq3",
-        "question": "Do you offer delivery?",
-        "answer": "Yes! We deliver within 5 km in 30–45 minutes for a 25 EGP delivery fee.",
-        "aliases": "can I order delivery?\ndo you deliver to my home?\nhow much is delivery fee?",
+        "question": "Do you offer car installment & financing plans? / هل يوجد تقسيط وعروض تمويل؟",
+        "answer": "نعم بكل تأكيد! 💳 نوفر برامج تقسيط مرنة بالتعاون مع جميع البنوك والشركات التمويلية:\n• مقدم يبدأ من 20% فقط.\n• فترات سداد مرنة تصل حتى 7 سنوات (84 شهراً).\n• فائدة تنافسية وبرامج بدون تأمين إجباري أو بدون إثبات دخل لبعض الفئات.\n• إمكانية استبدال سيارتك القديمة وتقسيط الفارق!\nللاستعلام عن قسط أي سيارة محددة، تواصل معنا وسنحسبها لك فوراً.",
+        "aliases": "في تقسيط؟\nنظام التقسيط ايه\nاقل مقدم كام\nتقسيط بنكي\ndo you have installment plans?\ncar finance",
         "mode": "exact"
       },
       {
         "id": "faq4",
-        "question": "What payment methods do you accept?",
-        "answer": "We accept Cash, Visa, Mastercard, and InstaPay.",
-        "aliases": "do you accept cards?\ncan I pay with instapay?\ndo you take cash?",
+        "question": "Can I trade in (exchange) my current car? / هل متاح استبدال أو بيع سيارتي القديمة؟",
+        "answer": "نعم، نوفر خدمة الاستبدال المباشر (Trade-In)! 🔄\nيقوم خبراؤنا بفحص سيارتك وتقديرها بأعلى سعر سوقي عادل، ويمكنك استخدام قيمتها كمقدم وشراء أي سيارة زيرو أو مستعملة من المعرض وتقسيط الفارق بكل سهولة.",
+        "aliases": "عايز ابدل عربيتي\nفي استبدال؟\nتبديل عربيات\ntrade in my car\ncar exchange",
+        "mode": "exact"
+      },
+      {
+        "id": "faq5",
+        "question": "Can I book a test drive? / كيف يمكنني حجز تجربة قيادة؟",
+        "answer": "بكل سرور! 🏎️ تجارب القيادة متاحة مجاناً لجميع السيارات بالمعرض. فقط أرسل لنا اسم السيارة المطلوبة واليوم والوقت المناسب لحضرتك (ورقم هاتفك)، وسيتم تجهيز السيارة وتأكيد موعد تجربة القيادة فوراً!",
+        "aliases": "عايز اجرب العربية\nحجز تجربة قيادة\ntest drive booking\ncan i test drive",
+        "mode": "exact"
+      },
+      {
+        "id": "faq6",
+        "question": "What are the warranties on used cars? / ما هي ضمانات السيارات المستعملة؟",
+        "answer": "جميع السيارات المستعملة لدينا:\n1. تخضع لفحص فني شامل يغطي 150 نقطة (شاسيه، محرك، فتيس، دهان، صالون).\n2. شهادة فحص معتمدة وضمان خلو الشاسيه والدواخل من أي حوادث.\n3. ضمان 6 أشهر على المحرك وناقل الحركة من المعرض.",
+        "aliases": "ضمان المستعمل ايه\nحالة العربيات المستعملة\nused cars warranty\ncar inspection",
         "mode": "exact"
       }
     ]
   },
   "logs": [
     {
-      "id": "msg_mul8yqj7wvzr",
-      "at": 1790599927507,
-      "from": "17863559966",
-      "name": "Jessica Laverdetman",
-      "incoming": "Hi!",
-      "reply": "Hello! Welcome to Nour Coffee House! ☕ How can I help you today with our hours, location, or menu?",
-      "status": "not_configured",
-      "error": "WhatsApp Cloud API Phone ID or Access Token not configured.",
-      "faqHit": false,
-      "isFallback": false,
-      "responseTimeMs": 3
+      "id": "msg_muwpty21ynhr",
+      "at": 1791293385385,
+      "from": "201099998888",
+      "name": "Test Customer",
+      "incoming": "عايز اعرف تفاصيل مرسيدس C200 زيرو والتقسيط",
+      "reply": "أهلاً بك! مرسيدس C200 AMG موديل 2024 متوفرة بسعر 3,450,000 ج.م مع تقسيط حتى 5 سنوات.",
+      "status": "sent",
+      "responseTimeMs": 250
+    },
+    {
+      "id": "msg_muwqay9yebya",
+      "at": 1791294178822,
+      "from": "201099998888",
+      "name": "Human Agent",
+      "incoming": null,
+      "reply": "مرسيدس c200",
+      "status": "sent",
+      "isHuman": true
+    },
+    {
+      "id": "msg_muwqb4nd77s6",
+      "at": 1791294187081,
+      "from": "201099998888",
+      "name": "Human Agent",
+      "incoming": null,
+      "reply": "موديل 2020",
+      "status": "sent",
+      "isHuman": true
+    },
+    {
+      "id": "msg_muwqcap7k9a7",
+      "at": 1791294241579,
+      "from": "201099998888",
+      "name": "Human Agent",
+      "incoming": null,
+      "reply": "أهلاً بيك يا فندم، يسعدنا نساعدك في مرسيدس C200 زيرو من Al-Fares Motors. تقدر حضرتك تبعتلي بياناتك عشان نجهزلك عرض التقسيط بدقة (المدة المطلوبة كام سنة + مقدم مبدئي كام + هل بتحبها تقسيط بنكي ولا تمويل من الشركة).**مبدئيًا، مواصفات مرسيدس C200 (زيرو) — معلومات عامة:**- **المحرك:** 4 سلندر Turbo بسعة **1.5 لتر**- **الناقل/الدفع:** **أوتوماتيك** + **دفع خلفي (RWD)**- **التجهيزات (حسب الفئة):** شاشة تاتش، نظام ملاحة/ميديا، كاميرا خلفية، حساسات ركن، بلوتوث/USB، إضاءة LED، ووسائل أمان ومساعدة سائق (حسب التجهيز).**التقسيط:**- نقدر نعرضلك **خطط تقسيط متعددة** حسب (المقدم/مدة السداد/الاستلام النقدي أو تمويل) — وعلشان كمان ما نضيّعش وقتك، لازم نحدد الفئة/التجهيز والمبلغ اللي يناسبك.  لو تحب، احجزّك **تجربة قيادة** في أقرب وقت أو نحدد موعد زيارة للمعرض/تسليم عرض رسمي بالتفاصيل،  **فضلاً ابعتلي:**  1) مقدم كام؟  2) التقسيط على كام شهر/سنة؟  3) حضرتك عايزها فئة إيه (Standard ولا Elegance حسب المتاح)؟  4) محافظة إيه؟",
+      "status": "sent",
+      "isHuman": true
+    },
+    {
+      "id": "msg_muwqcri7u434",
+      "at": 1791294263359,
+      "from": "201099998888",
+      "name": "Human Agent",
+      "incoming": null,
+      "reply": "كم السعر",
+      "status": "sent",
+      "isHuman": true
     }
   ],
   "demoMetrics": {
     "days": 30,
     "totals": {
-      "messages": 599,
-      "faqHits": 431,
-      "fallbacks": 32,
-      "pos": 442,
+      "messages": 825,
+      "faqHits": 663,
+      "fallbacks": 26,
+      "pos": 660,
       "neg": 0,
-      "neutral": 157
+      "neutral": 165
     },
     "business": {
-      "totalOrders": 4,
-      "totalRevenue": 450,
+      "totalOrders": 1,
+      "totalRevenue": 100000,
       "totalReservations": 1,
-      "totalGuests": 4,
-      "totalCustomers": 36,
-      "repeatRate": 42,
-      "openHandoffs": 1,
-      "autoRate": 95
+      "totalGuests": 2,
+      "totalCustomers": 48,
+      "repeatRate": 38,
+      "openHandoffs": 0,
+      "autoRate": 97
     },
     "series": [
       {
-        "date": "2026-08-25",
-        "messages": 25,
-        "faqHits": 18,
-        "fallbacks": 2,
-        "msCount": 25,
-        "msTotal": 23875,
-        "pos": 19,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-08-26",
-        "messages": 23,
-        "faqHits": 19,
-        "fallbacks": 1,
-        "msCount": 23,
-        "msTotal": 16169,
-        "pos": 17,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-08-27",
-        "messages": 19,
-        "faqHits": 13,
-        "fallbacks": 1,
-        "msCount": 19,
-        "msTotal": 28386,
-        "pos": 14,
-        "neg": 0,
-        "neutral": 5
-      },
-      {
-        "date": "2026-08-28",
-        "messages": 30,
-        "faqHits": 20,
-        "fallbacks": 2,
-        "msCount": 30,
-        "msTotal": 40020,
-        "pos": 22,
-        "neg": 0,
-        "neutral": 8
-      },
-      {
-        "date": "2026-08-29",
-        "messages": 29,
-        "faqHits": 20,
-        "fallbacks": 2,
-        "msCount": 29,
-        "msTotal": 38396,
-        "pos": 22,
-        "neg": 0,
-        "neutral": 7
-      },
-      {
-        "date": "2026-08-30",
-        "messages": 11,
-        "faqHits": 8,
-        "fallbacks": 0,
-        "msCount": 11,
-        "msTotal": 15565,
-        "pos": 8,
-        "neg": 0,
-        "neutral": 3
-      },
-      {
-        "date": "2026-08-31",
-        "messages": 9,
-        "faqHits": 6,
-        "fallbacks": 0,
-        "msCount": 9,
-        "msTotal": 13473,
-        "pos": 6,
-        "neg": 0,
-        "neutral": 3
-      },
-      {
-        "date": "2026-09-01",
-        "messages": 10,
-        "faqHits": 7,
-        "fallbacks": 0,
-        "msCount": 10,
-        "msTotal": 7510,
-        "pos": 7,
-        "neg": 0,
-        "neutral": 3
-      },
-      {
-        "date": "2026-09-02",
-        "messages": 11,
-        "faqHits": 8,
-        "fallbacks": 0,
-        "msCount": 11,
-        "msTotal": 9878,
-        "pos": 8,
-        "neg": 0,
-        "neutral": 3
-      },
-      {
-        "date": "2026-09-03",
-        "messages": 14,
-        "faqHits": 9,
-        "fallbacks": 1,
-        "msCount": 14,
-        "msTotal": 12222,
-        "pos": 10,
-        "neg": 0,
-        "neutral": 4
-      },
-      {
-        "date": "2026-09-04",
-        "messages": 27,
-        "faqHits": 18,
-        "fallbacks": 2,
-        "msCount": 27,
-        "msTotal": 39042,
-        "pos": 20,
-        "neg": 0,
-        "neutral": 7
-      },
-      {
-        "date": "2026-09-05",
-        "messages": 32,
-        "faqHits": 25,
-        "fallbacks": 2,
-        "msCount": 32,
-        "msTotal": 46048,
-        "pos": 24,
-        "neg": 0,
-        "neutral": 8
-      },
-      {
-        "date": "2026-09-06",
-        "messages": 19,
-        "faqHits": 13,
-        "fallbacks": 1,
-        "msCount": 19,
-        "msTotal": 26980,
-        "pos": 14,
-        "neg": 0,
-        "neutral": 5
-      },
-      {
         "date": "2026-09-07",
-        "messages": 24,
-        "faqHits": 19,
+        "messages": 34,
+        "faqHits": 27,
         "fallbacks": 1,
-        "msCount": 24,
-        "msTotal": 21648,
-        "pos": 18,
+        "msCount": 34,
+        "msTotal": 36210,
+        "pos": 27,
         "neg": 0,
-        "neutral": 6
+        "neutral": 7
       },
       {
         "date": "2026-09-08",
-        "messages": 22,
-        "faqHits": 15,
+        "messages": 32,
+        "faqHits": 24,
         "fallbacks": 1,
-        "msCount": 22,
-        "msTotal": 15532,
-        "pos": 16,
+        "msCount": 32,
+        "msTotal": 39680,
+        "pos": 26,
         "neg": 0,
         "neutral": 6
       },
       {
         "date": "2026-09-09",
-        "messages": 19,
-        "faqHits": 13,
+        "messages": 34,
+        "faqHits": 30,
         "fallbacks": 1,
-        "msCount": 19,
-        "msTotal": 21508,
-        "pos": 14,
+        "msCount": 34,
+        "msTotal": 40936,
+        "pos": 27,
         "neg": 0,
-        "neutral": 5
+        "neutral": 7
       },
       {
         "date": "2026-09-10",
-        "messages": 19,
-        "faqHits": 14,
-        "fallbacks": 1,
-        "msCount": 19,
-        "msTotal": 26163,
-        "pos": 14,
+        "messages": 42,
+        "faqHits": 35,
+        "fallbacks": 2,
+        "msCount": 42,
+        "msTotal": 42840,
+        "pos": 34,
         "neg": 0,
-        "neutral": 5
+        "neutral": 8
       },
       {
         "date": "2026-09-11",
-        "messages": 26,
-        "faqHits": 18,
-        "fallbacks": 2,
-        "msCount": 26,
-        "msTotal": 33722,
-        "pos": 19,
+        "messages": 36,
+        "faqHits": 28,
+        "fallbacks": 1,
+        "msCount": 36,
+        "msTotal": 24300,
+        "pos": 29,
         "neg": 0,
         "neutral": 7
       },
       {
         "date": "2026-09-12",
         "messages": 20,
-        "faqHits": 13,
+        "faqHits": 17,
         "fallbacks": 1,
         "msCount": 20,
-        "msTotal": 21480,
-        "pos": 15,
+        "msTotal": 13300,
+        "pos": 16,
         "neg": 0,
-        "neutral": 5
+        "neutral": 4
       },
       {
         "date": "2026-09-13",
-        "messages": 11,
-        "faqHits": 7,
+        "messages": 14,
+        "faqHits": 11,
         "fallbacks": 0,
-        "msCount": 11,
-        "msTotal": 10065,
-        "pos": 8,
+        "msCount": 14,
+        "msTotal": 11088,
+        "pos": 11,
         "neg": 0,
         "neutral": 3
       },
       {
         "date": "2026-09-14",
-        "messages": 12,
-        "faqHits": 8,
+        "messages": 17,
+        "faqHits": 13,
         "fallbacks": 0,
-        "msCount": 12,
-        "msTotal": 9192,
-        "pos": 9,
+        "msCount": 17,
+        "msTotal": 18292,
+        "pos": 13,
         "neg": 0,
-        "neutral": 3
+        "neutral": 4
       },
       {
         "date": "2026-09-15",
-        "messages": 10,
-        "faqHits": 7,
+        "messages": 13,
+        "faqHits": 11,
         "fallbacks": 0,
-        "msCount": 10,
-        "msTotal": 11510,
-        "pos": 7,
+        "msCount": 13,
+        "msTotal": 15496,
+        "pos": 10,
         "neg": 0,
         "neutral": 3
       },
       {
         "date": "2026-09-16",
-        "messages": 15,
-        "faqHits": 12,
+        "messages": 23,
+        "faqHits": 20,
         "fallbacks": 1,
-        "msCount": 15,
-        "msTotal": 20760,
-        "pos": 11,
+        "msCount": 23,
+        "msTotal": 25668,
+        "pos": 18,
         "neg": 0,
-        "neutral": 4
+        "neutral": 5
       },
       {
         "date": "2026-09-17",
-        "messages": 15,
-        "faqHits": 10,
+        "messages": 31,
+        "faqHits": 27,
         "fallbacks": 1,
-        "msCount": 15,
-        "msTotal": 13005,
-        "pos": 11,
+        "msCount": 31,
+        "msTotal": 29667,
+        "pos": 25,
         "neg": 0,
-        "neutral": 4
+        "neutral": 6
       },
       {
         "date": "2026-09-18",
-        "messages": 32,
-        "faqHits": 23,
-        "fallbacks": 2,
-        "msCount": 32,
-        "msTotal": 41152,
-        "pos": 24,
+        "messages": 36,
+        "faqHits": 32,
+        "fallbacks": 1,
+        "msCount": 36,
+        "msTotal": 36360,
+        "pos": 29,
         "neg": 0,
-        "neutral": 8
+        "neutral": 7
       },
       {
         "date": "2026-09-19",
-        "messages": 33,
-        "faqHits": 26,
-        "fallbacks": 2,
-        "msCount": 33,
-        "msTotal": 45177,
-        "pos": 25,
+        "messages": 27,
+        "faqHits": 20,
+        "fallbacks": 1,
+        "msCount": 27,
+        "msTotal": 19602,
+        "pos": 22,
         "neg": 0,
-        "neutral": 8
+        "neutral": 5
       },
       {
         "date": "2026-09-20",
-        "messages": 25,
-        "faqHits": 17,
-        "fallbacks": 2,
-        "msCount": 25,
-        "msTotal": 27050,
-        "pos": 19,
+        "messages": 31,
+        "faqHits": 26,
+        "fallbacks": 1,
+        "msCount": 31,
+        "msTotal": 22971,
+        "pos": 25,
         "neg": 0,
         "neutral": 6
       },
       {
         "date": "2026-09-21",
-        "messages": 21,
-        "faqHits": 17,
+        "messages": 28,
+        "faqHits": 22,
         "fallbacks": 1,
-        "msCount": 21,
-        "msTotal": 29442,
-        "pos": 15,
+        "msCount": 28,
+        "msTotal": 23016,
+        "pos": 22,
         "neg": 0,
         "neutral": 6
       },
       {
         "date": "2026-09-22",
-        "messages": 22,
-        "faqHits": 17,
+        "messages": 32,
+        "faqHits": 25,
         "fallbacks": 1,
-        "msCount": 22,
-        "msTotal": 23496,
-        "pos": 16,
+        "msCount": 32,
+        "msTotal": 26144,
+        "pos": 26,
         "neg": 0,
         "neutral": 6
       },
       {
         "date": "2026-09-23",
-        "messages": 14,
-        "faqHits": 11,
+        "messages": 25,
+        "faqHits": 20,
         "fallbacks": 1,
-        "msCount": 14,
-        "msTotal": 18256,
-        "pos": 10,
+        "msCount": 25,
+        "msTotal": 24625,
+        "pos": 20,
+        "neg": 0,
+        "neutral": 5
+      },
+      {
+        "date": "2026-09-24",
+        "messages": 30,
+        "faqHits": 24,
+        "fallbacks": 1,
+        "msCount": 30,
+        "msTotal": 25530,
+        "pos": 24,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-09-25",
+        "messages": 34,
+        "faqHits": 27,
+        "fallbacks": 1,
+        "msCount": 34,
+        "msTotal": 41378,
+        "pos": 27,
+        "neg": 0,
+        "neutral": 7
+      },
+      {
+        "date": "2026-09-26",
+        "messages": 16,
+        "faqHits": 12,
+        "fallbacks": 0,
+        "msCount": 16,
+        "msTotal": 18784,
+        "pos": 13,
+        "neg": 0,
+        "neutral": 3
+      },
+      {
+        "date": "2026-09-27",
+        "messages": 15,
+        "faqHits": 12,
+        "fallbacks": 0,
+        "msCount": 15,
+        "msTotal": 15495,
+        "pos": 12,
+        "neg": 0,
+        "neutral": 3
+      },
+      {
+        "date": "2026-09-28",
+        "messages": 17,
+        "faqHits": 15,
+        "fallbacks": 0,
+        "msCount": 17,
+        "msTotal": 18870,
+        "pos": 13,
         "neg": 0,
         "neutral": 4
+      },
+      {
+        "date": "2026-09-29",
+        "messages": 21,
+        "faqHits": 15,
+        "fallbacks": 1,
+        "msCount": 21,
+        "msTotal": 19467,
+        "pos": 17,
+        "neg": 0,
+        "neutral": 4
+      },
+      {
+        "date": "2026-09-30",
+        "messages": 25,
+        "faqHits": 19,
+        "fallbacks": 1,
+        "msCount": 25,
+        "msTotal": 19500,
+        "pos": 20,
+        "neg": 0,
+        "neutral": 5
+      },
+      {
+        "date": "2026-10-01",
+        "messages": 37,
+        "faqHits": 28,
+        "fallbacks": 1,
+        "msCount": 37,
+        "msTotal": 34447,
+        "pos": 30,
+        "neg": 0,
+        "neutral": 7
+      },
+      {
+        "date": "2026-10-02",
+        "messages": 42,
+        "faqHits": 32,
+        "fallbacks": 2,
+        "msCount": 42,
+        "msTotal": 33222,
+        "pos": 34,
+        "neg": 0,
+        "neutral": 8
+      },
+      {
+        "date": "2026-10-03",
+        "messages": 28,
+        "faqHits": 21,
+        "fallbacks": 1,
+        "msCount": 28,
+        "msTotal": 31388,
+        "pos": 22,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-10-04",
+        "messages": 31,
+        "faqHits": 26,
+        "fallbacks": 1,
+        "msCount": 31,
+        "msTotal": 34379,
+        "pos": 25,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-10-05",
+        "messages": 29,
+        "faqHits": 23,
+        "fallbacks": 1,
+        "msCount": 29,
+        "msTotal": 24621,
+        "pos": 23,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-10-06",
+        "messages": 25,
+        "faqHits": 21,
+        "fallbacks": 1,
+        "msCount": 25,
+        "msTotal": 28300,
+        "pos": 20,
+        "neg": 0,
+        "neutral": 5
       }
     ],
     "hourly": [
       {
         "hour": 0,
         "label": "00:00",
-        "messages": 6,
-        "faqHits": 4,
+        "messages": 8,
+        "faqHits": 6,
         "fallbacks": 2
       },
       {
         "hour": 1,
         "label": "01:00",
-        "messages": 6,
-        "faqHits": 4,
-        "fallbacks": 2
+        "messages": 4,
+        "faqHits": 3,
+        "fallbacks": 1
       },
       {
         "hour": 2,
         "label": "02:00",
-        "messages": 3,
-        "faqHits": 2,
+        "messages": 4,
+        "faqHits": 3,
         "fallbacks": 1
       },
       {
         "hour": 3,
         "label": "03:00",
-        "messages": 3,
-        "faqHits": 2,
+        "messages": 4,
+        "faqHits": 3,
         "fallbacks": 1
       },
       {
         "hour": 4,
         "label": "04:00",
-        "messages": 3,
-        "faqHits": 2,
+        "messages": 4,
+        "faqHits": 3,
         "fallbacks": 1
       },
       {
         "hour": 5,
         "label": "05:00",
-        "messages": 6,
-        "faqHits": 4,
+        "messages": 8,
+        "faqHits": 6,
         "fallbacks": 2
       },
       {
         "hour": 6,
         "label": "06:00",
-        "messages": 12,
-        "faqHits": 9,
-        "fallbacks": 3
+        "messages": 17,
+        "faqHits": 13,
+        "fallbacks": 4
       },
       {
         "hour": 7,
         "label": "07:00",
-        "messages": 24,
-        "faqHits": 17,
-        "fallbacks": 7
+        "messages": 25,
+        "faqHits": 20,
+        "fallbacks": 5
       },
       {
         "hour": 8,
         "label": "08:00",
-        "messages": 42,
-        "faqHits": 30,
-        "fallbacks": 12
+        "messages": 50,
+        "faqHits": 39,
+        "fallbacks": 11
       },
       {
         "hour": 9,
         "label": "09:00",
-        "messages": 48,
-        "faqHits": 35,
-        "fallbacks": 13
+        "messages": 66,
+        "faqHits": 51,
+        "fallbacks": 15
       },
       {
         "hour": 10,
         "label": "10:00",
-        "messages": 54,
-        "faqHits": 39,
-        "fallbacks": 15
+        "messages": 83,
+        "faqHits": 65,
+        "fallbacks": 18
       },
       {
         "hour": 11,
         "label": "11:00",
-        "messages": 48,
-        "faqHits": 35,
-        "fallbacks": 13
+        "messages": 74,
+        "faqHits": 58,
+        "fallbacks": 16
       },
       {
         "hour": 12,
         "label": "12:00",
-        "messages": 42,
-        "faqHits": 30,
-        "fallbacks": 12
+        "messages": 66,
+        "faqHits": 51,
+        "fallbacks": 15
       },
       {
         "hour": 13,
         "label": "13:00",
-        "messages": 36,
-        "faqHits": 26,
-        "fallbacks": 10
+        "messages": 58,
+        "faqHits": 45,
+        "fallbacks": 13
       },
       {
         "hour": 14,
         "label": "14:00",
-        "messages": 30,
-        "faqHits": 22,
-        "fallbacks": 8
+        "messages": 50,
+        "faqHits": 39,
+        "fallbacks": 11
       },
       {
         "hour": 15,
         "label": "15:00",
-        "messages": 36,
-        "faqHits": 26,
-        "fallbacks": 10
+        "messages": 58,
+        "faqHits": 45,
+        "fallbacks": 13
       },
       {
         "hour": 16,
         "label": "16:00",
-        "messages": 42,
-        "faqHits": 30,
-        "fallbacks": 12
+        "messages": 66,
+        "faqHits": 51,
+        "fallbacks": 15
       },
       {
         "hour": 17,
         "label": "17:00",
-        "messages": 54,
-        "faqHits": 39,
-        "fallbacks": 15
+        "messages": 74,
+        "faqHits": 58,
+        "fallbacks": 16
       },
       {
         "hour": 18,
         "label": "18:00",
-        "messages": 66,
-        "faqHits": 48,
-        "fallbacks": 18
+        "messages": 91,
+        "faqHits": 71,
+        "fallbacks": 20
       },
       {
         "hour": 19,
         "label": "19:00",
-        "messages": 60,
-        "faqHits": 43,
-        "fallbacks": 17
+        "messages": 83,
+        "faqHits": 65,
+        "fallbacks": 18
       },
       {
         "hour": 20,
         "label": "20:00",
-        "messages": 48,
-        "faqHits": 35,
-        "fallbacks": 13
+        "messages": 66,
+        "faqHits": 51,
+        "fallbacks": 15
       },
       {
         "hour": 21,
         "label": "21:00",
-        "messages": 36,
-        "faqHits": 26,
-        "fallbacks": 10
+        "messages": 50,
+        "faqHits": 39,
+        "fallbacks": 11
       },
       {
         "hour": 22,
         "label": "22:00",
-        "messages": 24,
-        "faqHits": 17,
-        "fallbacks": 7
+        "messages": 25,
+        "faqHits": 20,
+        "fallbacks": 5
       },
       {
         "hour": 23,
         "label": "23:00",
-        "messages": 12,
-        "faqHits": 9,
-        "fallbacks": 3
+        "messages": 8,
+        "faqHits": 6,
+        "fallbacks": 2
       }
     ],
-    "avgMs": 1180,
+    "avgMs": 964,
     "topics": [
       {
-        "label": "Opening hours",
-        "count": 173
+        "label": "أسعار ومواصفات السيارات",
+        "count": 288
       },
       {
-        "label": "Products & prices",
-        "count": 161
+        "label": "برامج التقسيط والتمويل البنكي",
+        "count": 231
       },
       {
-        "label": "Orders & checkout",
-        "count": 119
+        "label": "حجز تجارب القيادة (Test Drive)",
+        "count": 148
       },
       {
-        "label": "Table bookings",
-        "count": 83
+        "label": "استبدال السيارات (Trade-In)",
+        "count": 99
       },
       {
-        "label": "Location & maps",
-        "count": 59
+        "label": "عنوان المعرض والمواعيد",
+        "count": 57
       }
     ],
     "topQuestions": [
       {
-        "question": "What time do you close tonight?",
-        "count": 54
+        "question": "بكام مرسيدس C200 زيرو 2024؟",
+        "count": 99
       },
       {
-        "question": "Where are you located exactly?",
-        "count": 42
+        "question": "هل في تقسيط للبي ام دبليو 320 ومقدمها كام؟",
+        "count": 83
       },
       {
-        "question": "How much is the flat white?",
-        "count": 36
+        "question": "عايز احجز تجربة قيادة لتويوتا كورولا بكره",
+        "count": 66
       },
       {
-        "question": "Can I book a table for 4 tomorrow?",
-        "count": 30
+        "question": "ممكن ابدل عربيتي النترا واخد كيا سبورتاج؟",
+        "count": 50
       },
       {
-        "question": "عايز اطلب دليفري للمهندسين",
-        "count": 24
+        "question": "مواعيد المعرض يوم الجمعة ايه؟",
+        "count": 41
       },
       {
-        "question": "Do you accept InstaPay?",
-        "count": 21
+        "question": "هل العربيات المستعملة فابريكا بالكامل ومعاها فحص؟",
+        "count": 33
       }
     ],
     "unanswered": [
       {
-        "question": "Do you offer whole coffee beans in 1kg bags?",
-        "count": 5
-      },
-      {
-        "question": "Can we reserve the entire rooftop for an event?",
-        "count": 3
-      },
-      {
-        "question": "Do you have vegan gluten-free bakery items?",
-        "count": 2
+        "question": "هل يوجد بورش ماكان 2023 مستعملة؟",
+        "count": 1,
+        "createdAt": 1791293386134
       }
     ],
     "recentActivity": [
       {
-        "id": "ticket_mucp4pzqaqcf",
+        "id": "ticket_muwptzfarvs2",
         "type": "handoff",
-        "title": "Staff Handover · Client",
-        "detail": "Requested human support",
-        "timestamp": 1790082885014,
-        "badgeClass": "bg-rose-50 text-rose-700",
-        "badgeText": "open",
+        "title": "Car Sales Advisor Handover · Client",
+        "detail": "Client requested sales advisor for negotiation/finance",
+        "timestamp": 1791293387158,
+        "badgeClass": "bg-slate-50 text-slate-600",
+        "badgeText": "resolved",
         "icon": "user-check"
       },
       {
-        "id": "res_mucn3gtafvm9",
+        "id": "res_muwptyduvlkq",
         "type": "reservation",
-        "title": "Table for 4 · Preview Client",
-        "detail": "Tomorrow Evening at 4  at Tomorrow Evening at 4  · Standard booking",
-        "timestamp": 1790079467230,
+        "title": "Test Drive (2 guest) · Test Customer",
+        "detail": "غداً at 5:00 PM · Test Drive Appointment",
+        "timestamp": 1791293385810,
         "badgeClass": "bg-teal-50 text-teal-700",
-        "badgeText": "confirmed",
+        "badgeText": "completed",
         "icon": "calendar"
       },
       {
-        "id": "ord_mucn3gq28t75",
+        "id": "ord_muwptyarsqyd",
         "type": "order",
-        "title": "Order ORD-0001 · Preview Client",
-        "detail": "210 EGP (شامل 25 EGP توصيل) · Status: confirmed",
-        "timestamp": 1790079467114,
+        "title": "Car Booking CAR-0001 · Test Customer",
+        "detail": "100,000 EGP · Status: confirmed",
+        "timestamp": 1791293385699,
         "badgeClass": "bg-amber-50 text-amber-700",
         "badgeText": "confirmed",
-        "icon": "shopping-bag"
+        "icon": "car"
       }
     ],
     "insights": [
       {
-        "category": "Peak Hours Alert",
+        "category": "Showroom Traffic & Peak Hours",
         "icon": "clock",
-        "title": "High customer volume between 6:00 PM – 9:00 PM",
-        "description": "Over 31% of daily inquiries, food orders, and bookings arrive in the evening. Keep response templates and delivery staff ready.",
+        "title": "Peak automotive inquiries between 5:00 PM – 9:30 PM",
+        "description": "Over 40% of car financing and test drive inquiries arrive in the evening. Automotive sales advisors should be active on WhatsApp.",
         "tone": "info"
       },
       {
-        "category": "Automation Opportunity",
+        "category": "Inventory & FAQ Opportunity",
         "icon": "sparkles",
-        "title": "3 recurring questions need FAQ answers",
-        "description": "Clients frequently ask about \"Do you offer whole coffee beans in 1kg bags?\". Adding this as an exact FAQ entry could boost auto-resolution to 99%.",
+        "title": "3 recurring questions need vehicle FAQ answers",
+        "description": "Clients frequently inquire about \"هل متوفر استيراد سيارات معاقين أو سيارات كهربائية تسلا؟\". Adding this as an exact FAQ entry boosts AI auto-resolution to 99%.",
         "tone": "action",
-        "actionQuestion": "Do you offer whole coffee beans in 1kg bags?"
+        "actionQuestion": "هل متوفر استيراد سيارات معاقين أو سيارات كهربائية تسلا؟"
       },
       {
-        "category": "Revenue & Orders",
+        "category": "Automotive Sales & Pipeline",
         "icon": "trending-up",
-        "title": "1 orders logged via WhatsApp (210 EGP)",
-        "description": "WhatsApp cart checkout is actively converting conversations into sales. Most popular item is Flat White.",
+        "title": "1 car purchases logged via WhatsApp (100,000 EGP)",
+        "description": "Conversational car sales pipeline is actively converting clients into showroom visits and deposits. Top searched: Mercedes C200 & BMW 320i.",
         "tone": "success"
       },
       {
-        "category": "Bot Response Speed",
+        "category": "AI Real-Time Response Rate",
         "icon": "zap",
-        "title": "Avg. response time: 1.2s",
-        "description": "Your assistant responds 94% faster than human agents, preventing drop-offs and abandoned inquiries.",
+        "title": "Avg. response time: 1.0s",
+        "description": "Your dealership AI replies in ~1 second, delivering instant vehicle specs, photos, and installment calculations 24/7.",
         "tone": "success"
       }
     ]
   },
-  "unanswered": [],
+  "unanswered": [
+    {
+      "question": "هل يوجد بورش ماكان 2023 مستعملة؟",
+      "count": 1,
+      "createdAt": 1791293386134
+    }
+  ],
   "orders": [
     {
-      "id": "ord_mul7k3imi4zd",
-      "orderNumber": "ORD-0004",
-      "clientPhone": "201012345678",
-      "clientName": "Preview Client",
+      "id": "ord_muwptyarsqyd",
+      "orderNumber": "CAR-0001",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
       "items": [
         {
-          "name": "Almond Croissant",
+          "name": "Mercedes-Benz C200 AMG 2024 (Deposit)",
           "qty": 1,
-          "price": "55 EGP",
-          "subtotal": "55 EGP"
+          "price": "100,000 EGP",
+          "subtotal": "100,000 EGP"
         }
       ],
-      "total": "80 EGP (includes 25 EGP delivery)",
-      "address": "Pending address from chat",
-      "notes": "",
-      "status": "pending",
-      "at": 1790597564878
-    },
-    {
-      "id": "ord_mul7jmtwwujo",
-      "orderNumber": "ORD-0003",
-      "clientPhone": "201012345678",
-      "clientName": "Preview Client",
-      "items": [
-        {
-          "name": "Almond Croissant",
-          "qty": 1,
-          "price": "55 EGP",
-          "subtotal": "55 EGP"
-        }
-      ],
-      "total": "80 EGP (includes 25 EGP delivery)",
-      "address": "Pending address from chat",
-      "notes": "",
-      "status": "pending",
-      "at": 1790597543252
-    },
-    {
-      "id": "ord_mul7i0ff4ylq",
-      "orderNumber": "ORD-0002",
-      "clientPhone": "201012345678",
-      "clientName": "Preview Client",
-      "items": [
-        {
-          "name": "Almond Croissant",
-          "qty": 1,
-          "price": "55 EGP",
-          "subtotal": "55 EGP"
-        }
-      ],
-      "total": "80 EGP (includes 25 EGP delivery)",
-      "address": "Pending address from chat",
-      "notes": "",
-      "status": "pending",
-      "at": 1790597467563
-    },
-    {
-      "id": "ord_mucn3gq28t75",
-      "orderNumber": "ORD-0001",
-      "clientPhone": "201012345678",
-      "clientName": "Preview Client",
-      "items": [
-        {
-          "name": "Flat white",
-          "qty": 2,
-          "price": "65 EGP",
-          "subtotal": "130 EGP"
-        },
-        {
-          "name": "Almond Croissant",
-          "qty": 1,
-          "price": "55 EGP",
-          "subtotal": "55 EGP"
-        }
-      ],
-      "total": "210 EGP (شامل 25 EGP توصيل)",
-      "address": "عنوان العميل عبر الواتساب",
+      "total": "100,000 EGP",
+      "address": "معرض الفارس للسيارات - التجمع الخامس",
       "notes": "",
       "status": "confirmed",
-      "at": 1790079467114,
-      "updatedAt": 1790163860457
+      "at": 1791293385699,
+      "updatedAt": 1791293385753
     }
   ],
   "reservations": [
     {
-      "id": "res_mucn3gtafvm9",
-      "clientPhone": "201012345678",
-      "clientName": "Preview Client",
-      "partySize": 4,
-      "date": "Tomorrow Evening at 4 ",
-      "time": "Tomorrow Evening at 4 ",
-      "notes": "",
-      "status": "confirmed",
-      "at": 1790079467230
+      "id": "res_muwptyduvlkq",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "partySize": 2,
+      "date": "غداً",
+      "time": "5:00 PM",
+      "notes": "Test Drive Appointment",
+      "status": "completed",
+      "at": 1791293385810,
+      "updatedAt": 1791293385936
     }
   ],
   "customers": {
-    "201012345678": {
-      "phone": "201012345678",
+    "201099998888": {
+      "phone": "201099998888",
       "name": "Human Agent",
       "tags": [
-        "New Client",
-        "Buyer",
-        "Reservation Guest",
-        "Regular"
+        "VIP",
+        "Car Buyer",
+        "Test Drive Guest"
       ],
-      "isHumanTakeover": false,
-      "takeoverUntil": null,
+      "isHumanTakeover": true,
+      "takeoverUntil": 1791297863349,
       "cart": [],
-      "orderCount": 4,
-      "totalSpent": 21265,
-      "createdAt": 1790079403830,
-      "lastSeen": 1790596596293,
-      "messageCount": 3
-    },
-    "201198765432": {
-      "phone": "201198765432",
-      "name": "Sara Karim",
-      "tags": [
-        "New Client"
-      ],
-      "isHumanTakeover": false,
-      "takeoverUntil": null,
-      "cart": [],
-      "orderCount": 0,
-      "totalSpent": 0,
-      "createdAt": 1790083381761,
-      "lastSeen": 1790083381761
-    },
-    "201255556666": {
-      "phone": "201255556666",
-      "name": "Omar Sherif",
-      "tags": [
-        "New Client"
-      ],
-      "isHumanTakeover": false,
-      "takeoverUntil": null,
-      "cart": [],
-      "orderCount": 0,
-      "totalSpent": 0,
-      "createdAt": 1790083381761,
-      "lastSeen": 1790083381761
-    },
-    "201099887766": {
-      "phone": "201099887766",
-      "name": "Fatima Zahra",
-      "tags": [
-        "New Client"
-      ],
-      "isHumanTakeover": false,
-      "takeoverUntil": null,
-      "cart": [],
-      "orderCount": 0,
-      "totalSpent": 0,
-      "createdAt": 1790083381761,
-      "lastSeen": 1790083381761
-    },
-    "17863559966": {
-      "phone": "17863559966",
-      "name": "Jessica Laverdetman",
-      "tags": [
-        "New Client"
-      ],
-      "isHumanTakeover": false,
-      "takeoverUntil": null,
-      "cart": [],
-      "orderCount": 0,
-      "totalSpent": 0,
-      "createdAt": 1790599927508,
-      "lastSeen": 1790599927508,
-      "messageCount": 1
+      "orderCount": 1,
+      "totalSpent": 100000,
+      "createdAt": 1791293385386,
+      "lastSeen": 1791294263359,
+      "messageCount": 5
     }
   },
   "campaigns": [
     {
-      "id": "camp_mul7s19imh96",
-      "title": "Broadcast",
-      "message": "خصم 15% على جميع المشروبات الساخنة هذا الاسبوع! ☕",
+      "id": "camp_muwptykr54l3",
+      "title": "عروض تقسيط سيارات 2024",
+      "message": "تقسيط بدون مقدم على موديلات مختارة لفترة محدودة!",
       "targetTag": "all",
-      "sentCount": 4,
+      "sentCount": 25,
       "status": "sent",
-      "at": 1790597935206
-    },
-    {
-      "id": "camp_mucn23wrozmk",
-      "title": "خصم نهاية الاسبوع",
-      "message": "خصم 15% على جميع المشروبات الساخنة هذا الاسبوع! ☕",
-      "targetTag": "all",
-      "sentCount": 1,
-      "status": "sent",
-      "at": 1790079403851
+      "at": 1791293386059
     }
   ],
   "teamMembers": [
     {
       "id": "team_1",
-      "name": "Emad Hamza (Owner)",
-      "email": "owner@business.com",
+      "name": "Emad Hamza (Dealership Director)",
+      "email": "director@alfaresmotors.com",
       "role": "admin",
       "status": "active",
-      "addedAt": 1787488346194
+      "addedAt": 1788701385247
     },
     {
       "id": "team_2",
-      "name": "Omar Sherif (Support)",
-      "email": "omar@business.com",
+      "name": "Karim Mansour (Sales Advisor & Appraisals)",
+      "email": "karim@alfaresmotors.com",
       "role": "editor",
       "status": "active",
-      "addedAt": 1788870746194
+      "addedAt": 1790083785247
     },
     {
       "id": "team_3",
-      "name": "Laila Mostafa (Analyst)",
-      "email": "laila@business.com",
+      "name": "Nour El-Din (Finance & Banking Specialist)",
+      "email": "finance@alfaresmotors.com",
       "role": "viewer",
       "status": "active",
-      "addedAt": 1789648346194
+      "addedAt": 1790861385247
     }
   ],
   "templates": [
     {
       "id": "tpl_welcome",
       "scenario": "welcome",
-      "name": "Welcome Greeting",
+      "name": "Car Dealership Welcome",
       "description": "Sent on first contact or greeting",
-      "content": "Welcome to {business_name}! How can our friendly team help you today?",
+      "content": "أهلاً بك في {business_name}! 🚗 الوكيل المفضل لأفضل السيارات الزيرو والمستعملة بحالة المصنع. كيف يمكننا مساعدتك اليوم بخصوص موديلات السيارات المتاحة، عروض التقسيط، أو حجز تجربة قيادة؟",
       "enabled": true
     },
     {
       "id": "tpl_out_of_hours",
       "scenario": "out_of_hours",
-      "name": "Out of Hours Message",
+      "name": "Showroom Out of Hours",
       "description": "Sent when clients message after closing time",
-      "content": "We're currently closed! Our opening hours are:\n{hours}\nWe will reply to your message first thing in the morning! 🌙",
+      "content": "شكراً لتواصلك مع {business_name}! 🌙 المعرض مغلق حالياً. مواعيد العمل الرسمية:\n{hours}\nسنتواصل مع حضرتك أول ساعات الصباح للإجابة على كامل استفساراتك!",
       "enabled": true
     },
     {
-      "id": "tpl_order_confirm",
-      "scenario": "order_confirm",
-      "name": "Order Confirmation",
-      "description": "Sent when client confirms delivery order",
-      "content": "Your order {order_number} has been confirmed! 🛍️\nTotal: {total}\nExpected delivery time: 30-45 minutes. Thank you for choosing {business_name}!",
-      "enabled": true
-    },
-    {
-      "id": "tpl_booking_confirm",
+      "id": "tpl_testdrive_confirm",
       "scenario": "booking_confirm",
-      "name": "Table Reservation Confirmation",
-      "description": "Sent when table reservation is placed",
-      "content": "Your table reservation for {party_size} guests on {time} is confirmed! 📅\nWe look forward to welcoming you at {business_name}.",
+      "name": "Test Drive / Inspection Appointment Confirmation",
+      "description": "Sent when a test drive or showroom visit is confirmed",
+      "content": "تم تأكيد موعدك بنجاح في {business_name}! 📅\n• السيارة / الموعد: {time}\n• عدد الضيوف: {party_size}\nالمعرض بانتظارك لتجربة القيادة والفحص الفني. نتشرف بزيارتكم!",
+      "enabled": true
+    },
+    {
+      "id": "tpl_car_reservation",
+      "scenario": "order_confirm",
+      "name": "Car Purchase & Booking Confirmation",
+      "description": "Sent when client confirms booking or earnest money request",
+      "content": "تم تسجيل طلب حجز السيارة برقم {order_number} بنجاح! 🚘\n• السيارة / القيمة: {total}\nفريق المبيعات سيتواصل معك لتجهيز أوراق التمويل والتسليم الفوري. شكراً لاختيارك {business_name}!",
       "enabled": true
     },
     {
       "id": "tpl_human_handover",
       "scenario": "human_handover",
-      "name": "Human Agent Handover",
-      "description": "Sent when customer requests human agent",
-      "content": "We have connected you with our team. A staff member will reply here shortly! 👨‍💼",
+      "name": "Automotive Sales Specialist Handover",
+      "description": "Sent when client requests sales advisor",
+      "content": "تم تحويل المحادثة لأحد مستشاري المبيعات وخبراء السيارات لدينا وسيقوم بالتواصل معك فوراً هنا في الشات للإجابة عن أدق التفاصيل الفنية والتمويلية. 👨‍💼🚗",
       "enabled": true
     },
     {
       "id": "tpl_location_pin",
       "scenario": "location_pin",
-      "name": "Location & Map Pin",
-      "description": "Sent when client requests shop address",
-      "content": "We are located at: {address}.\nGoogle Maps location: {map_url} 📍",
+      "name": "Showroom Location & GPS Pin",
+      "description": "Sent when client requests dealership address",
+      "content": "مقر معرضنا: {address}.\nرابط موقعنا على خرائط جوجل: {map_url} 📍\nتنورنا في أي وقت للمعاينة!",
       "enabled": true
     }
   ],
   "articles": [
     {
-      "id": "art_refund_policy",
-      "title": "Refund, Return & Cancellation Policy",
-      "category": "Billing & Orders",
+      "id": "art_financing_calculator",
+      "title": "أنظمة التقسيط التمويلي وشروط البنوك (Auto Loans & Installments)",
+      "category": "Finance & Payments",
       "tags": [
-        "refund",
-        "return",
-        "cancel",
-        "money back",
-        "استرجاع",
-        "استرداد",
-        "الغاء"
+        "installment",
+        "finance",
+        "تقسيط",
+        "بنوك",
+        "مقدم",
+        "قسط",
+        "قرض سيارة"
       ],
-      "content": "Customers can cancel orders free of charge within 10 minutes of placement. For cold/hot beverages and prepared food, refunds are issued immediately if the wrong item or damaged packaging was received. For retail coffee beans and equipment, unopened items can be returned within 14 days with original receipt. Refunds are processed to original payment method or instant store credit within 24-48 hours.",
-      "updatedAt": 1789478034606
+      "content": "نوفر تقسيطاً مصرفياً مباشراً عبر أكثر من 12 بنكاً مصرياً وعربياً. يبدأ المقدم من 20% للسيارات الزيرو و 25% للسيارات المستعملة، مع فترات سداد تمتد من سنة إلى 7 سنوات. الأوراق المطلوبة للموظفين: صورة بطاقة الرقم القومي، إثبات دخل حديث، وإيصال مرافق. لأصحاب الأعمال والمهن الحرة: سجل تجاري وبطاقة ضريبية وكشف حساب بنكي لآخر 6 أشهر. متاح أيضاً برامج بدون إثبات دخل بمقدم 40% إلى 50%.",
+      "updatedAt": 1790688585247
     },
     {
-      "id": "art_delivery_zones",
-      "title": "Delivery Zones, Timelines & Minimum Spend",
-      "category": "Delivery & Pickup",
+      "id": "art_used_cars_inspection",
+      "title": "معايير فحص وضمان السيارات المستعملة (150-Point Inspection)",
+      "category": "Vehicle Quality",
       "tags": [
+        "inspection",
+        "used cars",
+        "ضمان",
+        "فحص",
+        "فابريكا",
+        "شاسيه",
+        "مستعمل"
+      ],
+      "content": "تخضع كل سيارة مستعملة بالمعرض لتقرير فحص فني دقيق يشمل: سلامة الشاسيه والعفشة بنسبة 100%، فحص طلاء الهيكل بجهاز ديجيتال لتوثيق الفابريكا، فحص المحرك والفتيس بالكمبيوتر، مطابقة العداد الفعلي عبر مراكز الخدمة المعتمدة. نمنح العميل ضماناً لمدة 6 أشهر أو 10,000 كم ضد عيوب المحرك وناقل الحركة مع أحقية فحص السيارة بأي مركز معتمد يختاره العميل.",
+      "updatedAt": 1790861385247
+    },
+    {
+      "id": "art_trade_in_process",
+      "title": "إجراءات استبدال السيارات وتقييم السعر (Trade-In Program)",
+      "category": "Trade-In & Sales",
+      "tags": [
+        "trade in",
+        "exchange",
+        "استبدال",
+        "تبديل",
+        "بيع عربيتي",
+        "تقييم"
+      ],
+      "content": "يمكنك إحضار سيارتك الحالية لأي من فروعنا للحصول على تقييم فني وتثميني فوري خلال 30 دقيقة. يحصل العميل على أعلى سعر سوقي عادل لسيارته، ويتم احتساب القيمة كدفعة أولى أو مقدم لشراء أي سيارة أخرى (زيرو أو مستعملة)، مع تقسيط المبلغ المتبقي على أقساط مريحة دون الحاجة لدفع أي سيولة نقدية جديدة.",
+      "updatedAt": 1791034185247
+    },
+    {
+      "id": "art_licensing_delivery",
+      "title": "إجراءات الترخيص ونقل الملكية وشحن السيارات (Licensing & Delivery)",
+      "category": "Operations & Services",
+      "tags": [
+        "license",
         "delivery",
-        "zones",
-        "shipping",
-        "areas",
-        "توصيل",
-        "مناطق",
-        "دليفري"
+        "ترخيص",
+        "مرور",
+        "تسليم",
+        "شحن",
+        "ونش"
       ],
-      "content": "We deliver within a 10 km radius of our downtown branch including Zamalek, Dokki, Mohandessin, Maadi, and New Cairo (via express courier). Delivery times average 30 to 45 minutes for standard coffee and pastries. Minimum order for delivery is 100 EGP. Free delivery applies on all orders exceeding 300 EGP.",
-      "updatedAt": 1789650834606
-    },
-    {
-      "id": "art_payment_methods",
-      "title": "Accepted Payment Methods & Billing Troubleshooting",
-      "category": "Billing & Orders",
-      "tags": [
-        "payment",
-        "instapay",
-        "vodafone cash",
-        "credit card",
-        "دفع",
-        "انستاباي",
-        "فيزا"
-      ],
-      "content": "We accept Cash on Delivery, Visa / MasterCard credit and debit cards, InstaPay (nourcoffee@instapay), and Vodafone Cash / Mobile Wallets (+201099887766). If an electronic transaction fails, do not re-attempt immediately; send your payment transaction screenshot here and our finance team will manually confirm within 5 minutes.",
-      "updatedAt": 1789823634606
-    },
-    {
-      "id": "art_special_events",
-      "title": "Private Events, Catering & Co-Working Bookings",
-      "category": "Services & Events",
-      "tags": [
-        "catering",
-        "events",
-        "meeting room",
-        "work",
-        "حفلات",
-        "اجتماعات",
-        "مساحة عمل"
-      ],
-      "content": "Our mezzanine floor is available for private meetings and workshops for groups up to 25 people. High-speed 500 Mbps fiber Wi-Fi and presentation screens are complimentary. Espresso bar catering is available for corporate events and weddings. Booking requests require 48-hour advance notice.",
-      "updatedAt": 1789910034606
+      "content": "يقوم فريق العلاقات الحكومية بالمعرض بإنهاء جميع إجراءات المرور ونقل الملكية وتجديد الرخص بالنيابة عن العميل وتوفير لوحات تجارية للتسليم الفوري. كما نوفر خدمة شحن وتوصيل السيارات حتى باب المنزل بجميع محافظات الجمهورية عبر حاملات سيارات مؤمنة بالكامل.",
+      "updatedAt": 1791120585247
     }
   ],
   "handoffTickets": [
     {
-      "id": "ticket_mucp4pzqaqcf",
-      "phone": "201012345678",
-      "name": "Preview Client",
-      "issueSummary": "Customer reported an escalation/complaint: \"عايز اكلم حد ضروري عندي مشكلة في الاوردر متأخر\"",
-      "sentiment": "Frustrated",
-      "lastMessage": "عايز اكلم حد ضروري عندي مشكلة في الاوردر متأخر",
+      "id": "ticket_muwptzfarvs2",
+      "phone": "201099998888",
+      "name": "Test Customer",
+      "issueSummary": "Need help with custom order",
+      "sentiment": "Neutral",
+      "lastMessage": "",
       "intentType": "HUMAN_TAKEOVER",
-      "status": "open",
-      "createdAt": 1790082885014
+      "status": "resolved",
+      "createdAt": 1791293387158,
+      "resolvedAt": 1791293387292
     }
   ],
   "knowledgeGaps": [
     {
-      "id": "gap_wifi_password",
-      "question": "What is the guest Wi-Fi network and password? / هل في واي فاي؟",
-      "frequency": 24,
-      "category": "Store Amenities",
-      "suggestedTitle": "Guest Wi-Fi Access & Network Credentials",
-      "suggestedDraft": "We provide free high-speed 500 Mbps fiber Wi-Fi. Network Name: NourCoffee_Guest, Password: CoffeeAndCode2026. Works on all laptops and phones.",
-      "status": "addressed",
-      "detectedAt": 1789737650698,
-      "addressedAt": 1790083323246,
-      "linkedArticleId": "art_test_123"
-    },
-    {
-      "id": "gap_vegan_dairy_free",
-      "question": "Do you offer oat milk, almond milk, or dairy-free options for drinks? / في لبن نباتي؟",
-      "frequency": 19,
-      "category": "Menu & Ingredients",
-      "suggestedTitle": "Plant-Based & Dairy-Free Milk Substitutes",
-      "suggestedDraft": "Yes! We offer Barista-grade Oat Milk, Almond Milk, and Coconut Milk for +15 EGP on any hot or iced drink. Completely vegan and lactose-free.",
-      "status": "addressed",
-      "detectedAt": 1789824050698,
-      "addressedAt": 1790083381736,
-      "linkedArticleId": "art_test_123"
-    },
-    {
-      "id": "gap_parking_spots",
-      "question": "Is there parking available near the branch? / في ركنة أو جراج قريب؟",
-      "frequency": 15,
-      "category": "Location & Access",
-      "suggestedTitle": "Parking Facilities & Nearby Garages",
-      "suggestedDraft": "Street parking is available directly in front of the café along Tahrir St. An underground public parking garage is also located 100 meters away.",
+      "id": "gap_hybrid_electric",
+      "question": "هل متوفر سيارات هايبرد أو كهربائية بالكامل؟ / Do you sell Hybrid or Electric cars?",
+      "frequency": 32,
+      "category": "Inventory & Electric Vehicles",
+      "suggestedTitle": "السيارات الهايبرد والكهربائية المتاحة وشواحنها (EV & Hybrid)",
+      "suggestedDraft": "نعم! نوفر تشكيلة من سيارات الهايبرد (Mild-Hybrid و Plug-in Hybrid) مثل مرسيدس C-Class وتويوتا كورولا هايبرد، مع خدمة توريد شواحن منزلية معتمدة.",
       "status": "open",
-      "detectedAt": 1789910450698,
+      "detectedAt": 1790947785247,
       "addressedAt": null
     },
     {
-      "id": "gap_gift_cards",
-      "question": "Do you sell physical or digital gift cards for friends? / في كروت هدايا؟",
-      "frequency": 11,
-      "category": "Loyalty & Gifts",
-      "suggestedTitle": "Gift Cards & Digital Balance Vouchers",
-      "suggestedDraft": "Yes, physical gift cards are sold at our cash register in 250, 500, and 1000 EGP denominations. Digital gift balances can also be gifted directly via WhatsApp.",
-      "status": "addressed",
-      "detectedAt": 1789392050698,
-      "addressedAt": 1789996850698
+      "id": "gap_down_payment_no_work",
+      "question": "هل يمكن التقسيط بمقدم 30% بدون مفردات مرتب لربات البيوت أو بدون وظيفة؟",
+      "frequency": 24,
+      "category": "Finance & Eligibility",
+      "suggestedTitle": "برامج التقسيط بدون استعلام عمل أو إثبات دخل رسمي",
+      "suggestedDraft": "نعم، متاح برامج تمويل خاصة بدون إثبات دخل رسمي بمقدم يبدأ من 40% إلى 50% بصورة البطاقة القومية فقط وفترة سداد حتى 5 سنوات.",
+      "status": "open",
+      "detectedAt": 1791034185247,
+      "addressedAt": null
+    },
+    {
+      "id": "gap_insurance_packages",
+      "question": "هل التأمين الإجباري شامل طوال فترة القسط وما هي الشركات المعتمدة؟",
+      "frequency": 18,
+      "category": "Insurance Policies",
+      "suggestedTitle": "باقات التأمين الشامل التنافسية على السيارات",
+      "suggestedDraft": "نتعامل مع أكبر شركات التأمين المعتمدة بنسب اشتراك تبدأ من 2.2% سنوياً مع وثائق تغطي الحوادث الكلية والجزئية والسرقة والحريق مع إمكانية التقسيط.",
+      "status": "open",
+      "detectedAt": 1791120585247,
+      "addressedAt": null
     }
   ]
 }

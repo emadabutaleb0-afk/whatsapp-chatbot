@@ -267,21 +267,30 @@ async function saveAll() {
   }
 }
 
-/* ============================== Products ============================== */
+/* ============================== Cars Database / Products ============================== */
 
 function productRow(p, i) {
+  const isUsed = (p.category || '').toLowerCase().includes('used') || (p.category || '').includes('مستعمل');
   return `
   <div class="card" data-prod="${i}">
     <div class="flex items-start gap-3">
       <div class="grid flex-1 gap-3 md:grid-cols-2">
-        <label class="field"><span>Product / service name</span><input class="inp p-name" value="${esc(p.name)}" placeholder="Flat white"></label>
-        <label class="field"><span>Price</span><input class="inp p-price" value="${esc(p.price)}" placeholder="65 EGP"></label>
-        <label class="field"><span>Category</span><input class="inp p-cat" value="${esc(p.category)}" placeholder="Hot drinks"></label>
-        <label class="field"><span>Availability</span><input class="inp p-stock" value="${esc(p.stock)}" placeholder="In stock"></label>
-        <label class="field md:col-span-2"><span>Image URL (shared with clients on WhatsApp)</span><input class="inp p-image" value="${esc(p.image)}" placeholder="https://example.com/flatwhite.jpg"></label>
-        <label class="field md:col-span-2"><span>Short description</span><input class="inp p-desc" value="${esc(p.description)}" placeholder="Double shot with steamed milk, 8oz"></label>
+        <label class="field md:col-span-2">
+          <div class="flex items-center justify-between">
+            <span>Car Model &amp; Trim (Make, Model, Year)</span>
+            <span class="rounded px-2 py-0.5 text-[10px] font-bold uppercase ${isUsed ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}">${isUsed ? 'Certified Used' : 'New / Zero'}</span>
+          </div>
+          <input class="inp p-name" value="${esc(p.name)}" placeholder="e.g. Mercedes-Benz C200 2024 AMG (Zero / New)">
+        </label>
+        <label class="field"><span>Price</span><input class="inp p-price" value="${esc(p.price)}" placeholder="e.g. 3,850,000 EGP"></label>
+        <label class="field"><span>Category / Condition</span>
+          <input class="inp p-cat" value="${esc(p.category)}" placeholder="New Cars (Zero) / Used Cars (Certified)">
+        </label>
+        <label class="field"><span>Availability / Stock</span><input class="inp p-stock" value="${esc(p.stock)}" placeholder="In Stock (Showroom)"></label>
+        <label class="field"><span>Car Photo Link (Sent to clients via WhatsApp)</span><input class="inp p-image" value="${esc(p.image)}" placeholder="https://example.com/car.jpg"></label>
+        <label class="field md:col-span-2"><span>Vehicle Specifications &amp; Warranty Details</span><input class="inp p-desc" value="${esc(p.description)}" placeholder="e.g. 1.5L Turbo 204hp, AMG Line, Panoramic roof, 0 km, 3-year warranty"></label>
       </div>
-      <button class="p-del mt-6 rounded-lg p-2 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600" title="Remove">
+      <button class="p-del mt-6 rounded-lg p-2 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600" title="Remove Car">
         <i data-lucide="trash-2" class="h-4 w-4"></i>
       </button>
     </div>
@@ -296,9 +305,9 @@ function renderProducts() {
   if (!list.length) {
     host.innerHTML = `
     <div class="rounded-xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
-      <i data-lucide="tag" class="mx-auto h-6 w-6 text-slate-300"></i>
-      <p class="mt-3 text-sm font-medium text-slate-700">No products yet</p>
-      <p class="mx-auto mt-1 max-w-sm text-sm text-slate-500">Add your items with exact prices and photo links — the bot quotes them and can send product photos!</p>
+      <i data-lucide="car" class="mx-auto h-6 w-6 text-slate-300"></i>
+      <p class="mt-3 text-sm font-medium text-slate-700">No cars in internal database</p>
+      <p class="mx-auto mt-1 max-w-sm text-sm text-slate-500">Add your new and used cars with exact specifications, prices, and photo links — the AI assistant quotes them and sends vehicle photos automatically on WhatsApp!</p>
     </div>`;
   } else {
     host.innerHTML = list.map(productRow).join('');

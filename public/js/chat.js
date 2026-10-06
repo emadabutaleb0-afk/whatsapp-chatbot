@@ -6,11 +6,12 @@ import { api, loadConvIndex, saveConvIndex, loadConversation, saveConversation, 
 let ctx = null;
 
 const SUGGESTIONS = [
-  'What time do you open today?',
-  'Where exactly are you located?',
-  'How much is the flat white?',
-  'Do you deliver to my area?',
-  'What payment methods do you accept?',
+  'What cars do you have in stock?',
+  'بكام مرسيدس C200 زيرو؟',
+  'هل في تقسيط للبي ام 320 ومقدمها كام؟',
+  'عايز احجز تجربة قيادة لتويوتا كورولا',
+  'ممكن ابدل عربيتي القديمة (Trade-in)؟',
+  'مواعيد وعنوان المعرض بالتفصيل'
 ];
 
 function timeLabel(ts) {
@@ -256,14 +257,14 @@ export async function sendMessage(text) {
         const cfg = ctx.state.config || {};
         const b = cfg.business || {};
         const isArabic = /[\u0600-\u06FF]/.test(userMsg.content);
-        const sysPrompt = `You are a helpful customer service representative for "${b.name || 'Nour Coffee House'}".
-Description: ${b.description || 'Specialty cafe'}
-Hours: ${b.hours || '8:00 AM - 12:00 AM'}
-Location: ${b.location || 'Downtown Cairo'}
-Delivery: ${b.delivery || 'Available'}
-Menu/Products: ${(cfg.products || []).map(p => `${p.name} (${p.price})`).join(', ')}
+        const sysPrompt = `You are the official AI Automotive Sales Specialist for "${b.name || 'Al-Fares Motors'}".
+Showroom: ${b.about || 'Dealership for New & Certified Pre-Owned Cars'}
+Hours: ${b.hours || 'Sat–Thu 9 AM – 11 PM, Fri 1:30 PM – 11 PM'}
+Location: ${b.location || 'New Cairo Auto Market Showroom'}
+Payment & Financing: ${b.payment || 'Cash, Bank installments up to 7 years from 20% down, direct trade-ins'}
+Vehicle Inventory: ${(cfg.products || []).map(p => `${p.name} (${p.price}, ${p.category})`).join('; ')}
 
-Answer customer inquiries accurately, politely, and naturally in ${isArabic ? 'Egyptian Arabic' : 'English'}. Keep responses friendly and concise.`;
+Answer customer questions accurately, politely, and naturally in ${isArabic ? 'Egyptian Arabic' : 'English'}. Keep responses friendly, structured, and helpful. Offer test drive bookings or showroom visits.`;
 
         const puterMessages = [
           { role: 'system', content: sysPrompt },

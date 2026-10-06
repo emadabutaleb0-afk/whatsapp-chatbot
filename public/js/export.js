@@ -42,7 +42,7 @@ export function exportLogsCSV(logs = []) {
   downloadFile(csvContent, `clientbot_messages_${dateStamp()}.csv`, 'text/csv;charset=utf-8;');
 }
 
-export function exportLogsPDF(logs = [], businessName = 'Nour Coffee House') {
+export function exportLogsPDF(logs = [], businessName = 'Al-Fares Motors') {
   if (!logs || !logs.length) {
     alert('No messages to export.');
     return;
@@ -141,19 +141,19 @@ export function exportMetricsCSV(metrics) {
     `"Automation Rate",${autoRate}%`,
     `"Client Satisfaction Rating",${t.pos + t.neg ? Math.round((t.pos / (t.pos + t.neg)) * 100) : 100}%`,
     `"Average Response Time",${(metrics.avgMs / 1000).toFixed(2)}s`,
-    `"Total Orders Placed",${b.totalOrders || 0}`,
+    `"Car Purchase Bookings",${b.totalOrders || 0}`,
     `"Total Revenue (EGP)",${b.totalRevenue || 0}`,
-    `"Table Bookings Confirmed",${b.totalReservations || 0} (${b.totalGuests || 0} guests)`,
+    `"Test Drives & Viewings",${b.totalReservations || 0} (${b.totalGuests || 0} guests)`,
     `"Active Customer Profiles",${b.totalCustomers || 0} (${b.repeatRate || 0}% repeat rate)`,
     '',
     headers.join(','),
     ...rows.map(r => r.join(','))
   ].join('\n');
 
-  downloadFile(csvContent, `clientbot_analytics_${dateStamp()}.csv`, 'text/csv;charset=utf-8;');
+  downloadFile(csvContent, `alfares_analytics_${dateStamp()}.csv`, 'text/csv;charset=utf-8;');
 }
 
-export function exportMetricsPDF(metrics, businessName = 'Nour Coffee House') {
+export function exportMetricsPDF(metrics, businessName = 'Al-Fares Motors') {
   if (!metrics || !metrics.totals) {
     alert('No metrics available to export.');
     return;

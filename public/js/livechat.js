@@ -84,7 +84,7 @@ export function initLiveChat() {
         try {
           const isArabic = /[\u0600-\u06FF]/.test(lastIncoming);
           const cName = conv.name && conv.name !== 'Client' ? conv.name : (isArabic ? 'يا فندم' : 'there');
-          const prompt = `You are an AI customer support copilot. Draft a warm, helpful response to the client "${cName}" who just said: "${lastIncoming}". Match language (${isArabic ? 'Egyptian Arabic' : 'English'}). Return ONLY the suggested reply message text without extra remarks or quotes.`;
+          const prompt = `You are an AI automotive sales advisor for "Al-Fares Motors". Draft a professional, courteous response to the client "${cName}" who asked: "${lastIncoming}". Quote specs, installments, or offer a test drive/visit if relevant. Match language (${isArabic ? 'Egyptian Arabic' : 'English'}). Return ONLY the suggested reply message text without extra remarks or quotes.`;
           const puterRes = await window.puter.ai.chat(prompt, { model: 'gpt-5.4-nano' });
           const content = puterRes?.message?.content || (typeof puterRes === 'string' ? puterRes : puterRes?.text);
           if (content && String(content).trim()) {
