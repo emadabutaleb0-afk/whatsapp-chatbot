@@ -58,7 +58,7 @@
       </div>
       <div class="min-w-0">
         <p class="truncate text-sm font-bold leading-tight text-slate-900">Al-Fares Motors</p>
-        <p id="sideBizName" class="truncate text-[11px] text-slate-400">الفارس للسيارات</p>
+        <p id="sideBizName" class="truncate text-[11px] text-slate-400" data-i18n="brand_sub">الفارس للسيارات</p>
       </div>
     </div>
 
@@ -107,7 +107,7 @@
         <div id="avatar" class="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#128C7E]/20 to-[#0ea5e9]/15 text-xs font-bold text-[#128C7E] ring-2 ring-[#128C7E]/10">CB</div>
         <div class="min-w-0 flex-1">
           <div class="flex items-center justify-between">
-            <p id="userName" class="truncate text-sm font-medium text-slate-900">Admin</p>
+            <p id="userName" class="truncate text-sm font-medium text-slate-900" data-i18n="admin_name">Admin</p>
             <span id="userRoleBadge" class="text-[10px] font-bold uppercase rounded px-1.5 py-0.5 bg-emerald-100 text-emerald-800">ADMIN</span>
           </div>
           <p id="botState" class="truncate text-xs text-slate-500">● Not connected</p>
@@ -280,8 +280,8 @@
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">🧠 لوحة الذكاء الاصطناعي</h1>
-          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">تحليل العملاء والمشاعر وتسجيل النقاط وإدارة الفروع والمعرض</p>
+          <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100" data-i18n="admin_ai_title">🧠 لوحة الذكاء الاصطناعي</h1>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1" data-i18n="admin_ai_sub">تحليل العملاء والمشاعر وتسجيل النقاط وإدارة الفروع والمعرض</p>
         </div>
         <button id="btnRefreshAnalytics" class="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition">
           <i data-lucide="refresh-cw" class="h-4 w-4"></i> تحديث
@@ -291,19 +291,19 @@
       <!-- Stats Row -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
-          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">🔥 عملاء ساخنون</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1" data-i18n="stat_interested_leads">🔥 عملاء مهتمون</p>
           <p id="statHotLeads" class="text-2xl font-bold text-rose-600">0</p>
         </div>
         <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
-          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">⚡ تنبيهات مشاعر</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1" data-i18n="stat_sentiment_alerts">⚡ تنبيهات مشاعر</p>
           <p id="statSentimentAlerts" class="text-2xl font-bold text-amber-600">0</p>
         </div>
         <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
-          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">🏪 عدد الفروع</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1" data-i18n="stat_branches">🏪 عدد الفروع</p>
           <p id="statBranches" class="text-2xl font-bold text-emerald-600">0</p>
         </div>
         <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
-          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">📷 سيارات بالمعرض</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1" data-i18n="stat_gallery">📷 سيارات بالمعرض</p>
           <p id="statGallery" class="text-2xl font-bold text-blue-600">0</p>
         </div>
       </div>
@@ -369,7 +369,7 @@
             <i data-lucide="lightbulb" class="h-4 w-4 text-yellow-500"></i>
             🧠 التعلم التلقائي للـ FAQ
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">اكتشف الأسئلة الغير مغطاة واقترح إجابات تلقائياً بالذكاء الاصطناعي</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-3" data-i18n="faq_learning_sub">اكتشف الأسئلة الغير مغطاة واقترح إجابات تلقائياً بالذكاء الاصطناعي</p>
           <button id="btnRunFaqLearn" class="w-full rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-medium px-4 py-2 text-sm transition mb-3">
             🔍 تشغيل كاشف الثغرات
           </button>
@@ -382,11 +382,11 @@
             <i data-lucide="gift" class="h-4 w-4 text-pink-500"></i>
             🎁 توليد عروض ترويجية ذكية
           </h2>
-          <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">اختر مستوى العميل وتوليد رسالة ترويجية مخصصة بالذكاء الاصطناعي</p>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-3" data-i18n="promotions_sub">اختر مستوى العميل وتوليد رسالة ترويجية مخصصة بالذكاء الاصطناعي</p>
           <select id="promoTier" class="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm px-3 py-2 mb-2 outline-none">
-            <option value="hot">🔥 عميل ساخن (Hot)</option>
-            <option value="warm">🌡️ عميل دافئ (Warm)</option>
-            <option value="cold">❄️ عميل بارد (Cold)</option>
+            <option value="hot" data-i18n="promo_tier_hot">🔥 عميل مهتم (Hot)</option>
+            <option value="warm" data-i18n="promo_tier_warm">🌡️ عميل دافئ (Warm)</option>
+            <option value="cold" data-i18n="promo_tier_cold">❄️ عميل بارد (Cold)</option>
           </select>
           <button id="btnGenPromotion" class="w-full rounded-lg bg-pink-500 hover:bg-pink-600 text-white font-medium px-4 py-2 text-sm transition mb-3">
             ✨ توليد عرض ترويجي

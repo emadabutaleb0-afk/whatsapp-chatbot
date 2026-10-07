@@ -658,8 +658,8 @@ function localSmartCarAnswer(question, config) {
   // Location / Address
   if (norm.includes('where') || norm.includes('location') || norm.includes('address') || norm.includes('مكان') || norm.includes('عنوان') || norm.includes('ازاي اجي')) {
     let reply = isArabic
-      ? `موقع معرضنا في: ${b.location || 'التجمع الخامس / سوق السيارات'}.`
-      : `Our showroom is located at: ${b.location || 'New Cairo Showroom'}.`;
+      ? 'موقع معارضنا: فرع التجمع الأول (سوق السيارات) وفرع مدينة نصر (شارع عباس العقاد).'
+      : 'Our showrooms: First Settlement Branch (Auto Market) and Nasr City Branch (Abbas El-Akkad St).';
     if (b.mapsUrl) {
       reply += isArabic
         ? `\n📍 رابط الموقع على خرائط جوجل: ${b.mapsUrl}`

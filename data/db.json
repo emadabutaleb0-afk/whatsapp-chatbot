@@ -5,7 +5,7 @@
       "tagline": "أفضل وجهة لشراء واستبدال السيارات الزيرو والمستعملة",
       "about": "Al-Fares Motors is your premier automotive dealership specializing in brand-new and certified pre-owned vehicles with comprehensive multi-point inspection, flexible bank installment plans, official manufacturer warranties, and direct trade-in options.",
       "hours": "Saturday–Thursday: 9:00 AM – 11:00 PM\nFriday: 1:30 PM – 11:00 PM",
-      "location": "Plot 45, Auto Market District, Ring Road Entrance, New Cairo / Downtown Showroom",
+      "location": "Plot 45, Auto Market District, Ring Road Entrance, First Settlement, New Cairo / Nasr City Showroom",
       "mapsUrl": "https://maps.app.goo.gl/alfaresmotors",
       "phone": "+20 100 888 9900",
       "delivery": "Nationwide vehicle delivery on flatbed carrier within 24-48 hours. Showroom pickup & private test drives available.",
@@ -188,103 +188,113 @@
       "reply": "أهلاً بك! مرسيدس C200 AMG موديل 2024 متوفرة بسعر 3,450,000 ج.م مع تقسيط حتى 5 سنوات.",
       "status": "sent",
       "responseTimeMs": 250
+    },
+    {
+      "id": "msg_muxx4j7atm7l",
+      "at": 1791366102838,
+      "from": "201099998888",
+      "name": "Test Customer",
+      "incoming": "عايز اعرف تفاصيل مرسيدس C200 زيرو والتقسيط",
+      "reply": "أهلاً بك! مرسيدس C200 AMG موديل 2024 متوفرة بسعر 3,450,000 ج.م مع تقسيط حتى 5 سنوات.",
+      "status": "sent",
+      "responseTimeMs": 250
     }
   ],
   "demoMetrics": {
     "days": 7,
     "totals": {
-      "messages": 215,
-      "faqHits": 176,
-      "fallbacks": 7,
-      "pos": 173,
+      "messages": 217,
+      "faqHits": 180,
+      "fallbacks": 8,
+      "pos": 174,
       "neg": 0,
-      "neutral": 42
+      "neutral": 43
     },
     "business": {
-      "totalOrders": 2,
-      "totalRevenue": 200000,
-      "totalReservations": 2,
-      "totalGuests": 4,
+      "totalOrders": 3,
+      "totalRevenue": 300000,
+      "totalReservations": 3,
+      "totalGuests": 6,
       "totalCustomers": 48,
       "repeatRate": 38,
       "openHandoffs": 0,
-      "autoRate": 97
+      "autoRate": 96
     },
     "series": [
       {
         "date": "2026-10-01",
-        "messages": 33,
-        "faqHits": 26,
+        "messages": 34,
+        "faqHits": 29,
         "fallbacks": 1,
-        "msCount": 33,
-        "msTotal": 40458,
+        "msCount": 34,
+        "msTotal": 34714,
         "pos": 27,
+        "neg": 0,
+        "neutral": 7
+      },
+      {
+        "date": "2026-10-02",
+        "messages": 40,
+        "faqHits": 32,
+        "fallbacks": 2,
+        "msCount": 40,
+        "msTotal": 33280,
+        "pos": 32,
+        "neg": 0,
+        "neutral": 8
+      },
+      {
+        "date": "2026-10-03",
+        "messages": 32,
+        "faqHits": 27,
+        "fallbacks": 1,
+        "msCount": 32,
+        "msTotal": 38912,
+        "pos": 26,
         "neg": 0,
         "neutral": 6
       },
       {
-        "date": "2026-10-02",
-        "messages": 36,
-        "faqHits": 28,
-        "fallbacks": 1,
-        "msCount": 36,
-        "msTotal": 23508,
-        "pos": 29,
-        "neg": 0,
-        "neutral": 7
-      },
-      {
-        "date": "2026-10-03",
-        "messages": 34,
-        "faqHits": 30,
-        "fallbacks": 1,
-        "msCount": 34,
-        "msTotal": 26656,
-        "pos": 27,
-        "neg": 0,
-        "neutral": 7
-      },
-      {
         "date": "2026-10-04",
-        "messages": 32,
-        "faqHits": 28,
+        "messages": 28,
+        "faqHits": 24,
         "fallbacks": 1,
-        "msCount": 32,
-        "msTotal": 25664,
-        "pos": 26,
+        "msCount": 28,
+        "msTotal": 34580,
+        "pos": 22,
         "neg": 0,
         "neutral": 6
       },
       {
         "date": "2026-10-05",
-        "messages": 32,
-        "faqHits": 25,
+        "messages": 29,
+        "faqHits": 21,
         "fallbacks": 1,
-        "msCount": 32,
-        "msTotal": 28928,
-        "pos": 26,
+        "msCount": 29,
+        "msTotal": 23113,
+        "pos": 23,
         "neg": 0,
         "neutral": 6
       },
       {
         "date": "2026-10-06",
-        "messages": 25,
-        "faqHits": 19,
+        "messages": 27,
+        "faqHits": 23,
         "fallbacks": 1,
-        "msCount": 25,
-        "msTotal": 29850,
-        "pos": 20,
+        "msCount": 27,
+        "msTotal": 24408,
+        "pos": 22,
         "neg": 0,
         "neutral": 5
       },
       {
         "date": "2026-10-07",
-        "messages": 23,
-        "faqHits": 20,
+        "messages": 27,
+        "faqHits": 24,
         "fallbacks": 1,
-        "msCount": 23,
-        "msTotal": 15985,
-        "pos": 18,
+        "msCount": 27,
+        "msTotal": 33264,
+        "pos": 22,
         "neg": 0,
         "neutral": 5
       }
@@ -342,9 +352,9 @@
       {
         "hour": 7,
         "label": "07:00",
-        "messages": 6,
+        "messages": 7,
         "faqHits": 5,
-        "fallbacks": 1
+        "fallbacks": 2
       },
       {
         "hour": 8,
@@ -370,8 +380,8 @@
       {
         "hour": 11,
         "label": "11:00",
-        "messages": 19,
-        "faqHits": 15,
+        "messages": 20,
+        "faqHits": 16,
         "fallbacks": 4
       },
       {
@@ -412,8 +422,8 @@
       {
         "hour": 17,
         "label": "17:00",
-        "messages": 19,
-        "faqHits": 15,
+        "messages": 20,
+        "faqHits": 16,
         "fallbacks": 4
       },
       {
@@ -447,9 +457,9 @@
       {
         "hour": 22,
         "label": "22:00",
-        "messages": 6,
+        "messages": 7,
         "faqHits": 5,
-        "fallbacks": 1
+        "fallbacks": 2
       },
       {
         "hour": 23,
@@ -459,7 +469,7 @@
         "fallbacks": 0
       }
     ],
-    "avgMs": 889,
+    "avgMs": 1024,
     "topics": [
       {
         "label": "أسعار ومواصفات السيارات",
@@ -471,11 +481,11 @@
       },
       {
         "label": "حجز تجارب القيادة (Test Drive)",
-        "count": 38
+        "count": 39
       },
       {
         "label": "استبدال السيارات (Trade-In)",
-        "count": 25
+        "count": 26
       },
       {
         "label": "عنوان المعرض والمواعيد",
@@ -511,12 +521,42 @@
     "unanswered": [
       {
         "question": "هل يوجد بورش ماكان 2023 مستعملة؟",
-        "count": 2,
+        "count": 3,
         "createdAt": 1791293386134,
-        "updatedAt": 1791364990590
+        "updatedAt": 1791366102853
       }
     ],
     "recentActivity": [
+      {
+        "id": "res_muxx4j7jtswr",
+        "type": "reservation",
+        "title": "Test Drive (2 guest) · Test Customer",
+        "detail": "غداً at 5:00 PM · Test Drive Appointment",
+        "timestamp": 1791366102847,
+        "badgeClass": "bg-teal-50 text-teal-700",
+        "badgeText": "completed",
+        "icon": "calendar"
+      },
+      {
+        "id": "ord_muxx4j7gxw3y",
+        "type": "order",
+        "title": "Car Booking CAR-0003 · Test Customer",
+        "detail": "100,000 EGP · Status: confirmed",
+        "timestamp": 1791366102844,
+        "badgeClass": "bg-amber-50 text-amber-700",
+        "badgeText": "confirmed",
+        "icon": "car"
+      },
+      {
+        "id": "ticket_muxwgp0mey50",
+        "type": "handoff",
+        "title": "Car Sales Advisor Handover · Client",
+        "detail": "Client requested sales advisor for negotiation/finance",
+        "timestamp": 1791364990630,
+        "badgeClass": "bg-slate-50 text-slate-600",
+        "badgeText": "resolved",
+        "icon": "user-check"
+      },
       {
         "id": "res_muxwgozept2h",
         "type": "reservation",
@@ -587,14 +627,14 @@
       {
         "category": "Automotive Sales & Pipeline",
         "icon": "trending-up",
-        "title": "2 car purchases logged via WhatsApp (200,000 EGP)",
+        "title": "3 car purchases logged via WhatsApp (300,000 EGP)",
         "description": "Conversational car sales pipeline is actively converting clients into showroom visits and deposits. Top searched: Mercedes C200 & BMW 320i.",
         "tone": "success"
       },
       {
         "category": "AI Real-Time Response Rate",
         "icon": "zap",
-        "title": "Avg. response time: 0.9s",
+        "title": "Avg. response time: 1.0s",
         "description": "Your dealership AI replies in ~1 second, delivering instant vehicle specs, photos, and installment calculations 24/7.",
         "tone": "success"
       }
@@ -603,12 +643,32 @@
   "unanswered": [
     {
       "question": "هل يوجد بورش ماكان 2023 مستعملة؟",
-      "count": 2,
+      "count": 3,
       "createdAt": 1791293386134,
-      "updatedAt": 1791364990590
+      "updatedAt": 1791366102853
     }
   ],
   "orders": [
+    {
+      "id": "ord_muxx4j7gxw3y",
+      "orderNumber": "CAR-0003",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "items": [
+        {
+          "name": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+          "qty": 1,
+          "price": "100,000 EGP",
+          "subtotal": "100,000 EGP"
+        }
+      ],
+      "total": "100,000 EGP",
+      "address": "معرض الفارس للسيارات - التجمع الخامس",
+      "notes": "",
+      "status": "confirmed",
+      "at": 1791366102844,
+      "updatedAt": 1791366102846
+    },
     {
       "id": "ord_muxwgozbvot1",
       "orderNumber": "CAR-0002",
@@ -652,6 +712,18 @@
   ],
   "reservations": [
     {
+      "id": "res_muxx4j7jtswr",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "partySize": 2,
+      "date": "غداً",
+      "time": "5:00 PM",
+      "notes": "Test Drive Appointment",
+      "status": "completed",
+      "at": 1791366102847,
+      "updatedAt": 1791366102849
+    },
+    {
       "id": "res_muxwgozept2h",
       "clientPhone": "201099998888",
       "clientName": "Test Customer",
@@ -689,14 +761,23 @@
       "isHumanTakeover": false,
       "takeoverUntil": null,
       "cart": [],
-      "orderCount": 2,
-      "totalSpent": 200000,
+      "orderCount": 3,
+      "totalSpent": 300000,
       "createdAt": 1791293385386,
-      "lastSeen": 1791364990577,
-      "messageCount": 6
+      "lastSeen": 1791366102838,
+      "messageCount": 7
     }
   },
   "campaigns": [
+    {
+      "id": "camp_muxx4j7nox1o",
+      "title": "عروض تقسيط سيارات 2024",
+      "message": "تقسيط بدون مقدم على موديلات مختارة لفترة محدودة!",
+      "targetTag": "all",
+      "sentCount": 25,
+      "status": "sent",
+      "at": 1791366102851
+    },
     {
       "id": "camp_muxwgozhpbug",
       "title": "عروض تقسيط سيارات 2024",
@@ -858,6 +939,18 @@
     }
   ],
   "handoffTickets": [
+    {
+      "id": "ticket_muxx4j8sqoxs",
+      "phone": "201099998888",
+      "name": "Test Customer",
+      "issueSummary": "Need help with custom order",
+      "sentiment": "Neutral",
+      "lastMessage": "",
+      "intentType": "HUMAN_TAKEOVER",
+      "status": "resolved",
+      "createdAt": 1791366102892,
+      "resolvedAt": 1791366102893
+    },
     {
       "id": "ticket_muxwgp0mey50",
       "phone": "201099998888",

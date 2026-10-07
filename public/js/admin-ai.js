@@ -1,4 +1,5 @@
 import { $, refreshIcons, toast } from './ui.js';
+import { getLang, t } from './i18n.js';
 import { api } from './api.js';
 
 let ctx = null;
@@ -87,7 +88,7 @@ function renderLeadScores() {
   
   const phones = Object.keys(leadScores);
   if (phones.length === 0) {
-    container.innerHTML = '<p class="text-center text-slate-400 py-4">لا توجد بيانات عملاء بعد</p>';
+    container.innerHTML = '<p class="text-center text-slate-400 py-4">${getLang() === 'en' ? 'No lead scoring data yet' : 'لا توجد بيانات عملاء بعد'}</p>';
     return;
   }
   
@@ -122,7 +123,7 @@ function renderSentimentAlerts() {
   if (!container) return;
   
   if (sentimentAlerts.length === 0) {
-    container.innerHTML = '<p class="text-center text-slate-400 py-4">لا توجد تنبيهات حالياً ✅</p>';
+    container.innerHTML = '<p class="text-center text-slate-400 py-4">${getLang() === 'en' ? 'No escalation alerts currently ✅' : 'لا توجد تنبيهات حالياً ✅'}</p>';
     return;
   }
   
@@ -200,7 +201,7 @@ function renderBranches() {
   if (!container) return;
   
   if (branchesData.length === 0) {
-    container.innerHTML = '<p class="text-sm text-slate-400 text-center py-4 col-span-3">لا توجد فروع مضافة</p>';
+    container.innerHTML = '<p class="text-sm text-slate-400 text-center py-4 col-span-3">${getLang() === 'en' ? 'No branches configured' : 'لا توجد فروع مضافة'}</p>';
     return;
   }
   
@@ -209,13 +210,13 @@ function renderBranches() {
     html += `
 <div class="rounded-xl border border-slate-200 dark:border-slate-700 p-4 bg-slate-50 dark:bg-slate-900">
   <div class="flex items-start justify-between mb-2">
-    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100">${b.name}</h3>
-    <span class="text-xs px-2 py-0.5 rounded-full ${b.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${b.status === 'active' ? '● نشط' : '○ غير نشط'}</span>
+    <h3 class="font-semibold text-sm text-slate-900 dark:text-slate-100">${getLang() === 'en' ? (b.nameEn || b.name) : b.name}</h3>
+    <span class="text-xs px-2 py-0.5 rounded-full ${b.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}">${b.status === 'active' ? (getLang() === 'en' ? '● Active' : '● نشط') : (getLang() === 'en' ? '○ Inactive' : '○ غير نشط')}</span>
   </div>
-  <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">📍 ${b.address}</p>
+  <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">📍 ${getLang() === 'en' ? (b.addressEn || b.address) : b.address}</p>
   <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">📞 ${b.phone}</p>
-  <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">👤 ${b.manager}</p>
-  <p class="text-xs text-slate-400">🚗 ${(b.inventory || []).length} سيارة في المخزون</p>
+  <p class="text-xs text-slate-500 dark:text-slate-400 mb-2">👤 ${getLang() === 'en' ? (b.managerEn || b.manager) : b.manager}</p>
+  <p class="text-xs text-slate-400">🚗 ${(b.inventory || []).length} ${getLang() === 'en' ? 'vehicles in stock' : 'سيارة في المخزون'}</p>
 </div>`;
   }
   container.innerHTML = html;
@@ -226,7 +227,7 @@ function renderGallery() {
   if (!container) return;
   
   if (galleryData.length === 0) {
-    container.innerHTML = '<p class="text-sm text-slate-400 text-center py-4 col-span-3">لا توجد سيارات في المعرض</p>';
+    container.innerHTML = '<p class="text-sm text-slate-400 text-center py-4 col-span-3">${getLang() === 'en' ? 'No cars available in showroom' : 'لا توجد سيارات في المعرض'}</p>';
     return;
   }
   
