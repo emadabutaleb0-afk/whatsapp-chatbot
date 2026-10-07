@@ -194,6 +194,51 @@ const DEFAULT_CONFIG = {
   ]
 };
 
+const DEFAULT_BRANCHES = [
+  {
+    id: 'branch_main',
+    name: 'المعرض الرئيسي - التجمع الخامس',
+    nameEn: 'Main Showroom - New Cairo',
+    address: 'قطعة 45، منطقة سوق السيارات، مدخل الطريق الدائري، التجمع الخامس',
+    phone: '+20 100 888 9900',
+    mapsUrl: 'https://maps.app.goo.gl/alfaresmotors',
+    hours: 'السبت–الخميس: 9ص–11م | الجمعة: 1:30م–11م',
+    latitude: 30.0131,
+    longitude: 31.4289,
+    manager: 'أحمد الفارس',
+    status: 'active',
+    inventory: ['car_1', 'car_2', 'car_3', 'car_4', 'car_5', 'car_6']
+  },
+  {
+    id: 'branch_downtown',
+    name: 'فرع وسط البلد - القاهرة',
+    nameEn: 'Downtown Cairo Branch',
+    address: '12 شارع رمسيس، وسط البلد، القاهرة',
+    phone: '+20 100 777 8800',
+    mapsUrl: 'https://maps.app.goo.gl/alfaresmotors-downtown',
+    hours: 'السبت–الخميس: 10ص–10م | الجمعة: 2م–10م',
+    latitude: 30.0626,
+    longitude: 31.2497,
+    manager: 'محمد عبد الرحمن',
+    status: 'active',
+    inventory: ['car_3', 'car_5']
+  },
+  {
+    id: 'branch_alex',
+    name: 'فرع الإسكندرية',
+    nameEn: 'Alexandria Branch',
+    address: 'طريق الكورنيش، سيدي جابر، الإسكندرية',
+    phone: '+20 100 666 7700',
+    mapsUrl: 'https://maps.app.goo.gl/alfaresmotors-alex',
+    hours: 'السبت–الخميس: 10ص–10م | الجمعة: 2م–10م',
+    latitude: 31.2001,
+    longitude: 29.9187,
+    manager: 'كريم السيد',
+    status: 'active',
+    inventory: ['car_2', 'car_4']
+  }
+];
+
 const DEFAULT_TEMPLATES = [
   {
     id: 'tpl_welcome',
@@ -1376,4 +1421,68 @@ export function getUnifiedCustomerContext(phone) {
     recentBookings: reservations.slice(0, 3),
     activeHandoffTicket: tickets.find(t => t.status === 'open') || null
   };
+}
+
+const getData = () => memoryStore;
+const persist = async () => await flush();
+
+// Multi-Branch Support
+export function getBranches() {
+  const d = getData();
+  return d.branches || DEFAULT_BRANCHES;
+}
+
+export async function saveBranch(branch) {
+  const d = getData();
+  if (!d.branches) d.branches = [...DEFAULT_BRANCHES];
+  const idx = d.branches.findIndex(b => b.id === branch.id);
+  if (idx >= 0) {
+    d.branches[idx] = { ...d.branches[idx], ...branch };
+  } else {
+    d.branches.push({ id: `branch_${Date.now()}`, ...branch, createdAt: new Date().toISOString() });
+  }
+  await persist(d);
+  return d.branches;
+}
+
+export async function deleteBranch(id) {
+  const d = getData();
+  d.branches = (d.branches || []).filter(b => b.id !== id);
+  await persist(d);
+  return d.branches;
+}
+
+// Behavioral Analytics
+export function getAnalytics() {
+  const d = getData();
+  return d.analytics || { carInquiries: {}, peakHours: {}, topQuestions: [], sentimentHistory: [], leadScores: {} };
+}
+
+export async function trackCarInquiry(carName) {
+  const d = getData();
+  if (!d.analytics) d.analytics = { carInquiries: {}, peakHours: {}, topQuestions: [], sentimentHistory: [], leadScores: {} };
+  if (!d.analytics.carInquiries) d.analytics.carInquiries = {};
+  d.analytics.carInquiries[carName] = (d.analytics.carInquiries[carName] || 0) + 1;
+  // Track peak hours
+  const hour = new Date().getHours();
+  if (!d.analytics.peakHours) d.analytics.peakHours = {};
+  d.analytics.peakHours[hour] = (d.analytics.peakHours[hour] || 0) + 1;
+  await persist(d);
+}
+
+export async function saveLeadScore(phone, scoreData) {
+  const d = getData();
+  if (!d.analytics) d.analytics = { carInquiries: {}, peakHours: {}, topQuestions: [], sentimentHistory: [], leadScores: {} };
+  if (!d.analytics.leadScores) d.analytics.leadScores = {};
+  d.analytics.leadScores[phone] = { ...scoreData, updatedAt: new Date().toISOString() };
+  await persist(d);
+}
+
+export async function trackSentiment(phone, sentimentData) {
+  const d = getData();
+  if (!d.analytics) d.analytics = { carInquiries: {}, peakHours: {}, topQuestions: [], sentimentHistory: [], leadScores: {} };
+  if (!d.analytics.sentimentHistory) d.analytics.sentimentHistory = [];
+  d.analytics.sentimentHistory.unshift({ phone, ...sentimentData, ts: new Date().toISOString() });
+  if (d.analytics.sentimentHistory.length > 200) d.analytics.sentimentHistory = d.analytics.sentimentHistory.slice(0, 200);
+  await persist(d);
 }

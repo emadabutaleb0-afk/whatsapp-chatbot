@@ -14,6 +14,7 @@ import { initTemplates, loadTemplates } from './templates.js';
 import { initHelpCenter, loadHelpCenter } from './helpcenter.js';
 import { exportLogsCSV, exportLogsPDF, exportMetricsCSV, exportMetricsPDF } from './export.js';
 import { applyLanguage, toggleLanguage, getLang } from './i18n.js';
+import { initAdminAI, loadAdminAI } from './admin-ai.js';
 
 const state = {
   view: 'dashboard',
@@ -91,6 +92,7 @@ async function boot() {
   });
   initTemplates();
   initHelpCenter(context);
+  initAdminAI(context);
 
   await Promise.all([loadConfig(), loadConversations()]);
 
@@ -408,6 +410,7 @@ function setView(view) {
   }
 
   if (view === 'dashboard') loadMetrics();
+  if (view === 'admin-ai') loadAdminAI();
   if (view === 'faq') renderFaq();
   if (view === 'products') renderProducts();
   if (view === 'orders') loadOrders();

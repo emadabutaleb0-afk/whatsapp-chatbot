@@ -49,7 +49,14 @@ import {
   getKnowledgeGaps,
   addressKnowledgeGap,
   addKnowledgeGap,
-  getUnifiedCustomerContext
+  getUnifiedCustomerContext,
+  getBranches,
+  saveBranch,
+  deleteBranch,
+  getAnalytics,
+  trackCarInquiry,
+  saveLeadScore,
+  trackSentiment
 } from './db.js';
 import {
   answerQuestion,
@@ -354,6 +361,19 @@ app.post('/webhook', async (req, res) => {
             responseTimeMs: answer.durationMs,
             intent: answer.intentType
           });
+
+          // Track car inquiries for behavioral analytics
+          const { trackCarInquiry: _trackCarInquiry } = await import('./db.js').catch(() => ({}));
+          if (typeof _trackCarInquiry === 'function') {
+            const config2 = getConfig();
+            const cars = config2.products || [];
+            for (const car of cars) {
+              if (incomingText && car.name && incomingText.toLowerCase().includes(car.name.split(' ')[0].toLowerCase())) {
+                await _trackCarInquiry(car.name).catch(() => {});
+                break;
+              }
+            }
+          }
         }
       }
     }
@@ -928,6 +948,129 @@ app.get('/api/customers/:phone/unified', (req, res) => {
   try {
     const context = getUnifiedCustomerContext(req.params.phone);
     res.json({ ok: true, profile: context, context });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= Multi-Branch API ================= */
+app.get('/api/branches', (req, res) => {
+  res.json({ branches: getBranches() });
+});
+
+app.post('/api/branches', async (req, res) => {
+  try {
+    const branches = await saveBranch(req.body);
+    res.json({ ok: true, branches });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/branches/:id', async (req, res) => {
+  try {
+    const branches = await deleteBranch(req.params.id);
+    res.json({ ok: true, branches });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= Analytics API ================= */
+app.get('/api/analytics', (req, res) => {
+  res.json({ analytics: getAnalytics() });
+});
+
+app.post('/api/analytics/lead-score', async (req, res) => {
+  try {
+    const { phone, score, tier, signals, summary } = req.body;
+    await saveLeadScore(phone, { score, tier, signals, summary });
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= Car Photo Gallery API ================= */
+app.get('/api/cars/gallery', (req, res) => {
+  const config = getConfig();
+  const cars = (config.products || []).map(c => ({
+    id: c.id,
+    name: c.name,
+    image: c.image || '',
+    price: c.price,
+    category: c.category,
+    stock: c.stock,
+    specs: c.specs || {}
+  }));
+  res.json({ gallery: cars });
+});
+
+/* ================= AI Features API ================= */
+app.post('/api/ai/sentiment', async (req, res) => {
+  try {
+    const { text, history } = req.body;
+    const { analyzeSentiment } = await import('./ai.js');
+    const result = await analyzeSentiment(text, history || []);
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/ai/lead-score', async (req, res) => {
+  try {
+    const { messages, customerData } = req.body;
+    const { scoreLeadQuality } = await import('./ai.js');
+    const result = await scoreLeadQuality(messages || [], customerData || {});
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/ai/summarize', async (req, res) => {
+  try {
+    const { messages, clientName, businessName } = req.body;
+    const { summarizeConversation } = await import('./ai.js');
+    const summary = await summarizeConversation(messages || [], clientName || '', businessName || 'Al-Fares Motors');
+    res.json({ summary });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/ai/promotion', async (req, res) => {
+  try {
+    const { leadScore, customerHistory, lang } = req.body;
+    const config = getConfig();
+    const { generateDynamicPromotion } = await import('./ai.js');
+    const promotion = await generateDynamicPromotion(leadScore || {}, customerHistory || [], config.products || [], lang || 'ar');
+    res.json({ promotion });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/ai/match-car', async (req, res) => {
+  try {
+    const { description } = req.body;
+    const config = getConfig();
+    const { matchCarByImage } = await import('./ai.js');
+    const match = await matchCarByImage(description || '', config.products || []);
+    res.json({ match });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/ai/faq-gap', async (req, res) => {
+  try {
+    const { question } = req.body;
+    const config = getConfig();
+    const { detectFaqGap } = await import('./ai.js');
+    const result = await detectFaqGap(question || '', config.faqEntries || []);
+    res.json(result);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

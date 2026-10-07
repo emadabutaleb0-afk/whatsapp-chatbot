@@ -19,118 +19,60 @@
     },
     "products": [
       {
-        "id": "car_1",
         "name": "Mercedes-Benz C200 2024 AMG (Zero / New)",
         "price": "3,850,000 EGP",
         "category": "New Cars (Zero)",
         "stock": "In Stock (Showroom)",
-        "description": "Brand new 2024 zero km, 1.5L Turbo Mild-Hybrid, AMG Line interior & exterior, Panoramic sunroof, Burmester 3D Sound, Digital Light headlights, 360 Cameras, Official Agent Warranty.",
         "image": "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?w=800&auto=format&fit=crop&q=80",
-        "specs": {
-          "condition": "New (Zero)",
-          "year": 2024,
-          "mileage": "0 km",
-          "engine": "1.5L Turbo 204 hp",
-          "transmission": "9G-Tronic Automatic",
-          "fuel": "Petrol",
-          "color": "Obsidian Black / Polar White",
-          "warranty": "3 Years Agency Warranty"
-        }
+        "description": "Brand new 2024 zero km, 1.5L Turbo Mild-Hybrid, AMG Line interior & exterior, Panoramic sunroof, Burmester 3D Sound, Digital Light headlights, 360 Cameras, Official Agent Warranty."
       },
       {
-        "id": "car_2",
         "name": "BMW 320i 2023 M-Sport (Certified Used)",
         "price": "2,650,000 EGP",
         "category": "Used Cars (مستعمل بحالة الزيرو)",
         "stock": "Available (1 Unit)",
-        "description": "Used 28,000 km, pristine factory paint (فابريكا بالكامل), full dealer service history, M-Sport Package, Harman Kardon audio, BMW Live Cockpit Professional, 19\" M wheels.",
         "image": "https://images.unsplash.com/photo-1555215695-3004980ad54e?w=800&auto=format&fit=crop&q=80",
-        "specs": {
-          "condition": "Used",
-          "year": 2023,
-          "mileage": "28,000 km",
-          "engine": "2.0L TwinPower Turbo 184 hp",
-          "transmission": "8-Speed Steptronic Sport",
-          "fuel": "Petrol",
-          "color": "Portimao Blue / Cognac Leather",
-          "warranty": "6 Months Dealership Engine Warranty"
-        }
+        "description": "Used 28,000 km, pristine factory paint (فابريكا بالكامل), full dealer service history, M-Sport Package, Harman Kardon audio, BMW Live Cockpit Professional, 19\" M wheels."
       },
       {
-        "id": "car_3",
         "name": "Toyota Corolla 2024 Smart (Zero / New)",
         "price": "1,450,000 EGP",
         "category": "New Cars (Zero)",
         "stock": "In Stock (Multiple Colors)",
-        "description": "Brand new 2024 zero km, 1.6L Dual VVT-i, Smart Entry & Push Start, 8-inch Touchscreen with Apple CarPlay & Android Auto, Sunroof, Dual-zone Climate Control, 16\" Alloy rims.",
         "image": "https://images.unsplash.com/photo-1623869675781-80aa31012a5a?w=800&auto=format&fit=crop&q=80",
-        "specs": {
-          "condition": "New (Zero)",
-          "year": 2024,
-          "mileage": "0 km",
-          "engine": "1.6L 120 hp",
-          "transmission": "CVT Automatic",
-          "fuel": "Petrol",
-          "color": "Silver / Super White / Celestite Grey",
-          "warranty": "5 Years / 150,000 km Agency Warranty"
-        }
+        "description": "Brand new 2024 zero km, 1.6L Dual VVT-i, Smart Entry & Push Start, 8-inch Touchscreen with Apple CarPlay & Android Auto, Sunroof, Dual-zone Climate Control, 16\" Alloy rims."
       },
       {
-        "id": "car_4",
         "name": "Hyundai Tucson 2022 Turbo NX4 (Certified Used)",
         "price": "1,580,000 EGP",
         "category": "Used Cars (مستعمل بحالة الزيرو)",
         "stock": "Available (1 Unit)",
-        "description": "Used 45,000 km, Top line with Panoramic roof, 100% factory original paint (فابريكا دواخل وخوارج), full agency service book, ventilated electric leather seats, smart power tailgate.",
         "image": "https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=800&auto=format&fit=crop&q=80",
-        "specs": {
-          "condition": "Used",
-          "year": 2022,
-          "mileage": "45,000 km",
-          "engine": "1.6L T-GDI 180 hp",
-          "transmission": "7-Speed DCT Dual Clutch",
-          "fuel": "Petrol",
-          "color": "Dark Knight Gray / Black Leather",
-          "warranty": "Certified 150-Point Technical Report"
-        }
+        "description": "Used 45,000 km, Top line with Panoramic roof, 100% factory original paint (فابريكا دواخل وخوارج), full agency service book, ventilated electric leather seats, smart power tailgate."
       },
       {
-        "id": "car_5",
         "name": "Kia Sportage 2024 GT-Line (Zero / New)",
         "price": "1,950,000 EGP",
         "category": "New Cars (Zero)",
         "stock": "In Stock (Showroom)",
-        "description": "Brand new zero km, 1.6 Turbo 180 hp, GT-Line sports styling, Curved dual 12.3\" displays, 19\" alloy wheels, full driver assistance safety suite, wireless phone charging.",
         "image": "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&auto=format&fit=crop&q=80",
-        "specs": {
-          "condition": "New (Zero)",
-          "year": 2024,
-          "mileage": "0 km",
-          "engine": "1.6L Turbo 180 hp",
-          "transmission": "7-Speed DCT",
-          "fuel": "Petrol",
-          "color": "Infra Red / Pearl White",
-          "warranty": "5 Years Agency Warranty"
-        }
+        "description": "Brand new zero km, 1.6 Turbo 180 hp, GT-Line sports styling, Curved dual 12.3\" displays, 19\" alloy wheels, full driver assistance safety suite, wireless phone charging."
       },
       {
-        "id": "car_6",
         "name": "Range Rover Sport 2021 HSE Dynamic (Certified Used)",
         "price": "4,900,000 EGP",
         "category": "Used Cars (مستعمل بحالة الزيرو)",
         "stock": "Available (1 Unit)",
-        "description": "Certified pre-owned 38,000 km, V6 Supercharged, Meridian Surround Audio, Soft-close doors, Adaptive Air Suspension, Head-Up Display, immaculate condition.",
         "image": "https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=800&auto=format&fit=crop&q=80",
-        "specs": {
-          "condition": "Used",
-          "year": 2021,
-          "mileage": "38,000 km",
-          "engine": "3.0L V6 Supercharged 360 hp",
-          "transmission": "8-Speed Automatic AWD",
-          "fuel": "Petrol",
-          "color": "Santorini Black / Ebony & Tan Leather",
-          "warranty": "1-Year Extended Powertrain Warranty"
-        }
+        "description": "Certified pre-owned 38,000 km, V6 Supercharged, Meridian Surround Audio, Soft-close doors, Adaptive Air Suspension, Head-Up Display, immaculate condition."
+      },
+      {
+        "name": "Toyota Corolla 2020 (Certified Used)",
+        "price": "1000000",
+        "category": "(Certified Used)",
+        "stock": "",
+        "image": "",
+        "description": ""
       }
     ],
     "whatsapp": {
@@ -238,8 +180,8 @@
       "isHuman": true
     },
     {
-      "id": "msg_muxv8255dtz3",
-      "at": 1791362908121,
+      "id": "msg_muxwgoz426l3",
+      "at": 1791364990576,
       "from": "201099998888",
       "name": "Test Customer",
       "incoming": "عايز اعرف تفاصيل مرسيدس C200 زيرو والتقسيط",
@@ -251,12 +193,12 @@
   "demoMetrics": {
     "days": 7,
     "totals": {
-      "messages": 217,
-      "faqHits": 171,
-      "fallbacks": 8,
-      "pos": 174,
+      "messages": 215,
+      "faqHits": 176,
+      "fallbacks": 7,
+      "pos": 173,
       "neg": 0,
-      "neutral": 43
+      "neutral": 42
     },
     "business": {
       "totalOrders": 2,
@@ -266,85 +208,85 @@
       "totalCustomers": 48,
       "repeatRate": 38,
       "openHandoffs": 0,
-      "autoRate": 96
+      "autoRate": 97
     },
     "series": [
       {
         "date": "2026-10-01",
-        "messages": 37,
-        "faqHits": 28,
+        "messages": 33,
+        "faqHits": 26,
         "fallbacks": 1,
-        "msCount": 37,
-        "msTotal": 46139,
-        "pos": 30,
-        "neg": 0,
-        "neutral": 7
-      },
-      {
-        "date": "2026-10-02",
-        "messages": 40,
-        "faqHits": 32,
-        "fallbacks": 2,
-        "msCount": 40,
-        "msTotal": 30960,
-        "pos": 32,
-        "neg": 0,
-        "neutral": 8
-      },
-      {
-        "date": "2026-10-03",
-        "messages": 31,
-        "faqHits": 23,
-        "fallbacks": 1,
-        "msCount": 31,
-        "msTotal": 37851,
-        "pos": 25,
+        "msCount": 33,
+        "msTotal": 40458,
+        "pos": 27,
         "neg": 0,
         "neutral": 6
       },
       {
-        "date": "2026-10-04",
-        "messages": 35,
-        "faqHits": 27,
+        "date": "2026-10-02",
+        "messages": 36,
+        "faqHits": 28,
         "fallbacks": 1,
-        "msCount": 35,
-        "msTotal": 26915,
-        "pos": 28,
+        "msCount": 36,
+        "msTotal": 23508,
+        "pos": 29,
         "neg": 0,
         "neutral": 7
       },
       {
-        "date": "2026-10-05",
-        "messages": 29,
-        "faqHits": 24,
+        "date": "2026-10-03",
+        "messages": 34,
+        "faqHits": 30,
         "fallbacks": 1,
-        "msCount": 29,
-        "msTotal": 34742,
-        "pos": 23,
+        "msCount": 34,
+        "msTotal": 26656,
+        "pos": 27,
+        "neg": 0,
+        "neutral": 7
+      },
+      {
+        "date": "2026-10-04",
+        "messages": 32,
+        "faqHits": 28,
+        "fallbacks": 1,
+        "msCount": 32,
+        "msTotal": 25664,
+        "pos": 26,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-10-05",
+        "messages": 32,
+        "faqHits": 25,
+        "fallbacks": 1,
+        "msCount": 32,
+        "msTotal": 28928,
+        "pos": 26,
         "neg": 0,
         "neutral": 6
       },
       {
         "date": "2026-10-06",
         "messages": 25,
-        "faqHits": 22,
+        "faqHits": 19,
         "fallbacks": 1,
         "msCount": 25,
-        "msTotal": 19500,
+        "msTotal": 29850,
         "pos": 20,
         "neg": 0,
         "neutral": 5
       },
       {
         "date": "2026-10-07",
-        "messages": 20,
-        "faqHits": 15,
+        "messages": 23,
+        "faqHits": 20,
         "fallbacks": 1,
-        "msCount": 20,
-        "msTotal": 17820,
-        "pos": 16,
+        "msCount": 23,
+        "msTotal": 15985,
+        "pos": 18,
         "neg": 0,
-        "neutral": 4
+        "neutral": 5
       }
     ],
     "hourly": [
@@ -400,9 +342,9 @@
       {
         "hour": 7,
         "label": "07:00",
-        "messages": 7,
+        "messages": 6,
         "faqHits": 5,
-        "fallbacks": 2
+        "fallbacks": 1
       },
       {
         "hour": 8,
@@ -428,8 +370,8 @@
       {
         "hour": 11,
         "label": "11:00",
-        "messages": 20,
-        "faqHits": 16,
+        "messages": 19,
+        "faqHits": 15,
         "fallbacks": 4
       },
       {
@@ -470,8 +412,8 @@
       {
         "hour": 17,
         "label": "17:00",
-        "messages": 20,
-        "faqHits": 16,
+        "messages": 19,
+        "faqHits": 15,
         "fallbacks": 4
       },
       {
@@ -505,9 +447,9 @@
       {
         "hour": 22,
         "label": "22:00",
-        "messages": 7,
+        "messages": 6,
         "faqHits": 5,
-        "fallbacks": 2
+        "fallbacks": 1
       },
       {
         "hour": 23,
@@ -517,7 +459,7 @@
         "fallbacks": 0
       }
     ],
-    "avgMs": 986,
+    "avgMs": 889,
     "topics": [
       {
         "label": "أسعار ومواصفات السيارات",
@@ -529,11 +471,11 @@
       },
       {
         "label": "حجز تجارب القيادة (Test Drive)",
-        "count": 39
+        "count": 38
       },
       {
         "label": "استبدال السيارات (Trade-In)",
-        "count": 26
+        "count": 25
       },
       {
         "label": "عنوان المعرض والمواعيد",
@@ -571,26 +513,26 @@
         "question": "هل يوجد بورش ماكان 2023 مستعملة؟",
         "count": 2,
         "createdAt": 1791293386134,
-        "updatedAt": 1791362908135
+        "updatedAt": 1791364990590
       }
     ],
     "recentActivity": [
       {
-        "id": "res_muxv825e3pqc",
+        "id": "res_muxwgozept2h",
         "type": "reservation",
         "title": "Test Drive (2 guest) · Test Customer",
         "detail": "غداً at 5:00 PM · Test Drive Appointment",
-        "timestamp": 1791362908130,
+        "timestamp": 1791364990586,
         "badgeClass": "bg-teal-50 text-teal-700",
         "badgeText": "completed",
         "icon": "calendar"
       },
       {
-        "id": "ord_muxv825bgt6g",
+        "id": "ord_muxwgozbvot1",
         "type": "order",
         "title": "Car Booking CAR-0002 · Test Customer",
         "detail": "100,000 EGP · Status: confirmed",
-        "timestamp": 1791362908127,
+        "timestamp": 1791364990583,
         "badgeClass": "bg-amber-50 text-amber-700",
         "badgeText": "confirmed",
         "icon": "car"
@@ -652,7 +594,7 @@
       {
         "category": "AI Real-Time Response Rate",
         "icon": "zap",
-        "title": "Avg. response time: 1.0s",
+        "title": "Avg. response time: 0.9s",
         "description": "Your dealership AI replies in ~1 second, delivering instant vehicle specs, photos, and installment calculations 24/7.",
         "tone": "success"
       }
@@ -663,12 +605,12 @@
       "question": "هل يوجد بورش ماكان 2023 مستعملة؟",
       "count": 2,
       "createdAt": 1791293386134,
-      "updatedAt": 1791362908135
+      "updatedAt": 1791364990590
     }
   ],
   "orders": [
     {
-      "id": "ord_muxv825bgt6g",
+      "id": "ord_muxwgozbvot1",
       "orderNumber": "CAR-0002",
       "clientPhone": "201099998888",
       "clientName": "Test Customer",
@@ -684,8 +626,8 @@
       "address": "معرض الفارس للسيارات - التجمع الخامس",
       "notes": "",
       "status": "confirmed",
-      "at": 1791362908127,
-      "updatedAt": 1791362908129
+      "at": 1791364990583,
+      "updatedAt": 1791364990584
     },
     {
       "id": "ord_muwptyarsqyd",
@@ -710,7 +652,7 @@
   ],
   "reservations": [
     {
-      "id": "res_muxv825e3pqc",
+      "id": "res_muxwgozept2h",
       "clientPhone": "201099998888",
       "clientName": "Test Customer",
       "partySize": 2,
@@ -718,8 +660,8 @@
       "time": "5:00 PM",
       "notes": "Test Drive Appointment",
       "status": "completed",
-      "at": 1791362908130,
-      "updatedAt": 1791362908132
+      "at": 1791364990586,
+      "updatedAt": 1791364990587
     },
     {
       "id": "res_muwptyduvlkq",
@@ -750,19 +692,19 @@
       "orderCount": 2,
       "totalSpent": 200000,
       "createdAt": 1791293385386,
-      "lastSeen": 1791362908121,
+      "lastSeen": 1791364990577,
       "messageCount": 6
     }
   },
   "campaigns": [
     {
-      "id": "camp_muxv825h9zzn",
+      "id": "camp_muxwgozhpbug",
       "title": "عروض تقسيط سيارات 2024",
       "message": "تقسيط بدون مقدم على موديلات مختارة لفترة محدودة!",
       "targetTag": "all",
       "sentCount": 25,
       "status": "sent",
-      "at": 1791362908133
+      "at": 1791364990589
     },
     {
       "id": "camp_muwptykr54l3",
@@ -917,7 +859,7 @@
   ],
   "handoffTickets": [
     {
-      "id": "ticket_muxv826l9xg9",
+      "id": "ticket_muxwgp0mey50",
       "phone": "201099998888",
       "name": "Test Customer",
       "issueSummary": "Need help with custom order",
@@ -925,8 +867,8 @@
       "lastMessage": "",
       "intentType": "HUMAN_TAKEOVER",
       "status": "resolved",
-      "createdAt": 1791362908173,
-      "resolvedAt": 1791362908174
+      "createdAt": 1791364990630,
+      "resolvedAt": 1791364990631
     },
     {
       "id": "ticket_muwptzfarvs2",

@@ -64,6 +64,11 @@
 
     <nav class="px-3 space-y-0.5 overflow-y-auto max-h-[calc(100dvh-130px)]" id="navDesktop">
       <button data-view="dashboard" class="nav-item active"><i data-lucide="layout-dashboard" class="h-4 w-4"></i><span data-i18n="nav_dashboard">لوحة التحكم</span></button>
+      <button data-view="admin-ai" class="nav-item">
+        <i data-lucide="brain" class="h-4 w-4 text-rose-600"></i>
+        <span data-i18n="nav_admin_ai">لوحة الذكاء الاصطناعي</span>
+        <span class="ml-auto rounded-full bg-rose-100 text-rose-700 px-1.5 py-0.5 text-[10px] font-bold">AI</span>
+      </button>
       <button data-view="products" class="nav-item"><i data-lucide="car" class="h-4 w-4 text-emerald-600"></i><span data-i18n="nav_products">قاعدة بيانات السيارات</span></button>
       <button data-view="orders" class="nav-item">
         <i data-lucide="check-circle-2" class="h-4 w-4 text-indigo-600"></i>
@@ -266,6 +271,154 @@
           <p class="min-w-0 flex-1 text-xs text-slate-500">Metrics are collected from live WhatsApp conversations. Want to see how the dashboard looks with data?</p>
           <button id="seedDemo" class="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-medium text-slate-700 transition hover:bg-slate-50">Load sample data</button>
           <button id="resetMetrics" class="rounded-lg px-3 py-1.5 text-xs font-medium text-slate-500 transition hover:bg-slate-50">Reset metrics</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ADMIN AI INTELLIGENCE VIEW ========== -->
+    <section data-pane="admin-ai" class="pane hidden flex-col h-full overflow-y-auto p-6 space-y-6">
+      <!-- Header -->
+      <div class="flex items-center justify-between">
+        <div>
+          <h1 class="text-2xl font-bold text-slate-900 dark:text-slate-100">🧠 لوحة الذكاء الاصطناعي</h1>
+          <p class="text-sm text-slate-500 dark:text-slate-400 mt-1">تحليل العملاء والمشاعر وتسجيل النقاط وإدارة الفروع والمعرض</p>
+        </div>
+        <button id="btnRefreshAnalytics" class="flex items-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition">
+          <i data-lucide="refresh-cw" class="h-4 w-4"></i> تحديث
+        </button>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">🔥 عملاء ساخنون</p>
+          <p id="statHotLeads" class="text-2xl font-bold text-rose-600">0</p>
+        </div>
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">⚡ تنبيهات مشاعر</p>
+          <p id="statSentimentAlerts" class="text-2xl font-bold text-amber-600">0</p>
+        </div>
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">🏪 عدد الفروع</p>
+          <p id="statBranches" class="text-2xl font-bold text-emerald-600">0</p>
+        </div>
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4">
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-1">📷 سيارات بالمعرض</p>
+          <p id="statGallery" class="text-2xl font-bold text-blue-600">0</p>
+        </div>
+      </div>
+
+      <!-- Sentiment Alerts + Lead Scores -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Sentiment Escalation Alerts -->
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h2 class="font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+              <i data-lucide="alert-triangle" class="h-4 w-4 text-rose-500"></i>
+              😤 تنبيهات التصعيد
+            </h2>
+            <span id="sentimentBadge" class="rounded-full bg-rose-100 text-rose-700 px-2 py-0.5 text-xs font-bold">0</span>
+          </div>
+          <div id="adminSentimentAlerts" class="space-y-2 text-sm text-slate-600 dark:text-slate-400">
+            <p class="text-center text-slate-400 py-4">لا توجد تنبيهات حالياً ✅</p>
+          </div>
+        </div>
+
+        <!-- Lead Scoring -->
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
+          <h2 class="font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-4">
+            <i data-lucide="trending-up" class="h-4 w-4 text-emerald-500"></i>
+            📈 تسجيل نقاط العملاء
+          </h2>
+          <div id="adminLeadScores" class="space-y-2 text-sm">
+            <p class="text-center text-slate-400 py-4">لا توجد بيانات عملاء بعد</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Behavioral Analytics -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Car Inquiries Chart -->
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
+          <h2 class="font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-4">
+            <i data-lucide="bar-chart-2" class="h-4 w-4 text-blue-500"></i>
+            📊 الاستفسارات حسب السيارة
+          </h2>
+          <div id="adminCarInquiries" class="space-y-2">
+            <p class="text-sm text-slate-400 text-center py-4">لا توجد بيانات بعد</p>
+          </div>
+        </div>
+
+        <!-- Peak Hours -->
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
+          <h2 class="font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-4">
+            <i data-lucide="clock" class="h-4 w-4 text-purple-500"></i>
+            ⏰ ساعات الذروة
+          </h2>
+          <div id="adminPeakHours" class="flex items-end gap-0.5 h-24">
+            <p class="text-sm text-slate-400 m-auto">لا توجد بيانات بعد</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ Auto-Learning + Dynamic Promotions -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- FAQ Gap Detection -->
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
+          <h2 class="font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-3">
+            <i data-lucide="lightbulb" class="h-4 w-4 text-yellow-500"></i>
+            🧠 التعلم التلقائي للـ FAQ
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">اكتشف الأسئلة الغير مغطاة واقترح إجابات تلقائياً بالذكاء الاصطناعي</p>
+          <button id="btnRunFaqLearn" class="w-full rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white font-medium px-4 py-2 text-sm transition mb-3">
+            🔍 تشغيل كاشف الثغرات
+          </button>
+          <div id="faqGapResults" class="space-y-2 text-sm"></div>
+        </div>
+
+        <!-- Dynamic Promotions -->
+        <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
+          <h2 class="font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-3">
+            <i data-lucide="gift" class="h-4 w-4 text-pink-500"></i>
+            🎁 توليد عروض ترويجية ذكية
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mb-3">اختر مستوى العميل وتوليد رسالة ترويجية مخصصة بالذكاء الاصطناعي</p>
+          <select id="promoTier" class="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm px-3 py-2 mb-2 outline-none">
+            <option value="hot">🔥 عميل ساخن (Hot)</option>
+            <option value="warm">🌡️ عميل دافئ (Warm)</option>
+            <option value="cold">❄️ عميل بارد (Cold)</option>
+          </select>
+          <button id="btnGenPromotion" class="w-full rounded-lg bg-pink-500 hover:bg-pink-600 text-white font-medium px-4 py-2 text-sm transition mb-3">
+            ✨ توليد عرض ترويجي
+          </button>
+          <textarea id="promotionResult" class="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-sm p-3 resize-none" rows="4" placeholder="سيظهر العرض هنا..."></textarea>
+        </div>
+      </div>
+
+      <!-- Multi-Branch Management -->
+      <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <i data-lucide="map-pin" class="h-4 w-4 text-emerald-500"></i>
+            🏪 إدارة الفروع المتعددة
+          </h2>
+          <button id="btnAddBranch" class="flex items-center gap-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium px-3 py-1.5 transition">
+            <i data-lucide="plus" class="h-3.5 w-3.5"></i> إضافة فرع
+          </button>
+        </div>
+        <div id="adminBranches" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <p class="text-sm text-slate-400 text-center py-4 col-span-3">جاري تحميل الفروع...</p>
+        </div>
+      </div>
+
+      <!-- Car Photo Gallery -->
+      <div class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-5">
+        <h2 class="font-semibold text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-4">
+          <i data-lucide="image" class="h-4 w-4 text-blue-500"></i>
+          📷 معرض صور السيارات
+        </h2>
+        <div id="adminGallery" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <p class="text-sm text-slate-400 text-center py-4 col-span-3">جاري تحميل المعرض...</p>
         </div>
       </div>
     </section>
@@ -871,6 +1024,11 @@
     </div>
     <nav class="flex-1 overflow-y-auto px-3 py-2 space-y-0.5" id="navMobileDrawer">
       <button data-view="dashboard" class="nav-item active"><i data-lucide="layout-dashboard" class="h-4 w-4"></i><span data-i18n="nav_dashboard">لوحة التحكم</span></button>
+      <button data-view="admin-ai" class="nav-item">
+        <i data-lucide="brain" class="h-4 w-4 text-rose-600"></i>
+        <span>لوحة الذكاء الاصطناعي</span>
+        <span class="ml-auto rounded-full bg-rose-100 text-rose-700 px-1.5 py-0.5 text-[10px] font-bold">AI</span>
+      </button>
       <button data-view="products" class="nav-item"><i data-lucide="car" class="h-4 w-4 text-emerald-600"></i><span data-i18n="nav_products">قاعدة بيانات السيارات</span></button>
       <button data-view="orders" class="nav-item"><i data-lucide="check-circle-2" class="h-4 w-4 text-indigo-600"></i><span data-i18n="nav_orders">حجوزات السيارات</span></button>
       <button data-view="reservations" class="nav-item"><i data-lucide="gauge" class="h-4 w-4 text-blue-600"></i><span data-i18n="nav_reservations">تجارب القيادة</span></button>

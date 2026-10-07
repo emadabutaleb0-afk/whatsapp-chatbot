@@ -221,7 +221,8 @@ export function analyzeIntent(text, config = {}, history = []) {
         sentiment,
         recommendedAction,
         lastMessage: raw
-      }
+      },
+      sentimentData: { sentiment: isAngry ? 'frustrated' : isUrgent ? 'urgent' : 'neutral', score: isAngry ? 0.8 : isUrgent ? 0.7 : 0.3, shouldEscalate: isAngry || isUrgent }
     };
   }
 
@@ -787,4 +788,216 @@ export async function translateContent(text, targetLang = 'en') {
   if (puterReply) return puterReply;
 
   return `[Translated to ${targetLang.toUpperCase()}]: ${raw}`;
+}
+
+
+export async function analyzeSentiment(text, history = []) {
+  const norm = normalize(text);
+  const raw = String(text || '').trim();
+
+  const prompt = `Analyze the emotional state of the following text and recent history.
+Text: "${raw}"
+Return ONLY a valid JSON object with: { "sentiment": "frustrated"|"urgent"|"excited"|"neutral"|"negative", "score": number between 0 and 1, "shouldEscalate": boolean, "reason": "string explaining why" }`;
+  
+  try {
+    const puterReply = await callPuterAI([{ role: 'user', content: prompt }]);
+    if (puterReply) {
+      const match = puterReply.match(/\{[\s\S]*\}/);
+      if (match) {
+        const parsed = JSON.parse(match[0]);
+        if (parsed.sentiment) return parsed;
+      }
+    }
+  } catch (e) {}
+
+  const frustratedKeywords = ['مشكله', 'مشكلة', 'شكوى', 'زفت', 'سيء', 'تأخير', 'غلط', 'فلوس', 'نصب', 'مزعج', 'تعبت', 'ماشيش', 'angry', 'bad', 'terrible', 'scam', 'frustrated', 'problem', 'issue', 'delayed', 'wrong'];
+  const urgentKeywords = ['ضروري', 'طوارئ', 'بسرعة', 'حالاً', 'عاجل', 'urgent', 'asap', 'immediately', 'now', 'right now'];
+  const excitedKeywords = ['اشتري', 'عايز', 'ابغى', 'interested', 'buy', 'purchase', 'want', 'love', 'perfect', 'great', 'amazing', 'ممتاز', 'محتاج'];
+
+  const isFrustrated = frustratedKeywords.some(k => norm.includes(normalize(k)));
+  const isUrgent = urgentKeywords.some(k => norm.includes(normalize(k)));
+  const isExcited = excitedKeywords.some(k => norm.includes(normalize(k)));
+
+  let sentiment = 'neutral';
+  let score = 0.5;
+  let reason = 'Normal inquiry';
+
+  if (isFrustrated) { sentiment = 'frustrated'; score = 0.8; reason = 'Detected frustrated keywords'; }
+  else if (isUrgent) { sentiment = 'urgent'; score = 0.7; reason = 'Detected urgent keywords'; }
+  else if (isExcited) { sentiment = 'excited'; score = 0.8; reason = 'Detected interested/excited keywords'; }
+  
+  return {
+    sentiment,
+    score,
+    shouldEscalate: sentiment === 'frustrated' || score >= 0.7,
+    reason
+  };
+}
+
+export async function scoreLeadQuality(messages = [], customerData = {}) {
+  const prompt = `Analyze these messages and customer data and score the lead quality 0-100 based on purchase intent signals.
+Messages: ${JSON.stringify(messages)}
+Data: ${JSON.stringify(customerData)}
+Return ONLY a valid JSON object with: { "score": number 0-100, "tier": "hot"|"warm"|"cold", "signals": ["string"], "summary": "string" }`;
+
+  try {
+    const puterReply = await callPuterAI([{ role: 'user', content: prompt }]);
+    if (puterReply) {
+      const match = puterReply.match(/\{[\s\S]*\}/);
+      if (match) {
+        const parsed = JSON.parse(match[0]);
+        if (typeof parsed.score === 'number') return parsed;
+      }
+    }
+  } catch (e) {}
+
+  let score = 0;
+  let signals = [];
+  const joinedText = messages.map(m => m.content || '').join(' ').toLowerCase();
+  
+  if (/(عايز اشتري|بكام|موديل|سعر|price|model|mercedes|bmw|toyota)/i.test(joinedText)) { score += 20; signals.push('Asked about specific car model'); }
+  if (/(تقسيط|قسط|تمويل|finance|installment)/i.test(joinedText)) { score += 15; signals.push('Asked about installment/financing'); }
+  if (/(تجربة|test drive|تجربة قيادة)/i.test(joinedText)) { score += 15; signals.push('Requested test drive'); }
+  if (/(تبديل|استبدال|trade|trade-in)/i.test(joinedText)) { score += 10; signals.push('Asked about trade-in'); }
+  if (/(سعر|بكام|price)/i.test(joinedText)) { score += 10; signals.push('Asked about price'); }
+  if (/(متاح|متوفر|موجود|available|stock)/i.test(joinedText)) { score += 10; signals.push('Asked about availability/stock'); }
+  if (messages.length >= 3) { score += 5; signals.push('Sent 3+ messages'); }
+  if (/(توصيل|شحن|استلام|delivery)/i.test(joinedText)) { score += 5; signals.push('Asked about delivery'); }
+  if (/(ميزانية|budget|فلوس)/i.test(joinedText)) { score += 10; signals.push('Mentioned budget'); }
+  if (/^(السلام عليكم|اهلا|hello|hi|مرحبا|ازيك)$/i.test(joinedText.trim())) { score -= 10; signals.push('Just casual chat'); }
+
+  score = Math.max(0, Math.min(100, score));
+  let tier = 'cold';
+  if (score >= 60) tier = 'hot';
+  else if (score >= 30) tier = 'warm';
+
+  return {
+    score,
+    tier,
+    signals,
+    summary: `Rule-based scoring returned ${score} (${tier} tier)`
+  };
+}
+
+export async function summarizeConversation(messages = [], clientName = '', businessName = 'Al-Fares Motors') {
+  const prompt = `Generate a professional CRM deal summary for a conversation with client "${clientName}" at "${businessName}".
+Detect: cars discussed, budget mentioned, financing interest, test drive requested, sentiment, and recommended action.
+Messages: ${JSON.stringify(messages)}
+Provide the summary in English (you can include Arabic terms if needed), highlighting the key points above.`;
+
+  try {
+    const puterReply = await callPuterAI([{ role: 'user', content: prompt }]);
+    if (puterReply) return puterReply;
+  } catch (e) {}
+
+  const topics = [];
+  const joinedText = messages.map(m => m.content || '').join(' ').toLowerCase();
+  if (/(تقسيط|finance)/i.test(joinedText)) topics.push('Financing');
+  if (/(تجربة|test drive)/i.test(joinedText)) topics.push('Test Drive');
+  if (/(مرسيدس|mercedes|bmw|تويوتا|toyota)/i.test(joinedText)) topics.push('Specific Cars');
+  
+  return `Client ${clientName} interacted with ${businessName}. Key topics detected: ${topics.join(', ') || 'General inquiry'}. Recommended to follow up.`;
+}
+
+export async function generateDynamicPromotion(leadScore = {}, customerHistory = [], inventory = [], lang = 'ar') {
+  const isArabic = (lang || 'ar').toLowerCase().includes('ar');
+  const tier = leadScore.tier || 'cold';
+  
+  const prompt = `Generate a personalized promotional offer message for a car dealership customer.
+Lead Tier: ${tier}
+Lead Signals: ${JSON.stringify(leadScore.signals || [])}
+Inventory: ${JSON.stringify((inventory || []).slice(0, 3))}
+Language: ${isArabic ? 'Egyptian Arabic' : 'English'}
+If tier is hot: offer exclusive discount, priority test drive, free inspection.
+If tier is warm: flexible installment highlight, offer callback from advisor.
+If tier is cold: general inventory teaser, showroom visit invite.
+Output ONLY the message text.`;
+
+  try {
+    const puterReply = await callPuterAI([{ role: 'user', content: prompt }]);
+    if (puterReply) return puterReply;
+  } catch (e) {}
+
+  if (tier === 'hot') {
+    return isArabic 
+      ? 'بما إنك مهتم جداً، بنقدملك خصم حصري وتجربة قيادة بأولوية وفحص مجاني! كلمنا دلوقتي.'
+      : 'Since you are highly interested, we offer you an exclusive discount, priority test drive, and free inspection! Contact us now.';
+  } else if (tier === 'warm') {
+    return isArabic
+      ? 'اكتشف خطط التقسيط المرنة بتاعتنا! مستشار المبيعات بتاعنا ممكن يكلمك يشرحلك كل التفاصيل.'
+      : 'Discover our flexible installment plans! Our sales advisor can call you to explain all the details.';
+  } else {
+    return isArabic
+      ? 'تعالى زورنا في المعرض وشوف تشكيلة العربيات الجديدة والمستعملة اللي عندنا!'
+      : 'Visit our showroom to explore our wide inventory of new and used cars!';
+  }
+}
+
+export async function matchCarByImage(description = '', inventory = []) {
+  const prompt = `Match the following car description/visual description to the best car from the inventory.
+Description: "${description}"
+Inventory: ${JSON.stringify(inventory)}
+Return ONLY a valid JSON object with the matched car object, or null if no good match.`;
+
+  try {
+    const puterReply = await callPuterAI([{ role: 'user', content: prompt }]);
+    if (puterReply) {
+      const match = puterReply.match(/\{[\s\S]*\}/);
+      if (match) {
+        const parsed = JSON.parse(match[0]);
+        if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 0) return parsed;
+      }
+    }
+  } catch (e) {}
+
+  const normDesc = normalize(description);
+  let bestMatch = null;
+  let bestScore = 0;
+  
+  for (const car of (inventory || [])) {
+    const carText = normalize((car.name || '') + ' ' + (car.description || ''));
+    const score = similarity(normDesc, carText);
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = car;
+    }
+  }
+  
+  return bestScore > 0.2 ? bestMatch : null;
+}
+
+export async function detectFaqGap(question = '', existingFaqs = []) {
+  const normQ = normalize(question);
+  let isGap = true;
+  
+  for (const faq of (existingFaqs || [])) {
+    const faqText = normalize((faq.question || '') + ' ' + (faq.title || ''));
+    if (similarity(normQ, faqText) >= 0.4) {
+      isGap = false;
+      break;
+    }
+  }
+  
+  if (!isGap) {
+    return { isGap: false, gapCategory: 'none', suggestedQuestion: '', suggestedAnswer: '' };
+  }
+  
+  const prompt = `A user asked a question that is not covered by existing FAQs.
+Question: "${question}"
+Generate a suggested FAQ entry for this question.
+Categories: 'pricing', 'financing', 'inventory', 'warranty', 'location', 'test-drive', 'trade-in', 'other'.
+Return ONLY a valid JSON object with: { "gapCategory": "string", "suggestedQuestion": "string", "suggestedAnswer": "string" }`;
+
+  try {
+    const puterReply = await callPuterAI([{ role: 'user', content: prompt }]);
+    if (puterReply) {
+      const match = puterReply.match(/\{[\s\S]*\}/);
+      if (match) {
+        const parsed = JSON.parse(match[0]);
+        return { isGap: true, gapCategory: parsed.gapCategory || 'other', suggestedQuestion: parsed.suggestedQuestion || question, suggestedAnswer: parsed.suggestedAnswer || '' };
+      }
+    }
+  } catch (e) {}
+
+  return { isGap: true, gapCategory: 'other', suggestedQuestion: question, suggestedAnswer: 'يرجى التواصل مع خدمة العملاء للمزيد من التفاصيل.' };
 }

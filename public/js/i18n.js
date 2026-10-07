@@ -22,6 +22,7 @@ export const translations = {
 
     // Navigation Items
     nav_dashboard: 'لوحة التحكم',
+    nav_admin_ai: 'لوحة الذكاء الاصطناعي',
     nav_products: 'قاعدة بيانات السيارات',
     nav_orders: 'حجوزات شراء السيارات',
     nav_reservations: 'مواعيد تجربة القيادة',
@@ -90,6 +91,7 @@ export const translations = {
 
     // Navigation Items
     nav_dashboard: 'Dashboard',
+    nav_admin_ai: 'AI Intelligence',
     nav_products: 'Cars Database',
     nav_orders: 'Car Bookings',
     nav_reservations: 'Test Drives',
