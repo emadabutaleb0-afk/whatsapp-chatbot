@@ -6,12 +6,12 @@ import { api, loadConvIndex, saveConvIndex, loadConversation, saveConversation, 
 let ctx = null;
 
 const SUGGESTIONS = [
-  'What cars do you have in stock?',
-  'بكام مرسيدس C200 زيرو؟',
-  'هل في تقسيط للبي ام 320 ومقدمها كام؟',
-  'عايز احجز تجربة قيادة لتويوتا كورولا',
-  'ممكن ابدل عربيتي القديمة (Trade-in)؟',
-  'مواعيد وعنوان المعرض بالتفصيل'
+  'ما هي السيارات المتوفرة بالمعرض زيرو ومستعمل؟',
+  'سعر وتفاصيل مرسيدس C200 AMG موديل 2024 زيرو',
+  'عايز اعرف نظام تقسيط BMW 320 ومقدمها كام',
+  'حجز موعد لمعاينة وتجربة قيادة سيارة',
+  'هل متاح استبدال سيارتي القديمة (Trade-In)؟',
+  'موقع صالة العرض ومواعيد العمل وأرقام التواصل'
 ];
 
 function timeLabel(ts) {
@@ -42,14 +42,28 @@ function messageHTML(m) {
 
 function emptyStateHTML(cfg) {
   const b = (cfg && cfg.business) || {};
+  const isAr = document.documentElement.lang === 'ar' || localStorage.getItem('alfares_lang') === 'ar';
   return `<div class="empty">
-    <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-[#128C7E] text-white shadow-sm">
-      <i data-lucide="message-circle-more" class="h-6 w-6"></i>
+    <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[#128C7E] to-[#0ea5e9] text-white shadow-md shadow-[#128C7E]/20">
+      <i data-lucide="car" class="h-7 w-7"></i>
     </div>
-    <h3 class="mt-4 text-base font-semibold text-slate-800">${esc(b.name || 'Your Assistant')}</h3>
-    <p class="mt-1.5 text-sm leading-relaxed text-slate-500">
-      Test your assistant the way a client would on WhatsApp. It replies in real-time quoting only your exact opening hours, location, and product prices.
+    <h3 class="mt-4 text-base font-bold text-slate-800 dark:text-slate-100">${esc(b.name || (isAr ? 'مستشار مبيعات الفارس للسيارات' : 'Al-Fares Motors AI Sales Advisor'))}</h3>
+    <p class="mt-2 text-sm leading-relaxed text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+      ${isAr
+        ? 'اختبر ردود مستشار مبيعات المعرض الذكي تماماً كما يجيب عملاءك على واتساب. يسحب الأسعار والمواصفات الرسمية من قاعدة بيانات السيارات، يحسب الأقساط البنكية، ويحدد مواعيد تجارب القيادة!'
+        : 'Test your automotive AI sales advisor as clients experience it on WhatsApp. It quotes exact vehicle inventory specs, prices, bank installments, trade-in values, and schedules test drives!'}
     </p>
+    <div class="mt-4 flex flex-wrap justify-center gap-2">
+      <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800/50 px-3 py-1 text-xs font-medium text-emerald-700 dark:text-emerald-300">
+        <i data-lucide="check" class="h-3 w-3"></i> ${isAr ? 'سيارات زيرو ومستعملة معتمدة' : 'Zero & Certified Used Inventory'}
+      </span>
+      <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 dark:bg-blue-950/50 border border-blue-200 dark:border-blue-800/50 px-3 py-1 text-xs font-medium text-blue-700 dark:text-blue-300">
+        <i data-lucide="gauge" class="h-3 w-3"></i> ${isAr ? 'حجز تجارب قيادة فورية' : 'Instant Test Drive Scheduling'}
+      </span>
+      <span class="inline-flex items-center gap-1 rounded-full bg-purple-50 dark:bg-purple-950/50 border border-purple-200 dark:border-purple-800/50 px-3 py-1 text-xs font-medium text-purple-700 dark:text-purple-300">
+        <i data-lucide="sparkles" class="h-3 w-3"></i> Puter AI & Local Engine
+      </span>
+    </div>
   </div>`;
 }
 

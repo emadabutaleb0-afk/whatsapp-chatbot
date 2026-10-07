@@ -1,22 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Al-Fares Motors — WhatsApp AI Automotive Suite</title>
-  <meta name="description" content="AI Assistant for selling new & used cars on WhatsApp, inventory management, test drives, and financing.">
+  <title>الفارس للسيارات — منصة مبيعات السيارات بالذكاء الاصطناعي</title>
+  <meta name="description" content="مستشار مبيعات سيارات ذكي لبيع واستبدال السيارات الزيرو والمستعملة على واتساب، إدارة الكتالوج، وتجارب القيادة والتقسيط.">
   <meta name="theme-color" content="#128C7E">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <!-- Puter.js for free AI access (OpenAI & GPT models) -->
   <script src="https://js.puter.com/v2/"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'] },
+          fontFamily: { sans: ['Cairo', 'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'sans-serif'] },
           colors: { brand: { 50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399', 500: '#128C7E', 600: '#0f7a6e', 700: '#0d6b5e', 800: '#065f46', 900: '#064e3b' } },
           animation: { 'fade-in': 'fadeIn 0.3s ease', 'slide-up': 'slideUp 0.3s ease', 'scale-in': 'scaleIn 0.25s cubic-bezier(0.21,1.02,0.73,1)' },
           keyframes: { fadeIn: { from: { opacity: '0' }, to: { opacity: '1' } }, slideUp: { from: { opacity: '0', transform: 'translateY(8px)' }, to: { opacity: '1', transform: 'translateY(0)' } } }
@@ -33,13 +34,13 @@
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 antialiased font-sans">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased font-sans transition-colors duration-200">
 
 <!-- Loading Screen -->
-<div id="appLoader" class="app-loader">
+<div id="appLoader" class="app-loader dark:bg-slate-950">
   <div class="text-center">
     <div class="loader-spinner mx-auto mb-4"></div>
-    <p class="text-sm font-medium text-slate-500">Loading Al-Fares Motors AI…</p>
+    <p class="text-sm font-medium text-slate-600 dark:text-slate-300">جاري تشغيل منصة الفارس للسيارات بالذكاء الاصطناعي…</p>
   </div>
 </div>
 
@@ -62,24 +63,24 @@
     </div>
 
     <nav class="px-3 space-y-0.5 overflow-y-auto max-h-[calc(100dvh-130px)]" id="navDesktop">
-      <button data-view="dashboard" class="nav-item active"><i data-lucide="layout-dashboard" class="h-4 w-4"></i><span>Dashboard</span></button>
-      <button data-view="products" class="nav-item"><i data-lucide="car" class="h-4 w-4 text-emerald-600"></i><span>Cars Database</span></button>
+      <button data-view="dashboard" class="nav-item active"><i data-lucide="layout-dashboard" class="h-4 w-4"></i><span data-i18n="nav_dashboard">لوحة التحكم</span></button>
+      <button data-view="products" class="nav-item"><i data-lucide="car" class="h-4 w-4 text-emerald-600"></i><span data-i18n="nav_products">قاعدة بيانات السيارات</span></button>
       <button data-view="orders" class="nav-item">
         <i data-lucide="check-circle-2" class="h-4 w-4 text-indigo-600"></i>
-        <span>Car Bookings</span>
+        <span data-i18n="nav_orders">حجوزات السيارات</span>
         <span id="ordersCountBadge" class="ml-auto rounded-full bg-emerald-100 text-emerald-700 px-1.5 py-0.2 text-[10px] font-bold">3</span>
       </button>
-      <button data-view="reservations" class="nav-item"><i data-lucide="gauge" class="h-4 w-4 text-blue-600"></i><span>Test Drives</span></button>
-      <button data-view="livechat" class="nav-item"><i data-lucide="headset" class="h-4 w-4 text-amber-600"></i><span>Live Chat</span></button>
-      <button data-view="broadcast" class="nav-item"><i data-lucide="megaphone" class="h-4 w-4 text-purple-600"></i><span>Broadcasts</span></button>
-      <button data-view="chat" class="nav-item"><i data-lucide="messages-square" class="h-4 w-4"></i><span>Assistant Preview</span></button>
-      <button data-view="faq" class="nav-item"><i data-lucide="book-open-check" class="h-4 w-4"></i><span>FAQ answers</span><span id="faqCount" class="ml-auto rounded-full bg-slate-100 px-1.5 text-[10px] font-semibold text-slate-500">6</span></button>
-      <button data-view="helpcenter" class="nav-item"><i data-lucide="book-marked" class="h-4 w-4 text-emerald-600"></i><span>Car Knowledge</span><span id="articlesCountBadge" class="ml-auto rounded-full bg-slate-100 px-1.5 text-[10px] font-semibold text-slate-500">4</span></button>
-      <button data-view="business" class="nav-item"><i data-lucide="building-2" class="h-4 w-4"></i><span>Dealership info</span></button>
-      <button data-view="whatsapp" class="nav-item"><i data-lucide="link" class="h-4 w-4"></i><span>Connect WhatsApp</span></button>
-      <button data-view="team" class="nav-item"><i data-lucide="users" class="h-4 w-4 text-indigo-600"></i><span>Sales Advisors</span></button>
-      <button data-view="templates" class="nav-item"><i data-lucide="layout-template" class="h-4 w-4 text-teal-600"></i><span>Templates</span></button>
-      <button data-view="logs" class="nav-item"><i data-lucide="inbox" class="h-4 w-4"></i><span>Client messages</span></button>
+      <button data-view="reservations" class="nav-item"><i data-lucide="gauge" class="h-4 w-4 text-blue-600"></i><span data-i18n="nav_reservations">تجارب القيادة</span></button>
+      <button data-view="livechat" class="nav-item"><i data-lucide="headset" class="h-4 w-4 text-amber-600"></i><span data-i18n="nav_livechat">المحادثات المباشرة</span></button>
+      <button data-view="broadcast" class="nav-item"><i data-lucide="megaphone" class="h-4 w-4 text-purple-600"></i><span data-i18n="nav_broadcast">الحملات الإعلانية</span></button>
+      <button data-view="chat" class="nav-item"><i data-lucide="messages-square" class="h-4 w-4 text-teal-600"></i><span data-i18n="nav_chat">معاينة المساعد الذكي</span></button>
+      <button data-view="faq" class="nav-item"><i data-lucide="book-open-check" class="h-4 w-4"></i><span data-i18n="nav_faq">الأسئلة الشائعة</span><span id="faqCount" class="ml-auto rounded-full bg-slate-100 px-1.5 text-[10px] font-semibold text-slate-500">6</span></button>
+      <button data-view="helpcenter" class="nav-item"><i data-lucide="book-marked" class="h-4 w-4 text-emerald-600"></i><span data-i18n="nav_helpcenter">مركز المعرفة الفني</span><span id="articlesCountBadge" class="ml-auto rounded-full bg-slate-100 px-1.5 text-[10px] font-semibold text-slate-500">4</span></button>
+      <button data-view="business" class="nav-item"><i data-lucide="building-2" class="h-4 w-4"></i><span data-i18n="nav_business">بيانات المعرض والسياسات</span></button>
+      <button data-view="whatsapp" class="nav-item"><i data-lucide="link" class="h-4 w-4"></i><span data-i18n="nav_whatsapp">ربط واتساب API</span></button>
+      <button data-view="team" class="nav-item"><i data-lucide="users" class="h-4 w-4 text-indigo-600"></i><span data-i18n="nav_team">مستشاري المبيعات</span></button>
+      <button data-view="templates" class="nav-item"><i data-lucide="layout-template" class="h-4 w-4 text-teal-600"></i><span data-i18n="nav_templates">قوالب الرسائل</span></button>
+      <button data-view="logs" class="nav-item"><i data-lucide="inbox" class="h-4 w-4"></i><span data-i18n="nav_logs">رسائل العملاء</span></button>
     </nav>
 
     <!-- Conversation list (chat view only) -->
@@ -115,24 +116,37 @@
           <option value="viewer">View-Only</option>
         </select>
       </div>
+      <!-- Theme & Language Toggles -->
+      <div class="mt-2 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+        <button id="themeToggleBtn" class="flex-1 flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-2 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-700" title="تبديل الوضع الليلي / النهاري">
+          <i data-lucide="moon" class="h-3.5 w-3.5 text-indigo-500"></i>
+          <span id="themeToggleText">ليلي</span>
+        </button>
+        <button id="langToggleBtn" class="flex-1 flex items-center justify-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-2 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-700" title="تبديل اللغة">
+          <i data-lucide="languages" class="h-3.5 w-3.5 text-emerald-600"></i>
+          <span>English</span>
+        </button>
+      </div>
     </div>
   </aside>
 
   <!-- Main -->
   <main class="flex min-w-0 flex-1 flex-col overflow-hidden">
     <!-- Mobile top bar -->
-    <header class="flex items-center justify-between border-b border-slate-200 bg-white px-4 py-3 md:hidden">
+    <header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3 md:hidden">
       <div class="flex items-center gap-2">
-        <button id="mobileMenuBtn" class="rounded-lg p-2 text-slate-500 hover:bg-slate-100" title="Menu">
+        <button id="mobileMenuBtn" class="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="Menu">
           <i data-lucide="menu" class="h-5 w-5"></i>
         </button>
         <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#128C7E] text-white">
-          <i data-lucide="message-circle-more" class="h-4 w-4"></i>
+          <i data-lucide="car" class="h-4 w-4"></i>
         </div>
-        <p class="text-sm font-semibold">ClientBot</p>
+        <p class="text-sm font-bold text-slate-900 dark:text-slate-100">Al-Fares Motors</p>
       </div>
       <div class="flex items-center gap-1">
-        <button id="mobileConvBtn" class="rounded-lg p-2 text-slate-500 hover:bg-slate-100" title="Conversations"><i data-lucide="history" class="h-4 w-4"></i></button>
+        <button id="themeToggleMobileBtn" class="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="تبديل الوضع الليلي"><i data-lucide="moon" class="h-4 w-4"></i></button>
+        <button id="langToggleMobileBtn" class="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="Language"><i data-lucide="languages" class="h-4 w-4"></i></button>
+        <button id="mobileConvBtn" class="rounded-lg p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800" title="Conversations"><i data-lucide="history" class="h-4 w-4"></i></button>
       </div>
     </header>
 
@@ -506,35 +520,39 @@
 
     <!-- ===== CHAT PREVIEW VIEW ===== -->
     <section data-pane="chat" class="pane hidden min-h-0 flex-1 flex-col">
-      <div class="hidden items-center justify-between border-b border-slate-200 bg-white px-6 py-3.5 md:flex">
+      <div class="hidden items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3.5 md:flex">
         <div>
-          <h2 class="text-sm font-semibold text-slate-900">Assistant preview</h2>
-          <p class="text-xs text-slate-500">Ask anything a client would ask — this is the exact bot that replies on WhatsApp.</p>
+          <h2 class="text-sm font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2">
+            <span data-i18n="chat_header">معاينة مستشار المبيعات الذكي</span>
+            <span class="rounded bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 text-[10px] font-bold px-2 py-0.5">Automotive AI</span>
+          </h2>
+          <p class="text-xs text-slate-500 dark:text-slate-400" data-i18n="chat_sub">اسأل أي استفسار يطرحه العميل عن السيارات والأسعار والمواصفات والتقسيط — هذا هو نفس البوت الذي يجيب على واتساب تلقائياً.</p>
         </div>
-        <button id="newChatBtn" class="flex items-center gap-1.5 rounded-lg border border-slate-200 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
-          <i data-lucide="plus" class="h-4 w-4"></i> New conversation
+        <button id="newChatBtn" class="flex items-center gap-1.5 rounded-lg border border-slate-200 dark:border-slate-700 px-3 py-1.5 text-sm font-medium text-slate-700 dark:text-slate-200 transition hover:bg-slate-50 dark:hover:bg-slate-800">
+          <i data-lucide="plus" class="h-4 w-4"></i> <span data-i18n="new_chat">محادثة جديدة</span>
         </button>
       </div>
 
       <div id="messages" class="min-h-0 flex-1 overflow-y-auto px-4 py-6 md:px-8"></div>
 
-      <div class="border-t border-slate-200 bg-white px-4 py-3 md:px-8 md:py-4">
+      <div class="border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 py-3 md:px-8 md:py-4">
         <div id="suggestions" class="mb-3 flex flex-wrap gap-2"></div>
         <form id="composer" class="flex items-end gap-2">
-          <div class="flex flex-1 items-end rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2 focus-within:border-[#128C7E] focus-within:bg-white transition-all">
-            <textarea id="input" rows="1" placeholder="Ask about hours, location, products or prices…"
-              class="max-h-40 flex-1 resize-none bg-transparent text-sm leading-6 outline-none placeholder:text-slate-400"></textarea>
+          <div class="flex flex-1 items-end rounded-2xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 px-3 py-2 focus-within:border-[#128C7E] focus-within:bg-white dark:focus-within:bg-slate-800 transition-all">
+            <textarea id="input" rows="1" placeholder="اسأل عن سيارات المعرض، الأسعار، أنظمة التقسيط، حجز تجربة قيادة أو الاستبدال…"
+              data-i18n-ph="input_placeholder"
+              class="max-h-40 flex-1 resize-none bg-transparent text-sm leading-6 outline-none placeholder:text-slate-400 dark:placeholder:text-slate-500 text-slate-900 dark:text-slate-100"></textarea>
           </div>
-          <button id="sendBtn" type="submit" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#128C7E] to-[#0f7a6e] text-white transition hover:shadow-lg hover:shadow-[#128C7E]/30 active:scale-95 shadow-md shadow-[#128C7E]/20">
+          <button id="sendBtn" type="submit" class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-[#128C7E] to-[#0f7a6e] text-white transition hover:shadow-lg hover:shadow-[#128C7E]/30 active:scale-95 shadow-md shadow-[#128C7E]/20" title="إرسال">
             <i data-lucide="arrow-up" class="h-4 w-4"></i>
           </button>
-          <button id="stopBtn" type="button" class="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50">
+          <button id="stopBtn" type="button" class="hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:bg-slate-50" title="إيقاف">
             <i data-lucide="square" class="h-4 w-4"></i>
           </button>
         </form>
-        <div class="mt-2 flex items-center justify-between">
-          <p class="text-[11px] text-slate-400">Multilingual & Egyptian Dialect Tuning Active.</p>
-          <span class="rounded-md border border-slate-200 bg-slate-50 px-2 py-0.5 text-[11px] font-medium text-slate-600">Active Mode: Order &amp; Booking Bot</span>
+        <div class="mt-2 flex items-center justify-between text-xs">
+          <p class="text-[11px] text-slate-400 dark:text-slate-500" data-i18n="tuning_badge">متصل بقاعدة بيانات السيارات وذكاء Puter AI الفوري.</p>
+          <span class="rounded-md border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-600 dark:text-slate-300" data-i18n="mode_badge">الوضع النشط: مستشار مبيعات سيارات &amp; حجز تجارب قيادة</span>
         </div>
       </div>
     </section>
@@ -840,32 +858,32 @@
 <div id="mobileMenuDrawer" class="fixed inset-0 z-50 hidden md:hidden">
   <div id="mobileMenuOverlay" class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"></div>
   <div id="mobileMenuPanel" class="absolute inset-y-0 left-0 w-72 bg-white shadow-2xl flex flex-col transform transition-transform duration-300">
-    <div class="flex items-center justify-between px-4 py-4 border-b border-slate-200">
+    <div class="flex items-center justify-between px-4 py-4 border-b border-slate-200 dark:border-slate-800">
       <div class="flex items-center gap-2.5">
         <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-[#128C7E] to-[#0ea5e9] text-white shadow-md">
-          <i data-lucide="message-circle-more" class="h-5 w-5"></i>
+          <i data-lucide="car" class="h-5 w-5"></i>
         </div>
-        <p class="text-sm font-bold text-slate-900">ClientBot</p>
+        <p class="text-sm font-bold text-slate-900 dark:text-slate-100">Al-Fares Motors</p>
       </div>
-      <button id="closeMobileMenu" class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 hover:text-slate-700">
+      <button id="closeMobileMenu" class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
         <i data-lucide="x" class="h-5 w-5"></i>
       </button>
     </div>
     <nav class="flex-1 overflow-y-auto px-3 py-2 space-y-0.5" id="navMobileDrawer">
-      <button data-view="dashboard" class="nav-item active"><i data-lucide="layout-dashboard" class="h-4 w-4"></i><span>Dashboard</span></button>
-      <button data-view="products" class="nav-item"><i data-lucide="car" class="h-4 w-4 text-emerald-600"></i><span>Cars Database</span></button>
-      <button data-view="orders" class="nav-item"><i data-lucide="check-circle-2" class="h-4 w-4 text-indigo-600"></i><span>Car Bookings</span></button>
-      <button data-view="reservations" class="nav-item"><i data-lucide="gauge" class="h-4 w-4 text-blue-600"></i><span>Test Drives</span></button>
-      <button data-view="livechat" class="nav-item"><i data-lucide="headset" class="h-4 w-4 text-amber-600"></i><span>Live Chat</span></button>
-      <button data-view="broadcast" class="nav-item"><i data-lucide="megaphone" class="h-4 w-4 text-purple-600"></i><span>Broadcasts</span></button>
-      <button data-view="chat" class="nav-item"><i data-lucide="messages-square" class="h-4 w-4"></i><span>Assistant Preview</span></button>
-      <button data-view="faq" class="nav-item"><i data-lucide="book-open-check" class="h-4 w-4"></i><span>FAQ answers</span></button>
-      <button data-view="helpcenter" class="nav-item"><i data-lucide="book-marked" class="h-4 w-4 text-emerald-600"></i><span>Car Knowledge</span></button>
-      <button data-view="business" class="nav-item"><i data-lucide="building-2" class="h-4 w-4"></i><span>Dealership info</span></button>
-      <button data-view="whatsapp" class="nav-item"><i data-lucide="link" class="h-4 w-4"></i><span>Connect WhatsApp</span></button>
-      <button data-view="team" class="nav-item"><i data-lucide="users" class="h-4 w-4 text-indigo-600"></i><span>Sales Advisors</span></button>
-      <button data-view="templates" class="nav-item"><i data-lucide="layout-template" class="h-4 w-4 text-teal-600"></i><span>Templates</span></button>
-      <button data-view="logs" class="nav-item"><i data-lucide="inbox" class="h-4 w-4"></i><span>Client messages</span></button>
+      <button data-view="dashboard" class="nav-item active"><i data-lucide="layout-dashboard" class="h-4 w-4"></i><span data-i18n="nav_dashboard">لوحة التحكم</span></button>
+      <button data-view="products" class="nav-item"><i data-lucide="car" class="h-4 w-4 text-emerald-600"></i><span data-i18n="nav_products">قاعدة بيانات السيارات</span></button>
+      <button data-view="orders" class="nav-item"><i data-lucide="check-circle-2" class="h-4 w-4 text-indigo-600"></i><span data-i18n="nav_orders">حجوزات السيارات</span></button>
+      <button data-view="reservations" class="nav-item"><i data-lucide="gauge" class="h-4 w-4 text-blue-600"></i><span data-i18n="nav_reservations">تجارب القيادة</span></button>
+      <button data-view="livechat" class="nav-item"><i data-lucide="headset" class="h-4 w-4 text-amber-600"></i><span data-i18n="nav_livechat">المحادثات المباشرة</span></button>
+      <button data-view="broadcast" class="nav-item"><i data-lucide="megaphone" class="h-4 w-4 text-purple-600"></i><span data-i18n="nav_broadcast">الحملات الإعلانية</span></button>
+      <button data-view="chat" class="nav-item"><i data-lucide="messages-square" class="h-4 w-4 text-teal-600"></i><span data-i18n="nav_chat">معاينة المساعد الذكي</span></button>
+      <button data-view="faq" class="nav-item"><i data-lucide="book-open-check" class="h-4 w-4"></i><span data-i18n="nav_faq">الأسئلة الشائعة</span></button>
+      <button data-view="helpcenter" class="nav-item"><i data-lucide="book-marked" class="h-4 w-4 text-emerald-600"></i><span data-i18n="nav_helpcenter">مركز المعرفة الفني</span></button>
+      <button data-view="business" class="nav-item"><i data-lucide="building-2" class="h-4 w-4"></i><span data-i18n="nav_business">بيانات المعرض والسياسات</span></button>
+      <button data-view="whatsapp" class="nav-item"><i data-lucide="link" class="h-4 w-4"></i><span data-i18n="nav_whatsapp">ربط واتساب API</span></button>
+      <button data-view="team" class="nav-item"><i data-lucide="users" class="h-4 w-4 text-indigo-600"></i><span data-i18n="nav_team">مستشاري المبيعات</span></button>
+      <button data-view="templates" class="nav-item"><i data-lucide="layout-template" class="h-4 w-4 text-teal-600"></i><span data-i18n="nav_templates">قوالب الرسائل</span></button>
+      <button data-view="logs" class="nav-item"><i data-lucide="inbox" class="h-4 w-4"></i><span data-i18n="nav_logs">رسائل العملاء</span></button>
     </nav>
   </div>
 </div>

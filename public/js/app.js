@@ -13,6 +13,7 @@ import { initTeam, loadTeam, applyPermissions, currentRole } from './team.js';
 import { initTemplates, loadTemplates } from './templates.js';
 import { initHelpCenter, loadHelpCenter } from './helpcenter.js';
 import { exportLogsCSV, exportLogsPDF, exportMetricsCSV, exportMetricsPDF } from './export.js';
+import { applyLanguage, toggleLanguage, getLang } from './i18n.js';
 
 const state = {
   view: 'dashboard',
@@ -28,6 +29,18 @@ const state = {
 /* ============================== Boot ============================== */
 
 async function boot() {
+  // Apply saved theme (night mode default preference support)
+  const savedTheme = localStorage.getItem('alfares_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+  if (savedTheme === 'dark') {
+    document.documentElement.classList.add('dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+  }
+  updateThemeButtonUI();
+
+  // Apply default language (Arabic full localization)
+  applyLanguage(getLang());
+
   refreshIcons();
 
   // Dismiss loading screen with smooth transition
@@ -412,6 +425,28 @@ function setView(view) {
 /* ============================== Wiring UI Events ============================== */
 
 function wireUI() {
+  // Theme (Night Mode) toggle
+  const toggleTheme = () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('alfares_theme', isDark ? 'dark' : 'light');
+    updateThemeButtonUI();
+    toast(isDark ? 'تم تفعيل الوضع الليلي 🌙' : 'تم تفعيل الوضع النهاري ☀️');
+    refreshIcons();
+  };
+
+  $('themeToggleBtn')?.addEventListener('click', toggleTheme);
+  $('themeToggleMobileBtn')?.addEventListener('click', toggleTheme);
+
+  // Language toggle (Arabic <-> English)
+  const onToggleLang = () => {
+    const newLang = toggleLanguage();
+    toast(newLang === 'ar' ? 'تم تحويل الواجهة إلى العربية 🇪🇬' : 'Switched to English 🇬🇧');
+    refreshIcons();
+  };
+
+  $('langToggleBtn')?.addEventListener('click', onToggleLang);
+  $('langToggleMobileBtn')?.addEventListener('click', onToggleLang);
+
   document.querySelectorAll('[data-view]').forEach((b) =>
     b.addEventListener('click', () => setView(b.dataset.view))
   );
@@ -423,14 +458,14 @@ function wireUI() {
   });
   $('exportMetricsPDFBtn')?.addEventListener('click', () => {
     const m = getCurrentMetrics();
-    const bName = (state.config && state.config.business && state.config.business.name) || 'Nour Coffee House';
+    const bName = (state.config && state.config.business && state.config.business.name) || 'Al-Fares Motors | الفارس للسيارات';
     exportMetricsPDF(m, bName);
   });
   $('exportLogsCSVBtn')?.addEventListener('click', () => {
     exportLogsCSV(state.logs);
   });
   $('exportLogsPDFBtn')?.addEventListener('click', () => {
-    const bName = (state.config && state.config.business && state.config.business.name) || 'Nour Coffee House';
+    const bName = (state.config && state.config.business && state.config.business.name) || 'Al-Fares Motors | الفارس للسيارات';
     exportLogsPDF(state.logs, bName);
   });
 
@@ -549,6 +584,23 @@ function wireUI() {
       e.returnValue = '';
     }
   });
+}
+
+function updateThemeButtonUI() {
+  const isDark = document.documentElement.classList.contains('dark');
+  const btn = $('themeToggleBtn');
+  const mobileBtn = $('themeToggleMobileBtn');
+  const text = $('themeToggleText');
+
+  if (text) {
+    text.textContent = isDark ? 'نهاري' : 'ليلي';
+  }
+  if (btn) {
+    btn.innerHTML = `<i data-lucide="${isDark ? 'sun' : 'moon'}" class="h-3.5 w-3.5 ${isDark ? 'text-amber-400' : 'text-indigo-500'}"></i><span>${isDark ? 'نهاري' : 'ليلي'}</span>`;
+  }
+  if (mobileBtn) {
+    mobileBtn.innerHTML = `<i data-lucide="${isDark ? 'sun' : 'moon'}" class="h-4 w-4 ${isDark ? 'text-amber-400' : 'text-indigo-500'}"></i>`;
+  }
 }
 
 boot();

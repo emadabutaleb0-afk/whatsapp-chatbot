@@ -51,11 +51,11 @@ function reservationCardHTML(r) {
 
     <div class="grid gap-3 sm:grid-cols-3 mb-3">
       <div class="bg-slate-50 rounded-lg p-2.5">
-        <p class="text-[11px] font-semibold uppercase text-slate-400">Party Size</p>
-        <p class="text-sm font-semibold text-slate-900 mt-0.5">${r.partySize} Guests</p>
+        <p class="text-[11px] font-semibold uppercase text-slate-400">Attendees / Guests</p>
+        <p class="text-sm font-semibold text-slate-900 mt-0.5">${r.partySize || 1} Person(s)</p>
       </div>
       <div class="bg-slate-50 rounded-lg p-2.5">
-        <p class="text-[11px] font-semibold uppercase text-slate-400">Date & Time</p>
+        <p class="text-[11px] font-semibold uppercase text-slate-400">Drive Date & Time</p>
         <p class="text-sm font-semibold text-slate-900 mt-0.5">${esc(r.date || r.time)}</p>
       </div>
       <div class="bg-slate-50 rounded-lg p-2.5">

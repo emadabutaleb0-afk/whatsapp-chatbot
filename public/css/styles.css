@@ -710,9 +710,202 @@ input, textarea, select, button, a { transition-property: background-color, bord
   .metric-value { font-size: 1.375rem; }
 }
 
-/* --- Dark mode readiness (prefers-color-scheme) --- */
-@media (prefers-color-scheme: dark) {
-  :root { color-scheme: light; }
+/* --- Dark Mode (Night Mode) Comprehensive Overrides --- */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #0b1120 !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark aside,
+html.dark header,
+html.dark .card,
+html.dark [data-pane="chat"] header,
+html.dark [data-pane="chat"] > div,
+html.dark #convPanel,
+html.dark #composer,
+html.dark .modal-content,
+html.dark [data-pane="livechat"] aside,
+html.dark [data-pane="livechat"] header,
+html.dark [data-pane="livechat"] footer,
+html.dark #mobileMenuPanel,
+html.dark #saveBar > div {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.dark .pane {
+  background-color: #0b1120 !important;
+}
+
+html.dark .nav-item {
+  color: #94a3b8 !important;
+}
+
+html.dark .nav-item:hover {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.dark .nav-item.active {
+  background-color: #064e3b !important;
+  color: #34d399 !important;
+}
+
+html.dark .nav-item.active svg {
+  color: #34d399 !important;
+}
+
+html.dark .conv-item {
+  color: #94a3b8 !important;
+}
+
+html.dark .conv-item:hover,
+html.dark .conv-item.active {
+  background-color: #1e293b !important;
+  color: #f8fafc !important;
+}
+
+html.dark .inp,
+html.dark textarea.inp,
+html.dark select {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+
+html.dark .inp:focus,
+html.dark textarea.inp:focus,
+html.dark select:focus {
+  border-color: #128C7E !important;
+  box-shadow: 0 0 0 1px #128C7E !important;
+}
+
+html.dark .inp::placeholder {
+  color: #64748b !important;
+}
+
+html.dark .metric {
+  background-color: #0f172a !important;
+  border-color: #1e293b !important;
+}
+
+html.dark .metric-label {
+  color: #94a3b8 !important;
+}
+
+html.dark .metric-value {
+  color: #f8fafc !important;
+}
+
+html.dark .bubble.bot {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  color: #f8fafc !important;
+}
+
+html.dark .bubble.user {
+  background-color: #128C7E !important;
+  color: #ffffff !important;
+}
+
+html.dark .bubble.err {
+  background-color: #450a0a !important;
+  border-color: #7f1d1d !important;
+  color: #fecdd3 !important;
+}
+
+html.dark .chip {
+  background-color: #1e293b !important;
+  border-color: #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+html.dark .chip:hover {
+  background-color: #334155 !important;
+  border-color: #128C7E !important;
+  color: #34d399 !important;
+}
+
+html.dark .range-btn {
+  background-color: #1e293b !important;
+  color: #94a3b8 !important;
+  border-color: #334155 !important;
+}
+
+html.dark .range-btn.active {
+  background-color: #064e3b !important;
+  color: #34d399 !important;
+}
+
+html.dark .pill-ok {
+  background-color: #064e3b !important;
+  color: #34d399 !important;
+  border-color: #047857 !important;
+}
+
+html.dark .pill-warn {
+  background-color: #451a03 !important;
+  color: #fcd34d !important;
+  border-color: #78350f !important;
+}
+
+html.dark .pill-err {
+  background-color: #450a0a !important;
+  color: #f87171 !important;
+  border-color: #7f1d1d !important;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-slate-100 {
+  background-color: #1e293b !important;
+}
+
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-slate-700 {
+  color: #f1f5f9 !important;
+}
+
+html.dark .text-slate-500,
+html.dark .text-slate-600 {
+  color: #94a3b8 !important;
+}
+
+html.dark .border-slate-200,
+html.dark .border-slate-100 {
+  border-color: #1e293b !important;
+}
+
+/* --- RTL (Arabic) Enhancements --- */
+html[dir="rtl"] {
+  text-align: right;
+}
+
+html[dir="rtl"] .nav-item {
+  text-align: right;
+}
+
+html[dir="rtl"] .nav-item span {
+  text-align: right;
+}
+
+html[dir="rtl"] .bubble.bot {
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 0.375rem;
+}
+
+html[dir="rtl"] .bubble.user {
+  border-top-right-radius: 1rem;
+  border-top-left-radius: 0.375rem;
+}
+
+html[dir="rtl"] .msg-time.text-right {
+  text-align: left !important;
 }
 
 /* --- Print improvements --- */
