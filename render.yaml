@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: alfares-motors-bot
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: WHATSAPP_VERIFY_TOKEN
+        value: my-secret-verify-token
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        value: "7794189252778687"
