@@ -236,286 +236,98 @@
       "reply": "كم السعر",
       "status": "sent",
       "isHuman": true
+    },
+    {
+      "id": "msg_muxv8255dtz3",
+      "at": 1791362908121,
+      "from": "201099998888",
+      "name": "Test Customer",
+      "incoming": "عايز اعرف تفاصيل مرسيدس C200 زيرو والتقسيط",
+      "reply": "أهلاً بك! مرسيدس C200 AMG موديل 2024 متوفرة بسعر 3,450,000 ج.م مع تقسيط حتى 5 سنوات.",
+      "status": "sent",
+      "responseTimeMs": 250
     }
   ],
   "demoMetrics": {
-    "days": 30,
+    "days": 7,
     "totals": {
-      "messages": 825,
-      "faqHits": 663,
-      "fallbacks": 26,
-      "pos": 660,
+      "messages": 217,
+      "faqHits": 171,
+      "fallbacks": 8,
+      "pos": 174,
       "neg": 0,
-      "neutral": 165
+      "neutral": 43
     },
     "business": {
-      "totalOrders": 1,
-      "totalRevenue": 100000,
-      "totalReservations": 1,
-      "totalGuests": 2,
+      "totalOrders": 2,
+      "totalRevenue": 200000,
+      "totalReservations": 2,
+      "totalGuests": 4,
       "totalCustomers": 48,
       "repeatRate": 38,
       "openHandoffs": 0,
-      "autoRate": 97
+      "autoRate": 96
     },
     "series": [
       {
-        "date": "2026-09-07",
-        "messages": 34,
-        "faqHits": 27,
+        "date": "2026-10-01",
+        "messages": 37,
+        "faqHits": 28,
         "fallbacks": 1,
-        "msCount": 34,
-        "msTotal": 36210,
-        "pos": 27,
+        "msCount": 37,
+        "msTotal": 46139,
+        "pos": 30,
         "neg": 0,
         "neutral": 7
       },
       {
-        "date": "2026-09-08",
-        "messages": 32,
-        "faqHits": 24,
-        "fallbacks": 1,
-        "msCount": 32,
-        "msTotal": 39680,
-        "pos": 26,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-09-09",
-        "messages": 34,
-        "faqHits": 30,
-        "fallbacks": 1,
-        "msCount": 34,
-        "msTotal": 40936,
-        "pos": 27,
-        "neg": 0,
-        "neutral": 7
-      },
-      {
-        "date": "2026-09-10",
-        "messages": 42,
-        "faqHits": 35,
+        "date": "2026-10-02",
+        "messages": 40,
+        "faqHits": 32,
         "fallbacks": 2,
-        "msCount": 42,
-        "msTotal": 42840,
-        "pos": 34,
+        "msCount": 40,
+        "msTotal": 30960,
+        "pos": 32,
         "neg": 0,
         "neutral": 8
       },
       {
-        "date": "2026-09-11",
-        "messages": 36,
-        "faqHits": 28,
-        "fallbacks": 1,
-        "msCount": 36,
-        "msTotal": 24300,
-        "pos": 29,
-        "neg": 0,
-        "neutral": 7
-      },
-      {
-        "date": "2026-09-12",
-        "messages": 20,
-        "faqHits": 17,
-        "fallbacks": 1,
-        "msCount": 20,
-        "msTotal": 13300,
-        "pos": 16,
-        "neg": 0,
-        "neutral": 4
-      },
-      {
-        "date": "2026-09-13",
-        "messages": 14,
-        "faqHits": 11,
-        "fallbacks": 0,
-        "msCount": 14,
-        "msTotal": 11088,
-        "pos": 11,
-        "neg": 0,
-        "neutral": 3
-      },
-      {
-        "date": "2026-09-14",
-        "messages": 17,
-        "faqHits": 13,
-        "fallbacks": 0,
-        "msCount": 17,
-        "msTotal": 18292,
-        "pos": 13,
-        "neg": 0,
-        "neutral": 4
-      },
-      {
-        "date": "2026-09-15",
-        "messages": 13,
-        "faqHits": 11,
-        "fallbacks": 0,
-        "msCount": 13,
-        "msTotal": 15496,
-        "pos": 10,
-        "neg": 0,
-        "neutral": 3
-      },
-      {
-        "date": "2026-09-16",
-        "messages": 23,
-        "faqHits": 20,
-        "fallbacks": 1,
-        "msCount": 23,
-        "msTotal": 25668,
-        "pos": 18,
-        "neg": 0,
-        "neutral": 5
-      },
-      {
-        "date": "2026-09-17",
+        "date": "2026-10-03",
         "messages": 31,
+        "faqHits": 23,
+        "fallbacks": 1,
+        "msCount": 31,
+        "msTotal": 37851,
+        "pos": 25,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-10-04",
+        "messages": 35,
         "faqHits": 27,
         "fallbacks": 1,
-        "msCount": 31,
-        "msTotal": 29667,
-        "pos": 25,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-09-18",
-        "messages": 36,
-        "faqHits": 32,
-        "fallbacks": 1,
-        "msCount": 36,
-        "msTotal": 36360,
-        "pos": 29,
+        "msCount": 35,
+        "msTotal": 26915,
+        "pos": 28,
         "neg": 0,
         "neutral": 7
       },
       {
-        "date": "2026-09-19",
-        "messages": 27,
-        "faqHits": 20,
-        "fallbacks": 1,
-        "msCount": 27,
-        "msTotal": 19602,
-        "pos": 22,
-        "neg": 0,
-        "neutral": 5
-      },
-      {
-        "date": "2026-09-20",
-        "messages": 31,
-        "faqHits": 26,
-        "fallbacks": 1,
-        "msCount": 31,
-        "msTotal": 22971,
-        "pos": 25,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-09-21",
-        "messages": 28,
-        "faqHits": 22,
-        "fallbacks": 1,
-        "msCount": 28,
-        "msTotal": 23016,
-        "pos": 22,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-09-22",
-        "messages": 32,
-        "faqHits": 25,
-        "fallbacks": 1,
-        "msCount": 32,
-        "msTotal": 26144,
-        "pos": 26,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-09-23",
-        "messages": 25,
-        "faqHits": 20,
-        "fallbacks": 1,
-        "msCount": 25,
-        "msTotal": 24625,
-        "pos": 20,
-        "neg": 0,
-        "neutral": 5
-      },
-      {
-        "date": "2026-09-24",
-        "messages": 30,
+        "date": "2026-10-05",
+        "messages": 29,
         "faqHits": 24,
         "fallbacks": 1,
-        "msCount": 30,
-        "msTotal": 25530,
-        "pos": 24,
+        "msCount": 29,
+        "msTotal": 34742,
+        "pos": 23,
         "neg": 0,
         "neutral": 6
       },
       {
-        "date": "2026-09-25",
-        "messages": 34,
-        "faqHits": 27,
-        "fallbacks": 1,
-        "msCount": 34,
-        "msTotal": 41378,
-        "pos": 27,
-        "neg": 0,
-        "neutral": 7
-      },
-      {
-        "date": "2026-09-26",
-        "messages": 16,
-        "faqHits": 12,
-        "fallbacks": 0,
-        "msCount": 16,
-        "msTotal": 18784,
-        "pos": 13,
-        "neg": 0,
-        "neutral": 3
-      },
-      {
-        "date": "2026-09-27",
-        "messages": 15,
-        "faqHits": 12,
-        "fallbacks": 0,
-        "msCount": 15,
-        "msTotal": 15495,
-        "pos": 12,
-        "neg": 0,
-        "neutral": 3
-      },
-      {
-        "date": "2026-09-28",
-        "messages": 17,
-        "faqHits": 15,
-        "fallbacks": 0,
-        "msCount": 17,
-        "msTotal": 18870,
-        "pos": 13,
-        "neg": 0,
-        "neutral": 4
-      },
-      {
-        "date": "2026-09-29",
-        "messages": 21,
-        "faqHits": 15,
-        "fallbacks": 1,
-        "msCount": 21,
-        "msTotal": 19467,
-        "pos": 17,
-        "neg": 0,
-        "neutral": 4
-      },
-      {
-        "date": "2026-09-30",
+        "date": "2026-10-06",
         "messages": 25,
-        "faqHits": 19,
+        "faqHits": 22,
         "fallbacks": 1,
         "msCount": 25,
         "msTotal": 19500,
@@ -524,299 +336,265 @@
         "neutral": 5
       },
       {
-        "date": "2026-10-01",
-        "messages": 37,
-        "faqHits": 28,
+        "date": "2026-10-07",
+        "messages": 20,
+        "faqHits": 15,
         "fallbacks": 1,
-        "msCount": 37,
-        "msTotal": 34447,
-        "pos": 30,
+        "msCount": 20,
+        "msTotal": 17820,
+        "pos": 16,
         "neg": 0,
-        "neutral": 7
-      },
-      {
-        "date": "2026-10-02",
-        "messages": 42,
-        "faqHits": 32,
-        "fallbacks": 2,
-        "msCount": 42,
-        "msTotal": 33222,
-        "pos": 34,
-        "neg": 0,
-        "neutral": 8
-      },
-      {
-        "date": "2026-10-03",
-        "messages": 28,
-        "faqHits": 21,
-        "fallbacks": 1,
-        "msCount": 28,
-        "msTotal": 31388,
-        "pos": 22,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-10-04",
-        "messages": 31,
-        "faqHits": 26,
-        "fallbacks": 1,
-        "msCount": 31,
-        "msTotal": 34379,
-        "pos": 25,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-10-05",
-        "messages": 29,
-        "faqHits": 23,
-        "fallbacks": 1,
-        "msCount": 29,
-        "msTotal": 24621,
-        "pos": 23,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-10-06",
-        "messages": 25,
-        "faqHits": 21,
-        "fallbacks": 1,
-        "msCount": 25,
-        "msTotal": 28300,
-        "pos": 20,
-        "neg": 0,
-        "neutral": 5
+        "neutral": 4
       }
     ],
     "hourly": [
       {
         "hour": 0,
         "label": "00:00",
-        "messages": 8,
-        "faqHits": 6,
-        "fallbacks": 2
+        "messages": 2,
+        "faqHits": 2,
+        "fallbacks": 0
       },
       {
         "hour": 1,
         "label": "01:00",
-        "messages": 4,
-        "faqHits": 3,
-        "fallbacks": 1
+        "messages": 1,
+        "faqHits": 1,
+        "fallbacks": 0
       },
       {
         "hour": 2,
         "label": "02:00",
-        "messages": 4,
-        "faqHits": 3,
-        "fallbacks": 1
+        "messages": 1,
+        "faqHits": 1,
+        "fallbacks": 0
       },
       {
         "hour": 3,
         "label": "03:00",
-        "messages": 4,
-        "faqHits": 3,
-        "fallbacks": 1
+        "messages": 1,
+        "faqHits": 1,
+        "fallbacks": 0
       },
       {
         "hour": 4,
         "label": "04:00",
+        "messages": 1,
+        "faqHits": 1,
+        "fallbacks": 0
+      },
+      {
+        "hour": 5,
+        "label": "05:00",
+        "messages": 2,
+        "faqHits": 2,
+        "fallbacks": 0
+      },
+      {
+        "hour": 6,
+        "label": "06:00",
         "messages": 4,
         "faqHits": 3,
         "fallbacks": 1
       },
       {
-        "hour": 5,
-        "label": "05:00",
-        "messages": 8,
-        "faqHits": 6,
+        "hour": 7,
+        "label": "07:00",
+        "messages": 7,
+        "faqHits": 5,
         "fallbacks": 2
       },
       {
-        "hour": 6,
-        "label": "06:00",
+        "hour": 8,
+        "label": "08:00",
+        "messages": 13,
+        "faqHits": 10,
+        "fallbacks": 3
+      },
+      {
+        "hour": 9,
+        "label": "09:00",
         "messages": 17,
         "faqHits": 13,
         "fallbacks": 4
       },
       {
-        "hour": 7,
-        "label": "07:00",
-        "messages": 25,
-        "faqHits": 20,
-        "fallbacks": 5
-      },
-      {
-        "hour": 8,
-        "label": "08:00",
-        "messages": 50,
-        "faqHits": 39,
-        "fallbacks": 11
-      },
-      {
-        "hour": 9,
-        "label": "09:00",
-        "messages": 66,
-        "faqHits": 51,
-        "fallbacks": 15
-      },
-      {
         "hour": 10,
         "label": "10:00",
-        "messages": 83,
-        "faqHits": 65,
-        "fallbacks": 18
+        "messages": 22,
+        "faqHits": 17,
+        "fallbacks": 5
       },
       {
         "hour": 11,
         "label": "11:00",
-        "messages": 74,
-        "faqHits": 58,
-        "fallbacks": 16
+        "messages": 20,
+        "faqHits": 16,
+        "fallbacks": 4
       },
       {
         "hour": 12,
         "label": "12:00",
-        "messages": 66,
-        "faqHits": 51,
-        "fallbacks": 15
+        "messages": 17,
+        "faqHits": 13,
+        "fallbacks": 4
       },
       {
         "hour": 13,
         "label": "13:00",
-        "messages": 58,
-        "faqHits": 45,
-        "fallbacks": 13
+        "messages": 15,
+        "faqHits": 12,
+        "fallbacks": 3
       },
       {
         "hour": 14,
         "label": "14:00",
-        "messages": 50,
-        "faqHits": 39,
-        "fallbacks": 11
+        "messages": 13,
+        "faqHits": 10,
+        "fallbacks": 3
       },
       {
         "hour": 15,
         "label": "15:00",
-        "messages": 58,
-        "faqHits": 45,
-        "fallbacks": 13
+        "messages": 15,
+        "faqHits": 12,
+        "fallbacks": 3
       },
       {
         "hour": 16,
         "label": "16:00",
-        "messages": 66,
-        "faqHits": 51,
-        "fallbacks": 15
+        "messages": 17,
+        "faqHits": 13,
+        "fallbacks": 4
       },
       {
         "hour": 17,
         "label": "17:00",
-        "messages": 74,
-        "faqHits": 58,
-        "fallbacks": 16
+        "messages": 20,
+        "faqHits": 16,
+        "fallbacks": 4
       },
       {
         "hour": 18,
         "label": "18:00",
-        "messages": 91,
-        "faqHits": 71,
-        "fallbacks": 20
+        "messages": 24,
+        "faqHits": 19,
+        "fallbacks": 5
       },
       {
         "hour": 19,
         "label": "19:00",
-        "messages": 83,
-        "faqHits": 65,
-        "fallbacks": 18
+        "messages": 22,
+        "faqHits": 17,
+        "fallbacks": 5
       },
       {
         "hour": 20,
         "label": "20:00",
-        "messages": 66,
-        "faqHits": 51,
-        "fallbacks": 15
+        "messages": 17,
+        "faqHits": 13,
+        "fallbacks": 4
       },
       {
         "hour": 21,
         "label": "21:00",
-        "messages": 50,
-        "faqHits": 39,
-        "fallbacks": 11
+        "messages": 13,
+        "faqHits": 10,
+        "fallbacks": 3
       },
       {
         "hour": 22,
         "label": "22:00",
-        "messages": 25,
-        "faqHits": 20,
-        "fallbacks": 5
+        "messages": 7,
+        "faqHits": 5,
+        "fallbacks": 2
       },
       {
         "hour": 23,
         "label": "23:00",
-        "messages": 8,
-        "faqHits": 6,
-        "fallbacks": 2
+        "messages": 2,
+        "faqHits": 2,
+        "fallbacks": 0
       }
     ],
-    "avgMs": 964,
+    "avgMs": 986,
     "topics": [
       {
         "label": "أسعار ومواصفات السيارات",
-        "count": 288
+        "count": 75
       },
       {
         "label": "برامج التقسيط والتمويل البنكي",
-        "count": 231
+        "count": 60
       },
       {
         "label": "حجز تجارب القيادة (Test Drive)",
-        "count": 148
+        "count": 39
       },
       {
         "label": "استبدال السيارات (Trade-In)",
-        "count": 99
+        "count": 26
       },
       {
         "label": "عنوان المعرض والمواعيد",
-        "count": 57
+        "count": 15
       }
     ],
     "topQuestions": [
       {
         "question": "بكام مرسيدس C200 زيرو 2024؟",
-        "count": 99
+        "count": 26
       },
       {
         "question": "هل في تقسيط للبي ام دبليو 320 ومقدمها كام؟",
-        "count": 83
+        "count": 22
       },
       {
         "question": "عايز احجز تجربة قيادة لتويوتا كورولا بكره",
-        "count": 66
+        "count": 17
       },
       {
         "question": "ممكن ابدل عربيتي النترا واخد كيا سبورتاج؟",
-        "count": 50
+        "count": 13
       },
       {
         "question": "مواعيد المعرض يوم الجمعة ايه؟",
-        "count": 41
+        "count": 11
       },
       {
         "question": "هل العربيات المستعملة فابريكا بالكامل ومعاها فحص؟",
-        "count": 33
+        "count": 9
       }
     ],
     "unanswered": [
       {
         "question": "هل يوجد بورش ماكان 2023 مستعملة؟",
-        "count": 1,
-        "createdAt": 1791293386134
+        "count": 2,
+        "createdAt": 1791293386134,
+        "updatedAt": 1791362908135
       }
     ],
     "recentActivity": [
+      {
+        "id": "res_muxv825e3pqc",
+        "type": "reservation",
+        "title": "Test Drive (2 guest) · Test Customer",
+        "detail": "غداً at 5:00 PM · Test Drive Appointment",
+        "timestamp": 1791362908130,
+        "badgeClass": "bg-teal-50 text-teal-700",
+        "badgeText": "completed",
+        "icon": "calendar"
+      },
+      {
+        "id": "ord_muxv825bgt6g",
+        "type": "order",
+        "title": "Car Booking CAR-0002 · Test Customer",
+        "detail": "100,000 EGP · Status: confirmed",
+        "timestamp": 1791362908127,
+        "badgeClass": "bg-amber-50 text-amber-700",
+        "badgeText": "confirmed",
+        "icon": "car"
+      },
       {
         "id": "ticket_muwptzfarvs2",
         "type": "handoff",
@@ -867,7 +645,7 @@
       {
         "category": "Automotive Sales & Pipeline",
         "icon": "trending-up",
-        "title": "1 car purchases logged via WhatsApp (100,000 EGP)",
+        "title": "2 car purchases logged via WhatsApp (200,000 EGP)",
         "description": "Conversational car sales pipeline is actively converting clients into showroom visits and deposits. Top searched: Mercedes C200 & BMW 320i.",
         "tone": "success"
       },
@@ -883,11 +661,32 @@
   "unanswered": [
     {
       "question": "هل يوجد بورش ماكان 2023 مستعملة؟",
-      "count": 1,
-      "createdAt": 1791293386134
+      "count": 2,
+      "createdAt": 1791293386134,
+      "updatedAt": 1791362908135
     }
   ],
   "orders": [
+    {
+      "id": "ord_muxv825bgt6g",
+      "orderNumber": "CAR-0002",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "items": [
+        {
+          "name": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+          "qty": 1,
+          "price": "100,000 EGP",
+          "subtotal": "100,000 EGP"
+        }
+      ],
+      "total": "100,000 EGP",
+      "address": "معرض الفارس للسيارات - التجمع الخامس",
+      "notes": "",
+      "status": "confirmed",
+      "at": 1791362908127,
+      "updatedAt": 1791362908129
+    },
     {
       "id": "ord_muwptyarsqyd",
       "orderNumber": "CAR-0001",
@@ -911,6 +710,18 @@
   ],
   "reservations": [
     {
+      "id": "res_muxv825e3pqc",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "partySize": 2,
+      "date": "غداً",
+      "time": "5:00 PM",
+      "notes": "Test Drive Appointment",
+      "status": "completed",
+      "at": 1791362908130,
+      "updatedAt": 1791362908132
+    },
+    {
       "id": "res_muwptyduvlkq",
       "clientPhone": "201099998888",
       "clientName": "Test Customer",
@@ -926,23 +737,33 @@
   "customers": {
     "201099998888": {
       "phone": "201099998888",
-      "name": "Human Agent",
+      "name": "Test Customer",
       "tags": [
         "VIP",
         "Car Buyer",
+        "VIP Collector",
         "Test Drive Guest"
       ],
-      "isHumanTakeover": true,
-      "takeoverUntil": 1791297863349,
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
       "cart": [],
-      "orderCount": 1,
-      "totalSpent": 100000,
+      "orderCount": 2,
+      "totalSpent": 200000,
       "createdAt": 1791293385386,
-      "lastSeen": 1791294263359,
-      "messageCount": 5
+      "lastSeen": 1791362908121,
+      "messageCount": 6
     }
   },
   "campaigns": [
+    {
+      "id": "camp_muxv825h9zzn",
+      "title": "عروض تقسيط سيارات 2024",
+      "message": "تقسيط بدون مقدم على موديلات مختارة لفترة محدودة!",
+      "targetTag": "all",
+      "sentCount": 25,
+      "status": "sent",
+      "at": 1791362908133
+    },
     {
       "id": "camp_muwptykr54l3",
       "title": "عروض تقسيط سيارات 2024",
@@ -1095,6 +916,18 @@
     }
   ],
   "handoffTickets": [
+    {
+      "id": "ticket_muxv826l9xg9",
+      "phone": "201099998888",
+      "name": "Test Customer",
+      "issueSummary": "Need help with custom order",
+      "sentiment": "Neutral",
+      "lastMessage": "",
+      "intentType": "HUMAN_TAKEOVER",
+      "status": "resolved",
+      "createdAt": 1791362908173,
+      "resolvedAt": 1791362908174
+    },
     {
       "id": "ticket_muwptzfarvs2",
       "phone": "201099998888",
