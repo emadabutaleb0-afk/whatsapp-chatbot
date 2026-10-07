@@ -1081,7 +1081,7 @@ app.get('*', (req, res) => {
 });
 
 initDB().then(() => {
-  app.listen(PORT, () => {
+  app.listen(PORT, '0.0.0.0', () => {
     console.log(`====================================================`);
     console.log(`🚀 ClientBot Enterprise WhatsApp running on http://localhost:${PORT}`);
     console.log(`📱 Webhook Verification URL: http://localhost:${PORT}/webhook`);
