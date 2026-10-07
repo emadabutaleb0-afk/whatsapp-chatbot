@@ -7,6 +7,7 @@ import { initFaq, renderFaq, collectFaqs, addEntry } from './faq.js';
 import { initChat, loadConversations, sendMessage } from './chat.js';
 import { initOrders, loadOrders } from './orders.js';
 import { initReservations, loadReservations } from './reservations.js';
+import { initReminders, loadReminders } from './reminders.js';
 import { initLiveChat, loadLiveChat } from './livechat.js';
 import { initBroadcast, loadBroadcast } from './broadcast.js';
 import { initTeam, loadTeam, applyPermissions, currentRole } from './team.js';
@@ -85,6 +86,7 @@ async function boot() {
   initChat(context);
   initOrders();
   initReservations();
+  initReminders();
   initLiveChat();
   initBroadcast();
   initTeam((newRole) => {
@@ -162,6 +164,11 @@ function updateStatusChips(statusData) {
 
   // Update badges
   if (statusData) {
+    const remBadge = $('remindersCountBadge');
+    if (remBadge && statusData.remindersCount !== undefined) {
+      remBadge.textContent = String(statusData.remindersCount);
+      remBadge.classList.toggle('hidden', statusData.remindersCount === 0);
+    }
     const ordBadge = $('ordersCountBadge');
     if (ordBadge && statusData.ordersCount !== undefined) {
       ordBadge.textContent = String(statusData.ordersCount);
@@ -288,22 +295,27 @@ function productRow(p, i) {
   const isUsed = (p.category || '').toLowerCase().includes('used') || (p.category || '').includes('مستعمل');
   return `
   <div class="card" data-prod="${i}">
-    <div class="flex items-start gap-3">
+    <div class="flex items-start gap-3.5">
+      ${p.image ? `
+        <div class="hidden sm:flex w-28 h-24 shrink-0 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 mt-5 items-center justify-center">
+          <img src="${esc(p.image)}" alt="${esc(p.name)}" class="w-full h-full object-cover" loading="lazy" onerror="this.parentElement.style.display='none'">
+        </div>
+      ` : ''}
       <div class="grid flex-1 gap-3 md:grid-cols-2">
         <label class="field md:col-span-2">
           <div class="flex items-center justify-between">
             <span>Car Model &amp; Trim (Make, Model, Year)</span>
-            <span class="rounded px-2 py-0.5 text-[10px] font-bold uppercase ${isUsed ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-800'}">${isUsed ? 'Certified Used' : 'New / Zero'}</span>
+            <span class="rounded px-2 py-0.5 text-[10px] font-bold uppercase ${isUsed ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300'}">${isUsed ? 'Certified Used' : 'New / Zero'}</span>
           </div>
-          <input class="inp p-name" value="${esc(p.name)}" placeholder="e.g. Mercedes-Benz C200 2024 AMG (Zero / New)">
+          <input class="inp p-name font-medium" value="${esc(p.name)}" placeholder="e.g. Mercedes-Benz C200 2024 AMG (Zero / New)">
         </label>
-        <label class="field"><span>Price</span><input class="inp p-price" value="${esc(p.price)}" placeholder="e.g. 3,850,000 EGP"></label>
+        <label class="field"><span>Price</span><input class="inp p-price font-semibold text-[#128C7E]" value="${esc(p.price)}" placeholder="e.g. 3,850,000 EGP"></label>
         <label class="field"><span>Category / Condition</span>
           <input class="inp p-cat" value="${esc(p.category)}" placeholder="New Cars (Zero) / Used Cars (Certified)">
         </label>
         <label class="field"><span>Availability / Stock</span><input class="inp p-stock" value="${esc(p.stock)}" placeholder="In Stock (Showroom)"></label>
-        <label class="field"><span>Car Photo Link (Sent to clients via WhatsApp)</span><input class="inp p-image" value="${esc(p.image)}" placeholder="https://example.com/car.jpg"></label>
-        <label class="field md:col-span-2"><span>Vehicle Specifications &amp; Warranty Details</span><input class="inp p-desc" value="${esc(p.description)}" placeholder="e.g. 1.5L Turbo 204hp, AMG Line, Panoramic roof, 0 km, 3-year warranty"></label>
+        <label class="field"><span>Car Photo Link (Sent to clients via WhatsApp)</span><input class="inp p-image text-xs" value="${esc(p.image)}" placeholder="https://example.com/car.jpg"></label>
+        <label class="field md:col-span-2"><span>Vehicle Specifications &amp; Warranty Details</span><input class="inp p-desc text-xs" value="${esc(p.description)}" placeholder="e.g. 1.5L Turbo 204hp, AMG Line, Panoramic roof, 0 km, 3-year warranty"></label>
       </div>
       <button class="p-del mt-6 rounded-lg p-2 text-slate-400 transition hover:bg-rose-50 hover:text-rose-600" title="Remove Car">
         <i data-lucide="trash-2" class="h-4 w-4"></i>
@@ -331,14 +343,19 @@ function renderProducts() {
 }
 
 function collectProducts() {
-  return [...document.querySelectorAll('[data-prod]')].map((row) => ({
-    name: row.querySelector('.p-name')?.value.trim() || '',
-    price: row.querySelector('.p-price')?.value.trim() || '',
-    category: row.querySelector('.p-cat')?.value.trim() || '',
-    stock: row.querySelector('.p-stock')?.value.trim() || '',
-    image: row.querySelector('.p-image')?.value.trim() || '',
-    description: row.querySelector('.p-desc')?.value.trim() || ''
-  })).filter((p) => p.name || p.price);
+  const current = (state.config && state.config.products) || [];
+  return [...document.querySelectorAll('[data-prod]')].map((row, idx) => {
+    const existing = current[idx] || {};
+    return {
+      ...existing,
+      name: row.querySelector('.p-name')?.value.trim() || '',
+      price: row.querySelector('.p-price')?.value.trim() || '',
+      category: row.querySelector('.p-cat')?.value.trim() || '',
+      stock: row.querySelector('.p-stock')?.value.trim() || '',
+      image: row.querySelector('.p-image')?.value.trim() || '',
+      description: row.querySelector('.p-desc')?.value.trim() || ''
+    };
+  }).filter((p) => p.name || p.price);
 }
 
 /* ============================== Logs (Client Messages) ============================== */
@@ -404,25 +421,36 @@ function setView(view) {
     b.classList.toggle('active', b.dataset.view === view);
   });
 
+  $('mobileMenuDrawer')?.classList.add('hidden');
+
   const convPanel = $('convPanel');
   if (convPanel) {
     convPanel.style.display = view === 'chat' ? 'flex' : 'none';
   }
 
-  if (view === 'dashboard') loadMetrics();
-  if (view === 'admin-ai') loadAdminAI();
-  if (view === 'faq') renderFaq();
-  if (view === 'products') renderProducts();
-  if (view === 'orders') loadOrders();
-  if (view === 'reservations') loadReservations();
-  if (view === 'livechat') loadLiveChat();
-  if (view === 'broadcast') loadBroadcast();
-  if (view === 'team') loadTeam();
-  if (view === 'templates') loadTemplates();
-  if (view === 'helpcenter') loadHelpCenter();
-  if (view === 'logs') refreshLogs();
+  try {
+    if (view === 'dashboard') loadMetrics();
+    else if (view === 'admin-ai') loadAdminAI();
+    else if (view === 'faq') renderFaq();
+    else if (view === 'products') renderProducts();
+    else if (view === 'orders') loadOrders();
+    else if (view === 'reservations') loadReservations();
+    else if (view === 'reminders') loadReminders();
+    else if (view === 'livechat') loadLiveChat();
+    else if (view === 'broadcast') loadBroadcast();
+    else if (view === 'team') loadTeam();
+    else if (view === 'templates') loadTemplates();
+    else if (view === 'helpcenter') loadHelpCenter();
+    else if (view === 'logs') refreshLogs();
+  } catch (e) {
+    console.error('Error loading view:', view, e);
+  }
 
-  applyPermissions(currentRole);
+  try {
+    applyPermissions(currentRole);
+  } catch (e) {}
+
+  refreshIcons();
 }
 
 /* ============================== Wiring UI Events ============================== */
@@ -450,6 +478,19 @@ function wireUI() {
   $('langToggleBtn')?.addEventListener('click', onToggleLang);
   $('langToggleMobileBtn')?.addEventListener('click', onToggleLang);
 
+  // Mobile drawer controls
+  $('mobileMenuBtn')?.addEventListener('click', () => {
+    $('mobileMenuDrawer')?.classList.remove('hidden');
+    refreshIcons();
+  });
+  $('closeMobileMenu')?.addEventListener('click', () => {
+    $('mobileMenuDrawer')?.classList.add('hidden');
+  });
+  $('mobileMenuOverlay')?.addEventListener('click', () => {
+    $('mobileMenuDrawer')?.classList.add('hidden');
+  });
+
+  // Wire all navigation buttons
   document.querySelectorAll('[data-view]').forEach((b) =>
     b.addEventListener('click', () => setView(b.dataset.view))
   );

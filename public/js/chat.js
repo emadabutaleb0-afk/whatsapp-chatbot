@@ -1,17 +1,17 @@
 // Chat simulator controller for previewing the WhatsApp assistant
 
 import { $, esc, refreshIcons, fmtText, uid } from './ui.js';
-import { api, loadConvIndex, saveConvIndex, loadConversation, saveConversation, deleteConversation, touchConversation } from './api.js';
+import { api, loadConvIndex, saveConvIndex, loadConversation, saveConversation, deleteConversation, touchConversation, clearAllConversations } from './api.js';
 
 let ctx = null;
 
 const SUGGESTIONS = [
   'ما هي السيارات المتوفرة بالمعرض زيرو ومستعمل؟',
-  'سعر وتفاصيل مرسيدس C200 AMG موديل 2024 زيرو',
-  'عايز اعرف نظام تقسيط BMW 320 ومقدمها كام',
-  'حجز موعد لمعاينة وتجربة قيادة سيارة',
-  'هل متاح استبدال سيارتي القديمة (Trade-In)؟',
-  'موقع صالة العرض ومواعيد العمل وأرقام التواصل'
+  'سعر وتفاصيل مرسيدس C 180 موديل 2018',
+  'سعر كيا سبورتاج 2026 زيرو وعروض التقسيط',
+  'موقع وفروع المعرض ومواعيد العمل وأرقام التواصل',
+  'عايز اعرف أنظمة التقسيط والتمويل البنكي المتاحة',
+  'هل متاح استبدال سيارتي القديمة (Trade-In)؟'
 ];
 
 function timeLabel(ts) {
@@ -105,6 +105,16 @@ export function initChat(context) {
   $('newChatSide')?.addEventListener('click', onNew);
   $('newChatSheet')?.addEventListener('click', onNew);
 
+  const onClear = async () => {
+    if (confirm('هل ترغب في مسح سجل المحادثات السابقة وبدء جلسة جديدة لمستشار مبيعات الفارس للسيارات؟')) {
+      await clearAllConversations();
+      ctx.state.convIndex = [];
+      newConversation(false);
+      closeSheet();
+    }
+  };
+  $('clearChatBtn')?.addEventListener('click', onClear);
+
   const handleConvClick = async (e) => {
     const del = e.target.closest('[data-del]');
     if (del) {
@@ -155,7 +165,14 @@ export function newConversation(persistNow = true) {
 
 export async function openConversation(id) {
   ctx.state.convId = id;
-  ctx.state.messages = await loadConversation(id);
+  const loaded = await loadConversation(id);
+  // Ensure no legacy cafe text is displayed
+  const raw = JSON.stringify(loaded || []).toLowerCase();
+  if (raw.includes('flat white') || raw.includes('croissant') || raw.includes('nour coffee') || raw.includes('12 nile') || raw.includes('طاولة') || raw.includes('أشهر الأصناف')) {
+    ctx.state.messages = [];
+  } else {
+    ctx.state.messages = loaded || [];
+  }
   renderMessages();
   renderConvList();
 }
@@ -271,13 +288,17 @@ export async function sendMessage(text) {
         const cfg = ctx.state.config || {};
         const b = cfg.business || {};
         const isArabic = /[\u0600-\u06FF]/.test(userMsg.content);
-        const sysPrompt = `You are the official AI Automotive Sales Specialist for "${b.name || 'Al-Fares Motors'}".
-Showroom: ${b.about || 'Dealership for New & Certified Pre-Owned Cars'}
-Hours: ${b.hours || 'Sat–Thu 9 AM – 11 PM, Fri 1:30 PM – 11 PM'}
-Location: ${b.location || 'New Cairo Auto Market Showroom'}
-Payment & Financing: ${b.payment || 'Cash, Bank installments up to 7 years from 20% down, direct trade-ins'}
-Vehicle Inventory: ${(cfg.products || []).map(p => `${p.name} (${p.price}, ${p.category})`).join('; ')}
+        const sysPrompt = `You are the official AI Automotive Sales Specialist for "${b.name || 'Al-Fares Motors مصر | إدارة هاني مسعود'}".
+Dealership: ${b.about || 'Al-Fares Motors - New & Certified Pre-Owned Cars in Egypt by Hany Massoud'}
+Official Website: https://alfarismotors.ai | Facebook: https://www.facebook.com/hany.massoud82/ | Phone: +201501511117
+Working Hours: Sat–Thu 2:00 PM – 12:00 AM, Fri 3:00 PM – 12:00 AM
+Branches:
+1. First Settlement: Mall 5, 5th Neighborhood, New Cairo (next to the bus terminal)
+2. Nasr City: 17 El-Mashroua St., Mostafa El-Nahas St., Cairo
+Payment & Financing: Cash, Bank installments up to 7 years starting from 20% down payment, direct trade-in (تبديل سيارتك وتقسيط الفارق).
+Vehicles Available (65 real cars): ${(cfg.products || []).slice(0, 35).map(p => `${p.name} (${p.price}, ${p.category})`).join('; ')}
 
+IMPORTANT: You are strictly an automotive dealership assistant for Al-Fares Motors. Never mention coffee, cafes, food, or restaurant items.
 Answer customer questions accurately, politely, and naturally in ${isArabic ? 'Egyptian Arabic' : 'English'}. Keep responses friendly, structured, and helpful. Offer test drive bookings or showroom visits.`;
 
         const puterMessages = [

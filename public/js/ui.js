@@ -1,4 +1,12 @@
-import { createIcons, icons } from 'https://cdn.jsdelivr.net/npm/lucide@latest/+esm';
+let lucideModule = null;
+try {
+  import('https://cdn.jsdelivr.net/npm/lucide@latest/+esm')
+    .then(mod => {
+      lucideModule = mod;
+      refreshIcons();
+    })
+    .catch(() => {});
+} catch (e) {}
 
 export const $ = (id) => document.getElementById(id);
 
@@ -7,7 +15,11 @@ export const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) =>
 
 export function refreshIcons() {
   try {
-    createIcons({ icons });
+    if (window.lucide && typeof window.lucide.createIcons === 'function') {
+      window.lucide.createIcons();
+    } else if (lucideModule && typeof lucideModule.createIcons === 'function') {
+      lucideModule.createIcons({ icons: lucideModule.icons });
+    }
   } catch (e) {
     /* ignore */
   }

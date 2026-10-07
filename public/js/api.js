@@ -52,6 +52,20 @@ export const api = {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ status })
   }),
+  // Reminders & Follow-ups
+  getReminders: () => call('/api/reminders'),
+  createReminder: (payload) => call('/api/reminders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }),
+  updateReminder: (id, payload) => call('/api/reminders/' + id, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }),
+  deleteReminder: (id) => call('/api/reminders/' + id, { method: 'DELETE' }),
+  sendReminder: (id) => call('/api/reminders/' + id + '/send', { method: 'POST' }),
   // Bookings & Reservations
   getReservations: () => call('/api/reservations'),
   updateReservationStatus: (id, status) => call(`/api/reservations/${id}`, {
@@ -150,7 +164,31 @@ const CONV_KEY = (id) => 'clientbot_conv_' + id;
 export async function loadConvIndex() {
   try {
     const item = localStorage.getItem(INDEX_KEY);
-    return item ? JSON.parse(item) : [];
+    if (!item) return [];
+    const list = JSON.parse(item);
+
+    // Automatically purge legacy cafe/restaurant demo conversations
+    const legacyPatterns = [
+      'coffee', 'flat white', 'latte', 'croissant', 'nour coffee', '12 nile', 'طاولة', 'أشهر الأصناف', 'v60', 'كافيه'
+    ];
+
+    const cleanList = [];
+    for (const c of list) {
+      const convData = localStorage.getItem(CONV_KEY(c.id)) || '';
+      const convLower = (convData + ' ' + (c.title || '')).toLowerCase();
+      const isLegacy = legacyPatterns.some(p => convLower.includes(p));
+
+      if (isLegacy) {
+        localStorage.removeItem(CONV_KEY(c.id));
+      } else {
+        cleanList.push(c);
+      }
+    }
+
+    if (cleanList.length !== list.length) {
+      localStorage.setItem(INDEX_KEY, JSON.stringify(cleanList));
+    }
+    return cleanList;
   } catch (e) {
     return [];
   }
@@ -165,7 +203,14 @@ export async function saveConvIndex(list) {
 export async function loadConversation(id) {
   try {
     const item = localStorage.getItem(CONV_KEY(id));
-    return item ? JSON.parse(item) : [];
+    if (!item) return [];
+    const msgs = JSON.parse(item);
+    const raw = JSON.stringify(msgs).toLowerCase();
+    if (raw.includes('flat white') || raw.includes('croissant') || raw.includes('nour coffee') || raw.includes('12 nile') || raw.includes('أشهر الأصناف')) {
+      localStorage.removeItem(CONV_KEY(id));
+      return [];
+    }
+    return msgs;
   } catch (e) {
     return [];
   }
@@ -175,6 +220,24 @@ export async function saveConversation(id, messages) {
   try {
     localStorage.setItem(CONV_KEY(id), JSON.stringify(messages.slice(-100)));
   } catch (e) {}
+}
+
+export async function clearAllConversations() {
+  try {
+    const item = localStorage.getItem(INDEX_KEY);
+    const list = item ? JSON.parse(item) : [];
+    list.forEach(c => localStorage.removeItem(CONV_KEY(c.id)));
+    localStorage.removeItem(INDEX_KEY);
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (k && k.startsWith('clientbot_conv_')) {
+        localStorage.removeItem(k);
+      }
+    }
+    return [];
+  } catch (e) {
+    return [];
+  }
 }
 
 export async function deleteConversation(id) {

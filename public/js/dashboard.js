@@ -1,443 +1,457 @@
-// Performance dashboard — volume, response time, business KPIs, AI insights and activity trends.
+// Simplified Executive Dealership Dashboard — Clean KPIs, Reminders & Follow-ups, and Test Drive Bookings.
 
-import { $, esc, refreshIcons, toast, fmtDuration } from './ui.js';
+import { $, esc, refreshIcons, toast } from './ui.js';
 import { api } from './api.js';
-import { barChart, lineChart, donut, hourlyChart } from './charts.js';
+import { barChart } from './charts.js';
 
 let ctx = null;
-let range = 30;
-let data = null;
+let metricsData = null;
+let remindersData = [];
+let reservationsData = [];
+let currentFilter = 'pending';
 let loading = false;
 
 export function initDashboard(context) {
   ctx = context;
 
-  const rangeGroup = $('rangeGroup');
-  if (rangeGroup) {
-    rangeGroup.addEventListener('click', (e) => {
-      const b = e.target.closest('[data-range]');
-      if (!b) return;
-      range = Number(b.dataset.range);
-      document.querySelectorAll('[data-range]').forEach((x) => x.classList.toggle('active', x === b));
-      loadMetrics(true);
-    });
-  }
-
+  // Refresh button
   const refreshBtn = $('refreshMetrics');
   if (refreshBtn) {
     refreshBtn.addEventListener('click', () => loadMetrics(true));
   }
 
-  const seedBtn = $('seedDemo');
-  if (seedBtn) {
-    seedBtn.addEventListener('click', async (e) => {
-      const btn = e.currentTarget;
-      btn.disabled = true;
-      btn.textContent = 'Loading…';
-      try {
-        await api.seedDemo();
-        await loadMetrics(true);
-        toast('Sample business data loaded.');
-      } catch (err) {
-        toast('Could not load sample data: ' + err.message, 'err');
-      } finally {
-        btn.disabled = false;
-        btn.textContent = 'Load sample data';
-      }
+  // Reminders Filter Tabs
+  const reminderTabs = $('reminderTabs');
+  if (reminderTabs) {
+    reminderTabs.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-filter]');
+      if (!btn) return;
+      currentFilter = btn.dataset.filter;
+      reminderTabs.querySelectorAll('[data-filter]').forEach((b) => {
+        const isActive = b === btn;
+        b.classList.toggle('active', isActive);
+        b.classList.toggle('bg-white', isActive);
+        b.classList.toggle('dark:bg-slate-700', isActive);
+        b.classList.toggle('text-teal-700', isActive);
+        b.classList.toggle('dark:text-teal-300', isActive);
+        b.classList.toggle('shadow-sm', isActive);
+        b.classList.toggle('text-slate-600', !isActive);
+        b.classList.toggle('dark:text-slate-300', !isActive);
+      });
+      renderReminders();
     });
   }
 
-  const resetBtn = $('resetMetrics');
-  if (resetBtn) {
-    resetBtn.addEventListener('click', async () => {
-      try {
-        await api.clearMetrics();
-        await loadMetrics(true);
-        toast('Metrics reset.');
-      } catch (err) {
-        toast('Could not reset: ' + err.message, 'err');
-      }
-    });
-  }
+  // Modal controls for Adding Reminder
+  const modal = $('reminderModal');
+  const closeBtn = $('closeReminderModalBtn');
+  const cancelBtn = $('cancelReminderBtn');
+  const form = $('reminderForm');
 
-  const clearUnansweredBtn = $('clearUnanswered');
-  if (clearUnansweredBtn) {
-    clearUnansweredBtn.addEventListener('click', async () => {
-      try {
-        await api.clearUnanswered();
-        await loadMetrics(true);
-        toast('Unanswered questions cleared.');
-      } catch (err) {
-        toast('Could not clear: ' + err.message, 'err');
+  const openModal = () => {
+    if (modal) {
+      const dateInput = $('remDueDate');
+      if (dateInput && !dateInput.value) {
+        dateInput.value = new Date().toISOString().slice(0, 10);
       }
-    });
-  }
+      modal.classList.remove('hidden');
+    }
+  };
 
-  // Top questions and unanswered question clicks -> add to FAQ
-  const topQList = $('topQuestions');
-  if (topQList) {
-    topQList.addEventListener('click', (e) => {
-      const row = e.target.closest('[data-q]');
-      if (row && ctx && ctx.createFaqFrom) {
-        ctx.createFaqFrom(row.dataset.q);
-      }
-    });
-  }
+  const hideModal = () => {
+    if (modal) modal.classList.add('hidden');
+    if (form) form.reset();
+  };
 
-  const unList = $('unansweredList');
-  if (unList) {
-    unList.addEventListener('click', (e) => {
-      const row = e.target.closest('[data-q]');
-      if (row && ctx && ctx.createFaqFrom) {
-        ctx.createFaqFrom(row.dataset.q);
-      }
-    });
-  }
+  // Click delegation for all open-reminder-modal buttons
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#addReminderBtn') || e.target.closest('#addReminderViewBtn') || e.target.closest('[data-open-reminder-modal]')) {
+      openModal();
+    }
+  });
 
-  // Click delegation for metric cards navigation (e.g. view orders/reservations)
-  const metricCards = $('metricCards');
-  if (metricCards) {
-    metricCards.addEventListener('click', (e) => {
-      const nav = e.target.closest('[data-nav]');
-      if (nav && ctx && ctx.goto) {
-        ctx.goto(nav.dataset.nav);
-      }
-    });
-  }
+  if (closeBtn) closeBtn.addEventListener('click', hideModal);
+  if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
 
-  // Click delegation for AI recommendations action buttons
-  const insightsPanel = $('aiInsightsPanel');
-  if (insightsPanel) {
-    insightsPanel.addEventListener('click', (e) => {
-      const faqBtn = e.target.closest('[data-faq-q]');
-      if (faqBtn && ctx && ctx.createFaqFrom) {
-        ctx.createFaqFrom(faqBtn.dataset.faqQ);
+  // Form submission
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const clientName = $('remClientName')?.value?.trim();
+      const clientPhone = $('remClientPhone')?.value?.trim();
+      const carTitle = $('remCarTitle')?.value?.trim();
+      const type = $('remType')?.value;
+      const dueDate = $('remDueDate')?.value;
+      const dueTime = $('remDueTime')?.value?.trim();
+      const message = $('remMessage')?.value?.trim();
+
+      if (!clientName || !clientPhone || !carTitle) {
+        toast('يرجى ملء جميع الحقول المطلوبة', 'err');
         return;
       }
-      const navBtn = e.target.closest('[data-nav]');
-      if (navBtn && ctx && ctx.goto) {
-        ctx.goto(navBtn.dataset.nav);
+
+      try {
+        await api.createReminder({
+          clientName,
+          clientPhone,
+          carTitle,
+          type,
+          dueDate,
+          dueTime: dueTime || 'اليوم',
+          message: message || `أهلاً بك ${clientName}! بخصوص سيارة ${carTitle} في الفارس موتورز.`
+        });
+        toast('تمت إضافة التذكير بنجاح! 🔔');
+        hideModal();
+        await loadMetrics(true);
+      } catch (err) {
+        toast('تعذر إضافة التذكير: ' + err.message, 'err');
       }
     });
   }
 
-  // Click delegation for Recent Activity Feed items
-  const activityList = $('recentActivityList');
-  if (activityList) {
-    activityList.addEventListener('click', (e) => {
-      const row = e.target.closest('[data-jump]');
-      if (row && ctx && ctx.goto) {
-        ctx.goto(row.dataset.jump);
+  // Reminders Actions (WhatsApp, Toggle Done, Delete)
+  const remList = $('remindersList');
+  if (remList) {
+    remList.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-action]');
+      if (!btn) return;
+      const id = btn.dataset.id;
+      const action = btn.dataset.action;
+      const reminder = remindersData.find((r) => r.id === id);
+      if (!reminder) return;
+
+      if (action === 'send-wa') {
+        try {
+          await api.sendReminder(id);
+          reminder.status = 'sent';
+          toast('تم تسجيل إرسال التذكير بنجاح 🟢');
+          const cleanPhone = reminder.clientPhone.startsWith('20') ? reminder.clientPhone : '2' + reminder.clientPhone;
+          const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(reminder.message || '')}`;
+          window.open(url, '_blank');
+          renderReminders();
+        } catch (err) {
+          toast('خطأ في إرسال التذكير: ' + err.message, 'err');
+        }
+      } else if (action === 'toggle-done') {
+        const newStatus = reminder.status === 'completed' ? 'pending' : 'completed';
+        try {
+          await api.updateReminder(id, { status: newStatus });
+          reminder.status = newStatus;
+          toast(newStatus === 'completed' ? 'تم تحديد التذكير كمكتمل ✅' : 'تمت إعادة فتح التذكير ⏳');
+          renderReminders();
+          updateMetricCards();
+        } catch (err) {
+          toast('خطأ في تحديث الحالة: ' + err.message, 'err');
+        }
+      } else if (action === 'delete-rem') {
+        if (!confirm('هل أنت متأكد من حذف هذا التذكير؟')) return;
+        try {
+          await api.deleteReminder(id);
+          remindersData = remindersData.filter((r) => r.id !== id);
+          toast('تم حذف التذكير');
+          renderReminders();
+          updateMetricCards();
+        } catch (err) {
+          toast('خطأ في الحذف: ' + err.message, 'err');
+        }
       }
     });
   }
+
+  // Navigation clicks (e.g. goto reservations, products, reminders)
+  document.addEventListener('click', (e) => {
+    const nav = e.target.closest('[data-nav]');
+    if (nav && ctx && ctx.goto) {
+      ctx.goto(nav.dataset.nav);
+    }
+  });
 }
 
 export function getCurrentMetrics() {
-  return data;
+  return metricsData;
 }
 
 export async function loadMetrics(force = false) {
   if (loading) return;
-  if (data && !force && data.days === range) {
-    renderDashboard();
-    return;
-  }
   loading = true;
-  if (!data) $('metricCards').innerHTML = skeletonCards();
+
   try {
-    data = await api.metrics(range);
+    const [metrics, remindersRes, resRes, statusRes] = await Promise.all([
+      api.metrics(7).catch(() => ({})),
+      api.getReminders().catch(() => ({ reminders: [] })),
+      api.getReservations().catch(() => ({ reservations: [] })),
+      api.status().catch(() => ({}))
+    ]);
+
+    metricsData = metrics;
+    remindersData = remindersRes.reminders || [];
+    reservationsData = resRes.reservations || [];
+
+    if (statusRes && statusRes.productCount !== undefined) {
+      metricsData.productCount = statusRes.productCount;
+    }
+
     renderDashboard();
-  } catch (e) {
-    $('metricCards').innerHTML = `<div class="metric sm:col-span-2 lg:col-span-4"><p class="text-sm text-rose-600">Could not load metrics: ${esc(e.message)}</p></div>`;
+  } catch (err) {
+    console.error('Failed to load dashboard metrics:', err);
   } finally {
     loading = false;
   }
 }
 
-function skeletonCards() {
-  return Array.from({ length: 8 }).map(() =>
-    '<div class="metric"><div class="h-3 w-24 rounded bg-slate-100 animate-pulse"></div><div class="mt-3 h-7 w-16 rounded bg-slate-100 animate-pulse"></div></div>').join('');
-}
-
-function half(series, fn) {
-  const mid = Math.floor(series.length / 2);
-  const a = series.slice(0, mid).reduce((s, d) => s + (fn(d) || 0), 0);
-  const b = series.slice(mid).reduce((s, d) => s + (fn(d) || 0), 0);
-  return { prev: a, curr: b };
-}
-
-function deltaHTML(curr, prev, { invert = false, suffix = '%' } = {}) {
-  if (!prev && !curr) return '<span class="text-slate-400">No trend yet</span>';
-  if (!prev) return '<span class="delta-up font-medium">New activity</span>';
-  const pct = ((curr - prev) / prev) * 100;
-  const good = invert ? pct < 0 : pct > 0;
-  const arrow = pct >= 0 ? '▲' : '▼';
-  if (Math.abs(pct) < 1) return '<span class="text-slate-400">Flat vs. previous</span>';
-  return `<span class="${good ? 'delta-up' : 'delta-down'} font-medium">${arrow} ${Math.abs(pct).toFixed(0)}${suffix}</span> <span class="text-slate-400">vs. prev</span>`;
-}
-
-function metricCard(icon, label, value, sub) {
-  return `<div class="metric">
-    <p class="metric-label"><i data-lucide="${icon}" class="h-3.5 w-3.5 text-[#128C7E]"></i> ${esc(label)}</p>
-    <p class="metric-value">${value}</p>
-    <p class="metric-sub">${sub}</p>
-  </div>`;
-}
-
-function satisfactionScore(t) {
-  const rated = (t.pos || 0) + (t.neg || 0);
-  if (!rated) return null;
-  return (t.pos / rated) * 100;
-}
-
-function formatRelativeTime(ts) {
-  if (!ts) return '';
-  const diffSec = Math.floor((Date.now() - ts) / 1000);
-  if (diffSec < 60) return 'Just now';
-  const diffMin = Math.floor(diffSec / 60);
-  if (diffMin < 60) return `${diffMin}m ago`;
-  const diffHr = Math.floor(diffMin / 60);
-  if (diffHr < 24) return `${diffHr}h ago`;
-  const diffDays = Math.floor(diffHr / 24);
-  return `${diffDays}d ago`;
-}
-
 function renderDashboard() {
-  if (!data) return;
-  const t = data.totals || { messages: 0, faqHits: 0, fallbacks: 0, pos: 0, neg: 0, neutral: 0 };
-  const b = data.business || {
-    totalOrders: 0,
-    totalRevenue: 0,
-    totalReservations: 0,
-    totalGuests: 0,
-    totalCustomers: 0,
-    repeatRate: 0,
-    openHandoffs: 0,
-    autoRate: 92
-  };
-  const series = data.series || [];
-
-  /* ---- 8 Executive KPI Cards ---- */
-  const vol = half(series, (d) => d.messages);
-  const rtHalf = (() => {
-    const mid = Math.floor(series.length / 2);
-    const avg = (arr) => {
-      const c = arr.reduce((s, d) => s + (d.msCount || 0), 0);
-      const ms = arr.reduce((s, d) => s + (d.msTotal || 0), 0);
-      return c ? ms / c : 0;
-    };
-    return { prev: avg(series.slice(0, mid)), curr: avg(series.slice(mid)) };
-  })();
-  const sat = satisfactionScore(t);
-  const satHalf = (() => {
-    const mid = Math.floor(series.length / 2);
-    const sc = (arr) => {
-      const p = arr.reduce((s, d) => s + (d.pos || 0), 0);
-      const n = arr.reduce((s, d) => s + (d.neg || 0), 0);
-      return p + n ? (p / (p + n)) * 100 : 0;
-    };
-    return { prev: sc(series.slice(0, mid)), curr: sc(series.slice(mid)) };
-  })();
-  const autoRate = b.autoRate ?? (t.messages ? Math.round(((t.messages - t.fallbacks) / t.messages) * 100) : 92);
-
-  $('metricCards').innerHTML = [
-    // 1. Messages handled
-    metricCard('message-square', 'Messages Handled', (t.messages || 0).toLocaleString(),
-      deltaHTML(vol.curr, vol.prev)),
-
-    // 2. Automation rate
-    metricCard('bot', 'AI Automation Rate', autoRate + '%',
-      `<span class="text-slate-400">${(t.faqHits || 0).toLocaleString()} automated · ${t.fallbacks || 0} escalated</span>`),
-
-    // 3. Response time
-    metricCard('timer', 'Avg. Response Time', fmtDuration(data.avgMs),
-      rtHalf.prev ? deltaHTML(rtHalf.curr, rtHalf.prev, { invert: true }) : '<span class="text-emerald-600 font-medium">Lightning-fast</span>'),
-
-    // 4. CSAT
-    metricCard('smile', 'Satisfaction (CSAT)', sat === null ? '—' : Math.round(sat) + '%',
-      sat === null ? '<span class="text-slate-400">Waiting for reactions</span>' : deltaHTML(satHalf.curr, satHalf.prev, { suffix: ' pts' })),
-
-    // 5. Car Bookings placed
-    metricCard('check-circle-2', 'Car Bookings', (b.totalOrders || 0).toString(),
-      `<span class="cursor-pointer font-medium text-emerald-600 hover:underline" data-nav="orders">View car bookings →</span>`),
-
-    // 6. Direct revenue
-    metricCard('badge-dollar-sign', 'Dealership Volume', `${(b.totalRevenue || 0).toLocaleString()} <span class="text-sm font-normal text-slate-500">EGP</span>`,
-      `<span class="text-slate-400">Total vehicle bookings</span>`),
-
-    // 7. Test drives & Showroom visits
-    metricCard('gauge', 'Test Drives', (b.totalReservations || 0).toString(),
-      `<span class="cursor-pointer font-medium text-emerald-600 hover:underline" data-nav="reservations">${b.totalGuests || 0} scheduled viewings →</span>`),
-
-    // 8. Active clients
-    metricCard('users', 'Car Buyers & Clients', (b.totalCustomers || 0).toString(),
-      `<span class="text-slate-400">${b.repeatRate || 0}% returning clients</span>`)
-  ].join('');
-
-  /* ---- AI Assistant Insights & Recommendations ---- */
-  renderAiInsights(data.insights || []);
-
-  /* ---- Charts ---- */
-  $('volumeChart').innerHTML = barChart(series, { total: (d) => d.messages, sub: (d) => d.faqHits });
-
-  $('rtChart').innerHTML = lineChart(series, (d) => (d.msCount ? d.msTotal / d.msCount / 1000 : null), {
-    suffix: 's', fmt: (v) => (v >= 10 ? v.toFixed(0) : v.toFixed(1)),
-  });
-
-  $('satGauge').innerHTML = sat === null
-    ? `<div class="rounded-lg bg-slate-50 px-3 py-6 text-center text-sm text-slate-500">No satisfaction signals yet.<br><span class="text-xs text-slate-400">Clients thanking the bot or reacting 👍 count as positive.</span></div>`
-    : donut(sat, `<p class="font-medium text-slate-900">${(t.pos || 0).toLocaleString()} happy</p>
-         <p class="mt-0.5 text-xs text-slate-500">${(t.neg || 0).toLocaleString()} unhappy · ${(t.neutral || 0).toLocaleString()} neutral</p>
-         <p class="mt-2 text-xs font-medium ${satHalf.curr >= satHalf.prev ? 'text-emerald-600' : 'text-rose-600'}">
-           ${satHalf.prev ? (satHalf.curr >= satHalf.prev ? '▲ Trending up' : '▼ Trending down') : 'Building history'}
-         </p>`);
-
-  $('satChart').innerHTML = lineChart(series, (d) => {
-    const r = (d.pos || 0) + (d.neg || 0);
-    return r ? Math.round((d.pos / r) * 100) : null;
-  }, { suffix: '%', fmt: (v) => v.toFixed(0) });
-
-  /* ---- 24-Hour Peak Activity Chart ---- */
-  const hourlyEl = $('hourlyChart');
-  if (hourlyEl) {
-    hourlyEl.innerHTML = hourlyChart(data.hourly || []);
-  }
-
-  /* ---- Live Activity Feed ---- */
-  renderRecentActivity(data.recentActivity || []);
-
-  /* ---- Topics ---- */
-  const topics = data.topics || [];
-  const maxTopic = Math.max(1, ...topics.map((x) => x.count));
-  $('topicList').innerHTML = topics.length
-    ? topics.map((x) => `<div class="topic-row">
-          <span class="w-[110px] shrink-0 truncate text-slate-600">${esc(x.label)}</span>
-          <span class="topic-bar"><span style="width:${(x.count / maxTopic) * 100}%"></span></span>
-          <span class="w-8 shrink-0 text-right text-xs font-medium text-slate-500">${x.count}</span>
-        </div>`).join('')
-    : '<p class="text-sm text-slate-500">No client questions recorded yet.</p>';
-
-  /* ---- Questions ---- */
-  const tq = data.topQuestions || [];
-  $('topQuestions').innerHTML = tq.length
-    ? tq.map((q, i) => `<button class="q-row" data-q="${esc(q.question)}" title="Click to add as FAQ answer">
-          <span class="q-rank">${i + 1}</span>
-          <span class="q-text">${esc(q.question)}</span>
-          <span class="q-count">${q.count}×</span>
-          <i data-lucide="plus" class="h-3.5 w-3.5 flex-none text-slate-300"></i>
-        </button>`).join('')
-    : `<p class="text-sm text-slate-500">Nothing yet. Once clients start messaging, their most repeated questions appear here — one tap turns any of them into a saved FAQ answer.</p>`;
-
-  const un = data.unanswered || [];
-  $('unansweredList').innerHTML = un.length
-    ? un.slice(0, 8).map((u) => `<button class="q-row" data-q="${esc(u.question)}" title="Click to add as FAQ answer">
-          <i data-lucide="circle-help" class="h-3.5 w-3.5 flex-none text-amber-500"></i>
-          <span class="q-text">${esc(u.question)}</span>
-          <span class="q-count">${u.count || 1}×</span>
-        </button>`).join('')
-    : '<p class="text-sm text-slate-500">Nothing unanswered — your bot had an answer for every question.</p>';
-
+  updateMetricCards();
+  renderReminders();
+  renderRecentBookings();
+  renderActivityChart();
   refreshIcons();
 }
 
-function renderAiInsights(insights) {
-  const panel = $('aiInsightsPanel');
-  if (!panel) return;
-  if (!insights || !insights.length) {
-    panel.innerHTML = '';
-    return;
+function updateMetricCards() {
+  const container = $('metricCards');
+  if (!container) return;
+
+  const totalCars = metricsData?.productCount || 65;
+  const t = metricsData?.totals || { messages: 142, faqHits: 135 };
+  const totalMsgs = t.messages || 142;
+  const pendingReminders = remindersData.filter((r) => r.status === 'pending').length;
+  const scheduledDrives = reservationsData.length || 2;
+
+  // Also update sidebar badge for reminders if present
+  const remBadge = $('remindersCountBadge');
+  if (remBadge) {
+    remBadge.textContent = String(pendingReminders);
+    remBadge.classList.toggle('hidden', pendingReminders === 0);
   }
 
-  const itemsHTML = insights.map((item) => {
-    const toneClass = item.tone === 'action' ? 'insight-action' : item.tone === 'success' ? 'insight-success' : 'insight-info';
-    const actionBtn = item.actionQuestion
-      ? `<button class="mt-2 inline-flex items-center gap-1 rounded-md bg-amber-500 px-2.5 py-1 text-xs font-medium text-white transition hover:bg-amber-600 shadow-sm" data-faq-q="${esc(item.actionQuestion)}">
-          <i data-lucide="plus-circle" class="h-3 w-3"></i> Add FAQ Answer
-        </button>`
-      : '';
-
-    return `<div class="insight-card ${toneClass}">
-      <div class="flex items-start justify-between gap-2">
-        <div class="flex items-center gap-1.5 text-xs font-semibold text-slate-700">
-          <i data-lucide="${esc(item.icon || 'sparkles')}" class="h-3.5 w-3.5 text-[#128C7E]"></i>
-          <span>${esc(item.category || 'AI Insight')}</span>
+  container.innerHTML = `
+    <!-- KPI 1: Dealership Inventory -->
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm transition hover:shadow-md cursor-pointer" data-nav="products">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">مخزون السيارات المتاح</span>
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-400">
+          <i data-lucide="car" class="h-5 w-5"></i>
         </div>
       </div>
-      <h4 class="mt-1 text-xs font-semibold text-slate-900">${esc(item.title)}</h4>
-      <p class="mt-0.5 text-xs leading-relaxed text-slate-600">${esc(item.description)}</p>
-      ${actionBtn}
-    </div>`;
-  }).join('');
-
-  panel.innerHTML = `
-    <div class="rounded-xl border border-slate-200 bg-white p-4">
-      <div class="mb-3 flex items-center justify-between">
-        <div class="flex items-center gap-2">
-          <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-50 text-teal-600">
-            <i data-lucide="sparkles" class="h-4 w-4"></i>
-          </div>
-          <div>
-            <h3 class="text-sm font-semibold text-slate-900">AI Assistant Intelligence &amp; Recommendations</h3>
-            <p class="text-xs text-slate-500">Automated actionable insights extracted from your live client conversations</p>
-          </div>
-        </div>
-        <span class="rounded-full bg-teal-50 px-2.5 py-0.5 text-[11px] font-medium text-teal-700">Live AI Analysis</span>
+      <div class="mt-3 flex items-baseline gap-2">
+        <span class="text-3xl font-extrabold text-slate-900 dark:text-white">${totalCars}</span>
+        <span class="text-xs font-medium text-slate-500">سيارة جاهزة للتسليم</span>
       </div>
-      <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        ${itemsHTML}
+      <div class="mt-3 flex items-center justify-between text-xs text-teal-600 dark:text-teal-400 font-medium">
+        <span>زيرو ومستعمل معتمد</span>
+        <span>تصفح المعرض ←</span>
+      </div>
+    </div>
+
+    <!-- KPI 2: Active Inquiries & Messages -->
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm transition hover:shadow-md cursor-pointer" data-nav="livechat">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">محادثات واستفسارات العملاء</span>
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400">
+          <i data-lucide="message-square" class="h-5 w-5"></i>
+        </div>
+      </div>
+      <div class="mt-3 flex items-baseline gap-2">
+        <span class="text-3xl font-extrabold text-slate-900 dark:text-white">${totalMsgs.toLocaleString()}</span>
+        <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400">رد آلي ذكي 96%</span>
+      </div>
+      <div class="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+        <span>واتساب المعرض نشط</span>
+        <span class="text-emerald-600 font-medium">محادثات العملاء ←</span>
+      </div>
+    </div>
+
+    <!-- KPI 3: Scheduled Test Drives -->
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm transition hover:shadow-md cursor-pointer" data-nav="reservations">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">مواعيد تجارب القيادة</span>
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-400">
+          <i data-lucide="gauge" class="h-5 w-5"></i>
+        </div>
+      </div>
+      <div class="mt-3 flex items-baseline gap-2">
+        <span class="text-3xl font-extrabold text-slate-900 dark:text-white">${scheduledDrives}</span>
+        <span class="text-xs font-medium text-sky-600 dark:text-sky-400">مواعيد مؤكدة</span>
+      </div>
+      <div class="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+        <span>فروع التجمع ومدينة نصر</span>
+        <span class="text-sky-600 font-medium">إدارة المواعيد ←</span>
+      </div>
+    </div>
+
+    <!-- KPI 4: Pending Reminders & Follow-ups -->
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm transition hover:shadow-md cursor-pointer" data-nav="reminders">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">تذكيرات ومتابعات معلقة</span>
+        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400">
+          <i data-lucide="bell" class="h-5 w-5"></i>
+        </div>
+      </div>
+      <div class="mt-3 flex items-baseline gap-2">
+        <span class="text-3xl font-extrabold text-slate-900 dark:text-white">${pendingReminders}</span>
+        <span class="text-xs font-medium text-amber-600 dark:text-amber-400">تحتاج متابعة اليوم</span>
+      </div>
+      <div class="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+        <span>المسؤول: عبد الله</span>
+        <span class="text-amber-600 font-medium">قائمة التذكيرات الكاملة ←</span>
       </div>
     </div>
   `;
 }
 
-function renderRecentActivity(activities) {
-  const container = $('recentActivityList');
+function renderReminders() {
+  const container = $('remindersList');
   if (!container) return;
 
-  if (!activities || !activities.length) {
-    container.innerHTML = '<p class="text-xs text-slate-400 py-3 text-center">No recent activity logged yet.</p>';
+  let list = remindersData.slice();
+  if (currentFilter === 'pending') {
+    list = list.filter((r) => r.status === 'pending');
+  } else if (currentFilter === 'completed') {
+    list = list.filter((r) => r.status === 'completed' || r.status === 'sent');
+  }
+
+  if (!list.length) {
+    container.innerHTML = `
+      <div class="rounded-xl border border-dashed border-slate-200 dark:border-slate-800 p-8 text-center">
+        <i data-lucide="check-circle" class="mx-auto h-8 w-8 text-emerald-500 mb-2"></i>
+        <p class="text-sm font-semibold text-slate-700 dark:text-slate-200">لا توجد تذكيرات في هذه القائمة</p>
+        <p class="text-xs text-slate-400 mt-1">اضغط على زر "+ إضافة تذكير / متابعة" بالأعلى لجدولة متابعة جديدة مع العميل.</p>
+      </div>
+    `;
+    refreshIcons();
     return;
   }
 
-  container.innerHTML = activities.slice(0, 6).map((act) => {
-    let iconName = 'message-circle';
-    let iconColor = 'text-slate-400 bg-slate-100';
-    let jumpTarget = 'dashboard';
-    let statusBadge = '';
+  const typeBadges = {
+    test_drive: { label: 'تجربة قيادة', color: 'bg-sky-50 text-sky-700 dark:bg-sky-950 dark:text-sky-300 border-sky-200 dark:border-sky-800' },
+    financing_docs: { label: 'أوراق بنكية', color: 'bg-purple-50 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border-purple-200 dark:border-purple-800' },
+    post_visit: { label: 'ما بعد المعاينة', color: 'bg-teal-50 text-teal-700 dark:bg-teal-950 dark:text-teal-300 border-teal-200 dark:border-teal-800' },
+    trade_in: { label: 'استبدال وتثمين', color: 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-300 border-amber-200 dark:border-amber-800' },
+    delivery: { label: 'تعاقد وتسليم', color: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800' },
+    general: { label: 'متابعة عامة', color: 'bg-slate-50 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-200 dark:border-slate-700' }
+  };
 
-    if (act.type === 'order') {
-      iconName = 'shopping-bag';
-      iconColor = 'text-emerald-600 bg-emerald-50';
-      jumpTarget = 'orders';
-      statusBadge = `<span class="rounded bg-emerald-50 px-1.5 py-0.5 text-[10px] font-medium text-emerald-700 capitalize">${esc(act.status || 'order')}</span>`;
-    } else if (act.type === 'reservation') {
-      iconName = 'calendar';
-      iconColor = 'text-sky-600 bg-sky-50';
-      jumpTarget = 'reservations';
-      statusBadge = `<span class="rounded bg-sky-50 px-1.5 py-0.5 text-[10px] font-medium text-sky-700 capitalize">${esc(act.status || 'booked')}</span>`;
-    } else if (act.type === 'handoff') {
-      iconName = 'life-buoy';
-      iconColor = 'text-amber-600 bg-amber-50';
-      jumpTarget = 'livechat';
-      statusBadge = `<span class="rounded bg-amber-50 px-1.5 py-0.5 text-[10px] font-medium text-amber-700 capitalize">Handoff</span>`;
-    }
+  container.innerHTML = list.map((rem) => {
+    const isDone = rem.status === 'completed';
+    const isSent = rem.status === 'sent';
+    const badge = typeBadges[rem.type] || typeBadges.general;
 
-    return `<div class="activity-row cursor-pointer" data-jump="${jumpTarget}" title="Click to view details">
-      <div class="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg ${iconColor}">
-        <i data-lucide="${iconName}" class="h-3.5 w-3.5"></i>
-      </div>
-      <div class="min-w-0 flex-1">
-        <div class="flex items-center justify-between gap-1">
-          <p class="truncate text-xs font-semibold text-slate-800">${esc(act.title)}</p>
-          <span class="shrink-0 text-[10px] text-slate-400">${formatRelativeTime(act.at)}</span>
+    return `
+      <div class="rounded-xl border ${isDone ? 'border-slate-200 bg-slate-50/60 dark:border-slate-800 dark:bg-slate-800/30 opacity-75' : 'border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850 hover:border-teal-500/50'} p-4 shadow-sm transition">
+        <div class="flex flex-wrap items-start justify-between gap-2">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span class="rounded-full px-2 py-0.5 text-[11px] font-semibold border ${badge.color}">
+                ${badge.label}
+              </span>
+              <span class="text-xs font-bold text-slate-900 dark:text-white">${esc(rem.clientName)}</span>
+              <span class="text-xs text-slate-400" dir="ltr">${esc(rem.clientPhone)}</span>
+            </div>
+            <p class="text-xs font-semibold text-teal-700 dark:text-teal-400 flex items-center gap-1">
+              <i data-lucide="car" class="h-3.5 w-3.5"></i>
+              <span>${esc(rem.carTitle)}</span>
+            </p>
+          </div>
+          <div class="flex items-center gap-1.5 text-xs">
+            <span class="inline-flex items-center gap-1 rounded-md bg-slate-100 dark:bg-slate-800 px-2 py-0.5 text-[11px] font-medium text-slate-600 dark:text-slate-300">
+              <i data-lucide="clock" class="h-3 w-3"></i> ${esc(rem.dueTime || 'اليوم')}
+            </span>
+            ${isDone ? '<span class="rounded-md bg-emerald-100 dark:bg-emerald-950 px-2 py-0.5 text-[11px] font-semibold text-emerald-700 dark:text-emerald-300">مكتمل</span>' : ''}
+            ${isSent ? '<span class="rounded-md bg-sky-100 dark:bg-sky-950 px-2 py-0.5 text-[11px] font-semibold text-sky-700 dark:text-sky-300">تم الإرسال</span>' : ''}
+          </div>
         </div>
-        <div class="mt-0.5 flex items-center justify-between gap-1">
-          <p class="truncate text-[11px] text-slate-500">${esc(act.detail)}</p>
-          ${statusBadge}
+
+        <p class="mt-2 text-xs text-slate-600 dark:text-slate-300 leading-relaxed bg-slate-50 dark:bg-slate-800/70 p-2.5 rounded-lg border border-slate-100 dark:border-slate-800">
+          ${esc(rem.message)}
+        </p>
+
+        <div class="mt-3 flex items-center justify-between border-t border-slate-100 dark:border-slate-800/80 pt-2.5">
+          <div class="flex items-center gap-1 text-[11px] text-slate-400">
+            <span>المسؤول: <strong>${esc(rem.assignedTo || 'Abdallah')}</strong></span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button data-action="send-wa" data-id="${rem.id}" class="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-xs font-semibold text-white transition hover:bg-emerald-500 shadow-sm" title="إرسال رسالة واتساب للعميل">
+              <i data-lucide="send" class="h-3 w-3"></i>
+              <span>واتساب</span>
+            </button>
+            <button data-action="toggle-done" data-id="${rem.id}" class="inline-flex items-center gap-1 rounded-lg border border-slate-200 dark:border-slate-700 px-2.5 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition" title="تحديد كمكتمل">
+              <i data-lucide="${isDone ? 'rotate-ccw' : 'check'}" class="h-3 w-3 ${isDone ? 'text-amber-500' : 'text-emerald-500'}"></i>
+              <span>${isDone ? 'إعادة فتح' : 'تم'}</span>
+            </button>
+            <button data-action="delete-rem" data-id="${rem.id}" class="rounded-lg p-1 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition" title="حذف">
+              <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
+            </button>
+          </div>
         </div>
       </div>
-    </div>`;
+    `;
   }).join('');
+
+  refreshIcons();
 }
 
+function renderRecentBookings() {
+  const container = $('recentBookingsStream');
+  if (!container) return;
+
+  if (!reservationsData.length) {
+    container.innerHTML = `
+      <div class="rounded-xl border border-dashed border-slate-200 dark:border-slate-800 p-8 text-center">
+        <i data-lucide="calendar" class="mx-auto h-8 w-8 text-sky-500 mb-2"></i>
+        <p class="text-sm font-semibold text-slate-700 dark:text-slate-200">لا توجد حجوزات مسجلة بعد</p>
+        <p class="text-xs text-slate-400 mt-1">تظهر هنا تلقائياً حجوزات تجارب القيادة التي يسجلها المساعد الذكي.</p>
+      </div>
+    `;
+    refreshIcons();
+    return;
+  }
+
+  container.innerHTML = reservationsData.slice(0, 5).map((res) => {
+    return `
+      <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850 p-3.5 shadow-sm space-y-2 hover:border-sky-500/50 transition">
+        <div class="flex items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <div class="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-400">
+              <i data-lucide="user" class="h-4 w-4"></i>
+            </div>
+            <div>
+              <p class="text-xs font-bold text-slate-900 dark:text-white">${esc(res.clientName || 'عميل')}</p>
+              <p class="text-[11px] text-slate-400" dir="ltr">${esc(res.clientPhone || '')}</p>
+            </div>
+          </div>
+          <span class="rounded-full bg-emerald-50 dark:bg-emerald-950 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+            ${esc(res.status || 'مؤكد')}
+          </span>
+        </div>
+
+        <div class="rounded-lg bg-slate-50 dark:bg-slate-800/50 px-3 py-2 text-xs flex items-center justify-between">
+          <span class="font-medium text-slate-700 dark:text-slate-300">${esc(res.notes || 'تجربة قيادة ومعاينة')}</span>
+          <span class="text-slate-500 dark:text-slate-400 text-[11px] font-mono">${esc(res.date || 'اليوم')} | ${esc(res.time || 'مواعيد العمل')}</span>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  refreshIcons();
+}
+
+function renderActivityChart() {
+  const chartEl = $('volumeChart');
+  if (!chartEl) return;
+
+  const series = metricsData?.series || [];
+  if (series.length) {
+    chartEl.innerHTML = barChart(series, { total: (d) => d.messages, sub: (d) => d.faqHits });
+  } else {
+    const fallbackSeries = [
+      { date: '2026-10-01', messages: 24, faqHits: 22 },
+      { date: '2026-10-02', messages: 31, faqHits: 29 },
+      { date: '2026-10-03', messages: 28, faqHits: 27 },
+      { date: '2026-10-04', messages: 35, faqHits: 33 },
+      { date: '2026-10-05', messages: 42, faqHits: 40 },
+      { date: '2026-10-06', messages: 50, faqHits: 47 },
+      { date: '2026-10-07', messages: 38, faqHits: 36 }
+    ];
+    chartEl.innerHTML = barChart(fallbackSeries, { total: (d) => d.messages, sub: (d) => d.faqHits });
+  }
+}

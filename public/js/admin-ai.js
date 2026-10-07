@@ -7,6 +7,7 @@ let analyticsData = null;
 let branchesData = [];
 let leadScores = {};
 let sentimentAlerts = [];
+let learnedData = [];
 
 export function initAdminAI(context) {
   ctx = context;
@@ -17,9 +18,20 @@ export async function loadAdminAI() {
   await Promise.all([
     loadAnalytics(),
     loadBranches(),
-    loadGallery()
+    loadGallery(),
+    loadLearnedAnswers()
   ]);
   renderAdminAI();
+}
+
+async function loadLearnedAnswers() {
+  try {
+    const res = await fetch('/api/ai/learned');
+    const data = await res.json();
+    learnedData = data.learned || [];
+  } catch (e) {
+    learnedData = [];
+  }
 }
 
 async function loadAnalytics() {
@@ -62,8 +74,56 @@ function renderAdminAI() {
   renderAnalyticsCharts();
   renderBranches();
   renderGallery();
+  renderLearnedAnswers();
   updateStats();
   refreshIcons();
+}
+
+function renderLearnedAnswers() {
+  const container = $('adminLearnedList');
+  if (!container) return;
+  const badge = $('statLearnedBadge');
+  if (badge) badge.textContent = `${learnedData.length} إجابة متعلمة`;
+
+  if (!learnedData.length) {
+    container.innerHTML = '<p class="text-sm text-slate-400 text-center py-4">لم يتم تسجيل ردود متعلمة بعد — عند الرد على العملاء في المحادثات المباشرة، سيتعلم الذكاء الاصطناعي إجابتك فوراً!</p>';
+    return;
+  }
+
+  container.innerHTML = learnedData.map(l => {
+    const dateStr = l.learnedAt ? new Date(l.learnedAt).toLocaleDateString('ar-EG', { hour: '2-digit', minute: '2-digit' }) : '';
+    return `
+      <div class="rounded-xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/60 p-3.5 text-xs transition hover:border-[#128C7E]/40">
+        <div class="flex items-center justify-between gap-2 mb-1.5">
+          <div class="flex items-center gap-2">
+            <span class="rounded bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300 px-2 py-0.5 text-[11px] font-semibold">رد معتمد من المالك</span>
+            <span class="text-slate-400 font-mono text-[10px]">${dateStr}</span>
+          </div>
+          <button class="text-rose-500 hover:text-rose-700 p-1" data-del-learned="${l.id}" title="حذف هذا الرد المتعلم">
+            <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
+          </button>
+        </div>
+        <p class="font-semibold text-slate-900 dark:text-slate-100 mb-1">سؤال العميل: "${l.question}"</p>
+        <p class="text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-800 p-2 rounded-lg border border-slate-200/60 dark:border-slate-700/60 leading-relaxed">${l.answer}</p>
+      </div>
+    `;
+  }).join('');
+
+  container.querySelectorAll('[data-del-learned]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const id = btn.dataset.delLearned;
+      if (!confirm('هل تريد حذف هذه الإجابة المتعلمة؟')) return;
+      try {
+        await fetch(`/api/ai/learned/${id}`, { method: 'DELETE' });
+        toast('تم حذف الإجابة المتعلمة');
+        await loadLearnedAnswers();
+        renderLearnedAnswers();
+        refreshIcons();
+      } catch (e) {
+        toast('فشل الحذف: ' + e.message, 'err');
+      }
+    });
+  });
 }
 
 function maskPhone(phone) {
@@ -88,7 +148,7 @@ function renderLeadScores() {
   
   const phones = Object.keys(leadScores);
   if (phones.length === 0) {
-    container.innerHTML = '<p class="text-center text-slate-400 py-4">${getLang() === 'en' ? 'No lead scoring data yet' : 'لا توجد بيانات عملاء بعد'}</p>';
+    container.innerHTML = `<p class="text-center text-slate-400 py-4">${getLang() === 'en' ? 'No lead scoring data yet' : 'لا توجد بيانات عملاء بعد'}</p>`;
     return;
   }
   
@@ -123,7 +183,7 @@ function renderSentimentAlerts() {
   if (!container) return;
   
   if (sentimentAlerts.length === 0) {
-    container.innerHTML = '<p class="text-center text-slate-400 py-4">${getLang() === 'en' ? 'No escalation alerts currently ✅' : 'لا توجد تنبيهات حالياً ✅'}</p>';
+    container.innerHTML = `<p class="text-center text-slate-400 py-4">${getLang() === 'en' ? 'No escalation alerts currently ✅' : 'لا توجد تنبيهات حالياً ✅'}</p>`;
     return;
   }
   
@@ -201,7 +261,7 @@ function renderBranches() {
   if (!container) return;
   
   if (branchesData.length === 0) {
-    container.innerHTML = '<p class="text-sm text-slate-400 text-center py-4 col-span-3">${getLang() === 'en' ? 'No branches configured' : 'لا توجد فروع مضافة'}</p>';
+    container.innerHTML = `<p class="text-sm text-slate-400 text-center py-4 col-span-3">${getLang() === 'en' ? 'No branches configured' : 'لا توجد فروع مضافة'}</p>`;
     return;
   }
   
@@ -227,7 +287,7 @@ function renderGallery() {
   if (!container) return;
   
   if (galleryData.length === 0) {
-    container.innerHTML = '<p class="text-sm text-slate-400 text-center py-4 col-span-3">${getLang() === 'en' ? 'No cars available in showroom' : 'لا توجد سيارات في المعرض'}</p>';
+    container.innerHTML = `<p class="text-sm text-slate-400 text-center py-4 col-span-3">${getLang() === 'en' ? 'No cars available in showroom' : 'لا توجد سيارات في المعرض'}</p>`;
     return;
   }
   

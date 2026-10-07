@@ -144,6 +144,18 @@ export function buildSystemPrompt(cfg = {}) {
     });
   }
 
+  const learned = (cfg.learnedAnswers || []).filter(l => l.question && l.answer);
+  if (learned.length) {
+    L.push('');
+    L.push('## RESPONSES TAUGHT DIRECTLY BY HUMAN OWNER (HIGHEST PRIORITY / RECENT LEARNING)');
+    L.push('The showroom owner personally answered these client questions. Use this exact knowledge whenever a client asks something similar:');
+    learned.forEach((l, i) => {
+      L.push(`${i + 1}. Client asked: "${l.question}"`);
+      if (l.aliases) L.push(`   Aliases: ${l.aliases}`);
+      L.push(`   Owner Approved Response: "${l.answer}"`);
+    });
+  }
+
   L.push('');
   L.push('## DEALERSHIP INFORMATION');
   if (b.name) L.push(`Name: ${b.name}`);
@@ -157,6 +169,15 @@ export function buildSystemPrompt(cfg = {}) {
   if (b.payment) L.push(`Payment & Financing: ${b.payment}`);
   if (b.policies) L.push(`Warranties & Inspection Policies:\n${b.policies}`);
 
+  const branches = cfg.branches || [];
+  if (branches.length) {
+    L.push('');
+    L.push('## SHOWROOM BRANCHES (LIVE DATABASE)');
+    branches.forEach((br, i) => {
+      L.push(`- Branch ${i + 1}: ${br.name} | Address: ${br.address} | Phone: ${br.phone} | Hours: ${br.hours} | Maps: ${br.mapsUrl || ''}`);
+    });
+  }
+
   L.push('');
   L.push('## VEHICLE INVENTORY & PRICES (CARS DATABASE)');
   if (cars.length) {
@@ -164,6 +185,11 @@ export function buildSystemPrompt(cfg = {}) {
       const specText = c.specs ? ` [Year: ${c.specs.year || ''}, Mileage: ${c.specs.mileage || ''}, Engine: ${c.specs.engine || ''}, Condition: ${c.specs.condition || ''}]` : '';
       L.push(`- ${c.name}: ${c.price || 'Call for price'} | Condition/Category: ${c.category || 'Automotive'} | Status: ${c.stock || 'In Stock'}.${specText} ${c.description || ''}`);
     });
+  }
+
+  if (cfg.ordersCount != null || cfg.reservationsCount != null) {
+    L.push('');
+    L.push(`## REAL-TIME DATABASE ACTIVITY: ${cfg.ordersCount || 0} active purchase orders, ${cfg.reservationsCount || 0} confirmed test drive bookings.`);
   }
 
   const templates = (cfg.templates || []).filter(t => t.enabled !== false);
@@ -197,12 +223,11 @@ export function analyzeIntent(text, config = {}, history = []) {
   const norm = normalize(text);
   const raw = String(text || '').trim();
 
-  // 1. Human Sales Advisor Request Intent
   const humanTriggers = [
     'human', 'agent', 'support', 'person', 'representative', 'operator', 'talk to someone',
-    'sales', 'salesman', 'مسؤول مبيعات', 'مستشار مبيعات', 'خدمه عملاء', 'خدمة عملاء', 'عايز اكلم حد',
-    'عاوز اكلم حد', 'كلمني حد', 'بني ادم', 'شخص', 'حولني لحد', 'موظف', 'مساعده بشريه',
-    'الدعم', 'شكوى', 'مشكله', 'مشكلة', 'مدير المعرض'
+    'salesman', 'مسؤول مبيعات', 'مستشار مبيعات', 'خدمه عملاء', 'خدمة عملاء', 'عايز اكلم حد',
+    'عاوز اكلم حد', 'كلمني حد', 'بني ادم', 'حولني لحد', 'عايز موظف', 'كلمني موظف', 'موظف مبيعات', 'موظف خدمة عملاء', 'مساعده بشريه',
+    'شكوى', 'مشكله', 'مشكلة', 'مدير المعرض'
   ].map(normalize);
   if (humanTriggers.some(t => norm.includes(t))) {
     const isAngry = /(مشكله|مشكلة|شكوى|زفت|سيء|تأخير|غلط|فلوس|نصب|angry|bad|terrible|scam)/i.test(raw);
@@ -230,17 +255,17 @@ export function analyzeIntent(text, config = {}, history = []) {
   const locationTriggers = [
     'اللوكيشن', 'لوكيشن', 'ابعثلي اللوكيشن', 'ابعتلي اللوكيشن', 'موقع المعرض', 'عنوان المعرض', 'مكان المعرض',
     'gps', 'send location', 'location pin', 'share location', 'feen el ma3rad', 'feen el mkan', 'where is showroom',
-    'where are you located'
+    'where are you located', 'المكان', 'مكان', 'العنوان', 'عنوان', 'فين', 'فروعكم', 'الفروع', 'فرعكم'
   ].map(normalize);
   if (locationTriggers.some(t => norm.includes(t))) {
     const b = config.business || {};
     return {
       type: 'SEND_LOCATION',
-      lat: b.latitude || 30.0131,
-      lng: b.longitude || 31.4289,
+      lat: b.latitude || 30.0444,
+      lng: b.longitude || 31.4582,
       name: b.name || 'Al-Fares Motors Showroom',
-      address: b.location || 'New Cairo Showroom',
-      reply: `تفضل لوكيشن معرض الفارس للسيارات على خرائط جوجل 📍\nيسعدنا تشريفك لمعاينة السيارات وتجربة القيادة:\n${b.mapsUrl || b.location}`
+      address: b.location || 'New Cairo & Nasr City Showrooms',
+      reply: `فروع ومواقع معارض الفارس موتورز مصر (إدارة هاني مسعود): 📍\n\n1️⃣ فرع التجمع الأول (القاهرة الجديدة):\nمول 5، المجاورة الخامسة، التجمع الأول – بجوار موقف الأتوبيس.\n\n2️⃣ فرع مدينة نصر (القاهرة):\n17 شارع المشروع، متفرع من مصطفى النحاس، مدينة نصر.\n\n📞 هاتف وواتساب المبيعات: 01501511117 / +201501511117\n🌐 خريطة الفروع على موقعنا: https://alfarismotors.ai/branches\nتشرفنا بالزيارة في أي وقت لمعاينة وفحص السيارات! 🚗`
     };
   }
 
@@ -467,6 +492,18 @@ export async function answerQuestion(question, config, history = []) {
     };
   }
 
+  // 1.5. Check Human Owner Learned Answers (Trained by Real Interactions)
+  const matchedLearned = matchFaq(question, config.learnedAnswers || []);
+  if (matchedLearned && matchedLearned.entry && matchedLearned.score >= 0.60) {
+    return {
+      reply: matchedLearned.entry.answer,
+      faqHit: true,
+      source: 'owner-learned',
+      isFallback: false,
+      durationMs: Date.now() - start
+    };
+  }
+
   // 2. FAQ Match Check
   const matched = matchFaq(question, config.faqEntries || []);
   if (matched && matched.entry) {
@@ -647,38 +684,44 @@ function localSmartCarAnswer(question, config) {
   }
 
   // Opening hours
-  if (norm.includes('hour') || norm.includes('open') || norm.includes('close') || norm.includes('مواعيد') || norm.includes('فاتحين') || norm.includes('تقفلوا') || norm.includes('ساعه')) {
-    if (b.hours) {
-      return isArabic
-        ? `مواعيد عمل ${b.name || 'المعرض'}:\n${b.hours}\nتشرفنا بالزيارة في أي وقت! هل تحب نحجز لحضرتك موعد معاينة وتجربة قيادة مسبقاً؟ 🚗`
-        : `Our showroom opening hours are:\n${b.hours}\nLet us know if you would like to book a test drive appointment! 🚗`;
-    }
+  if (norm.includes('hour') || norm.includes('time') || norm.includes('open') || norm.includes('close') || norm.includes('مواعيد') || norm.includes('فاتحين') || norm.includes('تقفلوا') || norm.includes('ساعه') || norm.includes('ساعات العمل') || norm.includes('الوقت') || norm.includes('وقت') || norm.includes('شغالين')) {
+    return isArabic
+      ? `مواعيد عمل معارض الفارس موتورز مصر (Al-Fares Motors) بإدارة هاني مسعود: ⏰\n\n• السبت إلى الخميس: من 2:00 PM حتى 12:00 AM (من 2 ظهراً حتى 12 منتصف الليل).\n• يوم الجمعة: من 3:00 PM حتى 12:00 AM (من 3 عصراً حتى 12 منتصف الليل).\n\n📞 هاتف المبيعات وخدمة العملاء: 01501511117 / +201501511117\nتشرفنا في أي وقت للمعاينة وتجربة القيادة! 🚗`
+      : `Al-Fares Motors Showroom Working Hours: ⏰\n\n• Saturday to Thursday: 2:00 PM – 12:00 AM\n• Friday: 3:00 PM – 12:00 AM\n\n📞 Phone: +201501511117\nLooking forward to welcoming you for viewing and test drives! 🚗`;
   }
 
-  // Location / Address
-  if (norm.includes('where') || norm.includes('location') || norm.includes('address') || norm.includes('مكان') || norm.includes('عنوان') || norm.includes('ازاي اجي')) {
-    let reply = isArabic
-      ? 'موقع معارضنا: فرع التجمع الأول (سوق السيارات) وفرع مدينة نصر (شارع عباس العقاد).'
-      : 'Our showrooms: First Settlement Branch (Auto Market) and Nasr City Branch (Abbas El-Akkad St).';
-    if (b.mapsUrl) {
-      reply += isArabic
-        ? `\n📍 رابط الموقع على خرائط جوجل: ${b.mapsUrl}`
-        : `\n📍 Google Maps link: ${b.mapsUrl}`;
-    }
-    return reply;
+  // Location / Address / Branches
+  if (norm.includes('where') || norm.includes('location') || norm.includes('address') || norm.includes('branch') || norm.includes('مكان') || norm.includes('عنوان') || norm.includes('ازاي اجي') || norm.includes('فين') || norm.includes('فروع') || norm.includes('فرع')) {
+    return isArabic
+      ? `فروع ومواقع معارض الفارس موتورز مصر (إدارة هاني مسعود): 📍\n\n1️⃣ فرع التجمع الأول (القاهرة الجديدة):\nمول 5، المجاورة الخامسة، التجمع الأول – بجوار موقف الأتوبيس.\n\n2️⃣ فرع مدينة نصر (القاهرة):\n17 شارع المشروع، متفرع من مصطفى النحاس، مدينة نصر.\n\n📞 هاتف وواتساب المبيعات: 01501511117 / +201501511117\n🌐 خريطة الفروع على موقعنا: https://alfarismotors.ai/branches\nتشرفنا بالزيارة في أي وقت لمعاينة وفحص السيارات! 🚗`
+      : `Al-Fares Motors Showrooms (Hany Massoud): 📍\n\n1. First Settlement Branch (New Cairo): Mall 5, 5th Neighborhood, next to the bus terminal.\n2. Nasr City Branch (Cairo): 17 El-Mashroua St., off Mostafa El-Nahas St.\n\n📞 Phone & WhatsApp: +201501511117\n🌐 Branch Locator: https://alfarismotors.ai/branches`;
+  }
+
+  // Founder, Facebook page & Socials
+  if (norm.includes('هاني مسعود') || norm.includes('فيس') || norm.includes('فيسبوك') || norm.includes('facebook') || norm.includes('تيك توك') || norm.includes('tiktok') || norm.includes('مين صاحب') || norm.includes('المؤسس')) {
+    return isArabic
+      ? `معرض الفارس موتورز مصر تحت إدارة الأستاذ هاني مسعود (Hany Massoud): 🌟\n• الصفحة الرسمية للأستاذ هاني مسعود على فيسبوك: https://www.facebook.com/hany.massoud82/\n• الموقع الرسمي للمعرض: https://alfarismotors.ai\n• تيك توك: https://www.tiktok.com/@elfarismotors\n• يوتيوب: https://www.youtube.com/@alfarismotors\n• الخط الساخن وواتساب: 01501511117 / +201501511117\nتشرفنا في أي وقت!`
+      : `Al-Fares Motors is founded and managed by Mr. Hany Massoud: 🌟\n• Official Facebook: https://www.facebook.com/hany.massoud82/\n• Official Website: https://alfarismotors.ai\n• TikTok: https://www.tiktok.com/@elfarismotors\n• Direct Hotline: +201501511117`;
+  }
+
+  // Non-automotive queries (Food / Drinks / Cafe / etc.)
+  if (norm.includes('اكل') || norm.includes('طعام') || norm.includes('وجبات') || norm.includes('قهوه') || norm.includes('كافيه') || norm.includes('مطعم') || norm.includes('فلات وايت') || norm.includes('لاتيه') || norm.includes('كواسون') || norm.includes('food') || norm.includes('coffee')) {
+    return isArabic
+      ? `أهلاً بحضرتك في الفارس موتورز مصر (Al-Fares Motors)! 🚗 نحن معرض سيارات رائد متخصص في بيع وشراء وتقسيط واستبدال السيارات الزيرو والمستعملة الفابريكا (إدارة هاني مسعود).\nيسعدنا مساعدتك في اختيار سيارتك، حساب أقساط البنوك، أو حجز موعد لتجربة القيادة في فرعينا (التجمع الأول ومدينة نصر).`
+      : `Welcome to Al-Fares Motors! 🚗 We are an automotive dealership specializing in new and certified pre-owned vehicles. How may we assist you with car specifications, financing plans, or test drive bookings?`;
   }
 
   // Installments / Financing / Loan calculation
   if (norm.includes('تقسيط') || norm.includes('قسط') || norm.includes('مقدم') || norm.includes('تمويل') || norm.includes('بنك') || norm.includes('installment') || norm.includes('finance') || norm.includes('loan')) {
     return isArabic
-      ? `نوفر أنظمة تقسيط مرنة بالتعاون مع جميع البنوك: 💳\n• مقدم يبدأ من 20% للسيارات الزيرو و 25% للمستعمل.\n• فترات سداد مريحة حتى 7 سنوات.\n• إمكانية التقسيط بدون تأمين إجباري أو بدون إثبات دخل لبعض الفئات.\n• متاح استبدال سيارتك القديمة وتقسيط الفارق!\nتحب تحسب قسط سيارة محددة من المعرض؟`
-      : `We offer flexible auto loans and installment programs with top banks: 💳\n• Down payment starting from 20% on new cars and 25% on certified used cars.\n• Flexible tenures up to 7 years.\n• Direct trade-in available!\nWould you like us to calculate the monthly payment for a specific model?`;
+      ? `نوفر أنظمة تقسيط مرنة بالتعاون مع كبرى البنوك والشركات التمويلية: 💳\n• مقدم يبدأ من 20% للسيارات الزيرو و 25% للمستعمل الفابريكا.\n• فترات سداد مريحة حتى 7 سنوات.\n• برامج متنوعة: للموظفين، أصحاب السجلات التجارية، والمهن الحرة، وبرامج خاصة للأطباء والمهندسين بدون إثبات دخل معقد.\n• إمكانية التقسيط بدون تأمين إجباري واستبدال سيارتك القديمة وتقسيط الفارق!\nتحب تحسب قسط سيارة محددة من المعرض؟ 🚗`
+      : `We offer flexible auto financing and installment programs with top Egyptian banks: 💳\n• Down payment starting from 20% on new cars and 25% on certified used cars.\n• Tenures up to 7 years.\n• Direct trade-in available!\nWould you like us to calculate the monthly payment for a specific vehicle?`;
   }
 
   // Trade-In / Car exchange
   if (norm.includes('استبدال') || norm.includes('تبديل') || norm.includes('ابدل') || norm.includes('trade in') || norm.includes('exchange')) {
     return isArabic
-      ? `نعم متاح خدمة الاستبدال المباشر (Trade-In)! 🔄\nيتم فحص سيارتك وتثمينها بأعلى سعر سوقي عادل، واستخدام قيمتها كمقدم لأي سيارة تختارها بالمعرض مع تقسيط الفارق. تحب تشرفنا بالسيارة لفحصها وتحديد السعر؟`
+      ? `نعم متاح خدمة الاستبدال المباشر (Trade-In)! 🔄\nيتم فحص سيارتك وتثمينها بأعلى سعر سوقي عادل، واستخدام قيمتها كمقدم لأي سيارة تختارها بالمعرض مع تقسيط الفارق. تحب تشرفنا بالسيارة في فرع التجمع الأول أو مدينة نصر لفحصها وتحديد السعر؟`
       : `Yes, we offer direct trade-ins! 🔄 We appraise your current vehicle at fair market value and apply it as a down payment toward any new or used car from our showroom. Would you like to bring it in for evaluation?`;
   }
 
@@ -689,6 +732,16 @@ function localSmartCarAnswer(question, config) {
       : `We would love to arrange a test drive for you! 🏎️ Please share the car model and your preferred date/time, and we will have it ready for you!`;
   }
 
+  // General Car Catalog / Prices / What do you have? ("اسعار", "سعر", "عار", "الاسعار", "عربيات", "سيارات")
+  if (norm.includes('اسعار') || norm.includes('سعر') || norm.includes('الاسعار') || norm.includes('قائمه الاسعار') || norm.includes('عار') || norm.includes('عندكم ايه') || norm.includes('انواع') || norm.includes('سيارات') || norm.includes('عربيات') || norm.includes('cars') || norm.includes('models') || norm.includes('list') || norm.includes('الكتالوج') || norm.includes('كتالوج') || norm.includes('المتاح') || norm.includes('المعروض')) {
+    if (cars.length) {
+      const list = cars.slice(0, 6).map(c => `• ${c.name}: ${c.price} (${c.category})`).join('\n');
+      return isArabic
+        ? `أهلاً بك في الفارس موتورز مصر! 🚗 لدينا تشكيلة تضم أكثر من 65 سيارة زيرو ومستعملة فابريكا بالكامل بأسعار معلنة وضمان معتمد. إليك عينة من أبرز السيارات المتاحة وأسعارها:\n\n${list}\n\n• إجمالي المعروض: أكثر من 65 سيارة تشمل مرسيدس، كيا، هيونداي، بي إم دابليو، رينج روفر، ميتسوبيشي، شيري، سكودا، جيتور، أوبل، بيجو، وغيرها.\n• جميع السيارات متوفرة كاش وبالتقسيط البنكي بمقدم يبدأ من 20%.\n🌐 تصفح كامل المعرض على موقعنا: https://alfarismotors.ai/cars\nتحب تستفسر عن سيارة معينة أو فئة سعرية محددة؟`
+        : `Welcome to Al-Fares Motors! 🚗 We offer over 65 certified new & pre-owned vehicles:\n\n${list}\n\n🌐 View our entire live catalog: https://alfarismotors.ai/cars\nWhich vehicle or price range would you like to explore? 🚗`;
+    }
+  }
+
   // Specific Car Specs and Pricing Match
   for (const c of cars) {
     const cName = normalize(c.name);
@@ -697,16 +750,6 @@ function localSmartCarAnswer(question, config) {
       return isArabic
         ? `سعر ${c.name} هو ${c.price || 'متاح عند الطلب'}.\n• الحالة: ${c.stock || 'متوفرة بالمعرض'} (${c.category || ''}).${desc}\n\nتحب تحجز موعد لتجربة قيادتها أو تستفسر عن نظام تقسيطها؟ 🚗`
         : `Our ${c.name} is quoted at ${c.price || 'available upon request'}.\n• Status: ${c.stock || 'In Stock'} (${c.category || ''}).${desc}\n\nWould you like to schedule a test drive or check out installment options? 🚗`;
-    }
-  }
-
-  // General Car Catalog / What do you have?
-  if (norm.includes('عندكم ايه') || norm.includes('انواع') || norm.includes('سيارات') || norm.includes('عربيات') || norm.includes('cars') || norm.includes('models') || norm.includes('list')) {
-    if (cars.length) {
-      const list = cars.slice(0, 5).map(c => `• ${c.name}: ${c.price} (${c.category})`).join('\n');
-      return isArabic
-        ? `أبرز السيارات المتوفرة لدينا بالمعرض حالياً:\n${list}\n\nتحب تستفسر عن تفاصيل ومواصفات أي سيارة منهم؟ 🚗`
-        : `Here are our top featured vehicles currently in our showroom:\n${list}\n\nWhich one would you like to explore specs or test drive? 🚗`;
     }
   }
 

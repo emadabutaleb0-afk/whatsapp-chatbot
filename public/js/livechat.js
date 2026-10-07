@@ -2,11 +2,13 @@
 
 import { $, esc, refreshIcons, toast, fmtText } from './ui.js';
 import { api } from './api.js';
+import { exportLogsCSV, exportLogsPDF } from './export.js';
 
 let conversations = [];
 let handoffTickets = [];
 let activePhone = null;
 let pollTimer = null;
+let cachedLogs = [];
 
 export function initLiveChat() {
   const convListEl = $('liveConvList');
@@ -44,9 +46,13 @@ export function initLiveChat() {
       if (sendBtn) sendBtn.disabled = true;
 
       try {
-        await api.replyConversation(activePhone, text);
+        const res = await api.replyConversation(activePhone, text);
         if (input) input.value = '';
-        toast('Message sent to client on WhatsApp');
+        if (res && res.learned) {
+          toast('✨ تم إرسال الرد، وتعلّم الذكاء الاصطناعي هذا السؤال والجواب تلقائياً!');
+        } else {
+          toast('Message sent to client on WhatsApp');
+        }
         await loadConversations(false);
       } catch (err) {
         toast('Failed to send WhatsApp message: ' + err.message, 'err');
@@ -58,6 +64,90 @@ export function initLiveChat() {
   }
 
   $('refreshLiveChatBtn')?.addEventListener('click', () => loadConversations(true));
+
+  // Search in conversations
+  $('searchLiveConvs')?.addEventListener('input', (e) => {
+    const q = e.target.value.toLowerCase().trim();
+    const convItems = document.querySelectorAll('#liveConvList [data-client-phone]');
+    convItems.forEach(item => {
+      const txt = item.textContent.toLowerCase();
+      item.style.display = txt.includes(q) ? '' : 'none';
+    });
+  });
+
+  // Quick Canned Replies
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.quick-canned-btn');
+    if (btn && btn.dataset.canned) {
+      const input = $('liveReplyInput');
+      if (input) {
+        input.value = btn.dataset.canned;
+        input.focus();
+        toast('تم إدراج الرد السريع في حقل الإرسال');
+      }
+    }
+  });
+
+
+  // Mode switcher: Live WhatsApp Chats vs Messages Audit Log
+  const chatTabBtn = $('liveTabChatBtn');
+  const logsTabBtn = $('liveTabLogsBtn');
+  const chatPanel = $('liveChatPanelWrap');
+  const logsPanel = $('liveLogsPanelWrap');
+  const logsTools = $('liveLogsTools');
+
+  const switchMode = (mode) => {
+    const isChat = mode === 'chat';
+    if (chatPanel) {
+      chatPanel.classList.toggle('hidden', !isChat);
+      chatPanel.classList.toggle('flex', isChat);
+    }
+    if (logsPanel) {
+      logsPanel.classList.toggle('hidden', isChat);
+    }
+    if (logsTools) {
+      logsTools.classList.toggle('hidden', isChat);
+      logsTools.classList.toggle('flex', !isChat);
+    }
+
+    if (chatTabBtn && logsTabBtn) {
+      chatTabBtn.className = isChat
+        ? 'flex items-center gap-1.5 rounded-xl bg-teal-50 dark:bg-teal-950 px-3.5 py-1.5 text-xs font-bold text-teal-800 dark:text-teal-200 border border-teal-200 dark:border-teal-800 shadow-xs'
+        : 'flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition';
+      logsTabBtn.className = !isChat
+        ? 'flex items-center gap-1.5 rounded-xl bg-teal-50 dark:bg-teal-950 px-3.5 py-1.5 text-xs font-bold text-teal-800 dark:text-teal-200 border border-teal-200 dark:border-teal-800 shadow-xs'
+        : 'flex items-center gap-1.5 rounded-xl px-3.5 py-1.5 text-xs font-semibold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition';
+    }
+
+    if (!isChat) {
+      loadLogsList();
+    }
+    refreshIcons();
+  };
+
+  chatTabBtn?.addEventListener('click', () => switchMode('chat'));
+  logsTabBtn?.addEventListener('click', () => switchMode('logs'));
+
+  // Wire logs tools
+  $('refreshLogs')?.addEventListener('click', loadLogsList);
+  $('clearLogs')?.addEventListener('click', async () => {
+    if (!confirm('هل أنت متأكد من مسح سجل الرسائل؟')) return;
+    try {
+      await api.clearLogs();
+      await loadLogsList();
+      toast('تم مسح سجل الرسائل بنجاح');
+    } catch (e) {
+      toast('خطأ في مسح السجل: ' + e.message, 'err');
+    }
+  });
+
+  $('exportLogsCSVBtn')?.addEventListener('click', () => {
+    exportLogsCSV(cachedLogs);
+  });
+  $('exportLogsPDFBtn')?.addEventListener('click', () => {
+    exportLogsPDF(cachedLogs, 'Al-Fares Motors | الفارس موتورز');
+  });
+
 
   // --- AI Copilot: Smart Draft ---
   $('copilotDraftBtn')?.addEventListener('click', async () => {
@@ -351,6 +441,22 @@ function renderActiveThread() {
   if (headerPhone) headerPhone.textContent = '+' + conv.phone;
   if (takeoverBox) takeoverBox.checked = !!conv.isHumanTakeover;
 
+  const pill = $('liveBotStatePill');
+  if (pill) {
+    if (conv.isHumanTakeover) {
+      pill.textContent = 'تدخل بشري نشط 👤';
+      pill.className = 'rounded-full px-2.5 py-0.5 text-[10px] font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-200 border border-amber-300 dark:border-amber-800';
+    } else {
+      pill.textContent = 'الرد الآلي نشط 🤖';
+      pill.className = 'rounded-full px-2.5 py-0.5 text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800';
+    }
+  }
+
+  const avatar = $('liveThreadAvatar');
+  if (avatar) {
+    avatar.textContent = (conv.name || 'CL').slice(0, 2).toUpperCase();
+  }
+
   const ticket = handoffTickets.find(t => t.phone === activePhone && t.status === 'open');
   const briefingHTML = ticket ? `
     <div class="mb-4 rounded-xl border border-amber-300 bg-amber-50/80 p-3.5 shadow-sm animate-scaleIn">
@@ -523,4 +629,58 @@ function renderQuickKnowledgeItems(query) {
       </div>
     </div>
   `).join('');
+}
+
+
+export async function loadLogsList() {
+  const host = $('logList');
+  if (!host) return;
+  host.innerHTML = '<p class="text-sm text-slate-400 py-6 text-center">جاري تحميل سجل الرسائل...</p>';
+
+  try {
+    const data = await api.logs();
+    cachedLogs = data.logs || [];
+    if (!cachedLogs.length) {
+      host.innerHTML = `
+        <div class="rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-10 text-center">
+          <i data-lucide="inbox" class="mx-auto h-8 w-8 text-slate-400 mb-2"></i>
+          <p class="text-sm font-semibold text-slate-700 dark:text-slate-300">لا توجد رسائل مسجلة بعد</p>
+          <p class="text-xs text-slate-500 mt-1">تظهر هنا كافة الرسائل الواردة وردود البوت الذكي والمستشارين.</p>
+        </div>
+      `;
+      refreshIcons();
+      return;
+    }
+
+    host.innerHTML = cachedLogs.map((l) => `
+      <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm space-y-2.5">
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 dark:border-slate-800 pb-2.5">
+          <div class="flex items-center gap-2">
+            <span class="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300">
+              ${esc((l.name || l.from || 'CL').slice(0, 2).toUpperCase())}
+            </span>
+            <span class="text-xs font-bold text-slate-900 dark:text-white">${esc(l.name || 'عميل')}</span>
+            <span class="text-xs text-slate-400 font-mono" dir="ltr">+${esc(l.from || '')}</span>
+          </div>
+          <span class="text-[11px] text-slate-400">${l.at ? new Date(l.at).toLocaleString('ar-EG') : ''}</span>
+        </div>
+        <div class="rounded-xl bg-slate-50 dark:bg-slate-800/60 p-3 text-xs text-slate-700 dark:text-slate-200">
+          <span class="font-semibold text-slate-500 block mb-0.5">سؤال العميل:</span>
+          ${fmtText(l.incoming || '—')}
+        </div>
+        ${l.reply ? `
+          <div class="rounded-xl bg-teal-50/70 dark:bg-teal-950/40 border border-teal-100 dark:border-teal-900/40 p-3 text-xs text-teal-900 dark:text-teal-200">
+            <span class="font-bold ${l.isHuman ? 'text-amber-700 dark:text-amber-300' : 'text-teal-700 dark:text-teal-400'} block mb-0.5">
+              ${l.isHuman ? 'مستشار المبيعات (بشري):' : 'المساعد الذكي (آلي):'}
+            </span>
+            ${fmtText(l.reply)}
+          </div>
+        ` : ''}
+      </div>
+    `).join('');
+
+    refreshIcons();
+  } catch (err) {
+    host.innerHTML = `<p class="text-sm text-rose-600 py-4 text-center">تعذر تحميل الرسائل: ${esc(err.message)}</p>`;
+  }
 }

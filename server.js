@@ -15,6 +15,11 @@ import {
   clearMetrics,
   clearUnanswered,
   recordUnanswered,
+  getReminders,
+  createReminder,
+  updateReminder,
+  deleteReminder,
+  sendReminder,
   getOrders,
   createOrder,
   updateOrderStatus,
@@ -56,7 +61,11 @@ import {
   getAnalytics,
   trackCarInquiry,
   saveLeadScore,
-  trackSentiment
+  trackSentiment,
+  getLearnedAnswers,
+  learnFromHumanReply,
+  deleteLearnedAnswer,
+  recordClientQuestion
 } from './db.js';
 import {
   answerQuestion,
@@ -188,12 +197,50 @@ app.get('/webhook', (req, res) => {
   const config = getConfig();
   const expectedToken = config.whatsapp?.verifyToken || process.env.WHATSAPP_VERIFY_TOKEN || 'my-secret-verify-token';
 
+  // If opened directly in browser without Meta query parameters
+  if (!mode && !token && !challenge) {
+    return res.status(200).send(`
+      <!DOCTYPE html>
+      <html lang="ar" dir="rtl">
+      <head>
+        <meta charset="utf-8">
+        <title>WhatsApp Webhook Endpoint — Al-Fares Motors</title>
+        <style>
+          body { font-family: system-ui, -apple-system, sans-serif; background: #f8fafc; color: #1e293b; padding: 40px 20px; line-height: 1.6; }
+          .card { max-width: 580px; margin: auto; background: #fff; border-radius: 16px; border: 1px solid #e2e8f0; padding: 32px; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05); }
+          h2 { color: #128C7E; margin-top: 0; display: flex; align-items: center; gap: 8px; font-size: 20px; }
+          .badge { display: inline-block; background: #ecfdf5; color: #047857; padding: 4px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+          code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 13px; color: #0f172a; font-family: monospace; }
+          .btn { display: inline-block; margin-top: 16px; background: #128C7E; color: white; text-decoration: none; padding: 10px 18px; border-radius: 8px; font-size: 13px; font-weight: 500; }
+        </style>
+      </head>
+      <body>
+        <div class="card">
+          <h2>📱 نقطة ربط الـ Webhook لواتساب (Meta Cloud API)</h2>
+          <span class="badge">✅ الخادم يعمل ونقطة النهاية جاهزة</span>
+          <p style="margin-top: 14px; font-size: 14px; color: #475569;">
+            هذا الرابط مخصص لاستقبال والتحقق من إشعارات ورسائل <strong>Meta WhatsApp Cloud API</strong> تلقائياً.
+          </p>
+          <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-top: 14px; font-size: 13px;">
+            <p style="margin: 4px 0;"><strong>رمز التحقق الخاص بك (Verify Token):</strong> <code>${expectedToken}</code></p>
+            <p style="margin: 4px 0;"><strong>الحالة:</strong> جاهز للربط في صفحة تطبيق Meta Developers.</p>
+          </div>
+          <p style="font-size: 12px; color: #64748b; margin-top: 14px;">
+            ⚠️ ملاحظة: عند فتح هذا الرابط في المتصفح يدوياً يظهر عادةً <code>Forbidden</code> لأن Meta هي من ترسل معاملات التحقق (hub.challenge). تم الآن تحويلها إلى هذه الصفحة التوضيحية.
+          </p>
+          <a href="/" class="btn">الذهاب إلى لوحة تحكم المعرض الرئيسية ←</a>
+        </div>
+      </body>
+      </html>
+    `);
+  }
+
   if (mode === 'subscribe' && token === expectedToken) {
     console.log('Webhook verified successfully by Meta!');
     return res.status(200).send(challenge);
   } else {
     console.warn(`Webhook verification failed. Provided: "${token}", Expected: "${expectedToken}"`);
-    return res.sendStatus(403);
+    return res.status(403).send('Forbidden: Invalid verification token');
   }
 });
 
@@ -284,7 +331,11 @@ app.post('/webhook', async (req, res) => {
           const answer = await answerQuestion(incomingText, {
             ...config,
             templates: getTemplates(),
-            articles: getArticles()
+            articles: getArticles(),
+            branches: getBranches(),
+            learnedAnswers: getLearnedAnswers(),
+            ordersCount: getOrders().length,
+            reservationsCount: getReservations().length
           }, history);
           const replyText = answer.reply;
 
@@ -320,7 +371,7 @@ app.post('/webhook', async (req, res) => {
           }
 
           if (answer.isFallback) {
-            await recordUnanswered(incomingText);
+            await recordClientQuestion(incomingText, fromPhone, true);
           }
 
           let sendStatus = 'sent';
@@ -402,6 +453,7 @@ app.get('/api/status', (req, res) => {
     businessName: b.name || '',
     ordersCount: getOrders().length,
     reservationsCount: getReservations().length,
+    remindersCount: getReminders().filter(r => r.status === 'pending').length,
     whatsapp: {
       phoneNumberId: w.phoneNumberId || '',
       verifyToken: w.verifyToken || 'my-secret-verify-token',
@@ -432,8 +484,16 @@ app.post('/api/chat', async (req, res) => {
     const result = await answerQuestion(message, {
       ...config,
       templates: getTemplates(),
-      articles: getArticles()
+      articles: getArticles(),
+      branches: getBranches(),
+      learnedAnswers: getLearnedAnswers(),
+      ordersCount: getOrders().length,
+      reservationsCount: getReservations().length
     }, history || []);
+
+    if (result.isFallback) {
+      await recordClientQuestion(message, '201012345678', true);
+    }
 
     if (result.intentType === 'HUMAN_TAKEOVER') {
       await setHumanTakeover('201012345678', true, 60);
@@ -526,6 +586,56 @@ app.patch('/api/reservations/:id', async (req, res) => {
   }
 });
 
+
+/* ================= Reminders & Follow-ups API ================= */
+
+app.get('/api/reminders', (req, res) => {
+  res.json({ reminders: getReminders() });
+});
+
+app.post('/api/reminders', async (req, res) => {
+  try {
+    const reminder = await createReminder(req.body);
+    res.json({ ok: true, reminder });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.patch('/api/reminders/:id', async (req, res) => {
+  try {
+    const updated = await updateReminder(req.params.id, req.body);
+    res.json({ ok: true, reminder: updated });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/reminders/:id', async (req, res) => {
+  try {
+    await deleteReminder(req.params.id);
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/reminders/:id/send', async (req, res) => {
+  try {
+    const sent = await sendReminder(req.params.id);
+    const config = getConfig();
+    const w = config.whatsapp || {};
+    const phoneId = w.phoneNumberId || process.env.WHATSAPP_PHONE_NUMBER_ID;
+    const token = w.accessToken || process.env.WHATSAPP_ACCESS_TOKEN;
+    if (phoneId && token && sent.clientPhone) {
+      await sendWhatsAppTextMessage(phoneId, token, sent.clientPhone, sent.message);
+    }
+    res.json({ ok: true, reminder: sent });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 /* ================= Live Chat & Human Takeover API ================= */
 
 app.get('/api/conversations', (req, res) => {
@@ -563,7 +673,24 @@ app.post('/api/conversations/reply', async (req, res) => {
     isHuman: true
   });
 
-  res.json({ ok: true });
+  // Automatically learn from human owner's reply to train AI for future clients
+  const learned = await learnFromHumanReply(to, text);
+
+  res.json({ ok: true, learned });
+});
+
+/* ================= Learned Answers API ================= */
+app.get('/api/ai/learned', (req, res) => {
+  res.json({ ok: true, learned: getLearnedAnswers() });
+});
+
+app.delete('/api/ai/learned/:id', async (req, res) => {
+  try {
+    await deleteLearnedAnswer(req.params.id);
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.post('/api/conversations/takeover', async (req, res) => {
