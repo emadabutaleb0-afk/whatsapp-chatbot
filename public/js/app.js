@@ -13,7 +13,7 @@ import { initBroadcast, loadBroadcast } from './broadcast.js';
 import { initTeam, loadTeam, applyPermissions, currentRole } from './team.js';
 import { initTemplates, loadTemplates } from './templates.js';
 import { initHelpCenter, loadHelpCenter } from './helpcenter.js';
-import { exportLogsCSV, exportLogsPDF, exportMetricsCSV, exportMetricsPDF } from './export.js';
+import { exportLogsCSV, exportLogsPDF, exportMetricsCSV, exportMetricsPDF, exportCarsCSV, exportCarsPDF } from './export.js';
 import { applyLanguage, toggleLanguage, getLang } from './i18n.js';
 import { initAdminAI, loadAdminAI } from './admin-ai.js';
 import { initTradeIns, loadTradeIns } from './tradeins.js';
@@ -370,10 +370,20 @@ function renderProducts() {
   let filtered = allList.map((p, origIdx) => ({ ...p, origIdx }));
 
   // Category filter
-  if (f.category === 'zero') {
-    filtered = filtered.filter(p => (p.category || '').toLowerCase().includes('zero') || (p.category || '').includes('زيرو'));
-  } else if (f.category === 'used') {
+  if (f.category === 'used') {
     filtered = filtered.filter(p => (p.category || '').toLowerCase().includes('used') || (p.category || '').includes('مستعمل'));
+  } else if (f.category === 'suv') {
+    filtered = filtered.filter(p => 
+      (p.specs?.bodyType || '').toLowerCase() === 'suv' || 
+      (p.name || '').toLowerCase().includes('suv') ||
+      (p.name || '').includes('سبورتاج') || (p.name || '').includes('توسان') || (p.name || '').includes('تيجو') || (p.name || '').includes('جيتور') || (p.name || '').includes('داستر')
+    );
+  } else if (f.category === 'sedan') {
+    filtered = filtered.filter(p => 
+      (p.specs?.bodyType || '').toLowerCase() === 'sedan' || 
+      (p.name || '').toLowerCase().includes('sedan') ||
+      (p.name || '').includes('فيرنا') || (p.name || '').includes('النترا') || (p.name || '').includes('سيراتو') || (p.name || '').includes('كورولا') || (p.name || '').includes('صني') || (p.name || '').includes('ميغان')
+    );
   }
 
   // Brand filter
@@ -654,6 +664,17 @@ function wireUI() {
   $('exportLogsPDFBtn')?.addEventListener('click', () => {
     const bName = (state.config && state.config.business && state.config.business.name) || 'Al-Fares Motors | الفارس للسيارات';
     exportLogsPDF(state.logs, bName);
+  });
+
+  $('exportCarsCSVBtn')?.addEventListener('click', () => {
+    const cars = (state.config && state.config.products) || [];
+    exportCarsCSV(cars);
+  });
+
+  $('exportCarsPDFBtn')?.addEventListener('click', () => {
+    const cars = (state.config && state.config.products) || [];
+    const bName = (state.config && state.config.business && state.config.business.name) || 'Al-Fares Motors | الفارس للسيارات';
+    exportCarsPDF(cars, bName);
   });
 
   const formFields = [

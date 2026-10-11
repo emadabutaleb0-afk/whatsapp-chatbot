@@ -975,6 +975,14 @@
               <i data-lucide="scale" class="h-4 w-4 text-indigo-600"></i>
               <span>مقارنة سيارتين ⚖️</span>
             </button>
+            <button id="exportCarsCSVBtn" type="button" class="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 transition shadow-xs" title="تصدير بيانات السيارات إلى ملف Excel / CSV">
+              <i data-lucide="file-spreadsheet" class="h-4 w-4 text-emerald-600"></i>
+              <span>تصدير CSV</span>
+            </button>
+            <button id="exportCarsPDFBtn" type="button" class="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 transition shadow-xs" title="طباعة كتالوج المعرض إلى PDF">
+              <i data-lucide="printer" class="h-4 w-4 text-rose-600"></i>
+              <span>كتالوج PDF</span>
+            </button>
             <button id="addProductBtn" class="flex items-center gap-1.5 rounded-xl bg-[#128C7E] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#0f7a6e] shadow-sm">
               <i data-lucide="plus" class="h-4 w-4"></i> إضافة سيارة جديدة
             </button>
@@ -986,9 +994,10 @@
           <div class="flex flex-wrap items-center justify-between gap-3">
             <!-- Category Pills -->
             <div class="flex flex-wrap items-center gap-1.5" id="carCategoryFilterPills">
-              <button data-cat="all" class="car-filter-pill active rounded-xl px-3 py-1.5 text-xs font-bold bg-[#128C7E] text-white shadow-xs">الكل (65)</button>
-              <button data-cat="zero" class="car-filter-pill rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">الزيرو فقط (Zero)</button>
-              <button data-cat="used" class="car-filter-pill rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">مستعمل فابريكا (Certified)</button>
+              <button data-cat="all" class="car-filter-pill active rounded-xl px-3 py-1.5 text-xs font-bold bg-[#128C7E] text-white shadow-xs">كافة السيارات (65)</button>
+              <button data-cat="used" class="car-filter-pill rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">مستعمل كسر زيرو معتمد (65)</button>
+              <button data-cat="suv" class="car-filter-pill rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">سيارات SUV عائلية 🚙</button>
+              <button data-cat="sedan" class="car-filter-pill rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">سيارات سيدان 🚗</button>
             </div>
 
             <!-- Total Results Counter -->

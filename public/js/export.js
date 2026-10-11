@@ -277,3 +277,103 @@ export function exportMetricsPDF(metrics, businessName = 'Al-Fares Motors') {
   `);
   printWindow.document.close();
 }
+
+/* ================= Dealership Inventory (Cars) Export ================= */
+
+export function exportCarsCSV(cars = []) {
+  if (!cars || !cars.length) {
+    alert('لا توجد سيارات في المعرض للتصدير.');
+    return;
+  }
+
+  const headers = ['ID', 'اسم وموديل السيارة', 'السعر المعلن', 'الفئة والحالة', 'حالة التوافر', 'سنة الصنع', 'المحرك', 'الفتيس', 'العداد', 'الضمان', 'رابط الصورة'];
+  const rows = cars.map(c => [
+    `"${c.id || ''}"`,
+    `"${String(c.name || '').replace(/"/g, '""')}"`,
+    `"${String(c.price || '').replace(/"/g, '""')}"`,
+    `"${String(c.category || '').replace(/"/g, '""')}"`,
+    `"${String(c.stock || '').replace(/"/g, '""')}"`,
+    `"${c.specs?.year || ''}"`,
+    `"${c.specs?.engine || ''}"`,
+    `"${c.specs?.transmission || ''}"`,
+    `"${c.specs?.mileage || ''}"`,
+    `"${c.specs?.warranty || ''}"`,
+    `"${c.image || ''}"`
+  ]);
+
+  const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  downloadFile(csvContent, `alfares_cars_catalog_${dateStamp()}.csv`, 'text/csv;charset=utf-8;');
+}
+
+export function exportCarsPDF(cars = [], businessName = 'Al-Fares Motors | الفارس موتورز') {
+  if (!cars || !cars.length) {
+    alert('لا توجد سيارات في المعرض للتصدير.');
+    return;
+  }
+
+  const printWindow = window.open('', '_blank');
+  if (!printWindow) {
+    alert('يرجى السماح بالنوافذ المنبثقة لتصدير تقرير الـ PDF.');
+    return;
+  }
+
+  const rowsHTML = cars.map((c, i) => `
+    <tr style="border-bottom: 1px solid #e2e8f0; font-size: 11px;">
+      <td style="padding: 8px; text-align: center; color: #64748b; font-weight: bold;">${i + 1}</td>
+      <td style="padding: 8px; font-weight: 700; color: #0f172a;">${esc(c.name)}</td>
+      <td style="padding: 8px; font-weight: 800; color: #0f766e;" dir="ltr">${esc(c.price)}</td>
+      <td style="padding: 8px; color: #334155;">${esc(c.category || 'مستعمل كسر زيرو معتمد')}</td>
+      <td style="padding: 8px; color: #64748b;">${esc(c.specs?.year || '—')} | ${esc(c.specs?.engine || '—')}</td>
+      <td style="padding: 8px; color: #64748b;">${esc(c.specs?.mileage || 'كسر زيرو')}</td>
+      <td style="padding: 8px; color: #15803d; font-size: 10px;">تسليم فوري (المعرض)</td>
+    </tr>
+  `).join('');
+
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html dir="rtl" lang="ar">
+    <head>
+      <meta charset="utf-8">
+      <title>كتالوج سيارات ${esc(businessName)}</title>
+      <style>
+        body { font-family: system-ui, -apple-system, sans-serif; padding: 24px; color: #1e293b; direction: rtl; }
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #0f766e; padding-bottom: 12px; margin-bottom: 20px; }
+        h1 { margin: 0; font-size: 20px; color: #0f766e; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th { background: #f8fafc; color: #475569; font-size: 11px; padding: 8px; text-align: right; border-bottom: 2px solid #cbd5e1; }
+        @media print { body { padding: 0; } }
+      </style>
+    </head>
+    <body>
+      <div class="header">
+        <div>
+          <h1>🚗 ${esc(businessName)}</h1>
+          <p style="margin: 4px 0 0; font-size: 12px; color: #64748b;">قائمة السيارات المتاحة بالمعرض — إجمالي ${cars.length} سيارة</p>
+        </div>
+        <div style="text-align: left;" dir="ltr">
+          <p style="margin: 0; font-size: 11px; color: #94a3b8;">Generated: ${new Date().toLocaleDateString('ar-EG')}</p>
+          <button onclick="window.print()" style="margin-top: 6px; padding: 5px 12px; background: #0f766e; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-size: 11px;">طباعة / PDF</button>
+        </div>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th style="text-align: center; width: 30px;">#</th>
+            <th>موديل ومواصفات السيارة</th>
+            <th>السعر الرسمي</th>
+            <th>الحالة / الفئة</th>
+            <th>السنة والمحرك</th>
+            <th>العداد</th>
+            <th>حالة التوافر</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rowsHTML}
+        </tbody>
+      </table>
+    </body>
+    </html>
+  `);
+  printWindow.document.close();
+}
+
