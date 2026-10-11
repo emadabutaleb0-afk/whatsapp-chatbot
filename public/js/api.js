@@ -92,6 +92,17 @@ export const api = {
   }),
   // Campaigns & Customers
   getCustomers: () => call('/api/customers'),
+  createCustomer: (payload) => call('/api/customers', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }),
+  updateCustomer: (phone, payload) => call(`/api/customers/${phone}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }),
+  deleteCustomer: (phone) => call(`/api/customers/${phone}`, { method: 'DELETE' }),
   getCampaigns: () => call('/api/campaigns'),
   sendCampaign: (payload) => call('/api/campaigns/send', {
     method: 'POST',

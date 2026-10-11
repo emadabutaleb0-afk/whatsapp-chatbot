@@ -18,6 +18,7 @@ import { applyLanguage, toggleLanguage, getLang } from './i18n.js';
 import { initAdminAI, loadAdminAI } from './admin-ai.js';
 import { initTradeIns, loadTradeIns } from './tradeins.js';
 import { initCalculator, updateCalculatorCars, openCalculatorForCar } from './calculator.js';
+import { initCustomers, loadCustomers } from './customers.js';
 
 const state = {
   view: 'dashboard',
@@ -105,6 +106,7 @@ async function boot() {
   initAdminAI(context);
   initTradeIns();
   initCalculator((state.config && state.config.products) || []);
+  initCustomers();
 
   await Promise.all([loadConfig(), loadConversations()]);
 
@@ -557,6 +559,7 @@ function setView(view) {
     else if (view === 'orders') loadOrders();
     else if (view === 'reservations') loadReservations();
     else if (view === 'tradeins') loadTradeIns();
+    else if (view === 'customers') loadCustomers();
     else if (view === 'reminders') loadReminders();
     else if (view === 'livechat') loadLiveChat();
     else if (view === 'broadcast') loadBroadcast();

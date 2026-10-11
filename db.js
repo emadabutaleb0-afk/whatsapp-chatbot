@@ -4390,7 +4390,15 @@ export function getCustomer(phone, name = 'Client') {
     memoryStore.customers[cleanPhone] = {
       phone: cleanPhone,
       name: name || 'Client',
-      tags: ['New Client'],
+      tags: ['عميل جديد'],
+      classification: 'lead', // vip, serious_buyer, test_drive, trade_in, installment, lead, inactive
+      classificationLabelAr: 'عميل مهتم (Lead)',
+      tier: 'Standard', // Platinum, Gold, Silver, Standard
+      budgetRange: 'غير محدد',
+      preferredCar: '',
+      preferredPayment: 'كاش أو تقسيط',
+      city: 'القاهرة',
+      notes: '',
       isHumanTakeover: false,
       takeoverUntil: null,
       cart: [],
@@ -4403,12 +4411,77 @@ export function getCustomer(phone, name = 'Client') {
   return memoryStore.customers[cleanPhone];
 }
 
+export async function createCustomer(data) {
+  const cleanPhone = String(data.phone || '').replace(/[^\d]/g, '');
+  if (!cleanPhone) throw new Error('Customer phone number is required');
+  
+  const classLabels = {
+    vip: 'عميل VIP متميز',
+    serious_buyer: 'مشتري جاد (جاهز للتعاقد)',
+    test_drive: 'حاجز تجربة قيادة',
+    trade_in: 'راغب في الاستبدال (Trade-In)',
+    installment: 'مقدم على تقسيط بنكي',
+    lead: 'عميل مهتم (Lead)',
+    inactive: 'غير متفاعل'
+  };
+
+  const cust = {
+    phone: cleanPhone,
+    name: data.name || 'عميل المعرض',
+    classification: data.classification || 'lead',
+    classificationLabelAr: classLabels[data.classification] || 'عميل مهتم (Lead)',
+    tier: data.tier || 'Standard',
+    budgetRange: data.budgetRange || 'غير محدد',
+    preferredCar: data.preferredCar || '',
+    preferredPayment: data.preferredPayment || 'كاش أو تقسيط',
+    city: data.city || 'القاهرة',
+    notes: data.notes || '',
+    tags: Array.isArray(data.tags) ? data.tags : (data.tags ? String(data.tags).split(',').map(t => t.trim()) : ['عميل مسجل']),
+    isHumanTakeover: false,
+    takeoverUntil: null,
+    cart: [],
+    orderCount: Number(data.orderCount) || 0,
+    totalSpent: Number(data.totalSpent) || 0,
+    createdAt: Date.now(),
+    lastSeen: Date.now()
+  };
+
+  memoryStore.customers[cleanPhone] = cust;
+  await flush();
+  return cust;
+}
+
 export async function updateCustomer(phone, updates = {}) {
   const cleanPhone = String(phone).replace(/[^\d]/g, '');
   const cust = getCustomer(cleanPhone);
-  memoryStore.customers[cleanPhone] = { ...cust, ...updates };
+  
+  const classLabels = {
+    vip: 'عميل VIP متميز',
+    serious_buyer: 'مشتري جاد (جاهز للتعاقد)',
+    test_drive: 'حاجز تجربة قيادة',
+    trade_in: 'راغب في الاستبدال (Trade-In)',
+    installment: 'مقدم على تقسيط بنكي',
+    lead: 'عميل مهتم (Lead)',
+    inactive: 'غير متفاعل'
+  };
+
+  if (updates.classification && !updates.classificationLabelAr) {
+    updates.classificationLabelAr = classLabels[updates.classification] || 'عميل مهتم (Lead)';
+  }
+
+  memoryStore.customers[cleanPhone] = { ...cust, ...updates, lastSeen: Date.now() };
   await flush();
   return memoryStore.customers[cleanPhone];
+}
+
+export async function deleteCustomer(phone) {
+  const cleanPhone = String(phone).replace(/[^\d]/g, '');
+  if (memoryStore.customers[cleanPhone]) {
+    delete memoryStore.customers[cleanPhone];
+    await flush();
+    return true;
+  }
+  return false;
 }
 
 export function getAllCustomers() {

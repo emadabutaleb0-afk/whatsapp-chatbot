@@ -93,6 +93,11 @@
       <button data-view="reservations" class="nav-item"><i data-lucide="gauge" class="h-4 w-4 text-blue-600"></i><span data-i18n="nav_reservations">تجارب القيادة</span></button>
       <button data-view="tradeins" class="nav-item"><i data-lucide="repeat" class="h-4 w-4 text-cyan-600"></i><span>استبدال وتثمين السيارات</span><span id="tradeInsCountBadge" class="ml-auto rounded-full bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300 px-1.5 py-0.2 text-[10px] font-bold">0</span></button>
       <button data-view="reminders" class="nav-item"><i data-lucide="bell" class="h-4 w-4 text-amber-500"></i><span>التذكيرات والمتابعات</span><span id="remindersCountBadge" class="ml-auto rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 px-1.5 py-0.2 text-[10px] font-bold">3</span></button>
+      <button data-view="customers" class="nav-item">
+        <i data-lucide="contact-2" class="h-4 w-4 text-violet-600"></i>
+        <span>قاعدة بيانات العملاء (CRM)</span>
+        <span id="customersCountBadge" class="ml-auto rounded-full bg-violet-100 text-violet-800 dark:bg-violet-950 dark:text-violet-300 px-1.5 py-0.2 text-[10px] font-bold">0</span>
+      </button>
       <button data-view="livechat" class="nav-item"><i data-lucide="headset" class="h-4 w-4 text-amber-600"></i><span data-i18n="nav_livechat">المحادثات المباشرة</span></button>
       <button data-view="broadcast" class="nav-item"><i data-lucide="megaphone" class="h-4 w-4 text-purple-600"></i><span data-i18n="nav_broadcast">الحملات الإعلانية</span></button>
       <button data-view="chat" class="nav-item"><i data-lucide="messages-square" class="h-4 w-4 text-teal-600"></i><span data-i18n="nav_chat">معاينة المساعد الذكي</span></button>
@@ -1097,6 +1102,111 @@
       </div>
     </section>
 
+    <!-- ===== CLIENTS DATABASE & CRM VIEW ===== -->
+    <section data-pane="customers" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-6xl px-4 py-6 md:px-8 md:py-8 space-y-6">
+        <header class="flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950 to-slate-900 p-6 text-white shadow-sm border border-slate-800">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="rounded-full bg-violet-500/20 px-2.5 py-0.5 text-xs font-semibold text-violet-300 border border-violet-500/30 flex items-center gap-1.5">
+                <i data-lucide="contact-2" class="h-3.5 w-3.5"></i> إدارة علاقات العملاء (Automotive CRM)
+              </span>
+            </div>
+            <h2 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+              قاعدة بيانات وتصنيف عملاء المعرض
+            </h2>
+            <p class="text-sm text-slate-300 mt-0.5">
+              سجل تفصيلي لكافة العملاء، مستوى الاهتمام، السيارات المفضلة، الميزانية، وتصنيف الشراء الفوري
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="addCustomerBtn" class="flex items-center gap-2 rounded-xl bg-violet-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-violet-500">
+              <i data-lucide="user-plus" class="h-4 w-4"></i>
+              <span>+ إضافة عميل جديد</span>
+            </button>
+            <button id="exportCustomersCSVBtn" class="flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/80 px-3 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-700 hover:text-white" title="تصدير بيانات العملاء إلى Excel / CSV">
+              <i data-lucide="file-spreadsheet" class="h-4 w-4 text-emerald-400"></i>
+              <span class="hidden sm:inline">تصدير CSV</span>
+            </button>
+            <button id="refreshCustomersBtn" class="flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/80 px-3.5 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-700 hover:text-white" title="تحديث القائمة">
+              <i data-lucide="refresh-cw" class="h-4 w-4"></i>
+              <span class="hidden sm:inline">تحديث</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- KPI Summary Cards -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4">
+            <span class="text-xs text-slate-400 font-medium block">إجمالي العملاء</span>
+            <p id="kpiTotalClients" class="text-2xl font-black text-slate-900 dark:text-white mt-1">0</p>
+            <span class="text-[10px] text-slate-400 mt-0.5 block">مسجلون في المنظومة</span>
+          </div>
+          <div class="rounded-2xl border border-amber-200 dark:border-amber-900/50 bg-amber-50/50 dark:bg-amber-950/20 p-4">
+            <span class="text-xs text-amber-700 dark:text-amber-400 font-medium block">عملاء VIP &amp; بلاتينيوم</span>
+            <p id="kpiVipClients" class="text-2xl font-black text-amber-600 dark:text-amber-300 mt-1">0</p>
+            <span class="text-[10px] text-amber-600/80 dark:text-amber-400/80 mt-0.5 block">أعلى قدرة شرائية</span>
+          </div>
+          <div class="rounded-2xl border border-emerald-200 dark:border-emerald-900/50 bg-emerald-50/50 dark:bg-emerald-950/20 p-4">
+            <span class="text-xs text-emerald-700 dark:text-emerald-400 font-medium block">مشترين جادين (Hot Leads)</span>
+            <p id="kpiHotLeads" class="text-2xl font-black text-emerald-600 dark:text-emerald-300 mt-1">0</p>
+            <span class="text-[10px] text-emerald-600/80 dark:text-emerald-400/80 mt-0.5 block">جاهزون للتعاقد والتقسيط</span>
+          </div>
+          <div class="rounded-2xl border border-cyan-200 dark:border-cyan-900/50 bg-cyan-50/50 dark:bg-cyan-950/20 p-4">
+            <span class="text-xs text-cyan-700 dark:text-cyan-400 font-medium block">تجارب قيادة واستبدال</span>
+            <p id="kpiTradeInClients" class="text-2xl font-black text-cyan-600 dark:text-cyan-300 mt-1">0</p>
+            <span class="text-[10px] text-cyan-600/80 dark:text-cyan-400/80 mt-0.5 block">مواعيد فحص واستبدال</span>
+          </div>
+        </div>
+
+        <!-- Filters & Search Toolbar -->
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <!-- Classification Tabs -->
+            <div class="flex flex-wrap items-center gap-1.5" id="customerClassTabs">
+              <button data-class="all" class="cust-tab active rounded-xl px-3 py-1.5 text-xs font-bold bg-violet-600 text-white shadow-xs">كافة العملاء</button>
+              <button data-class="vip" class="cust-tab rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">👑 عملاء VIP</button>
+              <button data-class="serious_buyer" class="cust-tab rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">🔥 مشترين جادين</button>
+              <button data-class="test_drive" class="cust-tab rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">🚗 تجارب قيادة</button>
+              <button data-class="trade_in" class="cust-tab rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">🔄 استبدال (Trade-In)</button>
+              <button data-class="installment" class="cust-tab rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">💳 تقسيط بنكي</button>
+            </div>
+
+            <!-- Counter -->
+            <span id="custFilteredCounter" class="text-xs font-semibold text-slate-500">0 عميل</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <!-- Search -->
+            <div class="relative">
+              <i data-lucide="search" class="absolute right-3 top-2.5 h-4 w-4 text-slate-400"></i>
+              <input id="customerSearchInput" type="text" placeholder="ابحث باسم العميل أو الهاتف أو السيارة..." class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 py-1.5 pr-9 pl-3 text-xs outline-none focus:border-violet-500 text-slate-900 dark:text-white">
+            </div>
+
+            <!-- Tier Filter -->
+            <select id="customerTierFilter" class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-1.5 text-xs font-medium outline-none focus:border-violet-500 text-slate-700 dark:text-slate-200">
+              <option value="all">كل المستويات (All Tiers)</option>
+              <option value="Platinum">بلاتينيوم (Platinum 💎)</option>
+              <option value="Gold">ذهبي (Gold 🥇)</option>
+              <option value="Silver">فضي (Silver 🥈)</option>
+              <option value="Standard">عادي (Standard 👤)</option>
+            </select>
+
+            <!-- Payment Preference Filter -->
+            <select id="customerPaymentFilter" class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-1.5 text-xs font-medium outline-none focus:border-violet-500 text-slate-700 dark:text-slate-200">
+              <option value="all">كل طرق السداد المطلوبة</option>
+              <option value="كاش">كاش فوري</option>
+              <option value="تقسيط">تقسيط بنكي</option>
+              <option value="استبدال">استبدال مع تقسيط الفارق</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Clients Grid -->
+        <div id="customersList" class="space-y-3"></div>
+      </div>
+    </section>
+
     <!-- ===== WHATSAPP VIEW ===== -->
     <section data-pane="whatsapp" class="pane hidden min-h-0 flex-1 overflow-y-auto">
       <div class="mx-auto max-w-3xl px-4 py-6 md:px-8 md:py-8">
@@ -1319,6 +1429,9 @@
       <button data-view="products" class="nav-item"><i data-lucide="car" class="h-4 w-4 text-emerald-600"></i><span data-i18n="nav_products">قاعدة بيانات السيارات</span></button>
       <button data-view="orders" class="nav-item"><i data-lucide="check-circle-2" class="h-4 w-4 text-indigo-600"></i><span data-i18n="nav_orders">حجوزات السيارات</span></button>
       <button data-view="reservations" class="nav-item"><i data-lucide="gauge" class="h-4 w-4 text-blue-600"></i><span data-i18n="nav_reservations">تجارب القيادة</span></button>
+      <button data-view="tradeins" class="nav-item"><i data-lucide="repeat" class="h-4 w-4 text-cyan-600"></i><span>استبدال وتثمين السيارات</span></button>
+      <button data-view="reminders" class="nav-item"><i data-lucide="bell" class="h-4 w-4 text-amber-500"></i><span>التذكيرات والمتابعات</span></button>
+      <button data-view="customers" class="nav-item"><i data-lucide="contact-2" class="h-4 w-4 text-violet-600"></i><span>قاعدة بيانات العملاء (CRM)</span></button>
       <button data-view="livechat" class="nav-item"><i data-lucide="headset" class="h-4 w-4 text-amber-600"></i><span data-i18n="nav_livechat">المحادثات المباشرة</span></button>
       <button data-view="broadcast" class="nav-item"><i data-lucide="megaphone" class="h-4 w-4 text-purple-600"></i><span data-i18n="nav_broadcast">الحملات الإعلانية</span></button>
       <button data-view="chat" class="nav-item"><i data-lucide="messages-square" class="h-4 w-4 text-teal-600"></i><span data-i18n="nav_chat">معاينة المساعد الذكي</span></button>
@@ -1876,6 +1989,102 @@
       <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
         <button id="cancelOrderBtn" type="button" class="rounded-xl border border-slate-200 dark:border-slate-700 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">إلغاء</button>
         <button type="submit" class="rounded-xl bg-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500">حفظ طلب الحجز</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Add / Edit Customer CRM Modal -->
+<div id="customerModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4 backdrop-blur-sm hidden">
+  <div class="w-full max-w-xl rounded-2xl bg-white dark:bg-slate-900 p-6 shadow-2xl border border-slate-200 dark:border-slate-800 animate-scaleIn max-h-[90vh] overflow-y-auto">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-violet-50 dark:bg-violet-950 text-violet-600 dark:text-violet-400">
+          <i data-lucide="user-check" class="h-4 w-4"></i>
+        </div>
+        <h3 id="customerModalTitle" class="text-base font-bold text-slate-900 dark:text-slate-100">إضافة عميل جديد وتصنيف الاهتمام</h3>
+      </div>
+      <button id="closeCustomerModalBtn" type="button" class="rounded-lg p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700">
+        <i data-lucide="x" class="h-4 w-4"></i>
+      </button>
+    </div>
+    
+    <form id="customerForm" class="mt-4 space-y-4">
+      <div class="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">اسم العميل *</label>
+          <input id="crmCustName" required type="text" placeholder="مثال: م. مصطفى كمال" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-violet-500 text-slate-900 dark:text-white">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف / الواتساب *</label>
+          <input id="crmCustPhone" required type="tel" placeholder="010XXXXXXXX" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-violet-500 text-slate-900 dark:text-white">
+        </div>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">تصنيف العميل (Client Classification) *</label>
+          <select id="crmCustClassification" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-violet-500 text-slate-900 dark:text-white">
+            <option value="vip">👑 عميل VIP متميز (أعلى أولوية)</option>
+            <option value="serious_buyer">🔥 مشتري جاد (جاهز للتعاقد الفوري)</option>
+            <option value="test_drive">🚗 حاجز تجربة قيادة ومعاينة</option>
+            <option value="trade_in">🔄 راغب في استبدال سيارته (Trade-In)</option>
+            <option value="installment">💳 مهتم بالتقسيط البنكي</option>
+            <option value="lead" selected>👤 عميل مهتم ومستفسر (Lead)</option>
+            <option value="inactive">💤 غير متفاعل / متابعة لاحقة</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">مستوى العميل (Tier Level)</label>
+          <select id="crmCustTier" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-violet-500 text-slate-900 dark:text-white">
+            <option value="Platinum">بلاتينيوم (Platinum 💎)</option>
+            <option value="Gold">ذهبي (Gold 🥇)</option>
+            <option value="Silver">فضي (Silver 🥈)</option>
+            <option value="Standard" selected>عادي (Standard 👤)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">السيارة المهتم بها</label>
+          <input id="crmCustPreferredCar" type="text" placeholder="مثال: كيا سبورتاج 2026 أو مرسيدس C200" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-violet-500 text-slate-900 dark:text-white">
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">الميزانية التقديرية (Budget)</label>
+          <input id="crmCustBudget" type="text" placeholder="مثال: من 1.5 إلى 2.5 مليون جنيه" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-violet-500 text-slate-900 dark:text-white">
+        </div>
+      </div>
+
+      <div class="grid gap-3 sm:grid-cols-2">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">طريقة السداد المفضلة</label>
+          <select id="crmCustPayment" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-violet-500 text-slate-900 dark:text-white">
+            <option value="كاش فوري">كاش فوري</option>
+            <option value="تقسيط بنكي مباشر">تقسيط بنكي مباشر</option>
+            <option value="استبدال وتقسيط الفارق">استبدال وتقسيط الفارق</option>
+            <option value="شركات تمويل (كونتكت / فاليو)">شركات تمويل (كونتكت / فاليو)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">المحافظة / المدينة</label>
+          <input id="crmCustCity" type="text" placeholder="مثال: القاهرة الجديدة / التجمع" value="القاهرة" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-violet-500 text-slate-900 dark:text-white">
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">الوسوم / الكلمات الدلالية (Tags)</label>
+        <input id="crmCustTags" type="text" placeholder="مثال: مهتم بـ SUV, تقسيط بنك مصر, مستعجل" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-sm outline-none focus:border-violet-500 text-slate-900 dark:text-white">
+      </div>
+
+      <div>
+        <label class="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">ملاحظات مستشار المبيعات</label>
+        <textarea id="crmCustNotes" rows="2" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-3 text-sm outline-none focus:border-violet-500 text-slate-900 dark:text-white" placeholder="مثال: زار المعرض يوم الأحد مع أسرته، يفضل الاستلام خلال أسبوع، في انتظار موافقة البنك الأهلي."></textarea>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+        <button id="cancelCustomerBtn" type="button" class="rounded-xl border border-slate-200 dark:border-slate-700 px-4 py-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800">إلغاء</button>
+        <button type="submit" class="rounded-xl bg-violet-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-500">حفظ العميل</button>
       </div>
     </form>
   </div>

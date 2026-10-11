@@ -27,7 +27,9 @@ import {
   createReservation,
   updateReservationStatus,
   getCustomer,
+  createCustomer,
   updateCustomer,
+  deleteCustomer,
   getAllCustomers,
   setHumanTakeover,
   isCustomerInTakeover,
@@ -727,6 +729,33 @@ app.post('/api/conversations/takeover', async (req, res) => {
 
 app.get('/api/customers', (req, res) => {
   res.json({ customers: getAllCustomers() });
+});
+
+app.post('/api/customers', async (req, res) => {
+  try {
+    const cust = await createCustomer(req.body);
+    res.json({ ok: true, customer: cust });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.patch('/api/customers/:phone', async (req, res) => {
+  try {
+    const cust = await updateCustomer(req.params.phone, req.body);
+    res.json({ ok: true, customer: cust });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/customers/:phone', async (req, res) => {
+  try {
+    await deleteCustomer(req.params.phone);
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.get('/api/campaigns', (req, res) => {
