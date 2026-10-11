@@ -37,9 +37,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Hyundai Verna 2016",
         "price": "475,000 EGP",
         "priceNum": 475000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "هيونداي فيرنا 2016 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة يدوي. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "هيونداي فيرنا 2016 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة يدوي. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1152/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1152/image",
@@ -67,15 +67,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/hyundai-verna-2026-1152",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2016,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 CC",
             "transmission": "يدوي",
             "fuel": "Petrol",
             "color": "Burgundy",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -85,9 +85,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "MG ZS 2022",
         "price": "875,000 EGP",
         "priceNum": 875000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "ام جي ZS 2022 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "ام جي ZS 2022 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1165/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1165/image",
@@ -113,15 +113,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mg-zs-comfort-2026-1165",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2022,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Blue",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -131,9 +131,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Kia Sportage 2026",
         "price": "2,420,000 EGP",
         "priceNum": 2420000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "كيا  سبورتاج 2026 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "كيا  سبورتاج 2026 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1164/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1164/image",
@@ -174,15 +174,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/kia-sportage-highline-2026-1164",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2026,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "White",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -192,9 +192,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "JETOUR X90 Plus 2026",
         "price": "1,480,000 EGP",
         "priceNum": 1480000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "جيتور  X90 بلس 2026 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "جيتور  X90 بلس 2026 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1163/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1163/image",
@@ -250,15 +250,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/jetour-x90-plus-luxury-2026-1163",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2026,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "2000 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Petroleum",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -268,9 +268,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mercedes C 180 2018",
         "price": "1,950,000 EGP",
         "priceNum": 1950000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "مرسيدس C 180 2018 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "مرسيدس C 180 2018 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1162/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1162/image",
@@ -301,15 +301,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mercedes-c-180-avantgarde-2026-1162",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2018,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "متعدد",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -319,9 +319,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mitsubishi Lancer Shark 2018",
         "price": "855,000 EGP",
         "priceNum": 855000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "ميتسوبيشي  لانسر شارك 2018 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "ميتسوبيشي  لانسر شارك 2018 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1161/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1161/image",
@@ -344,15 +344,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mitsubishi-lancer-shark-top-grade-key-2018-1161",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2018,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "متعدد",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -362,9 +362,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Hyundai Elantra AD 2019",
         "price": "835,000 EGP",
         "priceNum": 835000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "هيونداي  إلنترا AD 2019 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "هيونداي  إلنترا AD 2019 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1160/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1160/image",
@@ -388,15 +388,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/hyundai-elantra-ad-advanced-2019-1160",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2019,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -406,9 +406,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Fiat Tipo 2019",
         "price": "685,000 EGP",
         "priceNum": 685000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "فيات تيبو 2019 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة يدوي. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "فيات تيبو 2019 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة يدوي. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1158/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1158/image",
@@ -432,15 +432,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/fiat-tipo-grade-1-2019-1158",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2019,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1400 cc",
             "transmission": "يدوي",
             "fuel": "Petrol",
             "color": "Brown",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -450,9 +450,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Nissan Juke 2015",
         "price": "650,000 EGP",
         "priceNum": 650000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "نيسان  جوك 2015 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "نيسان  جوك 2015 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1156/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1156/image",
@@ -484,15 +484,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/nissan-juke-acenta-2015-1156",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2015,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1000 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Burgundy",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -502,9 +502,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Nissan Sunny 2020",
         "price": "690,000 EGP",
         "priceNum": 690000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "نيسان  صني 2020 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "نيسان  صني 2020 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1155/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1155/image",
@@ -539,15 +539,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/nissan-sunny-at-super-salon-2020-1155",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2020,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1498 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "متعدد",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -557,9 +557,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Nissan Qashqai 2018",
         "price": "755,000 EGP",
         "priceNum": 755000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "نيسان  قشقاي 2018 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "نيسان  قشقاي 2018 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1154/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1154/image",
@@ -589,15 +589,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/nissan-qashqai-top-grade-2018-1154",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2018,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1200 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Blue",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -607,9 +607,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Opel Insignia 2016",
         "price": "775,000 EGP",
         "priceNum": 775000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "اوبل  إنسيجنيا 2016 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "اوبل  إنسيجنيا 2016 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1149/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1149/image",
@@ -649,15 +649,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/opel-insignia-top-grade-2016-1149",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2016,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Graphite",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -667,9 +667,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Hyundai Accent RB 2024",
         "price": "880,000 EGP",
         "priceNum": 880000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "هيونداي  أكسنت RB 2024 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "هيونداي  أكسنت RB 2024 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1148/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1148/image",
@@ -705,15 +705,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/hyundai-accent-rb-sr-2021-1148",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2024,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Metallic",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -723,9 +723,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Hyundai Accent RB 2021",
         "price": "790,000 EGP",
         "priceNum": 790000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "هيونداي  أكسنت RB 2021 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "هيونداي  أكسنت RB 2021 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1147/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1147/image",
@@ -750,15 +750,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/hyundai-accent-rb-sr-2021-1147",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2021,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Metallic",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -768,9 +768,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Hyundai Accent 2021",
         "price": "825,000 EGP",
         "priceNum": 825000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "هيونداي  أكسنت 2021 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "هيونداي  أكسنت 2021 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1146/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1146/image",
@@ -804,15 +804,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/hyundai-accent-2026-1146",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2021,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "متعدد",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -822,9 +822,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mercedes E 200 2012",
         "price": "1,870,000 EGP",
         "priceNum": 1870000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "مرسيدس  E 200 2012 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "مرسيدس  E 200 2012 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1145/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1145/image",
@@ -868,15 +868,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mercedes-e-200-avantgarde-2026-1145",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2012,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "2000 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Black",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -886,9 +886,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Citroën C4 2022",
         "price": "1,120,000 EGP",
         "priceNum": 1120000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "سيتروين سي 4 2022 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "سيتروين سي 4 2022 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1144/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1144/image",
@@ -918,15 +918,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/citroen-c4-shine-2022-1144",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2022,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1200 cc t",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Copper",
             "bodyType": "سيدان",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -936,9 +936,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Citroën C4 2022",
         "price": "1,150,000 EGP",
         "priceNum": 1150000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "سيتروين سي 4 2022 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "سيتروين سي 4 2022 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1143/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1143/image",
@@ -991,15 +991,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/citroen-c4-shine-2022-1143",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2022,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1200 cc t",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Gray",
             "bodyType": "سيدان",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1009,9 +1009,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Kia XCeed 2022",
         "price": "1,200,000 EGP",
         "priceNum": 1200000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "كيا  إكسيد 2022 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "كيا  إكسيد 2022 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1141/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1141/image",
@@ -1057,15 +1057,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/kia-xceed-top-grade-2022-1141",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2022,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "gray",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1075,9 +1075,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Hyundai Tucson 2016",
         "price": "1,250,000 EGP",
         "priceNum": 1250000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "هيونداي  توسان 2016 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "هيونداي  توسان 2016 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1139/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1139/image",
@@ -1123,15 +1123,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/hyundai-tucson-2016-1139",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2016,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Burgundy",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1141,9 +1141,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Hyundai Tucson 2025",
         "price": "2,050,000 EGP",
         "priceNum": 2050000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "هيونداي  توسان 2025 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "هيونداي  توسان 2025 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1138/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1138/image",
@@ -1196,15 +1196,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/hyundai-tucson-2025-1138",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2025,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1214,9 +1214,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Hyundai Elantra 2022",
         "price": "1,080,000 EGP",
         "priceNum": 1080000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "هيونداي إلنترا 2022 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "هيونداي إلنترا 2022 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1137/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1137/image",
@@ -1257,15 +1257,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/hyundai-elantra-cn7-2022-1137",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2022,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Graphite",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1275,9 +1275,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Hyundai Elantra HD 2021",
         "price": "735,000 EGP",
         "priceNum": 735000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "هيونداي  إلنترا HD 2021 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "هيونداي  إلنترا HD 2021 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1136/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1136/image",
@@ -1310,15 +1310,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/hyundai-elantra-hd-2021-1136",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2021,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1328,9 +1328,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Hyundai Elantra AD 2025",
         "price": "1,070,000 EGP",
         "priceNum": 1070000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "هيونداي  إلنترا AD 2025 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "هيونداي  إلنترا AD 2025 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1135/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1135/image",
@@ -1358,15 +1358,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/hyundai-elantra-ad-2025-1135",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2025,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Metallic",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1376,9 +1376,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Hyundai ix35 2015",
         "price": "920,000 EGP",
         "priceNum": 920000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "هيونداي ix35 2015 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "هيونداي ix35 2015 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1133/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1133/image",
@@ -1412,15 +1412,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/hyundai-ix35-2015-1133",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2015,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Black",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1430,9 +1430,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Nissan Qashqai 2018",
         "price": "860,000 EGP",
         "priceNum": 860000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "نيسان  قشقاي 2018 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "نيسان  قشقاي 2018 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1131/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1131/image",
@@ -1480,15 +1480,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/nissan-qashqai-2018-1131",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2018,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1200 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Red",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1498,9 +1498,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Nissan Sunny 2017",
         "price": "545,000 EGP",
         "priceNum": 545000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "نيسان  صني 2017 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "نيسان  صني 2017 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1130/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1130/image",
@@ -1537,15 +1537,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/nissan-sunny-2017-1130",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2017,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Gold",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1555,9 +1555,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mitsubishi Eclipse Cross 2020",
         "price": "1,140,000 EGP",
         "priceNum": 1140000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "ميتسوبيشي  إكليبس كروس 2020 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "ميتسوبيشي  إكليبس كروس 2020 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1129/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1129/image",
@@ -1605,15 +1605,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mitsubishi-eclipse-cross-2020-1129",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2020,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1623,9 +1623,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mitsubishi Eclipse Cross 2024",
         "price": "1,420,000 EGP",
         "priceNum": 1420000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "ميتسوبيشي  إكليبس كروس 2024 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "ميتسوبيشي  إكليبس كروس 2024 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1128/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1128/image",
@@ -1658,15 +1658,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mitsubishi-eclipse-cross-2024-1128",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2024,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1676,9 +1676,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mitsubishi Xpander 2025",
         "price": "1,420,000 EGP",
         "priceNum": 1420000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "ميتسوبيشي  إكسباندر 2025 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "ميتسوبيشي  إكسباندر 2025 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1127/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1127/image",
@@ -1722,15 +1722,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mitsubishi-xpander-2025-1127",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2025,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "Van",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1740,9 +1740,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mercedes E 200 2019",
         "price": "2,850,000 EGP",
         "priceNum": 2850000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "مرسيدس  E 200 2019 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "مرسيدس  E 200 2019 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1125/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1125/image",
@@ -1777,15 +1777,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mercedes-e-200-2019-1125",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2019,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "2000 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Graphite",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1795,9 +1795,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mercedes E 180 2016",
         "price": "2,450,000 EGP",
         "priceNum": 2450000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "مرسيدس  E 180 2016 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "مرسيدس  E 180 2016 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1124/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1124/image",
@@ -1832,15 +1832,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mercedes-e-180-2016-1124",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2016,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Black",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1850,9 +1850,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mercedes C 180 2012",
         "price": "1,300,000 EGP",
         "priceNum": 1300000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "مرسيدس C 180 2012 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "مرسيدس C 180 2012 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1123/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1123/image",
@@ -1897,15 +1897,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mercedes-c-180-2012-1123",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2012,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "black",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1915,9 +1915,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mercedes B 160 2011",
         "price": "690,000 EGP",
         "priceNum": 690000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "مرسيدس  B 160 2011 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "مرسيدس  B 160 2011 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1121/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1121/image",
@@ -1941,15 +1941,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mercedes-b-160-2011-1121",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2011,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 CC",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Gold",
             "bodyType": "Hatchback",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -1959,9 +1959,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mercedes C 280 2008",
         "price": "1,280,000 EGP",
         "priceNum": 1280000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "مرسيدس  C 280 2008 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "مرسيدس  C 280 2008 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1120/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1120/image",
@@ -1984,15 +1984,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mercedes-c-280-2008-1120",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2008,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 CC",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Metallic",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2002,9 +2002,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mercedes E 230 2009",
         "price": "1,100,000 EGP",
         "priceNum": 1100000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "مرسيدس  E 230 2009 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "مرسيدس  E 230 2009 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1119/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1119/image",
@@ -2030,15 +2030,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mercedes-e-230-2009-1119",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2009,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 CC",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Black",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2048,9 +2048,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mitsubishi Lancer Shark 2016",
         "price": "790,000 EGP",
         "priceNum": 790000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "ميتسوبيشي  لانسر شارك 2016 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "ميتسوبيشي  لانسر شارك 2016 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1118/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1118/image",
@@ -2093,15 +2093,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mitsubishi-lancer-shark-2016-1118",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2016,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "White",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2111,9 +2111,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Mitsubishi Lancer Shark 2016",
         "price": "690,000 EGP",
         "priceNum": 690000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "ميتسوبيشي  لانسر شارك 2016 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "ميتسوبيشي  لانسر شارك 2016 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1117/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1117/image",
@@ -2146,15 +2146,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mitsubishi-lancer-shark-2016-1117",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2016,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "White",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2164,9 +2164,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Kia Cerato 2016",
         "price": "760,000 EGP",
         "priceNum": 760000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "كيا  سيراتو 2016 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "كيا  سيراتو 2016 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1116/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1116/image",
@@ -2195,15 +2195,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/kia-cerato-2016-1116",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2016,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "White",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2213,9 +2213,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Kia Sportage 2013",
         "price": "1,110,000 EGP",
         "priceNum": 1110000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "كيا  سبورتاج 2013 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "كيا  سبورتاج 2013 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1115/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1115/image",
@@ -2248,15 +2248,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/kia-sportage-2013-1115",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2013,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "2000 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2266,9 +2266,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Kia Sportage 2024",
         "price": "1,850,000 EGP",
         "priceNum": 1850000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "كيا  سبورتاج 2024 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "كيا  سبورتاج 2024 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1114/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1114/image",
@@ -2323,15 +2323,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/kia-sportage-2024-1114",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2024,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Black",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2341,9 +2341,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Kia Rio 2015",
         "price": "660,000 EGP",
         "priceNum": 660000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "كيا  ريو 2015 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "كيا  ريو 2015 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1113/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1113/image",
@@ -2369,15 +2369,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/kia-rio-2015-1113",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2015,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1400 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Black",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2387,9 +2387,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Kia Rio 2013",
         "price": "710,000 EGP",
         "priceNum": 710000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "كيا  ريو 2013 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "كيا  ريو 2013 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1112/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1112/image",
@@ -2428,15 +2428,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/kia-rio-2013-1112",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2013,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1400 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "White",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2446,9 +2446,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Chevrolet Cruze 2015",
         "price": "565,000 EGP",
         "priceNum": 565000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "شيفورلية  كروز 2015 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "شيفورلية  كروز 2015 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1106/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1106/image",
@@ -2465,15 +2465,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/chevrolet-cruze-2015-1106",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2015,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2483,9 +2483,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Chery Tiggo 7 2021",
         "price": "790,000 EGP",
         "priceNum": 790000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "شيري تيجو 7 2021 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "شيري تيجو 7 2021 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1104/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1104/image",
@@ -2513,15 +2513,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/chery-tiggo-7-2021-1104",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2021,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Metallic",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2531,9 +2531,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Chery Tiggo 7 2024",
         "price": "930,000 EGP",
         "priceNum": 930000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "شيري تيجو 7 2024 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "شيري تيجو 7 2024 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1103/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1103/image",
@@ -2579,15 +2579,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/chery-tiggo-7-2024-1103",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2024,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "White",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2597,9 +2597,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Chery Tiggo 8 Pro Max 2026",
         "price": "1,600,000 EGP",
         "priceNum": 1600000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "شيري  تيجو 8 برو ماكس 2026 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "شيري  تيجو 8 برو ماكس 2026 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1102/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1102/image",
@@ -2655,15 +2655,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/chery-tiggo-8-pro-max-2026-1102",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2026,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Light Gray",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2673,9 +2673,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "SEAT Ateca 2019",
         "price": "1,200,000 EGP",
         "priceNum": 1200000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "سيات  أتيكا 2019 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "سيات  أتيكا 2019 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1101/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1101/image",
@@ -2718,15 +2718,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/seat-ateca-2019-1101",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2019,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1400 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Brown",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2736,9 +2736,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Skoda Superb 2021",
         "price": "1,600,000 EGP",
         "priceNum": 1600000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "سكودا  سوبيرب 2021 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "سكودا  سوبيرب 2021 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1100/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1100/image",
@@ -2760,15 +2760,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/skoda-superb-2021-1100",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2021,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1400 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Gray",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2778,9 +2778,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Skoda Octavia A8 2021",
         "price": "1,350,000 EGP",
         "priceNum": 1350000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "سكودا  أوكتافيا A8 2021 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "سكودا  أوكتافيا A8 2021 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1099/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1099/image",
@@ -2807,15 +2807,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/skoda-octavia-a8-2021-1099",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2021,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1400 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2825,9 +2825,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Skoda Octavia A8 2021",
         "price": "1,390,000 EGP",
         "priceNum": 1390000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "سكودا  أوكتافيا A8 2021 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "سكودا  أوكتافيا A8 2021 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1097/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1097/image",
@@ -2877,15 +2877,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/skoda-octavia-a8-2021-1097",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2021,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1400 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Blue",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2895,9 +2895,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Renault Duster 2020",
         "price": "720,000 EGP",
         "priceNum": 720000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "رينو  داستر 2020 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "رينو  داستر 2020 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1095/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1095/image",
@@ -2931,15 +2931,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/renault-duster-2020-1095",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2020,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Gold",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -2949,9 +2949,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Range Rover Range Rover Sport 2021",
         "price": "5,100,000 EGP",
         "priceNum": 5100000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "رينج روڤر  سبورت 2021 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "رينج روڤر  سبورت 2021 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1094/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1094/image",
@@ -3001,15 +3001,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/range-rover-range-rover-sport-2021-1094",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2021,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "3000 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Navy Blue",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3019,9 +3019,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Range Rover Evoque 2020",
         "price": "2,750,000 EGP",
         "priceNum": 2750000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "رينج روڤر رينج روفر إيفوك 2020 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "رينج روڤر رينج روفر إيفوك 2020 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1093/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1093/image",
@@ -3074,15 +3074,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/range-rover-evoque-2020-1093",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2020,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "2000 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3092,9 +3092,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Geely Starray 2025",
         "price": "1,550,000 EGP",
         "priceNum": 1550000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "جيلي  ستاراي 2025 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "جيلي  ستاراي 2025 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1092/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1092/image",
@@ -3148,15 +3148,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/geely-starray-2025-1092",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2025,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Black",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3166,9 +3166,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Jeep Cherokee 2008",
         "price": "690,000 EGP",
         "priceNum": 690000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "جيب  شيروكي 2008 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "جيب  شيروكي 2008 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1091/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1091/image",
@@ -3197,15 +3197,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/jeep-cherokee-2008-1091",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2008,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "3700 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3215,9 +3215,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Jeep Wrangler 2013",
         "price": "1,300,000 EGP",
         "priceNum": 1300000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "جيب  رانجلر 2013 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "جيب  رانجلر 2013 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1090/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1090/image",
@@ -3242,15 +3242,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/jeep-wrangler-2013-1090",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2013,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 CC",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Black",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3260,9 +3260,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Peugeot 3008 2024",
         "price": "1,580,000 EGP",
         "priceNum": 1580000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "بيجو 3008 2024 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "بيجو 3008 2024 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1087/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1087/image",
@@ -3293,15 +3293,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/peugeot-3008-2024-1087",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2024,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Graphite",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3311,9 +3311,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Peugeot 2008 2019",
         "price": "780,000 EGP",
         "priceNum": 780000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "بيجو 2008 2019 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "بيجو 2008 2019 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1085/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1085/image",
@@ -3341,15 +3341,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/peugeot-2008-2019-1085",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2019,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1200 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Red",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3359,9 +3359,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "BMW 320i 2015",
         "price": "1,100,000 EGP",
         "priceNum": 1100000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "بي ام دابليو 320i 2015 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "بي ام دابليو 320i 2015 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1079/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1079/image",
@@ -3409,15 +3409,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/bmw-320i-2015-1079",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2015,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "2000 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Blue",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3427,9 +3427,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Audi A4 2010",
         "price": "930,000 EGP",
         "priceNum": 930000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "اودي A4 2010 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "اودي A4 2010 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1078/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1078/image",
@@ -3460,15 +3460,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/audi-a4-2010-1078",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2010,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1800 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Black",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3478,9 +3478,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Opel Grandland 2022",
         "price": "880,000 EGP",
         "priceNum": 880000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "اوبل  جراند لاند 2022 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "اوبل  جراند لاند 2022 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1077/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1077/image",
@@ -3514,15 +3514,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/opel-grandland-2022-1077",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2022,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "White",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3532,9 +3532,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Opel Insignia 2017",
         "price": "820,000 EGP",
         "priceNum": 820000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "اوبل  إنسيجنيا 2017 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "اوبل  إنسيجنيا 2017 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1076/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1076/image",
@@ -3577,15 +3577,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/opel-insignia-2017-1076",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2017,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Silver",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3595,9 +3595,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "Opel Insignia 2016",
         "price": "760,000 EGP",
         "priceNum": 760000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "اوبل  إنسيجنيا 2016 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "اوبل  إنسيجنيا 2016 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1075/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1075/image",
@@ -3637,15 +3637,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/opel-insignia-2016-1075",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2016,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1600 CC",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Brown",
             "bodyType": "Sedan",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     },
     {
@@ -3655,9 +3655,9 @@ const DEFAULT_CONFIG = {
         "nameEn": "MG ZS 2020",
         "price": "785,000 EGP",
         "priceNum": 785000,
-        "category": "New Cars (Zero)",
+        "category": "Certified Used (مستعمل كسر زيرو معتمد)",
         "stock": "In Stock (Showroom / تسليم فوري)",
-        "description": "ام جي ZS 2020 - حالة زيرو تماماً، عداد 0 كم، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
+        "description": "ام جي ZS 2020 - حالة ممتازة كسر زيرو فابريكا معتمدة، ناقل حركة أوتوماتيك. متوفرة كاش وبالتقسيط لدى الفارس موتورز.",
         "image": "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1074/image",
         "images": [
             "https://elfares.gosmart.eg/api/dealership/v1/vehicles/1074/image",
@@ -3684,15 +3684,15 @@ const DEFAULT_CONFIG = {
         ],
         "url": "https://alfarismotors.ai/cars/mg-zs-2020-1074",
         "specs": {
-            "condition": "New (Zero)",
+            "condition": "Certified Used (مستعمل كسر زيرو معتمد)",
             "year": 2020,
-            "mileage": "0 km (زيرو)",
+            "mileage": "كسر زيرو (معتمدة)",
             "engine": "1500 cc",
             "transmission": "أوتوماتيك",
             "fuel": "Petrol",
             "color": "Black",
             "bodyType": "SUV",
-            "warranty": "ضمان الوكيل الرسمي المعتمد"
+            "warranty": "ضمان المعرض وفحص 150 نقطة معتمد"
         }
     }
 ],
