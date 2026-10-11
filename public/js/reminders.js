@@ -53,9 +53,13 @@ export function initReminders() {
   // Refresh button
   $('refreshRemindersViewBtn')?.addEventListener('click', () => loadReminders(true));
 
-  // Add Reminder button in dedicated view
-  $('addReminderViewBtn')?.addEventListener('click', () => {
-    const modal = $('reminderModal');
+  // Modal controls for Adding Reminder
+  const modal = $('reminderModal');
+  const closeBtn = $('closeReminderModalBtn');
+  const cancelBtn = $('cancelReminderBtn');
+  const form = $('reminderForm');
+
+  const openModal = () => {
     if (modal) {
       const dateInput = $('remDueDate');
       if (dateInput && !dateInput.value) {
@@ -63,7 +67,55 @@ export function initReminders() {
       }
       modal.classList.remove('hidden');
     }
-  });
+  };
+
+  const hideModal = () => {
+    if (modal) modal.classList.add('hidden');
+    if (form) form.reset();
+  };
+
+  // Add Reminder button in dedicated view
+  $('addReminderViewBtn')?.addEventListener('click', openModal);
+  $('addReminderBtn')?.addEventListener('click', openModal);
+
+  if (closeBtn) closeBtn.addEventListener('click', hideModal);
+  if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
+
+  // Form submission
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const clientName = $('remClientName')?.value?.trim();
+      const clientPhone = $('remClientPhone')?.value?.trim();
+      const carTitle = $('remCarTitle')?.value?.trim();
+      const type = $('remType')?.value || 'general';
+      const dueDate = $('remDueDate')?.value;
+      const dueTime = $('remDueTime')?.value?.trim() || 'اليوم';
+      const message = $('remMessage')?.value?.trim();
+
+      if (!clientName || !clientPhone || !carTitle) {
+        toast('يرجى ملء جميع الحقول المطلوبة (الاسم، الهاتف، والسيارة)', 'err');
+        return;
+      }
+
+      try {
+        await api.createReminder({
+          clientName,
+          clientPhone,
+          carTitle,
+          type,
+          dueDate,
+          dueTime,
+          message: message || `أهلاً بك ${clientName}! بخصوص سيارة ${carTitle} في الفارس موتورز.`
+        });
+        toast('تمت إضافة التذكير والمتابعة بنجاح! 🔔');
+        hideModal();
+        await loadReminders(true);
+      } catch (err) {
+        toast('تعذر إضافة التذكير: ' + err.message, 'err');
+      }
+    });
+  }
 
   // Reminders List Click Delegation (WhatsApp, Toggle, Delete)
   const listEl = $('remindersViewList');

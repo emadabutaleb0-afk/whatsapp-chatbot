@@ -8,6 +8,54 @@ let orders = [];
 export function initOrders() {
   $('refreshOrdersBtn')?.addEventListener('click', loadOrders);
 
+  // Add Order / Booking Modal Controls
+  const modal = $('addOrderModal');
+  const addBtn = $('addOrderBtn');
+  const closeBtn = $('closeOrderModalBtn');
+  const cancelBtn = $('cancelOrderBtn');
+  const form = $('addOrderForm');
+
+  const openModal = () => modal?.classList.remove('hidden');
+  const closeModal = () => {
+    modal?.classList.add('hidden');
+    form?.reset();
+  };
+
+  addBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  cancelBtn?.addEventListener('click', closeModal);
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const clientName = $('ordClientName')?.value?.trim();
+    const clientPhone = $('ordClientPhone')?.value?.trim();
+    const carName = $('ordCarName')?.value?.trim();
+    const total = $('ordTotal')?.value?.trim();
+    const address = $('ordAddress')?.value?.trim();
+    const notes = $('ordNotes')?.value?.trim();
+
+    if (!clientName || !clientPhone || !carName || !total) {
+      toast('يرجى ملء جميع الحقول المطلوبة', 'err');
+      return;
+    }
+
+    try {
+      await api.createOrder({
+        clientName,
+        clientPhone,
+        items: [{ name: carName, qty: 1, price: total, subtotal: total }],
+        total,
+        address: address || 'استلام فوري من فرع المعرض والتسجيل',
+        notes: notes || ''
+      });
+      toast('تم تسجيل طلب وحجز السيارة بنجاح! 🚗✨');
+      closeModal();
+      await loadOrders();
+    } catch (err) {
+      toast('تعذر تسجيل الطلب: ' + err.message, 'err');
+    }
+  });
+
   const orderList = $('ordersList');
   if (orderList) {
     orderList.addEventListener('click', async (e) => {

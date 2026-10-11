@@ -73,42 +73,6 @@ export function initDashboard(context) {
   if (closeBtn) closeBtn.addEventListener('click', hideModal);
   if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
 
-  // Form submission
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const clientName = $('remClientName')?.value?.trim();
-      const clientPhone = $('remClientPhone')?.value?.trim();
-      const carTitle = $('remCarTitle')?.value?.trim();
-      const type = $('remType')?.value;
-      const dueDate = $('remDueDate')?.value;
-      const dueTime = $('remDueTime')?.value?.trim();
-      const message = $('remMessage')?.value?.trim();
-
-      if (!clientName || !clientPhone || !carTitle) {
-        toast('يرجى ملء جميع الحقول المطلوبة', 'err');
-        return;
-      }
-
-      try {
-        await api.createReminder({
-          clientName,
-          clientPhone,
-          carTitle,
-          type,
-          dueDate,
-          dueTime: dueTime || 'اليوم',
-          message: message || `أهلاً بك ${clientName}! بخصوص سيارة ${carTitle} في الفارس موتورز.`
-        });
-        toast('تمت إضافة التذكير بنجاح! 🔔');
-        hideModal();
-        await loadMetrics(true);
-      } catch (err) {
-        toast('تعذر إضافة التذكير: ' + err.message, 'err');
-      }
-    });
-  }
-
   // Reminders Actions (WhatsApp, Toggle Done, Delete)
   const remList = $('remindersList');
   if (remList) {

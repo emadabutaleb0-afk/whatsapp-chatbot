@@ -47,6 +47,11 @@ export const api = {
   }),
   // Orders
   getOrders: () => call('/api/orders'),
+  createOrder: (payload) => call('/api/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }),
   updateOrderStatus: (id, status) => call(`/api/orders/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
