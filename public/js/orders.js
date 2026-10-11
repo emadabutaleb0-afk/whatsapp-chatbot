@@ -15,11 +15,27 @@ export function initOrders() {
   const cancelBtn = $('cancelOrderBtn');
   const form = $('addOrderForm');
 
-  const openModal = () => modal?.classList.remove('hidden');
+  const openModal = () => {
+    const modalEl = $('addOrderModal');
+    if (modalEl) {
+      modalEl.classList.remove('hidden');
+    }
+  };
   const closeModal = () => {
-    modal?.classList.add('hidden');
+    const modalEl = $('addOrderModal');
+    if (modalEl) modalEl.classList.add('hidden');
     form?.reset();
   };
+
+  // Robust document-level click delegation for opening addOrderModal from any view
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('#addOrderBtn') || e.target.closest('[data-open-order-modal]')) {
+      openModal();
+    }
+    if (e.target.closest('#closeOrderModalBtn') || e.target.closest('#cancelOrderBtn')) {
+      closeModal();
+    }
+  });
 
   addBtn?.addEventListener('click', openModal);
   closeBtn?.addEventListener('click', closeModal);
