@@ -241,26 +241,126 @@ export function compareCars(carQueryA, carQueryB, inventory = []) {
 /**
  * Filter & Recommend Vehicles by Budget (EGP)
  */
-export function recommendCarsByBudget(budgetVal, inventory = []) {
+/**
+ * Filter & Recommend Vehicles by Budget (EGP) and Lifestyle Preferences
+ * Supports: budget, lifestyle (family, business, sport, economy), bodyType (SUV, sedan, hatchback),
+ * condition (zero, used), monthlyBudget, downPaymentMax.
+ */
+export function recommendCarsByBudget(budgetVal, inventory = [], preferences = {}) {
   const budget = parseNumericPrice(budgetVal);
-  if (!budget || budget <= 0) return [];
+  const {
+    lifestyle = 'all', // 'family', 'business', 'sport', 'youth', 'all'
+    bodyType = 'all',  // 'suv', 'sedan', 'hatchback', 'all'
+    condition = 'all', // 'zero', 'used', 'all'
+    maxDownPayment = null,
+    monthlyBudget = null
+  } = (typeof preferences === 'object' && preferences !== null) ? preferences : {};
 
-  const tolerance = 0.35; // +/- 35%
-  const minBudget = budget * (1 - tolerance);
-  const maxBudget = budget * (1 + tolerance);
+  if ((!budget || budget <= 0) && !monthlyBudget && !maxDownPayment) return [];
 
   const matched = inventory
     .map(c => {
       const p = parseNumericPrice(c.priceNum || c.price);
-      return { car: c, price: p, diff: Math.abs(p - budget) };
+      if (p <= 0) return null;
+
+      const inst = calculateCarInstallment({ price: p, downPaymentPct: 20, tenureYears: 5 });
+      const cName = (c.name || '').toLowerCase();
+      const cCat = (c.category || '').toLowerCase();
+      const cDesc = (c.description || '').toLowerCase();
+      const fullText = `${cName} ${cCat} ${cDesc}`;
+
+      let matchScore = 100;
+      const reasons = [];
+
+      // Budget Fit
+      if (budget > 0) {
+        const diffRatio = Math.abs(p - budget) / budget;
+        if (diffRatio > 0.45) return null; // Outside tolerance
+        matchScore -= Math.round(diffRatio * 50);
+        if (p <= budget) {
+          reasons.push(`ضمن ميزانيتك المقدرة (${p.toLocaleString()} ج.م)`);
+        } else {
+          reasons.push(`قريب من ميزانيتك بفارق بسيط (+${(p - budget).toLocaleString()} ج.م)`);
+        }
+      }
+
+      // Max Down Payment Filter
+      if (maxDownPayment && inst) {
+        if (inst.downPayment > maxDownPayment * 1.25) return null;
+        if (inst.downPayment <= maxDownPayment) {
+          matchScore += 15;
+          reasons.push(`مقدم يبدأ من ${inst.formattedDownPayment} مناسب للسيولة المطلوبة`);
+        }
+      }
+
+      // Monthly Budget Filter
+      if (monthlyBudget && inst) {
+        if (inst.monthlyInstallment > monthlyBudget * 1.30) return null;
+        if (inst.monthlyInstallment <= monthlyBudget) {
+          matchScore += 15;
+          reasons.push(`قسط شهري ${inst.formattedMonthlyInstallment} يناسب التدفق المالي`);
+        }
+      }
+
+      // Body Type Matching
+      if (bodyType !== 'all') {
+        const isSuv = fullText.includes('suv') || fullText.includes('كروس اوفر') || fullText.includes('عالية') || fullText.includes('sportage') || fullText.includes('tucson') || fullText.includes('tiggo');
+        const isSedan = fullText.includes('sedan') || fullText.includes('سيدان') || fullText.includes('c200') || fullText.includes('elantra') || fullText.includes('cerato') || fullText.includes('octavia') || fullText.includes('corolla');
+        const isHatch = fullText.includes('hatchback') || fullText.includes('هاتشباك') || fullText.includes('ibiza') || fullText.includes('golf');
+
+        if (bodyType === 'suv' && isSuv) { matchScore += 25; reasons.push('تصميم عائلي SUV مرتفع عن الأرض'); }
+        else if (bodyType === 'sedan' && isSedan) { matchScore += 25; reasons.push('صالون سيدان مريح وفخم'); }
+        else if (bodyType === 'hatchback' && isHatch) { matchScore += 25; reasons.push('هاتشباك شبابي وعملي جداً'); }
+        else if (bodyType !== 'all') { matchScore -= 30; }
+      }
+
+      // Lifestyle Matching
+      if (lifestyle !== 'all') {
+        if (lifestyle === 'family') {
+          if (fullText.includes('suv') || fullText.includes('عائل') || fullText.includes('شنطة') || fullText.includes('واسع') || fullText.includes('7 مقاعد') || fullText.includes('sportage') || fullText.includes('tucson')) {
+            matchScore += 20;
+            reasons.push('مناسبة جداً للعائلات ومريحة في السفر');
+          }
+        } else if (lifestyle === 'business') {
+          if (fullText.includes('mercedes') || fullText.includes('bmw') || fullText.includes('audi') || fullText.includes('فخمة') || fullText.includes('رجال اعمال') || fullText.includes('c200')) {
+            matchScore += 25;
+            reasons.push('فخامة وهيبة متميزة تليق برجال الأعمال');
+          }
+        } else if (lifestyle === 'economy') {
+          if (p < 1500000 || fullText.includes('موفر') || fullText.includes('اقتصادي') || fullText.includes('بنزين') || fullText.includes('قطع غيار')) {
+            matchScore += 20;
+            reasons.push('اقتصادية في استهلاك الوقود وتكاليف الصيانة وإعادة البيع');
+          }
+        } else if (lifestyle === 'sport') {
+          if (fullText.includes('turbo') || fullText.includes('hp') || fullText.includes('حصان') || fullText.includes('sport') || fullText.includes('تسارع') || fullText.includes('كوبيه')) {
+            matchScore += 20;
+            reasons.push('أداء رياضي قوي وتسارع مميز');
+          }
+        }
+      }
+
+      // Condition Matching (Zero vs Used)
+      const isUsed = cCat.includes('used') || cCat.includes('مستعمل');
+      if (condition === 'zero' && isUsed) return null;
+      if (condition === 'used' && !isUsed) return null;
+
+      if (isUsed) {
+        reasons.push('كسر زيرو مع فحص 150 نقطة وضمان معتمد');
+      } else {
+        reasons.push('زيرو تسليم فوري مع ضمان الوكيل الرسمي');
+      }
+
+      return {
+        ...c,
+        priceNum: p,
+        installment: inst,
+        matchScore: Math.max(10, matchScore),
+        matchReasons: reasons.slice(0, 3)
+      };
     })
-    .filter(item => item.price > 0 && item.price >= minBudget && item.price <= maxBudget)
-    .sort((a, b) => a.diff - b.diff)
-    .slice(0, 5)
-    .map(item => ({
-      ...item.car,
-      installment: calculateCarInstallment({ price: item.price, downPaymentPct: 20, tenureYears: 5 })
-    }));
+    .filter(Boolean)
+    .sort((a, b) => b.matchScore - a.matchScore)
+    .slice(0, 5);
 
   return matched;
 }
@@ -700,28 +800,92 @@ export function analyzeIntent(text, config = {}, history = []) {
     };
   }
 
-  // 9. Budget-Based Car Recommendation Intent (ترشيح سيارات بناءً على الميزانية)
-  const budgetTriggers = ['معايا ميزانية', 'ميزانيتي', 'في حدود', 'تحت مليون', 'معايا 500 الف', 'معايا 700 الف', 'معايا مليون', 'ميزانية'];
+  // 9. Budget & Lifestyle AI Car Matchmaker Intent (الترشيح الذكي حسب الميزانية ونمط الاستخدام)
+  const budgetTriggers = [
+    'معايا ميزانية', 'ميزانيتي', 'في حدود', 'تحت مليون', 'معايا 500 الف', 'معايا 700 الف', 'معايا مليون',
+    'ميزانية', 'budget', 'معايا مقدم', 'اقترحلي عربية', 'رشحلي عربية', 'عايز عربية عائلية', 'عايز عربية suv',
+    'عايز عربية سيدان', 'عايز عربية اقتصادية', 'عايز عربية شبابية', 'عايز عربية فخمة', 'رشحلي', 'اقترحلي'
+  ].map(normalize);
   if (budgetTriggers.some(t => norm.includes(t))) {
-    let budgetNum = 1000000;
-    if (norm.includes('مليون ونص') || norm.includes('1.5 مليون')) budgetNum = 1500000;
-    else if (norm.includes('2 مليون') || norm.includes('اتنين مليون')) budgetNum = 2000000;
-    else if (norm.includes('مليون')) budgetNum = 1000000;
-    else if (norm.includes('500 الف') || norm.includes('نص مليون')) budgetNum = 500000;
-    else if (norm.includes('700 الف') || norm.includes('750 الف')) budgetNum = 750000;
-    else if (norm.includes('800 الف')) budgetNum = 800000;
+    // 1. Extract numeric budget
+    let budgetNum = 0;
+    const millMatch = raw.match(/(\d+(?:\.\d+)?)\s*(?:مليون|million|m)/i);
+    const kMatch = raw.match(/(\d+)\s*(?:الف|ألف|k)/i);
+    const rawNumberMatch = raw.match(/(?:حدود|ميزانية|معايا|سعر)?\s*(\d{6,8})/);
 
-    const matched = recommendCarsByBudget(budgetNum, cars);
+    if (millMatch) {
+      budgetNum = Math.round(parseFloat(millMatch[1]) * 1000000);
+    } else if (norm.includes('مليون ونص') || norm.includes('1.5 مليون')) {
+      budgetNum = 1500000;
+    } else if (norm.includes('2 مليون') || norm.includes('اتنين مليون')) {
+      budgetNum = 2000000;
+    } else if (norm.includes('مليون')) {
+      budgetNum = 1000000;
+    } else if (kMatch) {
+      budgetNum = Math.round(parseFloat(kMatch[1]) * 1000);
+    } else if (rawNumberMatch) {
+      budgetNum = parseInt(rawNumberMatch[1], 10);
+    } else if (norm.includes('500 الف') || norm.includes('نص مليون')) {
+      budgetNum = 500000;
+    } else if (norm.includes('700 الف') || norm.includes('750 الف')) {
+      budgetNum = 750000;
+    } else if (norm.includes('800 الف')) {
+      budgetNum = 800000;
+    } else {
+      budgetNum = 2000000; // Default sweet spot for premium dealership
+    }
+
+    // 2. Extract Lifestyle & Body Type
+    let lifestyle = 'all';
+    if (norm.includes('عائلي') || norm.includes('عيلة') || norm.includes('اولاد') || norm.includes('سفر')) lifestyle = 'family';
+    else if (norm.includes('رجال اعمال') || norm.includes('فخامة') || norm.includes('شياكة') || norm.includes('برستيج')) lifestyle = 'business';
+    else if (norm.includes('اقتصادي') || norm.includes('موفر') || norm.includes('بنزين')) lifestyle = 'economy';
+    else if (norm.includes('شباب') || norm.includes('رياض') || norm.includes('جري')) lifestyle = 'sport';
+
+    let bodyType = 'all';
+    if (norm.includes('suv') || norm.includes('كروس') || norm.includes('عالية') || norm.includes('جيب')) bodyType = 'suv';
+    else if (norm.includes('سيدان') || norm.includes('sedan')) bodyType = 'sedan';
+    else if (norm.includes('هاتشباك') || norm.includes('hatchback')) bodyType = 'hatchback';
+
+    // 3. Extract Condition (Zero vs Used)
+    let condition = 'all';
+    if (norm.includes('مستعمل') || norm.includes('كسر زيرو') || norm.includes('used')) condition = 'used';
+    else if (norm.includes('زيرو') || norm.includes('جديد') || norm.includes('zero')) condition = 'zero';
+
+    // 4. Extract Max Down Payment if mentioned
+    let maxDown = null;
+    const downMatch = raw.match(/مقدم\s*(\d+(?:\.\d+)?)\s*(?:مليون|الف|ألف)?/);
+    if (downMatch) {
+      const val = parseFloat(downMatch[1]);
+      if (raw.includes('مليون')) maxDown = val * 1000000;
+      else if (raw.includes('الف') || raw.includes('ألف')) maxDown = val * 1000;
+      else if (val < 10) maxDown = val * 1000000;
+      else maxDown = val * 1000;
+    }
+
+    const matched = recommendCarsByBudget(budgetNum, cars, {
+      lifestyle,
+      bodyType,
+      condition,
+      maxDownPayment: maxDown
+    });
+
     if (matched.length > 0) {
-      const itemsList = matched.map((m, idx) => 
-        `${idx + 1}️⃣ ${m.name}\n• السعر: ${m.price} (${m.category || ''})\n• القسط الشهري (مقدم 20%): ${m.installment?.formattedMonthlyInstallment || 'متاح عند الطلب'}`
-      ).join('\n\n');
+      const itemsList = matched.map((m, idx) => {
+        const reasonsStr = (m.matchReasons || []).map(r => `   ✓ ${r}`).join('\n');
+        return `${idx + 1}️⃣ *${m.name}*\n• السعر: ${m.price} (${m.category || 'متوفرة بالمعرض'})\n• نسبة التطابق: ${m.matchScore}%\n• القسط الشهري التقريبي (مقدم 20%): ${m.installment?.formattedMonthlyInstallment || 'متاح عند الطلب'}\n${reasonsStr}`;
+      }).join('\n\n');
 
-      const reply = `بناءً على ميزانية تقارب (${budgetNum.toLocaleString()} EGP)، إليك أفضل الخيارات المتاحة لدينا بالمعرض مع أنظمة التقسيط: 🎯🚗\n\n${itemsList}\n\nجميع السيارات فابريكا بالكامل وخاضعة للفحص الفني الشامل. تحب تحجز تجربة قيادة لأي سيارة منها؟ 🏎️`;
+      let criteriaSummary = `الميزانية: ~${budgetNum.toLocaleString()} ج.م`;
+      if (bodyType !== 'all') criteriaSummary += ` | الفئة: ${bodyType.toUpperCase()}`;
+      if (lifestyle !== 'all') criteriaSummary += ` | الاستخدام: ${lifestyle}`;
+
+      const reply = `🎯 *ترشيح المستشار الذكي لمطابقة السيارات (AI Car Matchmaker):*\nبناءً على تفضيلاتك (${criteriaSummary})، إليك أفضل الخيارات المناسبة لك تماماً في المعرض:\n\n${itemsList}\n\n🌟 نوفر فحصاً فنياً لـ 150 نقطة بجهاز قياس الدهان، مع إمكانية تجربة القيادة الفورية وتقسيط حتى 7 سنوات.\nتحب تحجز موعد لتجربة قيادة لأي سيارة منها اليوم؟ 🏎️`;
 
       return {
         type: 'BUDGET_RECOMMEND',
         budget: budgetNum,
+        preferences: { lifestyle, bodyType, condition, maxDownPayment: maxDown },
         matches: matched,
         reply
       };

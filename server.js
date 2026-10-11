@@ -1320,9 +1320,9 @@ app.post('/api/ai/compare-cars', (req, res) => {
 
 app.post('/api/ai/recommend-budget', (req, res) => {
   try {
-    const { budget } = req.body;
+    const { budget, preferences } = req.body;
     const config = getConfig();
-    const recommendations = recommendCarsByBudget(budget, config.products || []);
+    const recommendations = recommendCarsByBudget(budget, config.products || [], preferences || {});
     res.json({ ok: true, recommendations });
   } catch (err) {
     res.status(500).json({ error: err.message });

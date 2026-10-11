@@ -611,7 +611,11 @@
                 <span>ترجمة</span>
               </button>
             </div>
-            <div>
+            <div class="flex items-center gap-1.5">
+              <button id="copilotMatchmakerBtn" type="button" class="flex items-center gap-1.5 rounded-xl border border-violet-200 dark:border-violet-800 bg-violet-50 dark:bg-violet-950 px-2.5 py-1.5 text-violet-700 dark:text-violet-300 hover:bg-violet-100 font-bold transition">
+                <i data-lucide="sparkles" class="h-3.5 w-3.5 text-violet-500"></i>
+                <span>ترشيح حسب الميزانية 🎯</span>
+              </button>
               <button id="copilotInsertKnowledgeBtn" type="button" class="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-2.5 py-1.5 text-slate-600 dark:text-slate-300 hover:bg-slate-50 font-medium transition">
                 <i data-lucide="book-open" class="h-3.5 w-3.5 text-emerald-600"></i>
                 <span>معلومات المعرض</span>
@@ -978,7 +982,10 @@
             </h2>
             <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">تشكيلة سيارات الزيرو والمستعملة الفابريكا المتاحة للرد التلقائي وإرسال المواصفات والصور والأقساط للعملاء عبر واتساب 24/7.</p>
           </div>
-          <div class="flex flex-wrap items-center gap-2">
+            <button id="openMatchmakerBtn" type="button" class="flex items-center gap-1.5 rounded-xl border border-violet-200 dark:border-violet-800 bg-violet-50 dark:bg-violet-950/60 px-3.5 py-2 text-xs font-bold text-violet-800 dark:text-violet-200 hover:bg-violet-100 transition shadow-xs">
+              <i data-lucide="sparkles" class="h-4 w-4 text-violet-600"></i>
+              <span>الترشيح الذكي (Matchmaker) 🎯</span>
+            </button>
             <button id="openInstallmentCalcBtn" type="button" class="flex items-center gap-1.5 rounded-xl border border-teal-200 dark:border-teal-800 bg-teal-50 dark:bg-teal-950/60 px-3.5 py-2 text-xs font-bold text-teal-800 dark:text-teal-200 hover:bg-teal-100 transition shadow-xs">
               <i data-lucide="calculator" class="h-4 w-4 text-teal-600"></i>
               <span>حاسبة الأقساط الذكية 💳</span>
@@ -2087,6 +2094,92 @@
         <button type="submit" class="rounded-xl bg-violet-600 px-5 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-500">حفظ العميل</button>
       </div>
     </form>
+  </div>
+</div>
+
+<!-- AI Car Matchmaker Modal (الترشيح الذكي حسب الميزانية ونمط الاستخدام) -->
+<div id="matchmakerModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 hidden">
+  <div class="w-full max-w-4xl rounded-3xl bg-white dark:bg-slate-900 p-6 md:p-8 shadow-2xl animate-scaleIn max-h-[92vh] overflow-y-auto border border-slate-200 dark:border-slate-800 space-y-5">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-violet-50 dark:bg-violet-950 text-violet-600">
+          <i data-lucide="sparkles" class="h-5 w-5"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">الترشيح الذكي حسب الميزانية (AI Car Matchmaker) 🎯</h3>
+          <p class="text-xs text-slate-400">مطابقة فورية بالذكاء الاصطناعي بين ميزانية العميل ونمط استخدامه مع سيارات المعرض المتاحة</p>
+        </div>
+      </div>
+      <button id="closeMatchmakerModal" class="rounded-xl p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-white transition">
+        <i data-lucide="x" class="h-5 w-5"></i>
+      </button>
+    </div>
+
+    <!-- Matchmaker Inputs & Filter Controls -->
+    <div class="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-850/60 p-4 space-y-3">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <!-- Budget Input -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">الميزانية الإجمالية (ج.م) *</label>
+          <div class="relative">
+            <input id="mmBudgetInput" type="number" step="50000" min="200000" max="25000000" value="2000000" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2 text-xs font-bold outline-none focus:border-violet-500 text-slate-800 dark:text-slate-100 font-mono">
+            <span class="absolute left-3 top-2 text-[10px] text-slate-400 font-semibold">EGP</span>
+          </div>
+        </div>
+
+        <!-- Lifestyle Preference -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">نمط الاستخدام والهدف</label>
+          <select id="mmLifestyleSelect" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs font-medium outline-none focus:border-violet-500 text-slate-700 dark:text-slate-200">
+            <option value="all">كافة أنماط الاستخدام 🌟</option>
+            <option value="family" selected>عائلي وسفر مريح (Family & Travel) 👨‍👩‍👧‍👦</option>
+            <option value="business">رجال أعمال وبرستيج فاخر (Business Executive) 💼</option>
+            <option value="economy">اقتصادي وموفر في البنزين (Economy & Commute) ⚡</option>
+            <option value="sport">شبابي ورياضي قوي (Sport & Performance) 🏁</option>
+          </select>
+        </div>
+
+        <!-- Body Type -->
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">فئة وتصميم الهيكل</label>
+          <select id="mmBodyTypeSelect" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs font-medium outline-none focus:border-violet-500 text-slate-700 dark:text-slate-200">
+            <option value="all">أي فئة هيكل (All Body Types)</option>
+            <option value="suv">سيارات SUV كروس أوفر مرتفعة 🚙</option>
+            <option value="sedan">سيدان صالون فخم 🚗</option>
+            <option value="hatchback">هاتشباك عملي 🚘</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Quick Budget Presets -->
+      <div class="flex flex-wrap items-center gap-1.5 pt-1 text-xs">
+        <span class="text-[11px] font-semibold text-slate-500">ميزانيات سريعة:</span>
+        <button type="button" class="mm-budget-preset rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2 py-0.5 text-[11px] text-slate-700 dark:text-slate-300 hover:border-violet-500" data-budget="800000">800 ألف</button>
+        <button type="button" class="mm-budget-preset rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2 py-0.5 text-[11px] text-slate-700 dark:text-slate-300 hover:border-violet-500" data-budget="1200000">1.2 مليون</button>
+        <button type="button" class="mm-budget-preset rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2 py-0.5 text-[11px] text-slate-700 dark:text-slate-300 hover:border-violet-500" data-budget="1600000">1.6 مليون</button>
+        <button type="button" class="mm-budget-preset rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2 py-0.5 text-[11px] text-slate-700 dark:text-slate-300 hover:border-violet-500" data-budget="2200000">2.2 مليون</button>
+        <button type="button" class="mm-budget-preset rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2 py-0.5 text-[11px] text-slate-700 dark:text-slate-300 hover:border-violet-500" data-budget="3500000">3.5 مليون</button>
+        <button type="button" class="mm-budget-preset rounded-lg bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 px-2 py-0.5 text-[11px] text-slate-700 dark:text-slate-300 hover:border-violet-500" data-budget="5000000">5 مليون +</button>
+      </div>
+    </div>
+
+    <!-- Recommendations Output Area -->
+    <div id="mmResultsContainer" class="space-y-3"></div>
+
+    <!-- Actions Footer -->
+    <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-2">
+        <button id="copyMatchmakerBtn" type="button" class="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 transition shadow-xs">
+          <i data-lucide="copy" class="h-4 w-4"></i> نسخ الترشيحات لواتساب 📋
+        </button>
+        <button id="shareMatchmakerWABtn" type="button" class="flex items-center gap-1.5 rounded-xl bg-emerald-600 px-4 py-2 text-xs font-bold text-white hover:bg-emerald-700 transition shadow-xs">
+          <i data-lucide="send" class="h-4 w-4"></i> إرسال عبر واتساب 📱
+        </button>
+      </div>
+      <button id="insertMatchmakerToChatBtn" type="button" class="rounded-xl bg-violet-600 px-4 py-2 text-xs font-bold text-white hover:bg-violet-700 transition">
+        إدراج في شات العميل 💬
+      </button>
+    </div>
   </div>
 </div>
 

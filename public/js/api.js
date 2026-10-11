@@ -196,10 +196,10 @@ export const api = {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ carA, carB })
   }),
-  recommendCarsByBudget: (budget) => call('/api/ai/recommend-budget', {
+  recommendCarsByBudget: (budget, preferences) => call('/api/ai/recommend-budget', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ budget })
+    body: JSON.stringify({ budget, preferences })
   })
 };
 

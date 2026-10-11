@@ -10,6 +10,15 @@ export function initCalculator(cars = []) {
   populateCarDropdowns();
   wireInstallmentModal();
   wireComparisonModal();
+  wireMatchmakerModal();
+}
+
+export function openMatchmaker(initialBudget = 2000000) {
+  const modal = $('matchmakerModal');
+  const input = $('mmBudgetInput');
+  if (input && initialBudget) input.value = initialBudget;
+  modal?.classList.remove('hidden');
+  runMatchmaker();
 }
 
 export function updateCalculatorCars(cars = []) {
@@ -334,4 +343,197 @@ function renderComparison(cmp) {
   `;
 
   refreshIcons();
+}
+
+/* ==========================================================================
+   AI CAR MATCHMAKER MODAL LOGIC
+   ========================================================================== */
+
+let currentMatchmakerResults = [];
+
+function wireMatchmakerModal() {
+  const modal = $('matchmakerModal');
+  const openBtn = $('openMatchmakerBtn');
+  const copilotBtn = $('copilotMatchmakerBtn');
+  const closeBtn = $('closeMatchmakerModal');
+  const budgetInput = $('mmBudgetInput');
+  const lifestyleSelect = $('mmLifestyleSelect');
+  const bodyTypeSelect = $('mmBodyTypeSelect');
+  const copyBtn = $('copyMatchmakerBtn');
+  const shareBtn = $('shareMatchmakerWABtn');
+  const insertBtn = $('insertMatchmakerToChatBtn');
+
+  openBtn?.addEventListener('click', () => {
+    modal?.classList.remove('hidden');
+    runMatchmaker();
+  });
+
+  copilotBtn?.addEventListener('click', () => {
+    modal?.classList.remove('hidden');
+    runMatchmaker();
+  });
+
+  closeBtn?.addEventListener('click', () => {
+    modal?.classList.add('hidden');
+  });
+
+  let debounceTimer = null;
+  budgetInput?.addEventListener('input', () => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(runMatchmaker, 300);
+  });
+
+  lifestyleSelect?.addEventListener('change', runMatchmaker);
+  bodyTypeSelect?.addEventListener('change', runMatchmaker);
+
+  // Budget Presets
+  document.querySelectorAll('.mm-budget-preset').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const budget = Number(btn.dataset.budget);
+      if (budgetInput && budget) {
+        budgetInput.value = budget;
+        runMatchmaker();
+      }
+    });
+  });
+
+  copyBtn?.addEventListener('click', () => {
+    const text = generateMatchmakerWhatsAppText();
+    if (text) {
+      navigator.clipboard.writeText(text);
+      toast('تم نسخ ترشيحات السيارات لحافظتك بنجاح! 📋');
+    }
+  });
+
+  shareBtn?.addEventListener('click', () => {
+    const text = generateMatchmakerWhatsAppText();
+    if (text) {
+      const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+      window.open(url, '_blank');
+    }
+  });
+
+  insertBtn?.addEventListener('click', () => {
+    const text = generateMatchmakerWhatsAppText();
+    const replyInput = $('liveReplyInput');
+    if (replyInput && text) {
+      replyInput.value = text;
+      modal?.classList.add('hidden');
+      toast('تم إدراج الترشيحات في صندوق الرد!');
+      replyInput.focus();
+    } else if (text) {
+      navigator.clipboard.writeText(text);
+      toast('تم نسخ الترشيحات (انتقل لشات العميل للصقها).');
+    }
+  });
+}
+
+async function runMatchmaker() {
+  const container = $('mmResultsContainer');
+  const budget = parseFloat($('mmBudgetInput')?.value) || 2000000;
+  const lifestyle = $('mmLifestyleSelect')?.value || 'all';
+  const bodyType = $('mmBodyTypeSelect')?.value || 'all';
+
+  if (!container) return;
+  container.innerHTML = `<div class="p-8 text-center text-xs text-slate-400"><i data-lucide="loader-2" class="h-6 w-6 animate-spin mx-auto text-violet-500 mb-2"></i>جاري مطابقة وترشيح سيارات المعرض بالذكاء الاصطناعي...</div>`;
+  refreshIcons();
+
+  try {
+    const res = await api.recommendCarsByBudget(budget, {
+      lifestyle,
+      bodyType
+    });
+
+    currentMatchmakerResults = (res && res.recommendations) || [];
+    renderMatchmakerResults(currentMatchmakerResults, budget);
+  } catch (err) {
+    container.innerHTML = `<p class="text-xs text-rose-500 text-center py-4">تعذر الترشيح: ${err.message}</p>`;
+  }
+}
+
+function renderMatchmakerResults(cars, budget) {
+  const container = $('mmResultsContainer');
+  if (!container) return;
+
+  if (!cars || !cars.length) {
+    container.innerHTML = `
+      <div class="rounded-2xl border border-dashed border-slate-200 dark:border-slate-800 p-8 text-center">
+        <i data-lucide="car" class="h-8 w-8 text-slate-300 dark:text-slate-600 mx-auto mb-2"></i>
+        <p class="text-sm font-bold text-slate-700 dark:text-slate-300">لم يتم العثور على سيارات مطابقة تماماً لهذه الميزانية</p>
+        <p class="text-xs text-slate-400 mt-1">جرب زيادة الميزانية قليلاً أو تغيير فئة الهيكل</p>
+      </div>
+    `;
+    refreshIcons();
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="flex items-center justify-between text-xs text-slate-500 px-1">
+      <span class="font-bold text-slate-700 dark:text-slate-300">تم ترشيح ${cars.length} سيارات هي الأنسب لميزانية ${budget.toLocaleString()} ج.م:</span>
+      <span class="text-[11px] text-violet-600 dark:text-violet-400 font-bold">مرتبة حسب نسبة التطابق والقيمة المالية</span>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+      ${cars.map((c, i) => {
+        const inst = c.installment;
+        const reasons = (c.matchReasons || []).map(r => `
+          <li class="flex items-center gap-1.5 text-[11px] text-slate-600 dark:text-slate-400">
+            <i data-lucide="check" class="h-3 w-3 text-emerald-500 shrink-0"></i>
+            <span>${esc(r)}</span>
+          </li>
+        `).join('');
+
+        return `
+          <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-850 p-4 space-y-3 relative overflow-hidden shadow-xs hover:border-violet-400 dark:hover:border-violet-600 transition">
+            <div class="flex items-start justify-between gap-2">
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-2">
+                  <span class="flex h-5 w-5 items-center justify-center rounded-full bg-violet-100 dark:bg-violet-950 text-violet-700 dark:text-violet-300 font-bold text-[10px]">${i + 1}</span>
+                  <h4 class="font-bold text-slate-900 dark:text-white text-sm truncate">${esc(c.name)}</h4>
+                </div>
+                <p class="text-xs text-slate-500 mt-0.5 truncate">${esc(c.category || 'معتمد بالمعرض')}</p>
+              </div>
+              <div class="text-left shrink-0">
+                <span class="rounded-full px-2 py-0.5 text-[10px] font-extrabold bg-violet-100 dark:bg-violet-950 text-violet-700 dark:text-violet-300">${c.matchScore}% تطابق</span>
+                <p class="font-extrabold text-[#128C7E] text-sm mt-1" dir="ltr">${esc(c.price)}</p>
+              </div>
+            </div>
+
+            <!-- Installment Highlights -->
+            ${inst ? `
+              <div class="grid grid-cols-2 gap-2 bg-slate-50 dark:bg-slate-900/60 rounded-xl p-2.5 text-xs">
+                <div>
+                  <span class="text-[10px] text-slate-400 block">المقدم (20%)</span>
+                  <strong class="text-slate-800 dark:text-slate-200 text-xs">${inst.formattedDownPayment}</strong>
+                </div>
+                <div>
+                  <span class="text-[10px] text-slate-400 block">القسط (5 سنوات)</span>
+                  <strong class="text-teal-600 dark:text-teal-400 text-xs">${inst.formattedMonthlyInstallment}</strong>
+                </div>
+              </div>
+            ` : ''}
+
+            <!-- Match Reasons Checklist -->
+            <ul class="space-y-1 pt-1 border-t border-slate-100 dark:border-slate-800">
+              ${reasons}
+            </ul>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+
+  refreshIcons();
+}
+
+function generateMatchmakerWhatsAppText() {
+  if (!currentMatchmakerResults || !currentMatchmakerResults.length) return '';
+  const budget = parseFloat($('mmBudgetInput')?.value) || 2000000;
+  const lifestyle = $('mmLifestyleSelect')?.options[$('mmLifestyleSelect')?.selectedIndex]?.text || '';
+
+  const items = currentMatchmakerResults.map((c, i) => {
+    const reasons = (c.matchReasons || []).map(r => `   ✓ ${r}`).join('\n');
+    return `${i + 1}️⃣ *${c.name}*\n• السعر الإجمالي: ${c.price}\n• نسبة التطابق: ${c.matchScore}%\n• القسط الشهري (مقدم 20%): ${c.installment?.formattedMonthlyInstallment || 'متاح عند الطلب'}\n${reasons}`;
+  }).join('\n\n');
+
+  return `🎯 *ترشيح المستشار الذكي لمطابقة السيارات (Al-Fares AI Matchmaker):*\nبناءً على ميزانية تقارب (${budget.toLocaleString()} ج.م) والهدف المطلوب (${lifestyle})، إليك أفضل الخيارات المناسبة لك تماماً بالمعرض:\n\n${items}\n\n🌟 نوفر فحصاً معتمداً لـ 150 نقطة بجهاز قياس الدهان، مع تجربة قيادة فورية وأنظمة تقسيط بنكي حتى 7 سنوات.\nتحب نحدد موعد لتجربة قيادة أو معاينة أي منها بالمعرض؟ 🏎️`;
 }
