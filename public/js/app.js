@@ -16,6 +16,8 @@ import { initHelpCenter, loadHelpCenter } from './helpcenter.js';
 import { exportLogsCSV, exportLogsPDF, exportMetricsCSV, exportMetricsPDF } from './export.js';
 import { applyLanguage, toggleLanguage, getLang } from './i18n.js';
 import { initAdminAI, loadAdminAI } from './admin-ai.js';
+import { initTradeIns, loadTradeIns } from './tradeins.js';
+import { initCalculator, updateCalculatorCars, openCalculatorForCar } from './calculator.js';
 
 const state = {
   view: 'dashboard',
@@ -23,6 +25,12 @@ const state = {
   convIndex: [],
   convId: null,
   messages: [],
+  productFilter: {
+    category: 'all',
+    brand: 'all',
+    price: 'all',
+    search: ''
+  },
   streaming: false,
   dirty: false,
   logs: []
@@ -95,6 +103,8 @@ async function boot() {
   initTemplates();
   initHelpCenter(context);
   initAdminAI(context);
+  initTradeIns();
+  initCalculator((state.config && state.config.products) || []);
 
   await Promise.all([loadConfig(), loadConversations()]);
 
@@ -112,6 +122,7 @@ async function loadConfig() {
     updateStatusChips();
     renderProducts();
     renderFaq();
+    updateCalculatorCars(state.config.products || []);
   } catch (err) {
     toast('Could not load configuration: ' + err.message, 'err');
   }
@@ -291,22 +302,48 @@ async function saveAll() {
 
 /* ============================== Cars Database / Products ============================== */
 
-function productRow(p, i) {
+function parseCarPrice(val) {
+  if (typeof val === 'number') return val;
+  if (!val) return 0;
+  const clean = String(val).replace(/,/g, '').replace(/[^\d.]/g, '');
+  const parsed = parseFloat(clean);
+  return isNaN(parsed) ? 0 : parsed;
+}
+
+function productRow(p, i, origIdx) {
   const isUsed = (p.category || '').toLowerCase().includes('used') || (p.category || '').includes('مستعمل');
+  const numPrice = parseCarPrice(p.priceNum || p.price);
+  const roughMonthly = numPrice > 0 ? Math.round((numPrice * 0.8 * 1.6) / 60) : 0;
+
   return `
-  <div class="card" data-prod="${i}">
+  <div class="card" data-prod="${origIdx !== undefined ? origIdx : i}">
     <div class="flex items-start gap-3.5">
       ${p.image ? `
-        <div class="hidden sm:flex w-28 h-24 shrink-0 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 mt-5 items-center justify-center">
-          <img src="${esc(p.image)}" alt="${esc(p.name)}" class="w-full h-full object-cover" loading="lazy" onerror="this.parentElement.style.display='none'">
+        <div class="hidden sm:flex w-32 h-28 shrink-0 rounded-2xl overflow-hidden bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 mt-5 items-center justify-center">
+          <img src="${esc(p.image)}" alt="${esc(p.name)}" class="w-full h-full object-cover hover:scale-105 transition duration-300" loading="lazy" onerror="this.parentElement.style.display='none'">
         </div>
       ` : ''}
       <div class="grid flex-1 gap-3 md:grid-cols-2">
-        <label class="field md:col-span-2">
-          <div class="flex items-center justify-between">
-            <span>Car Model &amp; Trim (Make, Model, Year)</span>
-            <span class="rounded px-2 py-0.5 text-[10px] font-bold uppercase ${isUsed ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300'}">${isUsed ? 'Certified Used' : 'New / Zero'}</span>
+        <div class="md:col-span-2 flex flex-wrap items-center justify-between gap-2">
+          <div class="flex items-center gap-2">
+            <span class="rounded-lg px-2.5 py-0.5 text-[10px] font-bold uppercase ${isUsed ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-300' : 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/40 dark:text-emerald-300'}">${isUsed ? 'Certified Used (مستعمل فابريكا)' : 'New / Zero (زيرو)'}</span>
+            ${roughMonthly > 0 ? `
+              <span class="rounded-lg bg-teal-50 dark:bg-teal-950 text-[#128C7E] px-2 py-0.5 text-[10px] font-bold">
+                قسط يبدأ من: ${roughMonthly.toLocaleString()} EGP/شهر
+              </span>
+            ` : ''}
           </div>
+          <div class="flex items-center gap-1.5">
+            <button type="button" class="btn-calc-car flex items-center gap-1 rounded-lg border border-teal-200 dark:border-teal-800 bg-teal-50 dark:bg-teal-950 px-2 py-1 text-xs font-bold text-teal-800 dark:text-teal-200 hover:bg-teal-100 transition" data-idx="${origIdx !== undefined ? origIdx : i}" title="حساب قسط هذه السيارة">
+              <i data-lucide="calculator" class="h-3.5 w-3.5"></i> <span>احسب القسط</span>
+            </button>
+            <button type="button" class="btn-share-car flex items-center gap-1 rounded-lg border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950 px-2 py-1 text-xs font-bold text-emerald-800 dark:text-emerald-200 hover:bg-emerald-100 transition" data-idx="${origIdx !== undefined ? origIdx : i}" title="مشاركة المواصفات عبر واتساب">
+              <i data-lucide="share-2" class="h-3.5 w-3.5"></i> <span>واتساب</span>
+            </button>
+          </div>
+        </div>
+        <label class="field md:col-span-2">
+          <span>Car Model &amp; Trim (Make, Model, Year)</span>
           <input class="inp p-name font-medium" value="${esc(p.name)}" placeholder="e.g. Mercedes-Benz C200 2024 AMG (Zero / New)">
         </label>
         <label class="field"><span>Price</span><input class="inp p-price font-semibold text-[#128C7E]" value="${esc(p.price)}" placeholder="e.g. 3,850,000 EGP"></label>
@@ -325,37 +362,111 @@ function productRow(p, i) {
 }
 
 function renderProducts() {
-  const list = (state.config && state.config.products) || [];
+  const allList = (state.config && state.config.products) || [];
   const host = $('productList');
   if (!host) return;
 
-  if (!list.length) {
+  const f = state.productFilter;
+  let filtered = allList.map((p, origIdx) => ({ ...p, origIdx }));
+
+  // Category filter
+  if (f.category === 'zero') {
+    filtered = filtered.filter(p => (p.category || '').toLowerCase().includes('zero') || (p.category || '').includes('زيرو'));
+  } else if (f.category === 'used') {
+    filtered = filtered.filter(p => (p.category || '').toLowerCase().includes('used') || (p.category || '').includes('مستعمل'));
+  }
+
+  // Brand filter
+  if (f.brand && f.brand !== 'all') {
+    filtered = filtered.filter(p => (p.name || '').toLowerCase().includes(f.brand.toLowerCase()));
+  }
+
+  // Price range filter
+  if (f.price === 'under_1m') {
+    filtered = filtered.filter(p => parseCarPrice(p.priceNum || p.price) < 1000000);
+  } else if (f.price === '1m_2m') {
+    filtered = filtered.filter(p => {
+      const pNum = parseCarPrice(p.priceNum || p.price);
+      return pNum >= 1000000 && pNum <= 2000000;
+    });
+  } else if (f.price === '2m_4m') {
+    filtered = filtered.filter(p => {
+      const pNum = parseCarPrice(p.priceNum || p.price);
+      return pNum >= 2000000 && pNum <= 4000000;
+    });
+  } else if (f.price === 'over_4m') {
+    filtered = filtered.filter(p => parseCarPrice(p.priceNum || p.price) > 4000000);
+  }
+
+  // Search filter
+  if (f.search) {
+    filtered = filtered.filter(p => 
+      (p.name || '').toLowerCase().includes(f.search) ||
+      (p.description || '').toLowerCase().includes(f.search) ||
+      (p.price || '').toLowerCase().includes(f.search)
+    );
+  }
+
+  // Update counter
+  const counter = $('carFilterCounter');
+  if (counter) {
+    counter.textContent = `عرض ${filtered.length} سيارة من أصل ${allList.length}`;
+  }
+
+  if (!filtered.length) {
     host.innerHTML = `
-    <div class="rounded-xl border border-dashed border-slate-300 bg-white px-6 py-12 text-center">
-      <i data-lucide="car" class="mx-auto h-6 w-6 text-slate-300"></i>
-      <p class="mt-3 text-sm font-medium text-slate-700">No cars in internal database</p>
-      <p class="mx-auto mt-1 max-w-sm text-sm text-slate-500">Add your new and used cars with exact specifications, prices, and photo links — the AI assistant quotes them and sends vehicle photos automatically on WhatsApp!</p>
+    <div class="rounded-2xl border border-dashed border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-12 text-center">
+      <i data-lucide="car" class="mx-auto h-8 w-8 text-slate-300"></i>
+      <p class="mt-3 text-sm font-bold text-slate-700 dark:text-slate-200">لم يتم العثور على سيارات تطابق الفلتر</p>
+      <p class="mx-auto mt-1 max-w-sm text-xs text-slate-500">جرب تغيير شروط البحث أو اختيار ماركة أخرى.</p>
     </div>`;
   } else {
-    host.innerHTML = list.map(productRow).join('');
+    host.innerHTML = filtered.map(p => productRow(p, p.origIdx, p.origIdx)).join('');
   }
+
+  // Wire buttons on cards
+  host.querySelectorAll('.btn-calc-car').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.dataset.idx);
+      const car = allList[idx];
+      if (car) openCalculatorForCar(car);
+    });
+  });
+
+  host.querySelectorAll('.btn-share-car').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const idx = Number(btn.dataset.idx);
+      const car = allList[idx];
+      if (car) {
+        const text = `🚗 ${car.name}\n• السعر: ${car.price}\n• الحالة: ${car.category || 'متوفرة بالمعرض'}\n${car.description ? '• المواصفات: ' + car.description + '\n' : ''}${car.image ? '• رابط الصورة: ' + car.image + '\n' : ''}\nمتاحة لدى معارض الفارس موتورز مصر (التجمع الأول ومدينة نصر). كاش وبالتقسيط البنكي حتى 7 سنوات!`;
+        navigator.clipboard.writeText(text).then(() => {
+          toast('تم نسخ مواصفات السيارة ورابط الصورة لواتساب! 📋');
+        });
+      }
+    });
+  });
+
   refreshIcons();
 }
 
 function collectProducts() {
   const current = (state.config && state.config.products) || [];
-  return [...document.querySelectorAll('[data-prod]')].map((row, idx) => {
-    const existing = current[idx] || {};
-    return {
-      ...existing,
-      name: row.querySelector('.p-name')?.value.trim() || '',
-      price: row.querySelector('.p-price')?.value.trim() || '',
-      category: row.querySelector('.p-cat')?.value.trim() || '',
-      stock: row.querySelector('.p-stock')?.value.trim() || '',
-      image: row.querySelector('.p-image')?.value.trim() || '',
-      description: row.querySelector('.p-desc')?.value.trim() || ''
-    };
-  }).filter((p) => p.name || p.price);
+  const rows = [...document.querySelectorAll('[data-prod]')];
+  rows.forEach(row => {
+    const origIdx = Number(row.dataset.prod);
+    if (origIdx >= 0 && current[origIdx]) {
+      current[origIdx] = {
+        ...current[origIdx],
+        name: row.querySelector('.p-name')?.value.trim() || current[origIdx].name,
+        price: row.querySelector('.p-price')?.value.trim() || current[origIdx].price,
+        category: row.querySelector('.p-cat')?.value.trim() || current[origIdx].category,
+        stock: row.querySelector('.p-stock')?.value.trim() || current[origIdx].stock,
+        image: row.querySelector('.p-image')?.value.trim() || current[origIdx].image,
+        description: row.querySelector('.p-desc')?.value.trim() || current[origIdx].description
+      };
+    }
+  });
+  return current.filter(p => p.name || p.price);
 }
 
 /* ============================== Logs (Client Messages) ============================== */
@@ -435,6 +546,7 @@ function setView(view) {
     else if (view === 'products') renderProducts();
     else if (view === 'orders') loadOrders();
     else if (view === 'reservations') loadReservations();
+    else if (view === 'tradeins') loadTradeIns();
     else if (view === 'reminders') loadReminders();
     else if (view === 'livechat') loadLiveChat();
     else if (view === 'broadcast') loadBroadcast();
@@ -494,6 +606,37 @@ function wireUI() {
   document.querySelectorAll('[data-view]').forEach((b) =>
     b.addEventListener('click', () => setView(b.dataset.view))
   );
+
+  // Car database search and filters
+  const carSearch = $('carSearchInput');
+  carSearch?.addEventListener('input', (e) => {
+    state.productFilter.search = e.target.value.toLowerCase().trim();
+    renderProducts();
+  });
+
+  const catPills = document.querySelectorAll('#carCategoryFilterPills .car-filter-pill');
+  catPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      catPills.forEach(p => {
+        p.classList.remove('active', 'bg-[#128C7E]', 'text-white', 'shadow-xs');
+        p.classList.add('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+      });
+      pill.classList.add('active', 'bg-[#128C7E]', 'text-white', 'shadow-xs');
+      pill.classList.remove('bg-slate-100', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+      state.productFilter.category = pill.dataset.cat || 'all';
+      renderProducts();
+    });
+  });
+
+  $('carBrandFilter')?.addEventListener('change', (e) => {
+    state.productFilter.brand = e.target.value;
+    renderProducts();
+  });
+
+  $('carPriceFilter')?.addEventListener('change', (e) => {
+    state.productFilter.price = e.target.value;
+    renderProducts();
+  });
 
   // Export buttons
   $('exportMetricsCSVBtn')?.addEventListener('click', () => {

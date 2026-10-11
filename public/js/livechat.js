@@ -438,7 +438,9 @@ function renderActiveThread() {
   renderUnifiedCustomerPanel(activePhone);
 
   if (headerName) headerName.textContent = conv.name || 'Client';
-  if (headerPhone) headerPhone.textContent = '+' + conv.phone;
+  if (headerPhone) {
+    headerPhone.innerHTML = `<a href="https://wa.me/${conv.phone}" target="_blank" rel="noopener noreferrer" class="hover:text-emerald-600 inline-flex items-center gap-1 transition" title="فتح محادثة مباشرة في واتساب">+${conv.phone} <i data-lucide="external-link" class="h-3 w-3 inline text-slate-400"></i></a>`;
+  }
   if (takeoverBox) takeoverBox.checked = !!conv.isHumanTakeover;
 
   const pill = $('liveBotStatePill');

@@ -4259,7 +4259,8 @@ export async function initDB() {
         articles: JSON.parse(JSON.stringify(DEFAULT_ARTICLES)),
         handoffTickets: [],
         knowledgeGaps: JSON.parse(JSON.stringify(DEFAULT_KNOWLEDGE_GAPS)),
-        learnedAnswers: []
+        learnedAnswers: [],
+        tradeIns: []
       };
       await flush();
     } else {
@@ -4278,7 +4279,8 @@ export async function initDB() {
         articles: parsed.articles?.length ? parsed.articles : JSON.parse(JSON.stringify(DEFAULT_ARTICLES)),
         handoffTickets: parsed.handoffTickets || [],
         knowledgeGaps: parsed.knowledgeGaps?.length ? parsed.knowledgeGaps : JSON.parse(JSON.stringify(DEFAULT_KNOWLEDGE_GAPS)),
-        learnedAnswers: parsed.learnedAnswers || []
+        learnedAnswers: parsed.learnedAnswers || [],
+        tradeIns: parsed.tradeIns || []
       };
     }
   } catch (err) {
@@ -4496,17 +4498,18 @@ export async function createOrder({ clientPhone, clientName, items, total, addre
   cust.cart = [];
   memoryStore.customers[clientPhone] = cust;
 
-  // Auto-schedule test drive reminder
+  // Auto-schedule booking follow-up reminder
   try {
+    const todayStr = new Date().toISOString().slice(0, 10);
     await createReminder({
       clientName: clientName || 'العميل',
       clientPhone: clientPhone,
-      carTitle: notes || 'تجربة قيادة',
-      type: 'test_drive',
-      typeLabelAr: 'تذكير موعد تجربة قيادة',
-      dueTime: (date || 'اليوم') + ' - ' + (time || 'الموعد المحدد'),
-      dueDate: date || new Date().toISOString().slice(0, 10),
-      message: 'أهلاً بك ' + (clientName || 'العميل') + '! نذكرك بموعد تجربة القيادة والمعاينة (' + (date || 'اليوم') + ' - ' + (time || 'الموعد المحدد') + ') بفرع الفارس موتورز. نتشرف باستقبالك!',
+      carTitle: notes || (items && items[0]?.name) || 'حجز سيارة',
+      type: 'delivery',
+      typeLabelAr: 'متابعة حجز وتعاقد سيارة',
+      dueTime: 'خلال 24 ساعة - مواعيد المعرض',
+      dueDate: todayStr,
+      message: 'أهلاً بك ' + (clientName || 'العميل') + '! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.',
       priority: 'high',
       assignedTo: 'Abdallah'
     });
@@ -5577,3 +5580,58 @@ export async function trackSentiment(phone, sentimentData) {
   if (d.analytics.sentimentHistory.length > 200) d.analytics.sentimentHistory = d.analytics.sentimentHistory.slice(0, 200);
   await persist(d);
 }
+
+/* ================= Car Trade-Ins & Appraisal Pipeline ================= */
+export function getTradeIns() {
+  return (memoryStore.tradeIns || []).slice().sort((a, b) => b.at - a.at);
+}
+
+export async function createTradeIn({ clientName, clientPhone, carMake, carModel, carYear, mileage, condition, paintStatus, estimatedValue, notes }) {
+  if (!memoryStore.tradeIns) memoryStore.tradeIns = [];
+  const count = memoryStore.tradeIns.length + 1;
+  const tradeInNumber = 'TRD-' + String(count).padStart(4, '0');
+  const tradeIn = {
+    id: 'trd_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    tradeInNumber,
+    clientName: clientName || 'Client',
+    clientPhone: String(clientPhone || '').replace(/[^\d]/g, ''),
+    carMake: carMake || '',
+    carModel: carModel || '',
+    carYear: Number(carYear) || new Date().getFullYear(),
+    mileage: mileage || 'غير محدد',
+    condition: condition || 'جيدة جداً',
+    paintStatus: paintStatus || 'فابريكا بالكامل',
+    estimatedValue: estimatedValue || 'في انتظار الفحص والمعاينة',
+    notes: notes || '',
+    status: 'pending', // pending, inspected, approved, completed, cancelled
+    at: Date.now()
+  };
+
+  memoryStore.tradeIns.unshift(tradeIn);
+
+  const cust = getCustomer(clientPhone, clientName);
+  if (!cust.tags.includes('Trade-In Prospect')) cust.tags.push('Trade-In Prospect');
+  memoryStore.customers[clientPhone] = cust;
+
+  await flush();
+  return tradeIn;
+}
+
+export async function updateTradeInStatus(tradeInId, newStatus, updates = {}) {
+  if (!memoryStore.tradeIns) memoryStore.tradeIns = [];
+  const item = memoryStore.tradeIns.find(t => t.id === tradeInId || t.tradeInNumber === tradeInId);
+  if (!item) throw new Error('Trade-in appraisal request not found');
+  item.status = newStatus;
+  Object.assign(item, updates);
+  item.updatedAt = Date.now();
+  await flush();
+  return item;
+}
+
+export async function deleteTradeIn(tradeInId) {
+  if (!memoryStore.tradeIns) memoryStore.tradeIns = [];
+  memoryStore.tradeIns = memoryStore.tradeIns.filter(t => t.id !== tradeInId && t.tradeInNumber !== tradeInId);
+  await flush();
+  return true;
+}
+

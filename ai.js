@@ -104,6 +104,216 @@ export function matchHelpCenter(text, articles = []) {
   return bestScore >= 0.60 ? { article: best, score: bestScore } : null;
 }
 
+/* ==========================================================================
+   AUTOMOTIVE REASONING & FINANCIAL ENGINES
+   ========================================================================== */
+
+export function parseNumericPrice(val) {
+  if (typeof val === 'number') return val;
+  if (!val) return 0;
+  const clean = String(val).replace(/,/g, '').replace(/[^\d.]/g, '');
+  const parsed = parseFloat(clean);
+  return isNaN(parsed) ? 0 : parsed;
+}
+
+/**
+ * Intelligent Auto Financing & Installment Calculator (Egyptian Banking Standards)
+ * Supports custom down payments (20%-70%) and tenures (1-7 years)
+ */
+export function calculateCarInstallment({ price, downPaymentPct = 20, tenureYears = 5, annualInterestRate = 12 }) {
+  const numPrice = typeof price === 'number' ? price : parseNumericPrice(price);
+  if (!numPrice || numPrice <= 0) return null;
+
+  const pct = Math.max(10, Math.min(80, Number(downPaymentPct) || 20));
+  const years = Math.max(1, Math.min(7, Number(tenureYears) || 5));
+  const rate = Math.max(5, Math.min(30, Number(annualInterestRate) || 12));
+
+  const downPayment = Math.round(numPrice * (pct / 100));
+  const financedAmount = numPrice - downPayment;
+  const tenureMonths = years * 12;
+
+  // Standard flat bank auto loan interest formula:
+  const totalInterest = Math.round(financedAmount * (rate / 100) * years);
+  const totalFinancedWithInterest = financedAmount + totalInterest;
+  const monthlyInstallment = Math.round(totalFinancedWithInterest / tenureMonths);
+
+  // Alternative multi-tenure breakdown (3, 5, 7 years)
+  const alternatives = [3, 5, 7].map(y => {
+    const yMonths = y * 12;
+    const yInterest = Math.round(financedAmount * (rate / 100) * y);
+    const yMonthly = Math.round((financedAmount + yInterest) / yMonths);
+    return {
+      years: y,
+      months: yMonths,
+      monthly: yMonthly,
+      totalInterest: yInterest,
+      formattedMonthly: yMonthly.toLocaleString() + ' EGP'
+    };
+  });
+
+  return {
+    price: numPrice,
+    formattedPrice: numPrice.toLocaleString() + ' EGP',
+    downPaymentPct: pct,
+    downPayment,
+    formattedDownPayment: downPayment.toLocaleString() + ' EGP',
+    financedAmount,
+    formattedFinancedAmount: financedAmount.toLocaleString() + ' EGP',
+    tenureYears: years,
+    tenureMonths,
+    annualInterestRate: rate,
+    totalInterest,
+    formattedTotalInterest: totalInterest.toLocaleString() + ' EGP',
+    monthlyInstallment,
+    formattedMonthlyInstallment: monthlyInstallment.toLocaleString() + ' EGP',
+    totalPayable: downPayment + totalFinancedWithInterest,
+    formattedTotalPayable: (downPayment + totalFinancedWithInterest).toLocaleString() + ' EGP',
+    alternatives
+  };
+}
+
+/**
+ * Compare Two Vehicles from Inventory Side-by-Side
+ */
+export function compareCars(carQueryA, carQueryB, inventory = []) {
+  const normA = normalize(carQueryA);
+  const normB = normalize(carQueryB);
+
+  const findCar = (query) => {
+    if (!query) return null;
+    let best = null;
+    let maxScore = 0;
+    for (const c of inventory) {
+      const cNorm = normalize(c.name + ' ' + (c.nameAr || '') + ' ' + (c.nameEn || ''));
+      const s = similarity(query, cNorm);
+      if (s > maxScore) {
+        maxScore = s;
+        best = c;
+      }
+    }
+    return maxScore >= 0.25 ? best : null;
+  };
+
+  const carA = findCar(normA) || inventory[0];
+  const carB = findCar(normB) || inventory[1] || inventory[0];
+
+  if (!carA || !carB) return null;
+
+  const instA = calculateCarInstallment({ price: carA.priceNum || carA.price, downPaymentPct: 20, tenureYears: 5 });
+  const instB = calculateCarInstallment({ price: carB.priceNum || carB.price, downPaymentPct: 20, tenureYears: 5 });
+
+  const priceA = parseNumericPrice(carA.priceNum || carA.price);
+  const priceB = parseNumericPrice(carB.priceNum || carB.price);
+  const priceDiff = Math.abs(priceA - priceB);
+
+  return {
+    carA: {
+      id: carA.id,
+      name: carA.name,
+      price: carA.price,
+      priceNum: priceA,
+      category: carA.category,
+      stock: carA.stock,
+      specs: carA.specs || {},
+      installment: instA,
+      image: carA.image
+    },
+    carB: {
+      id: carB.id,
+      name: carB.name,
+      price: carB.price,
+      priceNum: priceB,
+      category: carB.category,
+      stock: carB.stock,
+      specs: carB.specs || {},
+      installment: instB,
+      image: carB.image
+    },
+    priceDiff,
+    formattedPriceDiff: priceDiff.toLocaleString() + ' EGP',
+    cheaperCar: priceA < priceB ? carA.name : carB.name,
+    recommendation: priceA < priceB 
+      ? `تتميز ${carA.name} بسعرها الاقتصادي وفارق يبلغ ${priceDiff.toLocaleString()} EGP مع قسط شهري أقل، بينما تقدم ${carB.name} فئة ومواصفات إضافية.`
+      : `تتميز ${carB.name} بقيمة سعرية منافسة بفارق ${priceDiff.toLocaleString()} EGP وقسط شهري مريح، بينما تناسب ${carA.name} الباحثين عن مواصفات أعلى.`
+  };
+}
+
+/**
+ * Filter & Recommend Vehicles by Budget (EGP)
+ */
+export function recommendCarsByBudget(budgetVal, inventory = []) {
+  const budget = parseNumericPrice(budgetVal);
+  if (!budget || budget <= 0) return [];
+
+  const tolerance = 0.35; // +/- 35%
+  const minBudget = budget * (1 - tolerance);
+  const maxBudget = budget * (1 + tolerance);
+
+  const matched = inventory
+    .map(c => {
+      const p = parseNumericPrice(c.priceNum || c.price);
+      return { car: c, price: p, diff: Math.abs(p - budget) };
+    })
+    .filter(item => item.price > 0 && item.price >= minBudget && item.price <= maxBudget)
+    .sort((a, b) => a.diff - b.diff)
+    .slice(0, 5)
+    .map(item => ({
+      ...item.car,
+      installment: calculateCarInstallment({ price: item.price, downPaymentPct: 20, tenureYears: 5 })
+    }));
+
+  return matched;
+}
+
+/**
+ * Trade-In Fair Market Valuation Estimation Assistant
+ */
+export function estimateTradeInValue({ make, model, year, mileage, condition, paintStatus }) {
+  const currentYear = new Date().getFullYear();
+  const y = Number(year) || (currentYear - 5);
+  const age = Math.max(0, currentYear - y);
+
+  // Heuristic baseline depreciation model for Egyptian used car market:
+  let baseEstimate = 500000;
+  const brand = (make || '').toLowerCase();
+  if (brand.includes('mercedes') || brand.includes('مرسيدس') || brand.includes('bmw') || brand.includes('بي ام')) {
+    baseEstimate = 2200000;
+  } else if (brand.includes('kia') || brand.includes('hyundai') || brand.includes('toyota') || brand.includes('كيا') || brand.includes('هيونداي') || brand.includes('تويوتا')) {
+    baseEstimate = 950000;
+  } else if (brand.includes('mg') || brand.includes('chery') || brand.includes('ام جي') || brand.includes('شيري')) {
+    baseEstimate = 750000;
+  }
+
+  // Age factor
+  const ageDiscount = Math.min(0.60, age * 0.07);
+  let estimated = baseEstimate * (1 - ageDiscount);
+
+  // Paint status adjustment
+  const paint = (paintStatus || '').toLowerCase();
+  if (paint.includes('فابريكا بالكامل') || paint.includes('فابريكا')) {
+    estimated *= 1.05; // Premium
+  } else if (paint.includes('دواخل')) {
+    estimated *= 0.75; // Inside accident
+  } else if (paint.includes('حزام') || paint.includes('خارجي')) {
+    estimated *= 0.93;
+  }
+
+  const minRange = Math.round((estimated * 0.92) / 5000) * 5000;
+  const maxRange = Math.round((estimated * 1.08) / 5000) * 5000;
+
+  return {
+    make: make || 'السيارة المستعملة',
+    model: model || '',
+    year: y,
+    condition: condition || 'جيدة',
+    paintStatus: paintStatus || 'فابريكا',
+    minRange,
+    maxRange,
+    formattedRange: `${minRange.toLocaleString()} – ${maxRange.toLocaleString()} EGP`,
+    inspectionNote: 'يتم تحديد القيمة النهائية بدقة بعد الفحص الفني لـ 150 نقطة بجهاز قياس الدهان في فرعي المعرض (التجمع الأول أو مدينة نصر).'
+  };
+}
+
 export function buildSystemPrompt(cfg = {}) {
   const b = cfg.business || {};
   const cars = cfg.products || [];
@@ -378,6 +588,144 @@ export function analyzeIntent(text, config = {}, history = []) {
       },
       reply: `تم تسجيل طلب حجز سيارتك المبدئي بنجاح! 🚘🎉\n• السيارة: ${targetCar.name}\n• السعر الإجمالي: ${targetCar.price}\n• نظام الدفع: كاش أو تقسيط بنكي بمقدم يبدأ من 20%.\nمن فضلك أرسل رقم هاتفك واسمك بالكامل وسيتواصل معك مدير المبيعات فوراً لتجهيز أوراق التعاقد والاستلام!`
     };
+  }
+
+  // 6. Interactive Auto Financing & Installment Intent (حاسبة الأقساط والتمويل الذكية)
+  const installmentTriggers = [
+    'احسبلي قسط', 'احسب القسط', 'احسب قسط', 'قسط', 'تقسيط', 'كام قسط', 'كم قسط', 'حساب قسط', 'حساب القسط',
+    'installment', 'calculate installment', 'monthly installment', 'down payment'
+  ];
+  if (installmentTriggers.some(t => norm.includes(t))) {
+    let targetCar = null;
+    for (const c of cars) {
+      const candidates = getCarMatches(c);
+      if (candidates.some(cand => norm.includes(cand))) {
+        targetCar = c;
+        break;
+      }
+    }
+
+    if (!targetCar && Array.isArray(history) && history.length > 0) {
+      const lastText = history.map(h => h.content || '').join(' ');
+      const normHist = normalize(lastText);
+      for (const c of cars) {
+        const candidates = getCarMatches(c);
+        if (candidates.some(cand => normHist.includes(cand))) {
+          targetCar = c;
+          break;
+        }
+      }
+    }
+    if (!targetCar && cars.length > 0) {
+      targetCar = cars.find(c => (c.name || '').includes('Sportage') || (c.name || '').includes('Tucson')) || cars[0];
+    }
+
+    if (targetCar) {
+      let downPct = 20;
+      const pctMatch = raw.match(/(\d{1,2})\s*%/);
+      if (pctMatch) {
+        downPct = Number(pctMatch[1]);
+      } else if (norm.includes('مقدم 30') || norm.includes('30 في الميه')) downPct = 30;
+      else if (norm.includes('مقدم 40') || norm.includes('40 في الميه')) downPct = 40;
+      else if (norm.includes('مقدم 50') || norm.includes('50 في الميه') || norm.includes('النص')) downPct = 50;
+
+      let tenureYears = 5;
+      const yearMatch = raw.match(/(\d)\s*(سنين|سنوات|سنة|years|year)/i);
+      if (yearMatch) tenureYears = Number(yearMatch[1]);
+
+      const inst = calculateCarInstallment({
+        price: targetCar.priceNum || targetCar.price,
+        downPaymentPct: downPct,
+        tenureYears,
+        annualInterestRate: 12
+      });
+
+      if (inst) {
+        const alt3 = inst.alternatives.find(a => a.years === 3)?.formattedMonthly || '—';
+        const alt5 = inst.alternatives.find(a => a.years === 5)?.formattedMonthly || '—';
+        const alt7 = inst.alternatives.find(a => a.years === 7)?.formattedMonthly || '—';
+
+        const reply = `حسبة التقسيط التقديرية لسيارة ${targetCar.name}: 💳🚗\n\n• السعر الإجمالي: ${inst.formattedPrice}\n• المقدم المطلوب (${inst.downPaymentPct}%): ${inst.formattedDownPayment}\n• المبلغ الممول: ${inst.formattedFinancedAmount}\n• مدة السداد: ${inst.tenureYears} سنوات (${inst.tenureMonths} شهر)\n• القسط الشهري التقريبي: ${inst.formattedMonthlyInstallment} / شهرياً 🌟\n\nخيارات فترات السداد الأخرى بنفس المقدم (${inst.downPaymentPct}%):\n• 3 سنوات: ${alt3} / شهرياً\n• 5 سنوات: ${alt5} / شهرياً\n• 7 سنوات: ${alt7} / شهرياً\n\n🏦 البنوك وشركات التمويل الشريكة: بنك مصر، البنك الأهلي، بنك ناصر، كونتكت، فاليو، درايف.\n📝 المستندات المطلوبة: صورة بطاقة الرقم القومي + إثبات دخل أو سجل تجاري.\nتحب ننسق مع مسؤول التمويل بالمعرض لمراجعة أوراقك وحساب الحسبة الدقيقة؟ 👨‍💼`;
+
+        return {
+          type: 'INSTALLMENT_CALCULATE',
+          car: targetCar,
+          installment: inst,
+          reply
+        };
+      }
+    }
+  }
+
+  // 7. Car Comparison Intent (مقارنة المواصفات والأسعار بين سيارتين)
+  const compareTriggers = ['قارن', 'مقارنة', 'مقارنه', 'الفرق بين', 'احسن ولا', 'افضل ولا', 'compare', 'versus', ' vs '];
+  if (compareTriggers.some(t => norm.includes(t))) {
+    let carA = null;
+    let carB = null;
+    for (const c of cars) {
+      const candidates = getCarMatches(c);
+      if (candidates.some(cand => norm.includes(cand))) {
+        if (!carA) carA = c;
+        else if (!carB && carA.id !== c.id) { carB = c; break; }
+      }
+    }
+
+    if (carA && carB) {
+      const comp = compareCars(carA.name, carB.name, cars);
+      if (comp) {
+        const reply = `مقارنة سريعة بين ${carA.name} و ${carB.name}: ⚖️🚗\n\n1️⃣ ${carA.name}:\n• السعر: ${carA.price}\n• الفئة/الحالة: ${carA.category || 'متوفرة بالمعرض'}\n• القسط الشهري (بمقدم 20% على 5 سنين): ${comp.carA.installment?.formattedMonthlyInstallment || 'متاح عند الطلب'}\n\n2️⃣ ${carB.name}:\n• السعر: ${carB.price}\n• الفئة/الحالة: ${carB.category || 'متوفرة بالمعرض'}\n• القسط الشهري (بمقدم 20% على 5 سنين): ${comp.carB.installment?.formattedMonthlyInstallment || 'متاح عند الطلب'}\n\n💡 الفارق المالي: ${comp.formattedPriceDiff}\n📌 التوصية: ${comp.recommendation}\n\nتحب تحجز موعد لتجربة قيادة أي منهما بالمعرض للمقارنة على الطبيعة؟ 🏎️`;
+        return {
+          type: 'CAR_COMPARE',
+          comparison: comp,
+          reply
+        };
+      }
+    }
+  }
+
+  // 8. Trade-In Valuation Request Intent (تثمين واستبدال السيارات المستعملة)
+  const tradeInTriggers = ['ابدل', 'استبدال', 'تبديل', 'بدل عربيتي', 'ابدل عربيتي', 'trade in', 'تثمين', 'سعر عربيتي', 'تقييم عربيتي'];
+  if (tradeInTriggers.some(t => norm.includes(t))) {
+    const est = estimateTradeInValue({
+      make: raw.slice(0, 50),
+      paintStatus: norm.includes('راشة') ? 'راشة خارجي' : 'فابريكا بالكامل'
+    });
+
+    const reply = `أهلاً بك يا فندم! نوفر خدمة الاستبدال المباشر (Trade-In) بأعلى سعر سوقي عادل: 🔄🚗\n\n• نثمن سيارتك القديمة ونعتبر قيمتها مقدم لشراء أي سيارة زيرو أو كسر زيرو بالمعرض.\n• إمكانية تقسيط الفارق حتى 7 سنوات.\n• فحص فني معتمد مجاني لـ 150 نقطة.\n\nمن فضلك أرسل لنا:\n1. ماركة وموديل وسنة صنع سيارتك الحالية\n2. العداد التقريبي وحالة الدهان (فابريكا ولا راشة؟)\n3. رقم هاتفك للتواصل\nوسيقوم خبير التثمين بالمعرض بتقدير السعر المبدئي لحضرتك فوراً! 📞`;
+
+    return {
+      type: 'TRADE_IN_REQUEST',
+      tradeInEstimate: est,
+      reply
+    };
+  }
+
+  // 9. Budget-Based Car Recommendation Intent (ترشيح سيارات بناءً على الميزانية)
+  const budgetTriggers = ['معايا ميزانية', 'ميزانيتي', 'في حدود', 'تحت مليون', 'معايا 500 الف', 'معايا 700 الف', 'معايا مليون', 'ميزانية'];
+  if (budgetTriggers.some(t => norm.includes(t))) {
+    let budgetNum = 1000000;
+    if (norm.includes('مليون ونص') || norm.includes('1.5 مليون')) budgetNum = 1500000;
+    else if (norm.includes('2 مليون') || norm.includes('اتنين مليون')) budgetNum = 2000000;
+    else if (norm.includes('مليون')) budgetNum = 1000000;
+    else if (norm.includes('500 الف') || norm.includes('نص مليون')) budgetNum = 500000;
+    else if (norm.includes('700 الف') || norm.includes('750 الف')) budgetNum = 750000;
+    else if (norm.includes('800 الف')) budgetNum = 800000;
+
+    const matched = recommendCarsByBudget(budgetNum, cars);
+    if (matched.length > 0) {
+      const itemsList = matched.map((m, idx) => 
+        `${idx + 1}️⃣ ${m.name}\n• السعر: ${m.price} (${m.category || ''})\n• القسط الشهري (مقدم 20%): ${m.installment?.formattedMonthlyInstallment || 'متاح عند الطلب'}`
+      ).join('\n\n');
+
+      const reply = `بناءً على ميزانية تقارب (${budgetNum.toLocaleString()} EGP)، إليك أفضل الخيارات المتاحة لدينا بالمعرض مع أنظمة التقسيط: 🎯🚗\n\n${itemsList}\n\nجميع السيارات فابريكا بالكامل وخاضعة للفحص الفني الشامل. تحب تحجز تجربة قيادة لأي سيارة منها؟ 🏎️`;
+
+      return {
+        type: 'BUDGET_RECOMMEND',
+        budget: budgetNum,
+        matches: matched,
+        reply
+      };
+    }
   }
 
   // 6. Conversational Affirmation & Multi-Turn Context ("yes", "sure", "تمام", "اه", etc.)

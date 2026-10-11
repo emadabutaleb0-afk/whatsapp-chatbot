@@ -91,6 +91,8 @@
         <span id="ordersCountBadge" class="ml-auto rounded-full bg-emerald-100 text-emerald-700 px-1.5 py-0.2 text-[10px] font-bold">3</span>
       </button>
       <button data-view="reservations" class="nav-item"><i data-lucide="gauge" class="h-4 w-4 text-blue-600"></i><span data-i18n="nav_reservations">تجارب القيادة</span></button>
+      <button data-view="tradeins" class="nav-item"><i data-lucide="repeat" class="h-4 w-4 text-cyan-600"></i><span>استبدال وتثمين السيارات</span><span id="tradeInsCountBadge" class="ml-auto rounded-full bg-cyan-100 text-cyan-800 dark:bg-cyan-950 dark:text-cyan-300 px-1.5 py-0.2 text-[10px] font-bold">0</span></button>
+      <button data-view="reminders" class="nav-item"><i data-lucide="bell" class="h-4 w-4 text-amber-500"></i><span>التذكيرات والمتابعات</span><span id="remindersCountBadge" class="ml-auto rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 px-1.5 py-0.2 text-[10px] font-bold">3</span></button>
       <button data-view="livechat" class="nav-item"><i data-lucide="headset" class="h-4 w-4 text-amber-600"></i><span data-i18n="nav_livechat">المحادثات المباشرة</span></button>
       <button data-view="broadcast" class="nav-item"><i data-lucide="megaphone" class="h-4 w-4 text-purple-600"></i><span data-i18n="nav_broadcast">الحملات الإعلانية</span></button>
       <button data-view="chat" class="nav-item"><i data-lucide="messages-square" class="h-4 w-4 text-teal-600"></i><span data-i18n="nav_chat">معاينة المساعد الذكي</span></button>
@@ -955,17 +957,127 @@
 
     <!-- ===== PRODUCTS / CARS VIEW ===== -->
     <section data-pane="products" class="pane hidden min-h-0 flex-1 overflow-y-auto">
-      <div class="mx-auto max-w-4xl px-4 py-6 md:px-8 md:py-8">
-        <header class="mb-6 flex flex-wrap items-end justify-between gap-3">
+      <div class="mx-auto max-w-5xl px-4 py-6 md:px-8 md:py-8 space-y-5">
+        <header class="flex flex-wrap items-center justify-between gap-3">
           <div>
-            <h2 class="text-xl font-semibold text-slate-900">Cars Database (New &amp; Used Cars)</h2>
-            <p class="mt-1 text-sm text-slate-500">Internal vehicle inventory ready to answer client questions automatically 24/7 with exact prices, conditions, specs, and photos.</p>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <i data-lucide="car" class="h-5 w-5 text-emerald-600"></i>
+              قاعدة بيانات ومعرض السيارات (Cars Inventory)
+            </h2>
+            <p class="mt-1 text-xs text-slate-500 dark:text-slate-400">تشكيلة سيارات الزيرو والمستعملة الفابريكا المتاحة للرد التلقائي وإرسال المواصفات والصور والأقساط للعملاء عبر واتساب 24/7.</p>
           </div>
-          <button id="addProductBtn" class="flex items-center gap-1.5 rounded-lg bg-[#128C7E] px-3 py-2 text-sm font-medium text-white transition hover:bg-[#0f7a6e] shadow-sm">
-            <i data-lucide="plus" class="h-4 w-4"></i> Add Car to Inventory
-          </button>
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="openInstallmentCalcBtn" type="button" class="flex items-center gap-1.5 rounded-xl border border-teal-200 dark:border-teal-800 bg-teal-50 dark:bg-teal-950/60 px-3.5 py-2 text-xs font-bold text-teal-800 dark:text-teal-200 hover:bg-teal-100 transition shadow-xs">
+              <i data-lucide="calculator" class="h-4 w-4 text-teal-600"></i>
+              <span>حاسبة الأقساط الذكية 💳</span>
+            </button>
+            <button id="openCompareCarsBtn" type="button" class="flex items-center gap-1.5 rounded-xl border border-indigo-200 dark:border-indigo-800 bg-indigo-50 dark:bg-indigo-950/60 px-3.5 py-2 text-xs font-bold text-indigo-800 dark:text-indigo-200 hover:bg-indigo-100 transition shadow-xs">
+              <i data-lucide="scale" class="h-4 w-4 text-indigo-600"></i>
+              <span>مقارنة سيارتين ⚖️</span>
+            </button>
+            <button id="addProductBtn" class="flex items-center gap-1.5 rounded-xl bg-[#128C7E] px-4 py-2 text-xs font-bold text-white transition hover:bg-[#0f7a6e] shadow-sm">
+              <i data-lucide="plus" class="h-4 w-4"></i> إضافة سيارة جديدة
+            </button>
+          </div>
         </header>
+
+        <!-- Advanced Search & Filter Toolbar -->
+        <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-xs space-y-3">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <!-- Category Pills -->
+            <div class="flex flex-wrap items-center gap-1.5" id="carCategoryFilterPills">
+              <button data-cat="all" class="car-filter-pill active rounded-xl px-3 py-1.5 text-xs font-bold bg-[#128C7E] text-white shadow-xs">الكل (65)</button>
+              <button data-cat="zero" class="car-filter-pill rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">الزيرو فقط (Zero)</button>
+              <button data-cat="used" class="car-filter-pill rounded-xl px-3 py-1.5 text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200">مستعمل فابريكا (Certified)</button>
+            </div>
+
+            <!-- Total Results Counter -->
+            <span id="carFilterCounter" class="text-xs font-semibold text-slate-500">عرض 65 سيارة</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+            <!-- Live Search -->
+            <div class="relative">
+              <i data-lucide="search" class="absolute right-3 top-2.5 h-4 w-4 text-slate-400"></i>
+              <input id="carSearchInput" type="text" placeholder="ابحث باسم الموديل أو الماركة..." class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 py-1.5 pr-9 pl-3 text-xs outline-none focus:border-teal-500 text-slate-900 dark:text-white">
+            </div>
+
+            <!-- Brand Selector -->
+            <select id="carBrandFilter" class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-1.5 text-xs font-medium outline-none focus:border-teal-500 text-slate-700 dark:text-slate-200">
+              <option value="all">كل الماركات (All Brands)</option>
+              <option value="hyundai">Hyundai / هيونداي</option>
+              <option value="kia">Kia / كيا</option>
+              <option value="mercedes">Mercedes-Benz / مرسيدس</option>
+              <option value="bmw">BMW / بي إم دبليو</option>
+              <option value="toyota">Toyota / تويوتا</option>
+              <option value="mg">MG / إم جي</option>
+              <option value="chery">Chery / شيري</option>
+              <option value="jetour">Jetour / جيتور</option>
+              <option value="skoda">Skoda / سكودا</option>
+              <option value="opel">Opel / أوبل</option>
+              <option value="peugeot">Peugeot / بيجو</option>
+              <option value="mitsubishi">Mitsubishi / ميتسوبيشي</option>
+            </select>
+
+            <!-- Price Range Filter -->
+            <select id="carPriceFilter" class="rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-1.5 text-xs font-medium outline-none focus:border-teal-500 text-slate-700 dark:text-slate-200">
+              <option value="all">كل الفئات السعرية</option>
+              <option value="under_1m">أقل من مليون جنيه (&lt; 1,000,000 EGP)</option>
+              <option value="1m_2m">من 1 إلى 2 مليون جنيه</option>
+              <option value="2m_4m">من 2 إلى 4 مليون جنيه</option>
+              <option value="over_4m">أكثر من 4 مليون جنيه</option>
+            </select>
+          </div>
+        </div>
+
         <div id="productList" class="space-y-3"></div>
+      </div>
+    </section>
+
+    <!-- ===== TRADE-INS & VEHICLE APPRAISALS VIEW ===== -->
+    <section data-pane="tradeins" class="pane hidden min-h-0 flex-1 overflow-y-auto">
+      <div class="mx-auto max-w-5xl px-4 py-6 md:px-8 md:py-8 space-y-6">
+        <header class="flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-6 text-white shadow-sm border border-slate-800">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="rounded-full bg-cyan-500/20 px-2.5 py-0.5 text-xs font-semibold text-cyan-400 border border-cyan-500/30 flex items-center gap-1.5">
+                <i data-lucide="repeat" class="h-3.5 w-3.5"></i> تثمين واستبدال السيارات
+              </span>
+            </div>
+            <h2 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+              طلبات الاستبدال والتثمين (Trade-In Pipeline)
+            </h2>
+            <p class="text-sm text-slate-300 mt-0.5">
+              إدارة طلبات استبدال سيارات العملاء وتثمينها كدفعة مقدمة لشراء سيارات المعرض وتقسيط الفارق
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <button id="addTradeInBtn" class="flex items-center gap-2 rounded-xl bg-cyan-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition hover:bg-cyan-500">
+              <i data-lucide="plus-circle" class="h-4 w-4"></i>
+              <span>+ تسجيل طلب استبدال</span>
+            </button>
+            <button id="refreshTradeInsBtn" class="flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-800/80 px-3.5 py-2.5 text-sm font-medium text-slate-200 transition hover:bg-slate-700 hover:text-white" title="تحديث القائمة">
+              <i data-lucide="refresh-cw" class="h-4 w-4"></i>
+              <span class="hidden sm:inline">تحديث</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Status Filter Tabs -->
+        <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
+          <div class="flex items-center gap-1 rounded-xl border border-slate-200 dark:border-slate-800 p-1 bg-slate-50 dark:bg-slate-800/50" id="tradeInStatusTabs">
+            <button data-status="all" class="tradein-tab active rounded-lg px-3 py-1.5 text-xs font-bold bg-white dark:bg-slate-700 text-cyan-700 dark:text-cyan-300 shadow-sm">كافة الطلبات</button>
+            <button data-status="pending" class="tradein-tab rounded-lg px-3 py-1.5 text-xs font-bold text-slate-600 dark:text-slate-300 transition hover:bg-white dark:hover:bg-slate-700">في انتظار الفحص ⏳</button>
+            <button data-status="approved" class="tradein-tab rounded-lg px-3 py-1.5 text-xs font-bold text-slate-600 dark:text-slate-300 transition hover:bg-white dark:hover:bg-slate-700">تم التثمين والموافقة ✅</button>
+            <button data-status="completed" class="tradein-tab rounded-lg px-3 py-1.5 text-xs font-bold text-slate-600 dark:text-slate-300 transition hover:bg-white dark:hover:bg-slate-700">تم الاستبدال والتعاقد 🤝</button>
+          </div>
+          <div class="relative min-w-[220px]">
+            <i data-lucide="search" class="absolute right-3 top-2.5 h-4 w-4 text-slate-400"></i>
+            <input id="tradeInSearchInput" type="text" placeholder="ابحث باسم العميل أو السيارة..." class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 py-1.5 pr-9 pl-3 text-xs outline-none focus:border-cyan-500 text-slate-900 dark:text-white">
+          </div>
+        </div>
+
+        <div id="tradeInsList" class="space-y-3"></div>
       </div>
     </section>
 
@@ -1476,6 +1588,224 @@
       <input id="quickKnowledgeSearch" type="text" placeholder="Type to filter articles…" class="w-full rounded-lg border border-slate-200 px-3 py-2 text-xs outline-none focus:border-[#128C7E] mb-3">
       <div id="quickKnowledgeList" class="space-y-2.5 max-h-[50vh] overflow-y-auto"></div>
     </div>
+  </div>
+</div>
+
+<!-- Smart Auto Financing & Installment Calculator Modal -->
+<div id="installmentModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 hidden">
+  <div class="w-full max-w-2xl rounded-3xl bg-white dark:bg-slate-900 p-6 md:p-8 shadow-2xl animate-scaleIn max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 space-y-5">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-teal-50 dark:bg-teal-950 text-[#128C7E]">
+          <i data-lucide="calculator" class="h-5 w-5"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">حاسبة تمويل وأقساط السيارات (Smart Auto Finance)</h3>
+          <p class="text-xs text-slate-400">حساب فوري للأقساط البنكية وعروض الأسعار طبقاً لكبرى البنوك المصرية</p>
+        </div>
+      </div>
+      <button id="closeInstallmentModal" class="rounded-xl p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-white transition">
+        <i data-lucide="x" class="h-5 w-5"></i>
+      </button>
+    </div>
+
+    <!-- Inputs -->
+    <div class="space-y-4">
+      <div>
+        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">اختر سيارة من المعرض أو أدخل السعر</label>
+        <select id="calcCarSelect" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-xs font-medium outline-none focus:border-teal-500 text-slate-800 dark:text-slate-200">
+          <option value="custom">✏️ إدخال سعر يدوي مخصص...</option>
+        </select>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">سعر السيارة الإجمالي (EGP)</label>
+          <input id="calcPriceInput" type="number" step="10000" value="1500000" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2 text-sm font-bold text-[#128C7E] outline-none focus:border-teal-500">
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">نسبة المقدم (%)</label>
+            <span id="calcDownPctDisplay" class="text-xs font-bold text-teal-600">20%</span>
+          </div>
+          <input id="calcDownPctRange" type="range" min="15" max="70" step="5" value="20" class="w-full accent-[#128C7E]">
+        </div>
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="text-xs font-bold text-slate-700 dark:text-slate-300">مدة التقسيط (سنوات)</label>
+            <span id="calcYearsDisplay" class="text-xs font-bold text-teal-600">5 سنوات</span>
+          </div>
+          <input id="calcYearsRange" type="range" min="1" max="7" step="1" value="5" class="w-full accent-[#128C7E]">
+        </div>
+      </div>
+
+      <!-- Quick Preset Buttons -->
+      <div class="flex flex-wrap items-center gap-1.5 text-xs">
+        <span class="text-[11px] font-semibold text-slate-400">مقدم سريع:</span>
+        <button type="button" class="calc-pct-preset px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 font-bold hover:border-teal-500" data-pct="20">20%</button>
+        <button type="button" class="calc-pct-preset px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 font-bold hover:border-teal-500" data-pct="30">30%</button>
+        <button type="button" class="calc-pct-preset px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 font-bold hover:border-teal-500" data-pct="40">40%</button>
+        <button type="button" class="calc-pct-preset px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 font-bold hover:border-teal-500" data-pct="50">50%</button>
+      </div>
+    </div>
+
+    <!-- Live Calculation Cards -->
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+      <div class="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 p-3">
+        <p class="text-[10px] text-slate-400 font-medium">المقدم المطلوب</p>
+        <p id="calcResDownPayment" class="text-sm font-bold text-slate-900 dark:text-white mt-0.5">300,000 EGP</p>
+      </div>
+      <div class="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 p-3">
+        <p class="text-[10px] text-slate-400 font-medium">المبلغ الممول</p>
+        <p id="calcResFinanced" class="text-sm font-bold text-slate-900 dark:text-white mt-0.5">1,200,000 EGP</p>
+      </div>
+      <div class="rounded-2xl border border-teal-100 dark:border-teal-900/60 bg-teal-50/60 dark:bg-teal-950/40 p-3 col-span-2 sm:col-span-1 ring-1 ring-teal-500/20">
+        <p class="text-[10px] text-teal-700 dark:text-teal-300 font-bold">القسط الشهري</p>
+        <p id="calcResMonthly" class="text-base font-extrabold text-[#128C7E] mt-0.5">32,000 EGP</p>
+      </div>
+      <div class="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50 dark:bg-slate-850 p-3 col-span-2 sm:col-span-1">
+        <p class="text-[10px] text-slate-400 font-medium">إجمالي الفائدة</p>
+        <p id="calcResInterest" class="text-sm font-bold text-slate-900 dark:text-white mt-0.5">720,000 EGP</p>
+      </div>
+    </div>
+
+    <!-- Alternatives Table -->
+    <div class="rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-850/60 p-3 text-xs">
+      <p class="font-bold text-slate-700 dark:text-slate-300 mb-2">مقارنة فترات السداد المختلفة بنفس المقدم:</p>
+      <div class="grid grid-cols-3 gap-2 text-center" id="calcAlternativesGrid"></div>
+    </div>
+
+    <!-- Actions -->
+    <div class="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-2">
+        <button id="copyInstallmentQuoteBtn" type="button" class="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 shadow-xs transition">
+          <i data-lucide="copy" class="h-4 w-4"></i>
+          <span>نسخ عرض التقسيط 📋</span>
+        </button>
+        <button id="shareInstallmentWABtn" type="button" class="flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-2 text-xs font-bold text-white hover:bg-emerald-700 shadow-xs transition">
+          <i data-lucide="send" class="h-4 w-4"></i>
+          <span>مشاركة واتساب 📱</span>
+        </button>
+      </div>
+      <button id="insertInstallmentToChatBtn" type="button" class="rounded-xl bg-[#128C7E] px-4 py-2 text-xs font-bold text-white hover:bg-[#0f7a6e] transition">
+        إدراج في رد العميل 💬
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Vehicle Comparison Modal -->
+<div id="compareCarsModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 hidden">
+  <div class="w-full max-w-3xl rounded-3xl bg-white dark:bg-slate-900 p-6 md:p-8 shadow-2xl animate-scaleIn max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 space-y-5">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600">
+          <i data-lucide="scale" class="h-5 w-5"></i>
+        </div>
+        <div>
+          <h3 class="text-lg font-bold text-slate-900 dark:text-white">مقارنة سيارات المعرض (Vehicle Comparison)</h3>
+          <p class="text-xs text-slate-400">مقارنة فنية ومالية تفصيلية بين أي سيارتين مع توصية ذكية للعميل</p>
+        </div>
+      </div>
+      <button id="closeCompareModal" class="rounded-xl p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-white transition">
+        <i data-lucide="x" class="h-5 w-5"></i>
+      </button>
+    </div>
+
+    <!-- Selectors -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+      <div>
+        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">السيارة الأولى (Car A)</label>
+        <select id="compareCarSelectA" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-xs font-medium outline-none focus:border-indigo-500 text-slate-800 dark:text-slate-200"></select>
+      </div>
+      <div>
+        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">السيارة الثانية (Car B)</label>
+        <select id="compareCarSelectB" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-xs font-medium outline-none focus:border-indigo-500 text-slate-800 dark:text-slate-200"></select>
+      </div>
+    </div>
+
+    <!-- Comparison Results Area -->
+    <div id="compareResultContainer" class="space-y-4"></div>
+
+    <!-- Actions -->
+    <div class="flex items-center justify-between pt-3 border-t border-slate-100 dark:border-slate-800">
+      <button id="copyComparisonBtn" type="button" class="flex items-center gap-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-4 py-2 text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 transition">
+        <i data-lucide="copy" class="h-4 w-4"></i> نسخ المقارنة لواتساب
+      </button>
+      <button id="insertComparisonBtn" type="button" class="rounded-xl bg-indigo-600 px-4 py-2 text-xs font-bold text-white hover:bg-indigo-700 transition">
+        إدراج المقارنة في الشات 💬
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Trade-In Appraisal Modal -->
+<div id="addTradeInModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-xs p-4 hidden">
+  <div class="w-full max-w-lg rounded-3xl bg-white dark:bg-slate-900 p-6 md:p-8 shadow-2xl animate-scaleIn max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 space-y-4">
+    <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+      <div class="flex items-center gap-3">
+        <div class="flex h-10 w-10 items-center justify-center rounded-2xl bg-cyan-50 dark:bg-cyan-950 text-cyan-600">
+          <i data-lucide="repeat" class="h-5 w-5"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-slate-900 dark:text-white">تسجيل طلب استبدال وتثمين (Trade-In)</h3>
+          <p class="text-xs text-slate-400">تثمين سيارة العميل القديمة لاستبدالها بسيارة من المعرض</p>
+        </div>
+      </div>
+      <button id="closeTradeInModal" class="rounded-xl p-1.5 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-700 dark:hover:text-white transition">
+        <i data-lucide="x" class="h-5 w-5"></i>
+      </button>
+    </div>
+
+    <form id="addTradeInForm" class="space-y-3">
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">اسم العميل</label>
+          <input id="tiClientName" type="text" required placeholder="مثال: أحمد عبد الله" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs outline-none focus:border-cyan-500">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">رقم الهاتف / واتساب</label>
+          <input id="tiClientPhone" type="tel" required placeholder="مثال: 01012345678" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs outline-none focus:border-cyan-500 font-mono" dir="ltr">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">ماركة وموديل سيارة العميل</label>
+          <input id="tiCarModel" type="text" required placeholder="مثال: هيونداي إلنترا CN7" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs outline-none focus:border-cyan-500">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">سنة الصنع (الموديل)</label>
+          <input id="tiCarYear" type="number" value="2021" min="2000" max="2026" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs outline-none focus:border-cyan-500">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">العداد (كم)</label>
+          <input id="tiMileage" type="text" placeholder="مثال: 65,000 كم" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs outline-none focus:border-cyan-500">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">حالة الدهان والفحص</label>
+          <select id="tiPaintStatus" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs outline-none focus:border-cyan-500">
+            <option value="فابريكا بالكامل">فابريكا بالكامل (زيرو حوادث)</option>
+            <option value="راشة نظافة خارجي">راشة حزام نظافة (دواخل فابريكا)</option>
+            <option value="راشة رفرف أو اكصدام">راشة أجزاء بسيطة</option>
+            <option value="تحتاج فحص وتثمين">في انتظار الفحص بجهاز الدهان</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1">السيارة المطلوب الشراء والاستبدال بها من المعرض</label>
+        <input id="tiNotes" type="text" placeholder="مثال: يرغب في شراء كيا سبورتاج 2026 وتقسيط الفارق" class="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3 py-2 text-xs outline-none focus:border-cyan-500">
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-slate-100 dark:border-slate-800">
+        <button id="cancelTradeInBtn" type="button" class="rounded-xl border border-slate-200 dark:border-slate-700 px-4 py-2 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50">إلغاء</button>
+        <button type="submit" class="rounded-xl bg-cyan-600 px-5 py-2 text-xs font-bold text-white shadow-sm hover:bg-cyan-500">حفظ طلب الاستبدال</button>
+      </div>
+    </form>
   </div>
 </div>
 

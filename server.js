@@ -65,13 +65,21 @@ import {
   getLearnedAnswers,
   learnFromHumanReply,
   deleteLearnedAnswer,
-  recordClientQuestion
+  recordClientQuestion,
+  getTradeIns,
+  createTradeIn,
+  updateTradeInStatus,
+  deleteTradeIn
 } from './db.js';
 import {
   answerQuestion,
   generateCopilotDraft,
   improveCopilotDraft,
-  translateContent
+  translateContent,
+  calculateCarInstallment,
+  compareCars,
+  recommendCarsByBudget,
+  estimateTradeInValue
 } from './ai.js';
 
 dotenv.config();
@@ -368,6 +376,13 @@ app.post('/webhook', async (req, res) => {
               date: answer.intentData.time,
               time: answer.intentData.time
             });
+          } else if (answer.intentType === 'TRADE_IN_REQUEST') {
+            await createTradeIn({
+              clientPhone: fromPhone,
+              clientName,
+              notes: incomingText,
+              estimatedValue: answer.tradeInEstimate?.formattedRange || 'في انتظار الفحص والمعاينة'
+            });
           }
 
           if (answer.isFallback) {
@@ -528,6 +543,14 @@ app.post('/api/chat', async (req, res) => {
         time: result.intentData.time
       });
       result.reservation = reservation;
+    } else if (result.intentType === 'TRADE_IN_REQUEST') {
+      const tradeIn = await createTradeIn({
+        clientPhone: '201012345678',
+        clientName: 'Preview Client',
+        notes: message,
+        estimatedValue: result.tradeInEstimate?.formattedRange || 'في انتظار الفحص والمعاينة'
+      });
+      result.tradeIn = tradeIn;
     }
 
     res.json(result);
@@ -1198,6 +1221,80 @@ app.post('/api/ai/faq-gap', async (req, res) => {
     const { detectFaqGap } = await import('./ai.js');
     const result = await detectFaqGap(question || '', config.faqEntries || []);
     res.json(result);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= Auto Financing & Installment Calculator API ================= */
+app.post('/api/calculator/installment', (req, res) => {
+  try {
+    const { price, downPaymentPct, tenureYears, annualInterestRate } = req.body;
+    const result = calculateCarInstallment({
+      price,
+      downPaymentPct: Number(downPaymentPct) || 20,
+      tenureYears: Number(tenureYears) || 5,
+      annualInterestRate: Number(annualInterestRate) || 12
+    });
+    if (!result) return res.status(400).json({ error: 'Invalid car price' });
+    res.json({ ok: true, calculation: result });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= Car Trade-Ins & Appraisal Pipeline API ================= */
+app.get('/api/trade-ins', (req, res) => {
+  res.json({ tradeIns: getTradeIns() });
+});
+
+app.post('/api/trade-ins', async (req, res) => {
+  try {
+    const tradeIn = await createTradeIn(req.body);
+    res.json({ ok: true, tradeIn });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.patch('/api/trade-ins/:id', async (req, res) => {
+  try {
+    const { status, updates } = req.body;
+    const updated = await updateTradeInStatus(req.params.id, status, updates || {});
+    res.json({ ok: true, tradeIn: updated });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.delete('/api/trade-ins/:id', async (req, res) => {
+  try {
+    await deleteTradeIn(req.params.id);
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+/* ================= Car Comparison & Budget Recommendation API ================= */
+app.post('/api/ai/compare-cars', (req, res) => {
+  try {
+    const { carA, carB } = req.body;
+    const config = getConfig();
+    const result = compareCars(carA || '', carB || '', config.products || []);
+    if (!result) return res.status(400).json({ error: 'Could not compare the specified cars' });
+    res.json({ ok: true, comparison: result });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/ai/recommend-budget', (req, res) => {
+  try {
+    const { budget } = req.body;
+    const config = getConfig();
+    const recommendations = recommendCarsByBudget(budget, config.products || []);
+    res.json({ ok: true, recommendations });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

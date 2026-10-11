@@ -154,7 +154,37 @@ export const api = {
     body: JSON.stringify({ articleId })
   }),
   // Unified Customer Context
-  callGetUnifiedCustomer: (phone) => call(`/api/customers/${phone}/unified`)
+  callGetUnifiedCustomer: (phone) => call(`/api/customers/${phone}/unified`),
+  // Auto Financing & Installment Calculator
+  calculateInstallment: (payload) => call('/api/calculator/installment', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }),
+  // Trade-Ins & Vehicle Appraisals
+  getTradeIns: () => call('/api/trade-ins'),
+  createTradeIn: (payload) => call('/api/trade-ins', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }),
+  updateTradeInStatus: (id, status, updates) => call(`/api/trade-ins/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ status, updates })
+  }),
+  deleteTradeIn: (id) => call(`/api/trade-ins/${id}`, { method: 'DELETE' }),
+  // Vehicle Comparison & Budget Recommendations
+  compareCars: (carA, carB) => call('/api/ai/compare-cars', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ carA, carB })
+  }),
+  recommendCarsByBudget: (budget) => call('/api/ai/recommend-budget', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ budget })
+  })
 };
 
 /* Conversation Local Storage for In-App Live Simulator */
