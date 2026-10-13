@@ -163,6 +163,9 @@ export function initCustomers() {
       }
     });
   }
+
+  // Auto-load customers and calculate CRM KPIs on initialization
+  loadCustomers();
 }
 
 export async function loadCustomers() {

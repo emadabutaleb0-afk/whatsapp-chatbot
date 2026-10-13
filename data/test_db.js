@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import * as db from '../db.js';
+import { calculateCarInstallment, estimateTradeInValue, analyzeIntent } from '../ai.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -173,6 +174,37 @@ async function runTestSuite() {
     const diskParsed = JSON.parse(fileContent);
     assert(diskParsed && diskParsed.config && diskParsed.orders, '18. data/db.json file exists and is valid JSON');
     assert(diskParsed.orders.some(o => o.id === order.id), '18b. Orders correctly written and persisted to disk');
+
+    // Test 19: Egyptian Banking Auto Loan Standards (DBR 50%, Admin Fee, Insurance)
+    const loanCalc = calculateCarInstallment({ price: 2000000, downPaymentPct: 20, tenureYears: 5, annualInterestRate: 12 });
+    assert(loanCalc && loanCalc.monthlyInstallment > 0, '19. calculateCarInstallment() computes monthly installment');
+    assert(loanCalc.minNetSalary === Math.round(loanCalc.monthlyInstallment / 0.50), '19b. Central Bank of Egypt 50% DBR minimum salary requirement computed');
+    assert(loanCalc.adminFee === Math.round(loanCalc.financedAmount * 0.015), '19c. Bank administrative fee (1.5%) computed');
+    assert(loanCalc.approxAnnualInsurance > 0, '19d. Annual comprehensive auto insurance estimated');
+
+    // Test 20: Trade-In Valuation Appraisal Model
+    const mercVal = estimateTradeInValue({ make: 'مرسيدس C200', year: 2022, paintStatus: 'فابريكا بالكامل' });
+    assert(mercVal && mercVal.minRange > 1000000, '20. estimateTradeInValue() appraises luxury Mercedes-Benz with fair market premium');
+    const nissanVal = estimateTradeInValue({ make: 'نيسان صني', year: 2021, paintStatus: 'راشة خارجي' });
+    assert(nissanVal && nissanVal.minRange < mercVal.minRange, '20b. Popular Nissan baseline correctly differentiated from luxury vehicles');
+
+    // Test 21: Showroom Branches Official Setup
+    const branches = db.getBranches();
+    assert(Array.isArray(branches) && branches.length >= 2, '21. getBranches() provides multiple showroom branches');
+    const firstSettlement = branches.find(b => b.name.includes('التجمع الأول'));
+    assert(firstSettlement && firstSettlement.phone === '+201501511117', '21b. First Settlement showroom branch has official hotline');
+
+    // Test 22: Lead Intelligence CRM Auto-Tagging
+    const financePhone = '201011112222';
+    await db.addLog({
+      from: financePhone,
+      name: 'Amr Finance Prospect',
+      incoming: 'عايز اعرف تفاصيل التقسيط والقسط الشهري لسيارة كيا سبورتاج بمقدم 30%',
+      reply: 'أهلاً بك يا فندم! نوفر برامج تقسيط بنكية متميزة.'
+    });
+    const financeCust = db.getCustomer(financePhone);
+    assert(financeCust.tags.includes('Finance Prospect'), '22. addLog() auto-tags customer as Finance Prospect upon financing inquiry');
+    assert(financeCust.preferredPayment === 'تقسيط بنكي', '22b. Customer preferred payment updated to bank installment');
 
     console.log(`\n🎉 Results: ${passed} passed, ${failed} failed.`);
     process.exit(failed > 0 ? 1 : 0);

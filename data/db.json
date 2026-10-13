@@ -1,8 +1,8 @@
 {
   "config": {
     "business": {
-      "name": "Al-Fares Motors | الفارس موتورز مصر (هاني مسعود)",
-      "tagline": "وكالة الفارس موتورز – سيارات زيرو ومستعملة للبيع بالتقسيط المباشر | إدارة هاني مسعود",
+      "name": "Al-Fares Motors | الفارس للسيارات وموتورز مصر (هاني مسعود)",
+      "tagline": "أفضل وجهة لشراء واستبدال السيارات الزيرو والمستعملة",
       "about": "الفارس موتورز مصر – بيع وشراء واستبدال وتقسيط السيارات الزيرو والمستعملة في مصر بأسعار معلنة وتقسيط مباشر وضمان معتمد. فرع التجمع الأول وفرع مدينة نصر.",
       "hours": "السبت - الخميس: 2:00 PM – 12:00 AM | الجمعة: 3:00 PM – 12:00 AM",
       "location": "فرع التجمع الأول: مول 5، المجاورة الخامسة، القاهرة الجديدة | فرع مدينة نصر: 17 شارع المشروع، مصطفى النحاس",
@@ -3699,13 +3699,13 @@
     },
     "faqEntries": [
       {
-        "id": "learned_muxyvmbm0db6",
-        "question": "هل المعرض بيوفر سيارات مستوردة بالطلب من ألمانيا؟",
-        "answer": "لا",
-        "aliases": "هل المعرض بيوفر سيارات مستوردة بالطلب من ألمانيا؟",
+        "id": "learned_mv6o2zhdtp4s",
+        "question": "عايز اعرف تفاصيل التقسيط والقسط الشهري لسيارة كيا سبورتاج بمقدم 30%",
+        "answer": "متاح تقسيط بنكي مباشر بمقدم يبدأ من 20% وفترات سداد حتى 7 سنوات بأقل فائدة بنكية بصورة البطاقة وإثبات الدخل.",
+        "aliases": "عايز اعرف تفاصيل التقسيط والقسط الشهري لسيارة كيا سبورتاج بمقدم 30%",
         "mode": "exact",
         "autoLearned": true,
-        "learnedAt": 1791378728491
+        "learnedAt": 1791895109665
       },
       {
         "id": "faq1",
@@ -3958,26 +3958,223 @@
         "answer": "يتم فحص بطاريات السيارات الكهربائية بأحدث أجهزة التشخيص الرقمية (OBD) وتقديم تقرير رسمي يشمل: 🔋\n1. نسبة صحة البطارية (SOH) وعدد دورات الشحن السابقة.\n2. مدى السير الفعلي الواقعي للشحنة الكاملة (Real-World Range).\n3. كفاءة نظام التبريد الحراري للبطارية ومنافذ الشحن السريع.\n4. حالة محركات الدفع الكهربائية وأنظمة استرجاع طاقة الفرامل (Regenerative Braking).",
         "aliases": "فحص بطارية الكهرباء\nSOH\nصحة البطارية\nفحص سيارة كهربائية\nبطارية السيارة الكهربائية",
         "mode": "exact"
+      },
+      {
+        "id": "faq_37",
+        "question": "هل يمكن تقسيط السيارة بضمان شهادة استثمار أو وديعة بنكية وما هي المزايا؟",
+        "answer": "نعم، التقسيط بضمان الأوعية الادخارية والشهادات والودائع البنكية هو الأسرع والأسهل على الإطلاق: 🏦💳\n• تمويل يصل حتى 90% إلى 95% من القيمة الاسمية للشهادة أو الوديعة.\n• بدون استعلام عمل، بدون كشف حساب بنكي، وبدون تحريات ائتمانية.\n• الموافقة فورية خلال ساعات واستلام السيارة في نفس اليوم.\n• تحتفظ بكامل أرباح وعوائد شهاداتك البنكية دون كسرها، وتستفيد بفارق فائدة رمزي.\n• متاح مع جميع البنوك الكبرى (البنك الأهلي، بنك مصر، CIB، QNB، بنك القاهرة، وغيرها).",
+        "aliases": "تقسيط بضمان شهادة\nتقسيط بضمان وديعة\nقرض سيارة بضمان شهادات\nتمويل بضمان أوعية ادخارية\nتقسيط بدون كسر الشهادة\nشهادات البنك الاهلي وبنك مصر",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_38",
+        "question": "هل تتوفر لديكم أنظمة تقسيط وفق أحكام الشريعة الإسلامية (مرابحة إسلامية)؟",
+        "answer": "نعم بكل فخر! 🌙 نوفر حلول تمويل وتقسيط متوافقة 100% مع أحكام الشريعة الإسلامية بالتعاون مع بنوك وشركات إسلامية معتمدة:\n• بنك فيصل الإسلامي المصري، مصرف أبوظبي الإسلامي (ADIB)، وبنك البركة مصر.\n• برنامج كونتكت درايف الإسلامي المرخص من هيئة الرقابة الشرعية.\n• يتم الشراء بصيغة (المرابحة للآمر بالشراء) بهامش ربح ثابت ومعلوم دون أي فوائد مركبة أو غرامات ربوية.\n• عقد بيع واضح وصريح يحدد الأقساط الشهرية الثابتة من اليوم الأول وحتى انتهاء السداد.",
+        "aliases": "تقسيط اسلامي\nمرابحة اسلامية\nبنك فيصل الاسلامي\nمصرف ابوظبي الاسلامي\nتمويل حلال\nبدون فوائد ربوية\nشريعة اسلامية",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_39",
+        "question": "سيارتي الحالية ما زال عليها أقساط وحظر بيع لصالح بنك، هل يمكن استبدالها لديكم؟",
+        "answer": "نعم بكل تأكيد! 🔄 نوفر خدمة الاستبدال حتى للسيارات المرهونة للبنك أو شركة التمويل:\n1. يقوم خبراؤنا بفحص وتثمين سيارتك الحالية بالسعر العادل للسوق.\n2. نستخرج مخالصة رسمية من البنك بسداد كامل المديونية المعجلة وفك حظر البيع.\n3. الفارق المتبقي من ثمن السيارة يُحتسب مباشرة كمقدم للسيارة الجديدة الزيرو أو المستعملة.\n4. نساعدك في تمويل باقي قيمة السيارة الجديدة على أقساط بنكية مريحة جديدة.",
+        "aliases": "استبدال سيارة عليها اقساط\nابدل عربية عليها حظر\nبيع سيارة مرهونة\nعليا اقساط وعايز ابدل\nسداد مديونية البنك واستبدال\nفك حظر واستبدال",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_40",
+        "question": "كيف تتم إجراءات الترخيص واستلام نمر ورخصة السيارة في المرور؟",
+        "answer": "في الفارس موتورز، نهتم براحتك ونوفر لك خدمة التخليص المروري الشامل: 🚦📋\n• تسليمك ملف السيارة كاملاً (مبايعة معتمدة، إفراج جمركي، شهادة المطابقة، فحص البيئة).\n• مندوب مختص من المعرض يرافقك أو ينوب عنك في وحدة المرور التابع لها.\n• إنهاء الفحص الفني، سداد الضرائب، التأمين الإجباري، والملصق الإلكتروني.\n• استلام اللوحات المعدنية والرخصة الرسمية (سارية حتى 3 سنوات) وتسليمها لك فوراً.",
+        "aliases": "ترخيص المرور\nاستخراج النمر\nتكلفة ترخيص السيارة\nاجراءات المرور\nورق الترخيص\nاستلام الرخصة",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_41",
+        "question": "هل سيارات الزيرو تُباع لديكم بالسعر الرسمي أم يوجد أوفر برايس (Overprice)؟",
+        "answer": "سياسة الفارس موتورز مبنية على النزاهة والمصداقية المطلقة: 🏷️✨\n• نوفر أغلب الموديلات بالسعر الرسمي المعتمد من الوكيل مباشرة.\n• في حال وجود كوتة نادرة أو طلب استثنائي في السوق على بعض الفئات، نلتزم بأقل هامش تجاري عادل ومعلن بوضوح.\n• يتم تثبيت السعر النهائي بمجرد دفع العربون وتدوينه في إيصال الحجز الرسمي، دون أي زيادة أو تغيير عند الاستلام.",
+        "aliases": "في اوفر برايس؟\nالسعر الرسمي\nسعر التوكيل\nزيادة عن السعر الرسمي\nاوفر برايس كام\nتثبيت السعر",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_42",
+        "question": "هل توجد برامج تقسيط مخصصة لربات البيوت أو أصحاب المعاشات والمتقاعدين؟",
+        "answer": "نعم، لدينا برامج تمويل متخصصة تراعي مختلف الفئات المجتمعية: 👵🧕\n• برنامج أصحاب المعاشات والمتقاعدين: حتى سن 65 إلى 70 عاماً بشهادة بيان المعاش فقط مع بنك ناصر والبنوك الشريكة.\n• برنامج ربات البيوت: بمقدمات تبدأ من 30% إلى 40%، وإمكانية وجود ضامن من الدرجة الأولى أو إثبات دخل إضافي (عقود إيجار أو أوعية ادخارية).\n• برامج تمويل بدون عمل مثبت لكافة الفئات بالتعاون مع شركات التمويل المباشر.",
+        "aliases": "تقسيط للمعاشات\nتقسيط ربات بيوت\nتقسيط لكبار السن\nتقسيط بدون جهة عمل\nقسط بدون وظيفة\nبرنامج المعاشات",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_43",
+        "question": "هل يمكن تقسيط مصاريف الترخيص، الصيانة، أو جزء من مقدم السيارة عبر تطبيقات التمويل (ValU / سهولة / أمان)؟",
+        "answer": "نعم بكل تأكيد! 📱⚡ نحن شركاء معتمدون لكبرى منصات التمويل الاستهلاكي الذكي في مصر:\n• تطبيقات ValU، سهولة (Souhoola)، أمان (Aman)، وفرصة (Forsa).\n• يمكنك تقسيط قيمة التأمين الشامل السنوي، مصاريف الترخيص بالمرور، أو جزء من مقدم الشراء.\n• فترات سداد مرنة من 6 أشهر وحتى 36 شهراً بموافقة فورية برقم البطاقة فقط وبدون مستندات ورقية.",
+        "aliases": "تقسيط فاليو\nتقسيط سهولة\nتقسيط امان\nتقسيط مصاريف الترخيص والتأمين\nvalu\nsouhoola\naman\nforsa",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_44",
+        "question": "ما هي البنود التي يغطيها تقرير الفحص الفني الشامل (150 نقطة) لكل سيارة معتمدة؟",
+        "answer": "تقرير الفحص الفني الـ 150 نقطة لدى الفارس موتورز هو شهادة ضمان معتمدة تفحص السيارة هندسياً: 🔍🛠️\n1. الشاسيه والقواطع وهيكل السيارة لضمان خلوها من الحوادث أو اللحام.\n2. سمك دهان المصنع بالمايكرون (Paint Depth Gauge).\n3. المحرك، ناقل الحركة، وضغط الزيت، وكفاءة دورة التبريد.\n4. منظومة الفرامل، نظام التعليق (العفشة)، ونظام التوجيه (الباور).\n5. فحص كومبيوتر كامل (OBD Diagnostic Scan) لجميع الحساسات وكنترول الإيرباج.\n6. سلامة العداد الفعلي وخلوه من أي تلاعب.",
+        "aliases": "تقرير الفحص\nكشف الـ 150 نقطة\nفحص كمبيوتر\nكشف الشاسيه والبوية\nفحص العفشة والموتور\nتقرير الحالة الفنية",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_45",
+        "question": "هل يقدم المعرض ضماناً ممتداً وخدمة المساعدة على الطريق (Roadside Assistance) بعد الشراء؟",
+        "answer": "نعم! راحتك وأمانك بعد استلام السيارة أولويتنا الأولى: 🛡️🛟\n• باقات ضمان ممتد تصل حتى سنة كاملة أو 20,000 كم على المحرك وناقل الحركة للسيارات المستعملة المعتمدة.\n• بطاقة مساعدة وإنقاذ على الطريق (Roadside Assistance) مجانية 24/7 لمدة عام.\n• خدمة ونش سحب الطوارئ في كافة محافظات مصر، شحن البطارية في مكانك، تزويد الوقود الطارئ، وتبديل الإطارات.",
+        "aliases": "ضمان ممتد\nونش انقاذ\nمساعدة على الطريق\nطوارئ سيارات 24/7\nroadside assistance\nخدمة الانقاذ السريع",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_46",
+        "question": "هل يمكن شراء أو ترخيص سيارات المغتربين المعفاة من الجمارك والمستوردة من الخارج لديكم؟",
+        "answer": "نعم! نقدم استشارات متخصصة ونوفر سيارات مستوردة بالكامل: 🚢🇪🇬\n• توفير سيارات زيرو كسر زيرو خليجية وأوروبية كاملة الإفراج الجمركي مع أوراق الترخيص الفورية.\n• تقديم الاستشارات الفنية والمالية للمصريين المقيمين بالخارج المستفيدين من مبادرة تيسيرات استيراد السيارات.\n• فحص وترخيص السيارات الواردة من الخارج والتأكد من مطابقتها للمواصفات القياسية المصرية وتوفير برامج الضمان والصيانة.",
+        "aliases": "سيارات المغتربين\nسيارات المصريين بالخارج\nزيرو جمارك\nوديعة المغتربين\nسيارات مستوردة خليجي\nمبادرة سيارات المغتربين",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_47",
+        "question": "هل يقدم المعرض فواتير ضريبية وخصم ضريبة القيمة المضافة لسيارات الشركات والأساطيل؟",
+        "answer": "نعم، ندعم قطاع الأعمال والشركات بحلول B2B متكاملة: 🏢📑\n• إصدار فواتير ضريبية إلكترونية رسمية معتمدة برقم تسجيل ضريبي رسمي لخصم ضريبة القيمة المضافة ومصاريف الإهلاك.\n• عروض أسعار خاصة لشراء الأساطيل وسيارات المبيعات والنقل الخفيف.\n• برامج التأجير التمويلي (Financial & Operating Lease) بالتعاون مع كبرى شركات التأجير التمويلي في مصر.",
+        "aliases": "فواتير ضريبية\nسيارات شركات\nشراء للشركات\nتأجير تمويلي\nfleet sales\nb2b\nفاتورة الكترونية للسيارة",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_48",
+        "question": "هل يمكن لشخص آخر إتمام إجراءات الشراء أو استلام السيارة نيابة عني بموجب توكيل؟",
+        "answer": "نعم، متاح قانونياً بسهولة تامة: 🖋️⚖️\n• يمكن إتمام التعاقد، دفع المبالغ، واستلام السيارة بموجب توكيل رسمي خاص بالبيع والشراء والترخيص موثق من الشهر العقاري، أو توكيل رسمي عام ساري.\n• يشترط تقديم أصل التوكيل، أصل بطاقة الرقم القومي للوكيل، وصورة واضحة من بطاقة المشتري الأصلي.\n• يوقع الوكيل على محضر تسليم السيارة الرسمي مع تسليمه كافة وثائق وضمانات السيارة.",
+        "aliases": "استلام بتوكيل\nتوكيل رسمي\nحد يستلم مكاني\nتفويض استلام سيارة\nاستلام السيارة بالشهر العقاري",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_49",
+        "question": "ما مدى توفر قطع الغيار ومراكز الخدمة للسيارات الحديثة (الصينية، الأوروبية، والهايبرد) المعروضة لديكم؟",
+        "answer": "نحرص في الفارس موتورز على انتقاء سيارات تتمتع بدعم فني قوي في مصر: ⚙️🔧\n• السيارات الصينية المختارة (مثل MG، Chery، Geely، Haval) وكلاؤها يوفرون شبكة مراكز خدمة واسعة وضمان يصل إلى 5-6 سنوات أو 150 ألف كم.\n• السيارات الأوروبية واليابانية والكورية تتمتع بتوفر قطع الغيار الأصلية والبديلة بكافة الأسواق.\n• نقدم لعملائنا كتيب إرشادي بأفضل مراكز الصيانة المتخصصة وموزعي قطع الغيار المعتمدين عند استلام كل سيارة.",
+        "aliases": "قطع الغيار متوفرة؟\nمراكز الصيانة\nقطع غيار الصيني\nصيانة الهايبرد\nصيانة السيارات الاوروبية\nتوكيل وضمان قطع الغيار",
+        "mode": "exact"
+      },
+      {
+        "id": "faq_50",
+        "question": "ما هي الفروق في تكاليف الترخيص السنوية والضريبة ورسم التنمية بين سيارات 1600cc والأعلى سعة؟",
+        "answer": "تختلف تكلفة الترخيص السنوية بحسب السعة اللترية (CC) وقيمة السيارة وفق قانون المرور المصري: 📊🚗\n• حتى 1630 CC (المعظم): ضريبة سنوية اقتصادية ورسم تنمية مناسب (إجمالي حوالي 2,500 إلى 4,500 ج.م سنوياً شامل التأمين والملصق).\n• فوق 1630 CC حتى 2000 CC: تطبق شريحة أعلى في رسم التنمية والضريبة (حوالي 8,000 إلى 15,000 ج.م سنوياً).\n• فوق 2000 CC: فئة المحركات الكبيرة برسم تنمية وضريبة مرتفعة نسبياً (من 15,000 ج.م فأكثر).\nيقوم مستشار المبيعات بحساب التكلفة الدقيقة لترخيص السيارة التي تختارها وتفصيلها لك قبل الشراء.",
+        "aliases": "ضريبة المرور\nتكلفة ترخيص 2000cc\nفرق السيسي في الترخيص\nرسم التنمية السنوي\nمصاريف ترخيص المرور\nترخيص فوق 1600",
+        "mode": "exact"
       }
     ]
   },
   "logs": [
     {
-      "id": "msg_muxyvmbj5wvw",
-      "at": 1791369046207,
-      "from": "201099887766",
-      "name": "أحمد محمود",
-      "incoming": "هل المعرض بيوفر سيارات مستوردة بالطلب من ألمانيا؟",
-      "reply": null,
-      "status": "received"
+      "id": "msg_mv6kyqdd7koe",
+      "at": 1791889872385,
+      "from": "201099998888",
+      "name": "Test Customer",
+      "incoming": "عايز اعرف تفاصيل مرسيدس C200 زيرو والتقسيط",
+      "reply": "أهلاً بك! مرسيدس C200 AMG موديل 2024 متوفرة بسعر 3,450,000 ج.م مع تقسيط حتى 5 سنوات.",
+      "status": "sent",
+      "responseTimeMs": 250
     },
     {
-      "id": "msg_muy4n57qvj5t",
-      "at": 1791378728486,
-      "from": "201099887766",
+      "id": "msg_mv6kyqgh6jtj",
+      "at": 1791889872497,
+      "from": "201011112222",
+      "name": "Amr Finance Prospect",
+      "incoming": "عايز اعرف تفاصيل التقسيط والقسط الشهري لسيارة كيا سبورتاج بمقدم 30%",
+      "reply": "أهلاً بك يا فندم! نوفر برامج تقسيط بنكية متميزة."
+    },
+    {
+      "id": "msg_mv6lkel6e5hh",
+      "at": 1791890883546,
+      "from": "201099998888",
+      "name": "Test Customer",
+      "incoming": "عايز اعرف تفاصيل مرسيدس C200 زيرو والتقسيط",
+      "reply": "أهلاً بك! مرسيدس C200 AMG موديل 2024 متوفرة بسعر 3,450,000 ج.م مع تقسيط حتى 5 سنوات.",
+      "status": "sent",
+      "responseTimeMs": 250
+    },
+    {
+      "id": "msg_mv6lkeoldc8y",
+      "at": 1791890883669,
+      "from": "201011112222",
+      "name": "Amr Finance Prospect",
+      "incoming": "عايز اعرف تفاصيل التقسيط والقسط الشهري لسيارة كيا سبورتاج بمقدم 30%",
+      "reply": "أهلاً بك يا فندم! نوفر برامج تقسيط بنكية متميزة."
+    },
+    {
+      "id": "msg_mv6lwqziv53z",
+      "at": 1791891459486,
+      "from": "201099998888",
+      "name": "Test Customer",
+      "incoming": "عايز اعرف تفاصيل مرسيدس C200 زيرو والتقسيط",
+      "reply": "أهلاً بك! مرسيدس C200 AMG موديل 2024 متوفرة بسعر 3,450,000 ج.م مع تقسيط حتى 5 سنوات.",
+      "status": "sent",
+      "responseTimeMs": 250
+    },
+    {
+      "id": "msg_mv6lwr2zxejm",
+      "at": 1791891459611,
+      "from": "201011112222",
+      "name": "Amr Finance Prospect",
+      "incoming": "عايز اعرف تفاصيل التقسيط والقسط الشهري لسيارة كيا سبورتاج بمقدم 30%",
+      "reply": "أهلاً بك يا فندم! نوفر برامج تقسيط بنكية متميزة."
+    },
+    {
+      "id": "msg_mv6msedn8jvu",
+      "at": 1791892936139,
+      "from": "201099998888",
+      "name": "Test Customer",
+      "incoming": "عايز اعرف تفاصيل مرسيدس C200 زيرو والتقسيط",
+      "reply": "أهلاً بك! مرسيدس C200 AMG موديل 2024 متوفرة بسعر 3,450,000 ج.م مع تقسيط حتى 5 سنوات.",
+      "status": "sent",
+      "responseTimeMs": 250
+    },
+    {
+      "id": "msg_mv6msegz3myj",
+      "at": 1791892936259,
+      "from": "201011112222",
+      "name": "Amr Finance Prospect",
+      "incoming": "عايز اعرف تفاصيل التقسيط والقسط الشهري لسيارة كيا سبورتاج بمقدم 30%",
+      "reply": "أهلاً بك يا فندم! نوفر برامج تقسيط بنكية متميزة."
+    },
+    {
+      "id": "msg_mv6nbfu0i0iu",
+      "at": 1791893824488,
+      "from": "201099998888",
+      "name": "Test Customer",
+      "incoming": "عايز اعرف تفاصيل مرسيدس C200 زيرو والتقسيط",
+      "reply": "أهلاً بك! مرسيدس C200 AMG موديل 2024 متوفرة بسعر 3,450,000 ج.م مع تقسيط حتى 5 سنوات.",
+      "status": "sent",
+      "responseTimeMs": 250
+    },
+    {
+      "id": "msg_mv6nbfxb88cn",
+      "at": 1791893824607,
+      "from": "201011112222",
+      "name": "Amr Finance Prospect",
+      "incoming": "عايز اعرف تفاصيل التقسيط والقسط الشهري لسيارة كيا سبورتاج بمقدم 30%",
+      "reply": "أهلاً بك يا فندم! نوفر برامج تقسيط بنكية متميزة."
+    },
+    {
+      "id": "msg_mv6niftarxkt",
+      "at": 1791894151054,
+      "from": "201099998888",
+      "name": "Test Customer",
+      "incoming": "عايز اعرف تفاصيل مرسيدس C200 زيرو والتقسيط",
+      "reply": "أهلاً بك! مرسيدس C200 AMG موديل 2024 متوفرة بسعر 3,450,000 ج.م مع تقسيط حتى 5 سنوات.",
+      "status": "sent",
+      "responseTimeMs": 250
+    },
+    {
+      "id": "msg_mv6nifwjpw2t",
+      "at": 1791894151171,
+      "from": "201011112222",
+      "name": "Amr Finance Prospect",
+      "incoming": "عايز اعرف تفاصيل التقسيط والقسط الشهري لسيارة كيا سبورتاج بمقدم 30%",
+      "reply": "أهلاً بك يا فندم! نوفر برامج تقسيط بنكية متميزة."
+    },
+    {
+      "id": "msg_mv6o2zh82hhc",
+      "at": 1791895109660,
+      "from": "201011112222",
       "name": "Human Agent",
       "incoming": null,
-      "reply": "لا",
+      "reply": "متاح تقسيط بنكي مباشر بمقدم يبدأ من 20% وفترات سداد حتى 7 سنوات بأقل فائدة بنكية بصورة البطاقة وإثبات الدخل.",
       "status": "sent",
       "isHuman": true
     }
@@ -3985,97 +4182,97 @@
   "demoMetrics": {
     "days": 7,
     "totals": {
-      "messages": 230,
-      "faqHits": 192,
-      "fallbacks": 8,
-      "pos": 186,
+      "messages": 218,
+      "faqHits": 171,
+      "fallbacks": 9,
+      "pos": 174,
       "neg": 0,
       "neutral": 44
     },
     "business": {
-      "totalOrders": 3,
-      "totalRevenue": 7950000,
-      "totalReservations": 2,
-      "totalGuests": 3,
+      "totalOrders": 15,
+      "totalRevenue": 8850000,
+      "totalReservations": 17,
+      "totalGuests": 30,
       "totalCustomers": 48,
       "repeatRate": 38,
       "openHandoffs": 0,
-      "autoRate": 97
+      "autoRate": 96
     },
     "series": [
       {
-        "date": "2026-10-01",
-        "messages": 39,
-        "faqHits": 34,
+        "date": "2026-10-07",
+        "messages": 24,
+        "faqHits": 18,
         "fallbacks": 1,
-        "msCount": 39,
-        "msTotal": 28470,
-        "pos": 31,
-        "neg": 0,
-        "neutral": 8
-      },
-      {
-        "date": "2026-10-02",
-        "messages": 44,
-        "faqHits": 39,
-        "fallbacks": 2,
-        "msCount": 44,
-        "msTotal": 48840,
-        "pos": 36,
-        "neg": 0,
-        "neutral": 8
-      },
-      {
-        "date": "2026-10-03",
-        "messages": 32,
-        "faqHits": 25,
-        "fallbacks": 1,
-        "msCount": 32,
-        "msTotal": 22912,
-        "pos": 26,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-10-04",
-        "messages": 32,
-        "faqHits": 28,
-        "fallbacks": 1,
-        "msCount": 32,
-        "msTotal": 21472,
-        "pos": 26,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-10-05",
-        "messages": 30,
-        "faqHits": 24,
-        "fallbacks": 1,
-        "msCount": 30,
-        "msTotal": 28050,
-        "pos": 24,
-        "neg": 0,
-        "neutral": 6
-      },
-      {
-        "date": "2026-10-06",
-        "messages": 27,
-        "faqHits": 23,
-        "fallbacks": 1,
-        "msCount": 27,
-        "msTotal": 32535,
-        "pos": 22,
+        "msCount": 24,
+        "msTotal": 20064,
+        "pos": 19,
         "neg": 0,
         "neutral": 5
       },
       {
-        "date": "2026-10-07",
+        "date": "2026-10-08",
+        "messages": 41,
+        "faqHits": 33,
+        "fallbacks": 2,
+        "msCount": 41,
+        "msTotal": 45756,
+        "pos": 33,
+        "neg": 0,
+        "neutral": 8
+      },
+      {
+        "date": "2026-10-09",
+        "messages": 40,
+        "faqHits": 32,
+        "fallbacks": 2,
+        "msCount": 40,
+        "msTotal": 33320,
+        "pos": 32,
+        "neg": 0,
+        "neutral": 8
+      },
+      {
+        "date": "2026-10-10",
+        "messages": 35,
+        "faqHits": 26,
+        "fallbacks": 1,
+        "msCount": 35,
+        "msTotal": 32445,
+        "pos": 28,
+        "neg": 0,
+        "neutral": 7
+      },
+      {
+        "date": "2026-10-11",
+        "messages": 28,
+        "faqHits": 24,
+        "fallbacks": 1,
+        "msCount": 28,
+        "msTotal": 31472,
+        "pos": 22,
+        "neg": 0,
+        "neutral": 6
+      },
+      {
+        "date": "2026-10-12",
+        "messages": 24,
+        "faqHits": 18,
+        "fallbacks": 1,
+        "msCount": 24,
+        "msTotal": 21000,
+        "pos": 19,
+        "neg": 0,
+        "neutral": 5
+      },
+      {
+        "date": "2026-10-13",
         "messages": 26,
-        "faqHits": 19,
+        "faqHits": 20,
         "fallbacks": 1,
         "msCount": 26,
-        "msTotal": 21320,
+        "msTotal": 17368,
         "pos": 21,
         "neg": 0,
         "neutral": 5
@@ -4127,8 +4324,8 @@
       {
         "hour": 6,
         "label": "06:00",
-        "messages": 5,
-        "faqHits": 4,
+        "messages": 4,
+        "faqHits": 3,
         "fallbacks": 1
       },
       {
@@ -4141,99 +4338,99 @@
       {
         "hour": 8,
         "label": "08:00",
-        "messages": 14,
-        "faqHits": 11,
+        "messages": 13,
+        "faqHits": 10,
         "fallbacks": 3
       },
       {
         "hour": 9,
         "label": "09:00",
-        "messages": 18,
-        "faqHits": 14,
+        "messages": 17,
+        "faqHits": 13,
         "fallbacks": 4
       },
       {
         "hour": 10,
         "label": "10:00",
-        "messages": 23,
-        "faqHits": 18,
+        "messages": 22,
+        "faqHits": 17,
         "fallbacks": 5
       },
       {
         "hour": 11,
         "label": "11:00",
-        "messages": 21,
+        "messages": 20,
         "faqHits": 16,
-        "fallbacks": 5
+        "fallbacks": 4
       },
       {
         "hour": 12,
         "label": "12:00",
-        "messages": 18,
-        "faqHits": 14,
+        "messages": 17,
+        "faqHits": 13,
         "fallbacks": 4
       },
       {
         "hour": 13,
         "label": "13:00",
-        "messages": 16,
+        "messages": 15,
         "faqHits": 12,
-        "fallbacks": 4
+        "fallbacks": 3
       },
       {
         "hour": 14,
         "label": "14:00",
-        "messages": 14,
-        "faqHits": 11,
+        "messages": 13,
+        "faqHits": 10,
         "fallbacks": 3
       },
       {
         "hour": 15,
         "label": "15:00",
-        "messages": 16,
+        "messages": 15,
         "faqHits": 12,
-        "fallbacks": 4
+        "fallbacks": 3
       },
       {
         "hour": 16,
         "label": "16:00",
-        "messages": 18,
-        "faqHits": 14,
+        "messages": 17,
+        "faqHits": 13,
         "fallbacks": 4
       },
       {
         "hour": 17,
         "label": "17:00",
-        "messages": 21,
+        "messages": 20,
         "faqHits": 16,
-        "fallbacks": 5
+        "fallbacks": 4
       },
       {
         "hour": 18,
         "label": "18:00",
-        "messages": 25,
-        "faqHits": 20,
+        "messages": 24,
+        "faqHits": 19,
         "fallbacks": 5
       },
       {
         "hour": 19,
         "label": "19:00",
-        "messages": 23,
-        "faqHits": 18,
+        "messages": 22,
+        "faqHits": 17,
         "fallbacks": 5
       },
       {
         "hour": 20,
         "label": "20:00",
-        "messages": 18,
-        "faqHits": 14,
+        "messages": 17,
+        "faqHits": 13,
         "fallbacks": 4
       },
       {
         "hour": 21,
         "label": "21:00",
-        "messages": 14,
-        "faqHits": 11,
+        "messages": 13,
+        "faqHits": 10,
         "fallbacks": 3
       },
       {
@@ -4251,49 +4448,49 @@
         "fallbacks": 0
       }
     ],
-    "avgMs": 885,
+    "avgMs": 924,
     "topics": [
       {
         "label": "أسعار ومواصفات السيارات",
-        "count": 80
+        "count": 76
       },
       {
         "label": "برامج التقسيط والتمويل البنكي",
-        "count": 64
+        "count": 61
       },
       {
         "label": "حجز تجارب القيادة (Test Drive)",
-        "count": 41
+        "count": 39
       },
       {
         "label": "استبدال السيارات (Trade-In)",
-        "count": 27
+        "count": 26
       },
       {
         "label": "عنوان المعرض والمواعيد",
-        "count": 16
+        "count": 15
       }
     ],
     "topQuestions": [
       {
         "question": "بكام مرسيدس C200 زيرو 2024؟",
-        "count": 28
+        "count": 26
       },
       {
         "question": "هل في تقسيط للبي ام دبليو 320 ومقدمها كام؟",
-        "count": 23
+        "count": 22
       },
       {
         "question": "عايز احجز تجربة قيادة لتويوتا كورولا بكره",
-        "count": 18
+        "count": 17
       },
       {
         "question": "ممكن ابدل عربيتي النترا واخد كيا سبورتاج؟",
-        "count": 14
+        "count": 13
       },
       {
         "question": "مواعيد المعرض يوم الجمعة ايه؟",
-        "count": 12
+        "count": 11
       },
       {
         "question": "هل العربيات المستعملة فابريكا بالكامل ومعاها فحص؟",
@@ -4302,67 +4499,91 @@
     ],
     "unanswered": [
       {
-        "question": "هل متوفر استيراد سيارات معاقين أو سيارات كهربائية تسلا؟",
-        "count": 6
-      },
-      {
-        "question": "هل يمكن ترخيص السيارة 3 سنوات مباشرة من المعرض؟",
-        "count": 4
-      },
-      {
-        "question": "هل تقبلون بيع سيارة بالتوكيل المباشر بدون تجديد؟",
-        "count": 3
+        "question": "هل يوجد بورش ماكان 2023 مستعملة؟",
+        "count": 6,
+        "createdAt": 1791889872423,
+        "updatedAt": 1791894151095
       }
     ],
     "recentActivity": [
       {
-        "id": "ord_demo_1",
-        "type": "order",
-        "title": "Car Booking CAR-0001 · م. أحمد الشناوي",
-        "detail": "3,850,000 EGP (دفعة حجز أولى 150,000 EGP والباقي تمويل بنكي) · Status: confirmed",
-        "timestamp": 1791368271082,
-        "badgeClass": "bg-amber-50 text-amber-700",
-        "badgeText": "confirmed",
-        "icon": "car"
-      },
-      {
-        "id": "res_demo_1",
+        "id": "res_mv6ojypeo8jh",
         "type": "reservation",
-        "title": "Test Drive (2 guest) · م. أحمد الشناوي",
-        "detail": "غداً الأربعاء at 6:30 PM (تجربة قيادة مرسيدس C200) · العميل يرغب في فحص قيادة على الدائري الأوسطي",
-        "timestamp": 1791367371082,
+        "title": "Test Drive (1 guest) · Preview Client",
+        "detail": "موعد فحص وتثمين سيارة بالمعرض at موعد فحص وتثمين سيارة بالمعرض · موعد تجربة قيادة ومعاينة",
+        "timestamp": 1791895901810,
         "badgeClass": "bg-teal-50 text-teal-700",
         "badgeText": "confirmed",
         "icon": "calendar"
       },
       {
-        "id": "ord_demo_2",
-        "type": "order",
-        "title": "Car Booking CAR-0002 · د. سارة فؤاد",
-        "detail": "2,650,000 EGP · Status: ready_for_pickup",
-        "timestamp": 1791363771082,
-        "badgeClass": "bg-amber-50 text-amber-700",
-        "badgeText": "ready_for_pickup",
-        "icon": "car"
+        "id": "res_mv6nx5n7hud8",
+        "type": "reservation",
+        "title": "Test Drive (1 guest) · Preview Client",
+        "detail": "موعد فحص وتثمين سيارة بالمعرض at موعد فحص وتثمين سيارة بالمعرض · موعد تجربة قيادة ومعاينة",
+        "timestamp": 1791894837715,
+        "badgeClass": "bg-teal-50 text-teal-700",
+        "badgeText": "completed",
+        "icon": "calendar"
       },
       {
-        "id": "res_demo_2",
+        "id": "res_mv6nw5ptv1wf",
         "type": "reservation",
-        "title": "Test Drive (1 guest) · خالد مصطفى",
-        "detail": "الخميس القادم at 7:00 PM (معاينة هيونداي توسان NX4) · مصحوب بمهندس فحص خارجي للمعاينة",
-        "timestamp": 1791360171082,
+        "title": "Test Drive (2 guest) · أ. طارق عبد الرحمن",
+        "detail": "2026-10-15 at 18:00 · تجربة قيادة مرسيدس C200 - فرع مدينة نصر",
+        "timestamp": 1791894791153,
         "badgeClass": "bg-teal-50 text-teal-700",
         "badgeText": "confirmed",
         "icon": "calendar"
       },
       {
-        "id": "ord_demo_3",
+        "id": "ord_mv6nw5pjq4nj",
         "type": "order",
-        "title": "Car Booking CAR-0003 · طارق عبد الرحيم",
-        "detail": "1,450,000 EGP · Status: delivered",
-        "timestamp": 1791349371082,
-        "badgeClass": "bg-emerald-50 text-emerald-700",
-        "badgeText": "delivered",
+        "title": "Car Booking CAR-0015 · م. أحمد خالد",
+        "detail": "50,000 ج.م عربون حجز وتثبيت السعر · Status: pending",
+        "timestamp": 1791894791143,
+        "badgeClass": "bg-amber-50 text-amber-700",
+        "badgeText": "pending",
+        "icon": "car"
+      },
+      {
+        "id": "res_mv6nixwnpwpm",
+        "type": "reservation",
+        "title": "Test Drive (1 guest) · Preview Client",
+        "detail": "موعد فحص وتثمين سيارة بالمعرض at موعد فحص وتثمين سيارة بالمعرض · موعد تجربة قيادة ومعاينة",
+        "timestamp": 1791894174503,
+        "badgeClass": "bg-teal-50 text-teal-700",
+        "badgeText": "confirmed",
+        "icon": "calendar"
+      },
+      {
+        "id": "ticket_mv6nifvjrhq2",
+        "type": "handoff",
+        "title": "Car Sales Advisor Handover · Client",
+        "detail": "Client requested sales advisor for negotiation/finance",
+        "timestamp": 1791894151135,
+        "badgeClass": "bg-slate-50 text-slate-600",
+        "badgeText": "resolved",
+        "icon": "user-check"
+      },
+      {
+        "id": "res_mv6nifu39wyz",
+        "type": "reservation",
+        "title": "Test Drive (2 guest) · Test Customer",
+        "detail": "غداً at 5:00 PM · Test Drive Appointment",
+        "timestamp": 1791894151083,
+        "badgeClass": "bg-teal-50 text-teal-700",
+        "badgeText": "completed",
+        "icon": "calendar"
+      },
+      {
+        "id": "ord_mv6niftra0kd",
+        "type": "order",
+        "title": "Car Booking CAR-0014 · Test Customer",
+        "detail": "100,000 EGP · Status: confirmed",
+        "timestamp": 1791894151071,
+        "badgeClass": "bg-amber-50 text-amber-700",
+        "badgeText": "confirmed",
         "icon": "car"
       }
     ],
@@ -4385,7 +4606,7 @@
       {
         "category": "Automotive Sales & Pipeline",
         "icon": "trending-up",
-        "title": "3 car purchases logged via WhatsApp (7,950,000 EGP)",
+        "title": "15 car purchases logged via WhatsApp (8,850,000 EGP)",
         "description": "Conversational car sales pipeline is actively converting clients into showroom visits and deposits. Top searched: Mercedes C200 & BMW 320i.",
         "tone": "success"
       },
@@ -4398,8 +4619,249 @@
       }
     ]
   },
-  "unanswered": [],
+  "unanswered": [
+    {
+      "question": "هل يوجد بورش ماكان 2023 مستعملة؟",
+      "count": 6,
+      "createdAt": 1791889872423,
+      "updatedAt": 1791894151095
+    }
+  ],
   "orders": [
+    {
+      "id": "ord_mv6nw5pjq4nj",
+      "orderNumber": "CAR-0015",
+      "clientPhone": "01122334455",
+      "clientName": "م. أحمد خالد",
+      "items": [
+        {
+          "name": "Kia Sportage 2024 Topline",
+          "qty": 1,
+          "price": "1,950,000",
+          "subtotal": "1,950,000"
+        }
+      ],
+      "total": "50,000 ج.م عربون حجز وتثبيت السعر",
+      "address": "Showroom Delivery & Registration",
+      "notes": "استلام فرع التجمع",
+      "status": "pending",
+      "at": 1791894791143
+    },
+    {
+      "id": "ord_mv6niftra0kd",
+      "orderNumber": "CAR-0014",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "items": [
+        {
+          "name": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+          "qty": 1,
+          "price": "100,000 EGP",
+          "subtotal": "100,000 EGP"
+        }
+      ],
+      "total": "100,000 EGP",
+      "address": "معرض الفارس للسيارات - التجمع الخامس",
+      "notes": "",
+      "status": "confirmed",
+      "at": 1791894151071,
+      "updatedAt": 1791894151078
+    },
+    {
+      "id": "ord_mv6nbxsxlbmx",
+      "orderNumber": "CAR-0013",
+      "clientPhone": "01122334455",
+      "clientName": "م. أحمد خالد",
+      "items": [
+        {
+          "name": "Kia Sportage 2024 Topline",
+          "qty": 1,
+          "price": "1,950,000",
+          "subtotal": "1,950,000"
+        }
+      ],
+      "total": "50,000 ج.م عربون حجز وتثبيت السعر",
+      "address": "Showroom Delivery & Registration",
+      "notes": "استلام فرع التجمع",
+      "status": "pending",
+      "at": 1791893847777
+    },
+    {
+      "id": "ord_mv6nbfuhdfdn",
+      "orderNumber": "CAR-0012",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "items": [
+        {
+          "name": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+          "qty": 1,
+          "price": "100,000 EGP",
+          "subtotal": "100,000 EGP"
+        }
+      ],
+      "total": "100,000 EGP",
+      "address": "معرض الفارس للسيارات - التجمع الخامس",
+      "notes": "",
+      "status": "confirmed",
+      "at": 1791893824505,
+      "updatedAt": 1791893824514
+    },
+    {
+      "id": "ord_mv6mslcgf2io",
+      "orderNumber": "CAR-0011",
+      "clientPhone": "01122334455",
+      "clientName": "م. أحمد خالد",
+      "items": [
+        {
+          "name": "Kia Sportage 2024 Topline",
+          "qty": 1,
+          "price": "1,950,000",
+          "subtotal": "1,950,000"
+        }
+      ],
+      "total": "50,000 ج.م عربون حجز وتثبيت السعر",
+      "address": "Showroom Delivery & Registration",
+      "notes": "استلام فرع التجمع",
+      "status": "pending",
+      "at": 1791892945168
+    },
+    {
+      "id": "ord_mv6msee51f6c",
+      "orderNumber": "CAR-0010",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "items": [
+        {
+          "name": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+          "qty": 1,
+          "price": "100,000 EGP",
+          "subtotal": "100,000 EGP"
+        }
+      ],
+      "total": "100,000 EGP",
+      "address": "معرض الفارس للسيارات - التجمع الخامس",
+      "notes": "",
+      "status": "confirmed",
+      "at": 1791892936157,
+      "updatedAt": 1791892936166
+    },
+    {
+      "id": "ord_mv6lwr00qviy",
+      "orderNumber": "CAR-0009",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "items": [
+        {
+          "name": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+          "qty": 1,
+          "price": "100,000 EGP",
+          "subtotal": "100,000 EGP"
+        }
+      ],
+      "total": "100,000 EGP",
+      "address": "معرض الفارس للسيارات - التجمع الخامس",
+      "notes": "",
+      "status": "confirmed",
+      "at": 1791891459504,
+      "updatedAt": 1791891459512
+    },
+    {
+      "id": "ord_mv6lwggalsbt",
+      "orderNumber": "CAR-0008",
+      "clientPhone": "01122334455",
+      "clientName": "م. أحمد خالد",
+      "items": [
+        {
+          "name": "Kia Sportage 2024 Topline",
+          "qty": 1,
+          "price": "1,950,000",
+          "subtotal": "1,950,000"
+        }
+      ],
+      "total": "50,000 ج.م عربون حجز وتثبيت السعر",
+      "address": "Showroom Delivery & Registration",
+      "notes": "استلام فرع التجمع",
+      "status": "pending",
+      "at": 1791891445834
+    },
+    {
+      "id": "ord_mv6lkelp2nus",
+      "orderNumber": "CAR-0007",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "items": [
+        {
+          "name": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+          "qty": 1,
+          "price": "100,000 EGP",
+          "subtotal": "100,000 EGP"
+        }
+      ],
+      "total": "100,000 EGP",
+      "address": "معرض الفارس للسيارات - التجمع الخامس",
+      "notes": "",
+      "status": "confirmed",
+      "at": 1791890883565,
+      "updatedAt": 1791890883573
+    },
+    {
+      "id": "ord_mv6lk8dpmesr",
+      "orderNumber": "CAR-0006",
+      "clientPhone": "01122334455",
+      "clientName": "م. أحمد خالد",
+      "items": [
+        {
+          "name": "Kia Sportage 2024 Topline",
+          "qty": 1,
+          "price": "1,950,000",
+          "subtotal": "1,950,000"
+        }
+      ],
+      "total": "50,000 ج.م عربون حجز وتثبيت السعر",
+      "address": "Showroom Delivery & Registration",
+      "notes": "استلام فرع التجمع",
+      "status": "pending",
+      "at": 1791890875502
+    },
+    {
+      "id": "ord_mv6kyqdu7bl0",
+      "orderNumber": "CAR-0005",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "items": [
+        {
+          "name": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+          "qty": 1,
+          "price": "100,000 EGP",
+          "subtotal": "100,000 EGP"
+        }
+      ],
+      "total": "100,000 EGP",
+      "address": "معرض الفارس للسيارات - التجمع الخامس",
+      "notes": "",
+      "status": "confirmed",
+      "at": 1791889872402,
+      "updatedAt": 1791889872409
+    },
+    {
+      "id": "ord_mv6kykfh3cl0",
+      "orderNumber": "CAR-0004",
+      "clientPhone": "01122334455",
+      "clientName": "م. أحمد خالد",
+      "items": [
+        {
+          "name": "Kia Sportage 2024 Topline",
+          "qty": 1,
+          "price": "1,950,000",
+          "subtotal": "1,950,000"
+        }
+      ],
+      "total": "50,000 ج.م عربون حجز وتثبيت السعر",
+      "address": "Showroom Delivery & Registration",
+      "notes": "استلام فرع التجمع",
+      "status": "pending",
+      "at": 1791889864685
+    },
     {
       "id": "ord_demo_1",
       "orderNumber": "CAR-0001",
@@ -4417,8 +4879,7 @@
       "address": "استلام فوري من المعرض الرئيسي بالتجمع",
       "notes": "اللون المطلوب Obsidian Black مع رخصة 3 سنوات",
       "status": "confirmed",
-      "at": 1791368271082,
-      "updatedAt": 1791374168356
+      "at": 1791887164572
     },
     {
       "id": "ord_demo_2",
@@ -4437,7 +4898,7 @@
       "address": "معاينة وفحص فني بالمعرض قبل إتمام العقد",
       "notes": "تم فحص السيارة بالمركز المعتمد وتقرير 150 نقطة مطابق",
       "status": "ready_for_pickup",
-      "at": 1791363771082
+      "at": 1791882664572
     },
     {
       "id": "ord_demo_3",
@@ -4456,10 +4917,182 @@
       "address": "شحن على ونش مغلق إلى الإسكندرية",
       "notes": "تم سداد كامل القيمة تحويل بنكي",
       "status": "delivered",
-      "at": 1791349371082
+      "at": 1791868264572
     }
   ],
   "reservations": [
+    {
+      "id": "res_mv6ojypeo8jh",
+      "clientPhone": "201012345678",
+      "clientName": "Preview Client",
+      "partySize": 1,
+      "date": "موعد فحص وتثمين سيارة بالمعرض",
+      "time": "موعد فحص وتثمين سيارة بالمعرض",
+      "notes": "موعد تجربة قيادة ومعاينة",
+      "status": "confirmed",
+      "at": 1791895901810
+    },
+    {
+      "id": "res_mv6nx5n7hud8",
+      "clientPhone": "201012345678",
+      "clientName": "Preview Client",
+      "partySize": 1,
+      "date": "موعد فحص وتثمين سيارة بالمعرض",
+      "time": "موعد فحص وتثمين سيارة بالمعرض",
+      "notes": "موعد تجربة قيادة ومعاينة",
+      "status": "completed",
+      "at": 1791894837715,
+      "updatedAt": 1791895713845
+    },
+    {
+      "id": "res_mv6nw5ptv1wf",
+      "clientPhone": "01233445566",
+      "clientName": "أ. طارق عبد الرحمن",
+      "partySize": 2,
+      "date": "2026-10-15",
+      "time": "18:00",
+      "notes": "تجربة قيادة مرسيدس C200 - فرع مدينة نصر",
+      "status": "confirmed",
+      "at": 1791894791153
+    },
+    {
+      "id": "res_mv6nixwnpwpm",
+      "clientPhone": "201012345678",
+      "clientName": "Preview Client",
+      "partySize": 1,
+      "date": "موعد فحص وتثمين سيارة بالمعرض",
+      "time": "موعد فحص وتثمين سيارة بالمعرض",
+      "notes": "موعد تجربة قيادة ومعاينة",
+      "status": "confirmed",
+      "at": 1791894174503
+    },
+    {
+      "id": "res_mv6nifu39wyz",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "partySize": 2,
+      "date": "غداً",
+      "time": "5:00 PM",
+      "notes": "Test Drive Appointment",
+      "status": "completed",
+      "at": 1791894151083,
+      "updatedAt": 1791894151087
+    },
+    {
+      "id": "res_mv6nbxt8psb9",
+      "clientPhone": "01233445566",
+      "clientName": "أ. طارق عبد الرحمن",
+      "partySize": 2,
+      "date": "2026-10-15",
+      "time": "18:00",
+      "notes": "تجربة قيادة مرسيدس C200 - فرع مدينة نصر",
+      "status": "confirmed",
+      "at": 1791893847788
+    },
+    {
+      "id": "res_mv6nbfuuwite",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "partySize": 2,
+      "date": "غداً",
+      "time": "5:00 PM",
+      "notes": "Test Drive Appointment",
+      "status": "completed",
+      "at": 1791893824518,
+      "updatedAt": 1791893824523
+    },
+    {
+      "id": "res_mv6mslcq1ckc",
+      "clientPhone": "01233445566",
+      "clientName": "أ. طارق عبد الرحمن",
+      "partySize": 2,
+      "date": "2026-10-15",
+      "time": "18:00",
+      "notes": "تجربة قيادة مرسيدس C200 - فرع مدينة نصر",
+      "status": "confirmed",
+      "at": 1791892945178
+    },
+    {
+      "id": "res_mv6mseei1mqs",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "partySize": 2,
+      "date": "غداً",
+      "time": "5:00 PM",
+      "notes": "Test Drive Appointment",
+      "status": "completed",
+      "at": 1791892936170,
+      "updatedAt": 1791892936174
+    },
+    {
+      "id": "res_mv6lwr0cb2pk",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "partySize": 2,
+      "date": "غداً",
+      "time": "5:00 PM",
+      "notes": "Test Drive Appointment",
+      "status": "completed",
+      "at": 1791891459516,
+      "updatedAt": 1791891459520
+    },
+    {
+      "id": "res_mv6lwgglhk30",
+      "clientPhone": "01233445566",
+      "clientName": "أ. طارق عبد الرحمن",
+      "partySize": 2,
+      "date": "2026-10-15",
+      "time": "18:00",
+      "notes": "تجربة قيادة مرسيدس C200 - فرع مدينة نصر",
+      "status": "confirmed",
+      "at": 1791891445845
+    },
+    {
+      "id": "res_mv6lkem1mkmt",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "partySize": 2,
+      "date": "غداً",
+      "time": "5:00 PM",
+      "notes": "Test Drive Appointment",
+      "status": "completed",
+      "at": 1791890883577,
+      "updatedAt": 1791890883582
+    },
+    {
+      "id": "res_mv6lk8e0ne1a",
+      "clientPhone": "01233445566",
+      "clientName": "أ. طارق عبد الرحمن",
+      "partySize": 2,
+      "date": "2026-10-15",
+      "time": "18:00",
+      "notes": "تجربة قيادة مرسيدس C200 - فرع مدينة نصر",
+      "status": "confirmed",
+      "at": 1791890875512
+    },
+    {
+      "id": "res_mv6kyqe5c1dt",
+      "clientPhone": "201099998888",
+      "clientName": "Test Customer",
+      "partySize": 2,
+      "date": "غداً",
+      "time": "5:00 PM",
+      "notes": "Test Drive Appointment",
+      "status": "completed",
+      "at": 1791889872413,
+      "updatedAt": 1791889872416
+    },
+    {
+      "id": "res_mv6kykfrk5n2",
+      "clientPhone": "01233445566",
+      "clientName": "أ. طارق عبد الرحمن",
+      "partySize": 2,
+      "date": "2026-10-15",
+      "time": "18:00",
+      "notes": "تجربة قيادة مرسيدس C200 - فرع مدينة نصر",
+      "status": "confirmed",
+      "at": 1791889864695
+    },
     {
       "id": "res_demo_1",
       "clientPhone": "201012345678",
@@ -4469,7 +5102,7 @@
       "time": "6:30 PM (تجربة قيادة مرسيدس C200)",
       "notes": "العميل يرغب في فحص قيادة على الدائري الأوسطي",
       "status": "confirmed",
-      "at": 1791367371082
+      "at": 1791886264572
     },
     {
       "id": "res_demo_2",
@@ -4480,10 +5113,202 @@
       "time": "7:00 PM (معاينة هيونداي توسان NX4)",
       "notes": "مصحوب بمهندس فحص خارجي للمعاينة",
       "status": "confirmed",
-      "at": 1791360171082
+      "at": 1791879064572
     }
   ],
   "reminders": [
+    {
+      "id": "rem_mv6nw5pjr0ex",
+      "clientName": "م. أحمد خالد",
+      "clientPhone": "01122334455",
+      "carTitle": "استلام فرع التجمع",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك م. أحمد خالد! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791894791143,
+      "completedAt": null
+    },
+    {
+      "id": "rem_mv6niftrpexf",
+      "clientName": "Test Customer",
+      "clientPhone": "201099998888",
+      "carTitle": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك Test Customer! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791894151071,
+      "completedAt": null
+    },
+    {
+      "id": "rem_mv6nbxsxne47",
+      "clientName": "م. أحمد خالد",
+      "clientPhone": "01122334455",
+      "carTitle": "استلام فرع التجمع",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك م. أحمد خالد! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791893847777,
+      "completedAt": null
+    },
+    {
+      "id": "rem_mv6nbfuiq815",
+      "clientName": "Test Customer",
+      "clientPhone": "201099998888",
+      "carTitle": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك Test Customer! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791893824506,
+      "completedAt": null
+    },
+    {
+      "id": "rem_mv6mslcg17cw",
+      "clientName": "م. أحمد خالد",
+      "clientPhone": "01122334455",
+      "carTitle": "استلام فرع التجمع",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك م. أحمد خالد! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791892945168,
+      "completedAt": null
+    },
+    {
+      "id": "rem_mv6msee60f7k",
+      "clientName": "Test Customer",
+      "clientPhone": "201099998888",
+      "carTitle": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك Test Customer! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791892936158,
+      "completedAt": null
+    },
+    {
+      "id": "rem_mv6lwr013p9v",
+      "clientName": "Test Customer",
+      "clientPhone": "201099998888",
+      "carTitle": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك Test Customer! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791891459505,
+      "completedAt": null
+    },
+    {
+      "id": "rem_mv6lwgga1zbw",
+      "clientName": "م. أحمد خالد",
+      "clientPhone": "01122334455",
+      "carTitle": "استلام فرع التجمع",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك م. أحمد خالد! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791891445835,
+      "completedAt": null
+    },
+    {
+      "id": "rem_mv6lkelp8xm0",
+      "clientName": "Test Customer",
+      "clientPhone": "201099998888",
+      "carTitle": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك Test Customer! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791890883565,
+      "completedAt": null
+    },
+    {
+      "id": "rem_mv6lk8dqf68n",
+      "clientName": "م. أحمد خالد",
+      "clientPhone": "01122334455",
+      "carTitle": "استلام فرع التجمع",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك م. أحمد خالد! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791890875502,
+      "completedAt": null
+    },
+    {
+      "id": "rem_mv6kyqdumykn",
+      "clientName": "Test Customer",
+      "clientPhone": "201099998888",
+      "carTitle": "Mercedes-Benz C200 AMG 2024 (Deposit)",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك Test Customer! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791889872402,
+      "completedAt": null
+    },
+    {
+      "id": "rem_mv6kykfh3jq3",
+      "clientName": "م. أحمد خالد",
+      "clientPhone": "01122334455",
+      "carTitle": "استلام فرع التجمع",
+      "type": "delivery",
+      "typeLabelAr": "متابعة حجز وتعاقد سيارة",
+      "dueTime": "خلال 24 ساعة - مواعيد المعرض",
+      "dueDate": "2026-10-13",
+      "message": "أهلاً بك م. أحمد خالد! تم تسجيل طلب حجز سيارتك المبدئي لدى الفارس موتورز بنجاح. سيتواصل معك مستشار المبيعات لمراجعة التفاصيل وتجهيز الأوراق.",
+      "status": "pending",
+      "priority": "high",
+      "assignedTo": "Abdallah",
+      "createdAt": 1791889864685,
+      "completedAt": null
+    },
     {
       "id": "rem_1",
       "clientName": "م. حسام الدين",
@@ -4492,12 +5317,12 @@
       "type": "test_drive",
       "typeLabelAr": "تذكير موعد تجربة قيادة",
       "dueTime": "اليوم - 5:00 م",
-      "dueDate": "2026-10-07",
+      "dueDate": "2026-10-13",
       "message": "أهلاً بك م. حسام! نذكرك بميعاد تجربة قيادة كيا سبورتاج 2026 اليوم الساعة 5:00 مساءً بفرع التجمع الأول. تنورنا وتشرفنا!",
       "status": "pending",
       "priority": "high",
       "assignedTo": "Abdallah",
-      "createdAt": 1791369694474,
+      "createdAt": 1791882515481,
       "completedAt": null
     },
     {
@@ -4508,12 +5333,12 @@
       "type": "financing_docs",
       "typeLabelAr": "متابعة أوراق وموافقة بنكية",
       "dueTime": "غداً - 12:00 ظهراً",
-      "dueDate": "2026-10-08",
+      "dueDate": "2026-10-14",
       "message": "مرحباً د. سارة، نتابع معك استكمال إشعار تحويل المرتب ومفردات الدخل لإنهاء الموافقة الائتمانية لسيارة مرسيدس C180 بأقل فائدة بنكية.",
       "status": "pending",
       "priority": "high",
       "assignedTo": "Karim Mansour",
-      "createdAt": 1791358894474,
+      "createdAt": 1791871715481,
       "completedAt": null
     },
     {
@@ -4524,12 +5349,12 @@
       "type": "post_visit",
       "typeLabelAr": "متابعة ما بعد المعاينة وعرض السعر",
       "dueTime": "غداً - 3:00 م",
-      "dueDate": "2026-10-08",
+      "dueDate": "2026-10-14",
       "message": "أهلاً بك أ. طارق، نتمنى تكون معاينتك لهيونداي توسان كانت موفقة. هل تود تثبيت السعر بالعربون أو حساب تفاصيل قسط بدفعة أولى مختلفة؟",
       "status": "pending",
       "priority": "medium",
       "assignedTo": "Abdallah",
-      "createdAt": 1791348094474,
+      "createdAt": 1791860915481,
       "completedAt": null
     },
     {
@@ -4540,33 +5365,841 @@
       "type": "trade_in",
       "typeLabelAr": "متابعة تثمين واستبدال سيارة",
       "dueTime": "أمس - 4:00 م",
-      "dueDate": "2026-10-06",
+      "dueDate": "2026-10-12",
       "message": "تم الانتهاء من فحص سيارتك القديمة وتثمينها بأعلى سعر سوقي. يمكنك استلام تقرير الفحص وإتمام الاستبدال فوراً.",
       "status": "completed",
       "priority": "medium",
       "assignedTo": "Abdallah",
-      "createdAt": 1791204094474,
-      "completedAt": 1791290494474
+      "createdAt": 1791716915481,
+      "completedAt": 1791803315481
     }
   ],
   "customers": {
     "201099887766": {
       "phone": "201099887766",
-      "name": "Human Agent",
+      "name": "م. حازم السويدي (رجل أعمال)",
+      "classification": "vip",
+      "classificationLabelAr": "عميل VIP متميز",
+      "tier": "Platinum",
+      "budgetRange": "2,800,000 - 3,200,000 ج.م",
+      "preferredCar": "Mercedes-Benz CLA 200 Coupe 2024",
+      "preferredPayment": "تحويل بنكي كاش",
+      "city": "التجمع الخامس - القاهرة الجديدة",
+      "notes": "اشترى سيارة بالفعل من المعرض ومؤهل لبرنامج الولاء وخدمات VIP الدورية.",
       "tags": [
-        "New Client"
+        "VIP Buyer",
+        "Platinum Client",
+        "Repeat Client"
       ],
-      "isHumanTakeover": true,
-      "takeoverUntil": 1791382328481,
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 1,
+      "totalSpent": 2420000,
+      "messageCount": 16,
+      "createdAt": 1788001829713,
+      "lastSeen": 1791886229713
+    },
+    "201011223344": {
+      "phone": "201011223344",
+      "name": "م. حسام الدين عبد الرحيم",
+      "classification": "vip",
+      "classificationLabelAr": "عميل VIP متميز",
+      "tier": "Platinum",
+      "budgetRange": "4,000,000 - 4,500,000 ج.م",
+      "preferredCar": "Mercedes-Benz C200 2024 AMG (Zero)",
+      "preferredPayment": "كاش فوري تحويل بنكي",
+      "city": "التجمع الخامس - القاهرة الجديدة",
+      "notes": "عميل سابق بالمعرض، جاهز لتحويل كامل المبلغ كاش عند تأكيد اللون الأسود فرش أحمر وتسليم ترخيص 3 سنوات.",
+      "tags": [
+        "VIP Buyer",
+        "Luxury Sedans",
+        "Cash Deal",
+        "Repeat Client"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 1,
+      "totalSpent": 3850000,
+      "messageCount": 14,
+      "createdAt": 1789297829713,
+      "lastSeen": 1791882629713
+    },
+    "201227788990": {
+      "phone": "201227788990",
+      "name": "المستشار شريف عز الدين",
+      "classification": "vip",
+      "classificationLabelAr": "عميل VIP متميز",
+      "tier": "Platinum",
+      "budgetRange": "3,900,000 ج.م",
+      "preferredCar": "BMW 320i 2024 M-Sport (Zero)",
+      "preferredPayment": "كاش فوري شيك مصرفي",
+      "city": "المعادي دجلة - القاهرة",
+      "notes": "طلب فحص ومعاينة خاصة بفرع التجمع الأول مع تسليم ترخيص 3 سنوات وباك النانو سيراميك.",
+      "tags": [
+        "VIP Buyer",
+        "BMW Fans",
+        "Showroom Delivery",
+        "Executive"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 1,
+      "totalSpent": 3900000,
+      "messageCount": 19,
+      "createdAt": 1789729829713,
+      "lastSeen": 1791871829713
+    },
+    "201004455667": {
+      "phone": "201004455667",
+      "name": "د. فاروق النحاس (استشاري جراحة)",
+      "classification": "vip",
+      "classificationLabelAr": "عميل VIP متميز",
+      "tier": "Platinum",
+      "budgetRange": "5,200,000 ج.م",
+      "preferredCar": "Mercedes-Benz E200 Exclusive 2024",
+      "preferredPayment": "كاش فوري تحويل بنكي CIB",
+      "city": "الشيخ زايد - الجيزة",
+      "notes": "يرغب في استلام السيارة فابريكا بالكامل بحالة الزيرو مع باقة الحماية والنانو سيراميك.",
+      "tags": [
+        "VIP Buyer",
+        "Executive Luxury",
+        "Doctor Program",
+        "Pre-Order"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
       "cart": [],
       "orderCount": 0,
       "totalSpent": 0,
-      "createdAt": 1791369046207,
-      "lastSeen": 1791378728486,
-      "messageCount": 2
+      "messageCount": 11,
+      "createdAt": 1790334629713,
+      "lastSeen": 1791861029713
+    },
+    "201288990011": {
+      "phone": "201288990011",
+      "name": "د. سارة وجدي غالي",
+      "classification": "vip",
+      "classificationLabelAr": "عميل VIP متميز",
+      "tier": "Platinum",
+      "budgetRange": "6,500,000 ج.م",
+      "preferredCar": "Range Rover Velar 2024 Dynamic SE",
+      "preferredPayment": "كاش فوري تحويل سويفت",
+      "city": "الزمالك - القاهرة",
+      "notes": "عميلة من طرف إدارة المعرض، جاهزة للتعاقد الفوري فور تأكيد اللون الأبيض لؤلؤي سقف بانوراما.",
+      "tags": [
+        "VIP Buyer",
+        "Luxury SUV",
+        "High Net Worth",
+        "Cash Deal"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 9,
+      "createdAt": 1790680229713,
+      "lastSeen": 1791875429713
+    },
+    "201022334455": {
+      "phone": "201022334455",
+      "name": "أحمد مروان الرفاعي (رجل أعمال)",
+      "classification": "serious_buyer",
+      "classificationLabelAr": "مشتري جاد (جاهز للتعاقد)",
+      "tier": "Gold",
+      "budgetRange": "1,950,000 ج.م",
+      "preferredCar": "Kia Sportage 2024 Topline",
+      "preferredPayment": "عربون 50 ألف وتكملة كاش",
+      "city": "مدينة نصر - القاهرة",
+      "notes": "قام بدفع عربون جدية حجز 50,000 ج.م بالمعرض لتثبيت السعر وجاري استلام المستندات وتجهيز الترخيص.",
+      "tags": [
+        "Hot Lead",
+        "Ready Buyer",
+        "Cash Deal",
+        "Earnest Deposit"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 1,
+      "totalSpent": 50000,
+      "messageCount": 22,
+      "createdAt": 1790853029713,
+      "lastSeen": 1791886229713
+    },
+    "201122334455": {
+      "phone": "201122334455",
+      "name": "د. طارق مصطفى سالم",
+      "classification": "serious_buyer",
+      "classificationLabelAr": "مشتري جاد (جاهز للتعاقد)",
+      "tier": "Gold",
+      "budgetRange": "1,920,000 ج.م",
+      "preferredCar": "Hyundai Tucson NX4 2024 Turbo",
+      "preferredPayment": "كاش فوري",
+      "city": "مصر الجديدة - القاهرة",
+      "notes": "قارن بين التوسان والسبورتاج واستقر على التوسان الفئة الرابعة بالضمان بعد تجربة قيادة ممتازة.",
+      "tags": [
+        "Serious Buyer",
+        "Family SUV",
+        "Fast Delivery",
+        "Showroom Inspected"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 16,
+      "createdAt": 1791025829713,
+      "lastSeen": 1791879029713
+    },
+    "201066778899": {
+      "phone": "201066778899",
+      "name": "أ. محمود فؤاد البدري",
+      "classification": "serious_buyer",
+      "classificationLabelAr": "مشتري جاد (جاهز للتعاقد)",
+      "tier": "Gold",
+      "budgetRange": "1,890,000 ج.م",
+      "preferredCar": "Škoda Octavia A8 Style 2024",
+      "preferredPayment": "تقسيط بنكي 30% مقدم",
+      "city": "التجمع الأول - القاهرة الجديدة",
+      "notes": "تم إرسال كشف حساب CIB ومفردات المرتب لمسؤول التمويل، في انتظار الموافقة الائتمانية البنكية.",
+      "tags": [
+        "Ready Buyer",
+        "Sedan Lovers",
+        "Finance Prospect",
+        "Approved Bank"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 20,
+      "createdAt": 1791112229713,
+      "lastSeen": 1791875429713
+    },
+    "201033445577": {
+      "phone": "201033445577",
+      "name": "م. شادي منير القاضي",
+      "classification": "serious_buyer",
+      "classificationLabelAr": "مشتري جاد (جاهز للتعاقد)",
+      "tier": "Gold",
+      "budgetRange": "1,750,000 ج.م",
+      "preferredCar": "Suzuki Grand Vitara 2024 GLX",
+      "preferredPayment": "كاش فوري",
+      "city": "الإسكندرية - سموحة",
+      "notes": "سيحضر لمعرض التجمع الأول للاستلام الفوري وإنهاء إجراءات المرور ونقل الملكية بالضمان المعتمد.",
+      "tags": [
+        "Serious Buyer",
+        "Japanese SUV",
+        "Alexandria Client",
+        "Cash Ready"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 8,
+      "createdAt": 1791198629713,
+      "lastSeen": 1791868229713
+    },
+    "201200112233": {
+      "phone": "201200112233",
+      "name": "أ. باسل حازم ممدوح",
+      "classification": "serious_buyer",
+      "classificationLabelAr": "مشتري جاد (جاهز للتعاقد)",
+      "tier": "Gold",
+      "budgetRange": "2,450,000 ج.م",
+      "preferredCar": "Cupra Formentor 2024 Sportline",
+      "preferredPayment": "كاش فوري 50 ألف عربون",
+      "city": "المقطم - القاهرة",
+      "notes": "طلب حجز السيارة بلون رمادي مط (Magnetic Grey Matte) مع تسليم زيرو بالكتالوج والضمان.",
+      "tags": [
+        "Serious Buyer",
+        "Sport Crossover",
+        "Ready Buyer",
+        "Hot Lead"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 15,
+      "createdAt": 1791285029713,
+      "lastSeen": 1791864629713
+    },
+    "201055667788": {
+      "phone": "201055667788",
+      "name": "كابتن عمر خالد الصياد",
+      "classification": "test_drive",
+      "classificationLabelAr": "حاجز تجربة قيادة",
+      "tier": "Silver",
+      "budgetRange": "1,580,000 ج.م",
+      "preferredCar": "Chery Tiggo 8 Pro 2024 (7 راكب)",
+      "preferredPayment": "تقسيط بنك مصر 5 سنوات",
+      "city": "الشروق - القاهرة",
+      "notes": "حجز موعد تجربة قيادة مؤكد يوم الخميس القادم الساعة 6:00 مساءً بفرع التجمع الأول.",
+      "tags": [
+        "Test Drive Guest",
+        "7 Seater",
+        "Family Car",
+        "Confirmed Booking"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 12,
+      "createdAt": 1791371429713,
+      "lastSeen": 1791882629713
+    },
+    "201233445566": {
+      "phone": "201233445566",
+      "name": "أ. طارق عبد الرحمن",
+      "classification": "test_drive",
+      "classificationLabelAr": "حاجز تجربة قيادة",
+      "tier": "Silver",
+      "budgetRange": "3,850,000 ج.م",
+      "preferredCar": "Mercedes-Benz C200 AMG 2024",
+      "preferredPayment": "تقسيط بنكي كونتكت",
+      "city": "مدينة نصر - القاهرة",
+      "notes": "موعد معاينة واختبار عملي بفرع مصطفى النحاس مدينة نصر، تم تجهيز السيارة للمعاينة.",
+      "tags": [
+        "Test Drive Guest",
+        "Luxury Prospect",
+        "Showroom Visit",
+        "Nasr City Branch"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 10,
+      "createdAt": 1791457829713,
+      "lastSeen": 1791886229713
+    },
+    "201552233441": {
+      "phone": "201552233441",
+      "name": "أ. وليد كمال الألفي",
+      "classification": "test_drive",
+      "classificationLabelAr": "حاجز تجربة قيادة",
+      "tier": "Silver",
+      "budgetRange": "1,480,000 ج.م",
+      "preferredCar": "Mitsubishi Outlander Sport 2024",
+      "preferredPayment": "تقسيط 4 سنوات بمقدم 35%",
+      "city": "حلوان - القاهرة",
+      "notes": "موعد تجربة قيادة مسجل ليوم الأحد الساعة 4 عصراً بفرع التجمع الأول لتجربة نظام الثبات والتكييف.",
+      "tags": [
+        "Test Drive Guest",
+        "New Crossover",
+        "Showroom Appointment"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 7,
+      "createdAt": 1791544229713,
+      "lastSeen": 1791853829713
+    },
+    "201012345678": {
+      "phone": "201012345678",
+      "name": "د. مصطفى الشريف",
+      "classification": "trade_in",
+      "classificationLabelAr": "استبدال سيارة (Trade-In)",
+      "tier": "Gold",
+      "budgetRange": "1,450,000 ج.م",
+      "preferredCar": "Toyota Corolla 2024 Smart Key",
+      "preferredPayment": "استبدال + دفع الفارق كاش",
+      "city": "الرحاب - القاهرة الجديدة",
+      "notes": "يرغب في استبدال تويوتا كورولا 2021 فابريكا بالكامل بالجديدة 2024، تم الفحص وقبول التثمين بـ 950,000 ج.م.",
+      "tags": [
+        "Trade-In Prospect",
+        "Appraisal Approved",
+        "Toyota Fans",
+        "First Settlement",
+        "Test Drive Guest"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 18,
+      "createdAt": 1790939429713,
+      "lastSeen": 1791875429713
+    },
+    "201588776655": {
+      "phone": "201588776655",
+      "name": "أ. كريم سيف النصر",
+      "classification": "trade_in",
+      "classificationLabelAr": "استبدال سيارة (Trade-In)",
+      "tier": "Gold",
+      "budgetRange": "2,600,000 ج.م",
+      "preferredCar": "Škoda Kodiaq 2024 Style",
+      "preferredPayment": "استبدال نيسان قشقاي 2020 + تمويل الفارق",
+      "city": "مصر الجديدة - القاهرة",
+      "notes": "تثمين مبدئي للسيارة القديمة 890,000 ج.م وخصمها كمقدم للسيارة الجديدة وتمويل باقي المبلغ.",
+      "tags": [
+        "Trade-In Prospect",
+        "7 Seater SUV",
+        "Finance Plus Exchange"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 13,
+      "createdAt": 1790680229713,
+      "lastSeen": 1791817829713
+    },
+    "201088776655": {
+      "phone": "201088776655",
+      "name": "م. تامر الشناوي (استشاري مشاريع)",
+      "classification": "serious_buyer",
+      "classificationLabelAr": "مشتري جاد (جاهز للتعاقد)",
+      "tier": "Gold",
+      "budgetRange": "1,650,000 ج.م",
+      "preferredCar": "Chery Tiggo 8 Pro 2024 (7 راكب)",
+      "preferredPayment": "مقدم 50% وتكملة تقسيط بنكي",
+      "city": "الشروق - القاهرة",
+      "notes": "قام بمعاينة السيارة في فرع التجمع الأول وجاري مراجعة عرض البنك الأهلي.",
+      "tags": [
+        "Serious Buyer",
+        "7 Seater SUV",
+        "Family Car",
+        "Branch Visitor"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 12,
+      "createdAt": 1790853029713,
+      "lastSeen": 1791879029713
+    },
+    "201199884433": {
+      "phone": "201199884433",
+      "name": "م. ياسمين خالد النجار",
+      "classification": "installment",
+      "classificationLabelAr": "تقسيط بنكي",
+      "tier": "Silver",
+      "budgetRange": "1,450,000 ج.م",
+      "preferredCar": "MG 4 EV Luxury (كهربائية بالكامل)",
+      "preferredPayment": "تقسيط بنكي 5 سنوات بنك CIB",
+      "city": "التجمع الخامس - القاهرة الجديدة",
+      "notes": "تم حساب القسط الشهري بحاسبة المعرض (16,000 ج.م/شهر بمقدم 30%) مع شاحن منزلي مجاني.",
+      "tags": [
+        "Finance Prospect",
+        "EV Enthusiast",
+        "Eco Friendly",
+        "CIB Bank"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 14,
+      "createdAt": 1790766629713,
+      "lastSeen": 1791871829713
+    },
+    "201011112222": {
+      "phone": "201011112222",
+      "name": "Human Agent",
+      "classification": "installment",
+      "classificationLabelAr": "تقسيط بنكي",
+      "tier": "Silver",
+      "budgetRange": "980,000 ج.م",
+      "preferredCar": "Nissan Sentra 2024 Upper",
+      "preferredPayment": "تقسيط بنكي",
+      "city": "شبرا - القاهرة",
+      "notes": "تم استيفاء ضوابط البنك المركزي المصري 50% عبء دين (DBR) وتقديم مفردات المرتب وكشف الحساب.",
+      "tags": [
+        "Finance Prospect",
+        "Low Downpayment",
+        "Banque Misr",
+        "Fast Approval"
+      ],
+      "isHumanTakeover": true,
+      "takeoverUntil": 1791898709656,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 15,
+      "createdAt": 1790421029713,
+      "lastSeen": 1791895109660
+    },
+    "201122334466": {
+      "phone": "201122334466",
+      "name": "م. أحمد خالد عبد المجيد",
+      "classification": "installment",
+      "classificationLabelAr": "تقسيط بنكي",
+      "tier": "Gold",
+      "budgetRange": "2,200,000 ج.م",
+      "preferredCar": "Peugeot 3008 GT 2024",
+      "preferredPayment": "تقسيط شركة كونتكت 7 سنوات",
+      "city": "المعادي - القاهرة",
+      "notes": "يرغب في أطول فترة سداد (7 سنوات) لتقليل القسط الشهري، الملف قيد الاستعلام البنكي الائتماني.",
+      "tags": [
+        "Finance Prospect",
+        "European SUV",
+        "Contact Financing",
+        "Long Term Loan"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 17,
+      "createdAt": 1790161829713,
+      "lastSeen": 1791882629713
+    },
+    "201177665544": {
+      "phone": "201177665544",
+      "name": "د. منى عبد الفتاح",
+      "classification": "test_drive",
+      "classificationLabelAr": "حاجز تجربة قيادة",
+      "tier": "Silver",
+      "budgetRange": "1,350,000 ج.م",
+      "preferredCar": "Suzuki Fronx 2024 GLX",
+      "preferredPayment": "كاش تحويل فوري",
+      "city": "الدقي - الجيزة",
+      "notes": "حجزت موعد تجربة قيادة غداً الساعة 5 مساءً بفرع التجمع الأول.",
+      "tags": [
+        "Test Drive",
+        "Compact SUV",
+        "Doctor Program",
+        "Cash Prospect"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 7,
+      "createdAt": 1791630629713,
+      "lastSeen": 1791886229713
+    },
+    "201144556677": {
+      "phone": "201144556677",
+      "name": "د. نورهان إبراهيم الجمال",
+      "classification": "lead",
+      "classificationLabelAr": "عميل مهتم (Lead)",
+      "tier": "Standard",
+      "budgetRange": "850,000 ج.م",
+      "preferredCar": "Nissan Qashqai 2018 (مستعمل معتمد)",
+      "preferredPayment": "كاش أو تقسيط خفيف",
+      "city": "الهرم - الجيزة",
+      "notes": "استفسرت عبر واتساب عن تقرير الفحص والضمان للسيارات المستعملة المعتمدة، تم إرسال الكتالوج.",
+      "tags": [
+        "Certified Pre-Owned",
+        "Budget SUV",
+        "Lead",
+        "WhatsApp Inquiry"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 6,
+      "createdAt": 1789989029713,
+      "lastSeen": 1791839429713
+    },
+    "201099881122": {
+      "phone": "201099881122",
+      "name": "أ. حسام زكي بركات",
+      "classification": "lead",
+      "classificationLabelAr": "عميل مهتم (Lead)",
+      "tier": "Standard",
+      "budgetRange": "1,350,000 ج.م",
+      "preferredCar": "Renault Megane 2024 Turbo",
+      "preferredPayment": "تقسيط فاليو أو كونتكت",
+      "city": "العاشر من رمضان",
+      "notes": "مهتم بالفئة الثانية تيربو، طلب موعد لزيارة المعرض يوم السبت القادم بعد مواعيد العمل.",
+      "tags": [
+        "Hot Lead",
+        "French Cars",
+        "ValU Installment",
+        "Showroom Visit Pending"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 8,
+      "createdAt": 1789902629713,
+      "lastSeen": 1791850229713
+    },
+    "201033221100": {
+      "phone": "201033221100",
+      "name": "م. إيهاب مجدي غنيم",
+      "classification": "lead",
+      "classificationLabelAr": "عميل مهتم (Lead)",
+      "tier": "Standard",
+      "budgetRange": "1,400,000 ج.م",
+      "preferredCar": "Hyundai Elantra CN7 2024",
+      "preferredPayment": "تقسيط بنكي",
+      "city": "المنصورة - الدقهلية",
+      "notes": "استفسر عن عروض التقسيط المباشر بدون تأمين إجباري ومصاريف إدارية.",
+      "tags": [
+        "Lead",
+        "Zero Car",
+        "Installment Info"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 5,
+      "createdAt": 1789643429713,
+      "lastSeen": 1791825029713
+    },
+    "201211002233": {
+      "phone": "201211002233",
+      "name": "المستشار خالد أبو العز",
+      "classification": "vip",
+      "classificationLabelAr": "عميل VIP متميز",
+      "tier": "Platinum",
+      "budgetRange": "4,800,000 ج.م",
+      "preferredCar": "Audi A6 S-Line 2024 Zero",
+      "preferredPayment": "كاش فوري تحويل مصرفي",
+      "city": "القطامية هايتس - التجمع الخامس",
+      "notes": "عميل VIP مهتم بفئة S-Line مع حزمة الصيانة المجانية، جاهز للتعاقد الفوري.",
+      "tags": [
+        "VIP Buyer",
+        "Audi Quattro",
+        "Executive Sedan",
+        "Cash Deal"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 1,
+      "totalSpent": 4800000,
+      "messageCount": 15,
+      "createdAt": 1788433829713,
+      "lastSeen": 1791882629713
+    },
+    "201555443322": {
+      "phone": "201555443322",
+      "name": "الحاج عاطف المنشاوي",
+      "classification": "trade_in",
+      "classificationLabelAr": "راغب في الاستبدال (Trade-In)",
+      "tier": "Gold",
+      "budgetRange": "فارق استبدال 900,000 ج.م",
+      "preferredCar": "Toyota Fortuner 2024 V6 4.0L",
+      "preferredPayment": "استبدال تويوتا فورتشنر 2020 ودفع الفارق كاش",
+      "city": "طنطا - الغربية",
+      "notes": "تم فحص سيارته مبدئياً وتثمينها بـ 2,100,000 ج.م، يرغب في استلام 2024 ودفع الفارق.",
+      "tags": [
+        "Trade-In",
+        "Toyota 4x4",
+        "Valuation Done",
+        "Cash Difference"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 14,
+      "createdAt": 1791198629713,
+      "lastSeen": 1791875429713
+    },
+    "201044332211": {
+      "phone": "201044332211",
+      "name": "أ. بهاء الدين رضوان",
+      "classification": "installment",
+      "classificationLabelAr": "مقدم على تقسيط بنكي",
+      "tier": "Silver",
+      "budgetRange": "1,500,000 ج.م",
+      "preferredCar": "Toyota Corolla 2024 Active Plus",
+      "preferredPayment": "تقسيط 5 سنوات بنك مصر بمقدم 25%",
+      "city": "المعادي - القاهرة",
+      "notes": "تم إرسال مفردات المرتب وكشف الحساب، بانتظار الموافقة الائتمانية للبنك.",
+      "tags": [
+        "Installment",
+        "Toyota Corolla",
+        "Bank Approved Pending",
+        "Salaried"
+      ],
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "messageCount": 11,
+      "createdAt": 1791371429713,
+      "lastSeen": 1791882629713
+    },
+    "01012345678": {
+      "phone": "01012345678",
+      "name": "د. مصطفى الشريف",
+      "tags": [
+        "عميل جديد",
+        "Trade-In Prospect"
+      ],
+      "classification": "lead",
+      "classificationLabelAr": "عميل مهتم (Lead)",
+      "tier": "Standard",
+      "budgetRange": "غير محدد",
+      "preferredCar": "",
+      "preferredPayment": "كاش أو تقسيط",
+      "city": "القاهرة",
+      "notes": "",
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "createdAt": 1791889864651,
+      "lastSeen": 1791889864651
+    },
+    "01122334455": {
+      "phone": "01122334455",
+      "name": "م. أحمد خالد",
+      "tags": [
+        "عميل جديد",
+        "Car Buyer",
+        "VIP Collector"
+      ],
+      "classification": "lead",
+      "classificationLabelAr": "عميل مهتم (Lead)",
+      "tier": "Standard",
+      "budgetRange": "غير محدد",
+      "preferredCar": "",
+      "preferredPayment": "كاش أو تقسيط",
+      "city": "القاهرة",
+      "notes": "",
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 6,
+      "totalSpent": 300000,
+      "createdAt": 1791889864685,
+      "lastSeen": 1791889864685
+    },
+    "01233445566": {
+      "phone": "01233445566",
+      "name": "أ. طارق عبد الرحمن",
+      "tags": [
+        "عميل جديد",
+        "Test Drive Guest"
+      ],
+      "classification": "lead",
+      "classificationLabelAr": "عميل مهتم (Lead)",
+      "tier": "Standard",
+      "budgetRange": "غير محدد",
+      "preferredCar": "",
+      "preferredPayment": "كاش أو تقسيط",
+      "city": "القاهرة",
+      "notes": "",
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 0,
+      "totalSpent": 0,
+      "createdAt": 1791889864695,
+      "lastSeen": 1791889864695
+    },
+    "201099998888": {
+      "phone": "201099998888",
+      "name": "Test Customer",
+      "tags": [
+        "VIP",
+        "Car Buyer",
+        "VIP Collector",
+        "Test Drive Guest"
+      ],
+      "classification": "lead",
+      "classificationLabelAr": "عميل مهتم (Lead)",
+      "tier": "Gold",
+      "budgetRange": "غير محدد",
+      "preferredCar": "",
+      "preferredPayment": "تقسيط بنكي",
+      "city": "القاهرة",
+      "notes": "",
+      "isHumanTakeover": false,
+      "takeoverUntil": null,
+      "cart": [],
+      "orderCount": 6,
+      "totalSpent": 600000,
+      "createdAt": 1791889872385,
+      "lastSeen": 1791894151059,
+      "messageCount": 6
     }
   },
   "campaigns": [
+    {
+      "id": "camp_mv6nifub627c",
+      "title": "عروض تقسيط سيارات 2024",
+      "message": "تقسيط بدون مقدم على موديلات مختارة لفترة محدودة!",
+      "targetTag": "all",
+      "sentCount": 25,
+      "status": "sent",
+      "at": 1791894151091
+    },
+    {
+      "id": "camp_mv6nbfv3gnvz",
+      "title": "عروض تقسيط سيارات 2024",
+      "message": "تقسيط بدون مقدم على موديلات مختارة لفترة محدودة!",
+      "targetTag": "all",
+      "sentCount": 25,
+      "status": "sent",
+      "at": 1791893824527
+    },
+    {
+      "id": "camp_mv6mseeqpbl2",
+      "title": "عروض تقسيط سيارات 2024",
+      "message": "تقسيط بدون مقدم على موديلات مختارة لفترة محدودة!",
+      "targetTag": "all",
+      "sentCount": 25,
+      "status": "sent",
+      "at": 1791892936178
+    },
+    {
+      "id": "camp_mv6lwr0l5ztz",
+      "title": "عروض تقسيط سيارات 2024",
+      "message": "تقسيط بدون مقدم على موديلات مختارة لفترة محدودة!",
+      "targetTag": "all",
+      "sentCount": 25,
+      "status": "sent",
+      "at": 1791891459525
+    },
+    {
+      "id": "camp_mv6lkemaer7j",
+      "title": "عروض تقسيط سيارات 2024",
+      "message": "تقسيط بدون مقدم على موديلات مختارة لفترة محدودة!",
+      "targetTag": "all",
+      "sentCount": 25,
+      "status": "sent",
+      "at": 1791890883586
+    },
+    {
+      "id": "camp_mv6kyqech6j5",
+      "title": "عروض تقسيط سيارات 2024",
+      "message": "تقسيط بدون مقدم على موديلات مختارة لفترة محدودة!",
+      "targetTag": "all",
+      "sentCount": 25,
+      "status": "sent",
+      "at": 1791889872420
+    },
     {
       "id": "camp_demo_1",
       "title": "عروض تقسيط سيارات زيرو بمقدم 20% وبدون مصاريف إدارية",
@@ -4574,7 +6207,7 @@
       "targetTag": "all",
       "sentCount": 65,
       "status": "sent",
-      "at": 1791198171082
+      "at": 1791717064572
     }
   ],
   "teamMembers": [
@@ -4584,7 +6217,7 @@
       "email": "abdallah@alfaresmotors.com",
       "role": "admin",
       "status": "active",
-      "addedAt": 1788777046207
+      "addedAt": 1789297715480
     },
     {
       "id": "team_2",
@@ -4592,7 +6225,7 @@
       "email": "karim@alfaresmotors.com",
       "role": "editor",
       "status": "active",
-      "addedAt": 1790159446207
+      "addedAt": 1790680115480
     },
     {
       "id": "team_3",
@@ -4600,7 +6233,7 @@
       "email": "finance@alfaresmotors.com",
       "role": "viewer",
       "status": "active",
-      "addedAt": 1790937046207
+      "addedAt": 1791457715480
     }
   ],
   "templates": [
@@ -4668,7 +6301,7 @@
         "قرض سيارة"
       ],
       "content": "نوفر تقسيطاً مصرفياً مباشراً عبر أكثر من 12 بنكاً مصرياً وعربياً. يبدأ المقدم من 20% للسيارات الزيرو و 25% للسيارات المستعملة، مع فترات سداد تمتد من سنة إلى 7 سنوات. الأوراق المطلوبة للموظفين: صورة بطاقة الرقم القومي، إثبات دخل حديث، وإيصال مرافق. لأصحاب الأعمال والمهن الحرة: سجل تجاري وبطاقة ضريبية وكشف حساب بنكي لآخر 6 أشهر. متاح أيضاً برامج بدون إثبات دخل بمقدم 40% إلى 50%.",
-      "updatedAt": 1790764246207
+      "updatedAt": 1791284915480
     },
     {
       "id": "art_used_cars_inspection",
@@ -4684,7 +6317,7 @@
         "مستعمل"
       ],
       "content": "تخضع كل سيارة مستعملة بالمعرض لتقرير فحص فني دقيق يشمل: سلامة الشاسيه والعفشة بنسبة 100%، فحص طلاء الهيكل بجهاز ديجيتال لتوثيق الفابريكا، فحص المحرك والفتيس بالكمبيوتر، مطابقة العداد الفعلي عبر مراكز الخدمة المعتمدة. نمنح العميل ضماناً لمدة 6 أشهر أو 10,000 كم ضد عيوب المحرك وناقل الحركة مع أحقية فحص السيارة بأي مركز معتمد يختاره العميل.",
-      "updatedAt": 1790937046207
+      "updatedAt": 1791457715480
     },
     {
       "id": "art_trade_in_process",
@@ -4699,7 +6332,7 @@
         "تقييم"
       ],
       "content": "يمكنك إحضار سيارتك الحالية لأي من فروعنا للحصول على تقييم فني وتثميني فوري خلال 30 دقيقة. يحصل العميل على أعلى سعر سوقي عادل لسيارته، ويتم احتساب القيمة كدفعة أولى أو مقدم لشراء أي سيارة أخرى (زيرو أو مستعملة)، مع تقسيط المبلغ المتبقي على أقساط مريحة دون الحاجة لدفع أي سيولة نقدية جديدة.",
-      "updatedAt": 1791109846207
+      "updatedAt": 1791630515480
     },
     {
       "id": "art_licensing_delivery",
@@ -4715,10 +6348,83 @@
         "ونش"
       ],
       "content": "يقوم فريق العلاقات الحكومية بالمعرض بإنهاء جميع إجراءات المرور ونقل الملكية وتجديد الرخص بالنيابة عن العميل وتوفير لوحات تجارية للتسليم الفوري. كما نوفر خدمة شحن وتوصيل السيارات حتى باب المنزل بجميع محافظات الجمهورية عبر حاملات سيارات مؤمنة بالكامل.",
-      "updatedAt": 1791196246207
+      "updatedAt": 1791716915480
     }
   ],
-  "handoffTickets": [],
+  "handoffTickets": [
+    {
+      "id": "ticket_mv6nifvjrhq2",
+      "phone": "201099998888",
+      "name": "Test Customer",
+      "issueSummary": "Need help with custom order",
+      "sentiment": "Neutral",
+      "lastMessage": "",
+      "intentType": "HUMAN_TAKEOVER",
+      "status": "resolved",
+      "createdAt": 1791894151135,
+      "resolvedAt": 1791894151139
+    },
+    {
+      "id": "ticket_mv6nbfwa8lqa",
+      "phone": "201099998888",
+      "name": "Test Customer",
+      "issueSummary": "Need help with custom order",
+      "sentiment": "Neutral",
+      "lastMessage": "",
+      "intentType": "HUMAN_TAKEOVER",
+      "status": "resolved",
+      "createdAt": 1791893824570,
+      "resolvedAt": 1791893824573
+    },
+    {
+      "id": "ticket_mv6msefx0w28",
+      "phone": "201099998888",
+      "name": "Test Customer",
+      "issueSummary": "Need help with custom order",
+      "sentiment": "Neutral",
+      "lastMessage": "",
+      "intentType": "HUMAN_TAKEOVER",
+      "status": "resolved",
+      "createdAt": 1791892936222,
+      "resolvedAt": 1791892936225
+    },
+    {
+      "id": "ticket_mv6lwr1ufh1v",
+      "phone": "201099998888",
+      "name": "Test Customer",
+      "issueSummary": "Need help with custom order",
+      "sentiment": "Neutral",
+      "lastMessage": "",
+      "intentType": "HUMAN_TAKEOVER",
+      "status": "resolved",
+      "createdAt": 1791891459570,
+      "resolvedAt": 1791891459573
+    },
+    {
+      "id": "ticket_mv6lkenjf9p1",
+      "phone": "201099998888",
+      "name": "Test Customer",
+      "issueSummary": "Need help with custom order",
+      "sentiment": "Neutral",
+      "lastMessage": "",
+      "intentType": "HUMAN_TAKEOVER",
+      "status": "resolved",
+      "createdAt": 1791890883631,
+      "resolvedAt": 1791890883635
+    },
+    {
+      "id": "ticket_mv6kyqfg79pk",
+      "phone": "201099998888",
+      "name": "Test Customer",
+      "issueSummary": "Need help with custom order",
+      "sentiment": "Neutral",
+      "lastMessage": "",
+      "intentType": "HUMAN_TAKEOVER",
+      "status": "resolved",
+      "createdAt": 1791889872460,
+      "resolvedAt": 1791889872464
+    }
+  ],
   "knowledgeGaps": [
     {
       "id": "gap_hybrid_electric",
@@ -4728,7 +6434,7 @@
       "suggestedTitle": "السيارات الهايبرد والكهربائية المتاحة وشواحنها (EV & Hybrid)",
       "suggestedDraft": "نعم! نوفر تشكيلة من سيارات الهايبرد (Mild-Hybrid و Plug-in Hybrid) مثل مرسيدس C-Class وتويوتا كورولا هايبرد، مع خدمة توريد شواحن منزلية معتمدة.",
       "status": "open",
-      "detectedAt": 1791023446207,
+      "detectedAt": 1791544115480,
       "addressedAt": null
     },
     {
@@ -4739,7 +6445,7 @@
       "suggestedTitle": "برامج التقسيط بدون استعلام عمل أو إثبات دخل رسمي",
       "suggestedDraft": "نعم، متاح برامج تمويل خاصة بدون إثبات دخل رسمي بمقدم يبدأ من 40% إلى 50% بصورة البطاقة القومية فقط وفترة سداد حتى 5 سنوات.",
       "status": "open",
-      "detectedAt": 1791109846207,
+      "detectedAt": 1791630515480,
       "addressedAt": null
     },
     {
@@ -4750,20 +6456,246 @@
       "suggestedTitle": "باقات التأمين الشامل التنافسية على السيارات",
       "suggestedDraft": "نتعامل مع أكبر شركات التأمين المعتمدة بنسب اشتراك تبدأ من 2.2% سنوياً مع وثائق تغطي الحوادث الكلية والجزئية والسرقة والحريق مع إمكانية التقسيط.",
       "status": "open",
-      "detectedAt": 1791196246207,
+      "detectedAt": 1791716915480,
       "addressedAt": null
     }
   ],
   "learnedAnswers": [
     {
-      "id": "learned_muxyvmbm0db6",
-      "question": "هل المعرض بيوفر سيارات مستوردة بالطلب من ألمانيا؟",
-      "answer": "لا",
+      "id": "learned_mv6o2zhdtp4s",
+      "question": "عايز اعرف تفاصيل التقسيط والقسط الشهري لسيارة كيا سبورتاج بمقدم 30%",
+      "answer": "متاح تقسيط بنكي مباشر بمقدم يبدأ من 20% وفترات سداد حتى 7 سنوات بأقل فائدة بنكية بصورة البطاقة وإثبات الدخل.",
       "source": "human_owner_livechat",
-      "customerPhone": "201099887766",
-      "learnedAt": 1791378728491,
+      "customerPhone": "201011112222",
+      "learnedAt": 1791895109665,
       "confidence": 1,
-      "aliases": "هل المعرض بيوفر سيارات مستوردة بالطلب من ألمانيا؟"
+      "aliases": "عايز اعرف تفاصيل التقسيط والقسط الشهري لسيارة كيا سبورتاج بمقدم 30%"
+    }
+  ],
+  "tradeIns": [
+    {
+      "id": "trd_mv6ojfhc1jli",
+      "tradeInNumber": "TRD-0014",
+      "clientName": "Preview Client",
+      "clientPhone": "201012345678",
+      "carMake": "",
+      "carModel": "",
+      "carYear": 2026,
+      "mileage": "غير محدد",
+      "condition": "جيدة جداً",
+      "paintStatus": "فابريكا بالكامل",
+      "estimatedValue": "في انتظار الفحص والمعاينة",
+      "notes": "عايز ابدل عربيتي نيسان صني 2020 فابريكا بالكامل",
+      "status": "pending",
+      "at": 1791895876896
+    },
+    {
+      "id": "trd_mv6nw5obpz59",
+      "tradeInNumber": "TRD-0013",
+      "clientName": "Preview Client",
+      "clientPhone": "201012345678",
+      "carMake": "",
+      "carModel": "",
+      "carYear": 2026,
+      "mileage": "غير محدد",
+      "condition": "جيدة جداً",
+      "paintStatus": "فابريكا بالكامل",
+      "estimatedValue": "في انتظار الفحص والمعاينة",
+      "notes": "عايز ابدل عربيتي نيسان صني 2021 فابريكا بالكامل",
+      "status": "pending",
+      "at": 1791894791099
+    },
+    {
+      "id": "trd_mv6neua1swtg",
+      "tradeInNumber": "TRD-0012",
+      "clientName": "Preview Client",
+      "clientPhone": "201012345678",
+      "carMake": "",
+      "carModel": "",
+      "carYear": 2026,
+      "mileage": "غير محدد",
+      "condition": "جيدة جداً",
+      "paintStatus": "فابريكا بالكامل",
+      "estimatedValue": "في انتظار الفحص والمعاينة",
+      "notes": "عايز ابدل عربيتي نيسان صني 2020 فابريكا بالكامل",
+      "status": "pending",
+      "at": 1791893983177
+    },
+    {
+      "id": "trd_mv6nbxrp6gim",
+      "tradeInNumber": "TRD-0011",
+      "clientName": "Preview Client",
+      "clientPhone": "201012345678",
+      "carMake": "",
+      "carModel": "",
+      "carYear": 2026,
+      "mileage": "غير محدد",
+      "condition": "جيدة جداً",
+      "paintStatus": "فابريكا بالكامل",
+      "estimatedValue": "في انتظار الفحص والمعاينة",
+      "notes": "عايز ابدل عربيتي نيسان صني 2021 فابريكا بالكامل",
+      "status": "pending",
+      "at": 1791893847733
+    },
+    {
+      "id": "trd_mv6mslb8xljh",
+      "tradeInNumber": "TRD-0010",
+      "clientName": "Preview Client",
+      "clientPhone": "201012345678",
+      "carMake": "",
+      "carModel": "",
+      "carYear": 2026,
+      "mileage": "غير محدد",
+      "condition": "جيدة جداً",
+      "paintStatus": "فابريكا بالكامل",
+      "estimatedValue": "في انتظار الفحص والمعاينة",
+      "notes": "عايز ابدل عربيتي نيسان صني 2021 فابريكا بالكامل",
+      "status": "pending",
+      "at": 1791892945124
+    },
+    {
+      "id": "trd_mv6lwgestvoy",
+      "tradeInNumber": "TRD-0009",
+      "clientName": "Preview Client",
+      "clientPhone": "201012345678",
+      "carMake": "",
+      "carModel": "",
+      "carYear": 2026,
+      "mileage": "غير محدد",
+      "condition": "جيدة جداً",
+      "paintStatus": "فابريكا بالكامل",
+      "estimatedValue": "في انتظار الفحص والمعاينة",
+      "notes": "عايز ابدل عربيتي نيسان صني 2021 فابريكا بالكامل",
+      "status": "pending",
+      "at": 1791891445780
+    },
+    {
+      "id": "trd_mv6lk8cflqc9",
+      "tradeInNumber": "TRD-0008",
+      "clientName": "Preview Client",
+      "clientPhone": "201012345678",
+      "carMake": "",
+      "carModel": "",
+      "carYear": 2026,
+      "mileage": "غير محدد",
+      "condition": "جيدة جداً",
+      "paintStatus": "فابريكا بالكامل",
+      "estimatedValue": "في انتظار الفحص والمعاينة",
+      "notes": "عايز ابدل عربيتي نيسان صني 2021 فابريكا بالكامل",
+      "status": "pending",
+      "at": 1791890875455
+    },
+    {
+      "id": "trd_001",
+      "tradeInNumber": "TRD-1001",
+      "clientName": "الحاج عاطف المنشاوي",
+      "clientPhone": "01555443322",
+      "carMake": "Toyota",
+      "carModel": "Toyota Fortuner 2020 V6 4.0L",
+      "carYear": 2020,
+      "mileage": "55,000 كم",
+      "condition": "ممتازة فابريكا صيانات توكيل",
+      "paintStatus": "فابريكا بالكامل (دهان المصنع)",
+      "estimatedValue": "2,100,000 ج.م (تثمين معتمد)",
+      "notes": "تم فحص السيارة بمركز الفحص بفرع التجمع وتثمينها رسمياً لاستبدالها بـ Fortuner 2024 ودفع الفارق كاش.",
+      "status": "approved",
+      "at": 1791717997819
+    },
+    {
+      "id": "trd_002",
+      "tradeInNumber": "TRD-1002",
+      "clientName": "المستشار معتز الشافعي",
+      "clientPhone": "01099884422",
+      "carMake": "Mercedes-Benz",
+      "carModel": "Mercedes-Benz C180 Avantgarde 2019",
+      "carYear": 2019,
+      "mileage": "60,000 كم",
+      "condition": "حالة نادرة كسر زيرو",
+      "paintStatus": "فابريكا بالكامل",
+      "estimatedValue": "2,450,000 ج.م (تثمين معتمد)",
+      "notes": "فحص هندسي كامل 150 نقطة سليم 100%، جاري استبدالها بـ Mercedes C200 AMG 2024.",
+      "status": "approved",
+      "at": 1791631597819
+    },
+    {
+      "id": "trd_003",
+      "tradeInNumber": "TRD-1003",
+      "clientName": "م. شريف المنياوي",
+      "clientPhone": "01223344889",
+      "carMake": "Nissan",
+      "carModel": "Nissan Sunny 2021 Super Saloon",
+      "carYear": 2021,
+      "mileage": "48,000 كم",
+      "condition": "جيدة جداً",
+      "paintStatus": "فابريكا بالكامل",
+      "estimatedValue": "680,000 - 720,000 ج.م (مبدئي)",
+      "notes": "طلب العميل معاينة وفحص السيارة يوم الخميس القادم واستبدالها بـ MG 4 EV كهربائية زيرو.",
+      "status": "pending",
+      "at": 1791804397819
+    },
+    {
+      "id": "trd_004",
+      "tradeInNumber": "TRD-1004",
+      "clientName": "أ. كريم عبد الحميد",
+      "clientPhone": "01011229988",
+      "carMake": "Kia",
+      "carModel": "Kia Cerato 2019 Topline",
+      "carYear": 2019,
+      "mileage": "72,000 كم",
+      "condition": "جيدة جداً فابريكا سقف وكبوت وشنطة",
+      "paintStatus": "راشة إكصدامين نظافة فقط",
+      "estimatedValue": "850,000 - 900,000 ج.م (مبدئي)",
+      "notes": "تواصل عبر واتساب لإرسال صور السيارة ورخصة التسيير، بانتظار فحص المعرض.",
+      "status": "pending",
+      "at": 1791847597819
+    },
+    {
+      "id": "trd_005",
+      "tradeInNumber": "TRD-1005",
+      "clientName": "د. هاني الجوهري",
+      "clientPhone": "01144558877",
+      "carMake": "Renault",
+      "carModel": "Renault Megane Turbo 2020 Signature",
+      "carYear": 2020,
+      "mileage": "65,000 كم",
+      "condition": "ممتازة صيانة كاملة بالتوكيل",
+      "paintStatus": "فابريكا بالكامل",
+      "estimatedValue": "980,000 - 1,020,000 ج.م (مبدئي)",
+      "notes": "مهتم باستبدالها بـ Peugeot 3008 GT 2024 زيرو بالتقسيط.",
+      "status": "pending",
+      "at": 1791869197819
+    },
+    {
+      "id": "trd_006",
+      "tradeInNumber": "TRD-1006",
+      "clientName": "أ. طارق عبد المحسن",
+      "clientPhone": "01004455221",
+      "carMake": "Škoda",
+      "carModel": "Škoda Octavia A7 2018 Style Plus",
+      "carYear": 2018,
+      "mileage": "89,000 كم",
+      "condition": "ممتازة تم الاستبدال",
+      "paintStatus": "فابريكا دواخل وخوارج",
+      "estimatedValue": "880,000 ج.م (تمت التسوية)",
+      "notes": "تمت الصفقة بنجاح واستلام السيارة القديمة وتسليم العميل Octavia A8 2024 وتقسيط الفارق.",
+      "status": "completed",
+      "at": 1790594797819
+    },
+    {
+      "id": "trd_007",
+      "tradeInNumber": "TRD-1007",
+      "clientName": "د. مصطفى الشريف",
+      "clientPhone": "01012345678",
+      "carMake": "Toyota",
+      "carModel": "Toyota Corolla 2020 Active Plus",
+      "carYear": 2020,
+      "mileage": "62,000 كم",
+      "condition": "ممتازة تم الاستبدال",
+      "paintStatus": "فابريكا بالكامل",
+      "estimatedValue": "920,000 ج.م (تمت التسوية)",
+      "notes": "تم استبدالها بـ Toyota Corolla 2024 Smart Key زيرو ونقل الملكية بنجاح.",
+      "status": "completed",
+      "at": 1790162797819
     }
   ]
 }

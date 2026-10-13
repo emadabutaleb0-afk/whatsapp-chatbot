@@ -1,828 +1,1152 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ClientBot WhatsApp — Executive System Presentation</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>العرض التقديمي التنفيذي — منصة الفارس موتورز الذكية</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cairo:wght@600;700;800&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      background-color: #0b1118;
-      color: #0f172a;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    
-    /* 16:9 Slide Aspect Ratio for Desktop & Print */
+    body {
+      font-family: 'Cairo', 'Tajawal', sans-serif;
+      background-color: #080d1a;
+      color: #e2e8f0;
+      -webkit-font-smoothing: antialiased;
+    }
+    @page {
+      size: 1920px 1080px;
+      margin: 0;
+    }
     .slide {
-      width: 100%;
-      max-width: 1100px;
-      aspect-ratio: 16 / 9;
-      margin: 0 auto 3rem auto;
-      background: #ffffff;
-      border-radius: 1.25rem;
-      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.4);
+      width: 1920px;
+      height: 1080px;
+      position: relative;
+      page-break-after: always;
+      page-break-inside: avoid;
+      overflow: hidden;
+      padding: 60px 80px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 2.75rem 3.5rem;
+      background: linear-gradient(135deg, #0b1120 0%, #0f172a 50%, #0a0f1d 100%);
+      border-bottom: 2px solid #1e293b;
+    }
+
+    /* Ambient glow elements */
+    .glow-top-right {
+      position: absolute;
+      top: -150px;
+      left: -150px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(18, 140, 126, 0.25) 0%, rgba(18, 140, 126, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .glow-bottom-left {
+      position: absolute;
+      bottom: -150px;
+      right: -150px;
+      width: 550px;
+      height: 550px;
+      background: radial-gradient(circle, rgba(14, 165, 233, 0.2) 0%, rgba(14, 165, 233, 0) 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 20px;
       position: relative;
-      overflow: hidden;
-      page-break-after: always;
-      break-after: page;
+      z-index: 2;
     }
-
-    .slide-dark {
-      background: linear-gradient(135deg, #091924 0%, #0c202d 50%, #061118 100%);
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .brand-logo {
+      height: 56px;
+      width: 56px;
+      background: #0f172a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+    }
+    .brand-logo img {
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain;
+    }
+    .brand-title {
+      font-size: 26px;
+      font-weight: 800;
       color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    .brand-sub {
+      font-size: 14px;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+    .slide-meta {
+      text-align: left;
+    }
+    .slide-category {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #10b981;
+      font-weight: 700;
+    }
+    .slide-number {
+      font-size: 22px;
+      font-weight: 900;
+      color: #64748b;
     }
 
-    @media print {
-      body {
-        background: transparent !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-      .no-print {
-        display: none !important;
-      }
-      .slide {
-        max-width: 100% !important;
-        width: 100vw !important;
-        height: 100vh !important;
-        margin: 0 !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        padding: 2.5rem 3.5rem !important;
-        page-break-after: always !important;
-        break-after: page !important;
-        box-sizing: border-box !important;
-      }
-      @page {
-        size: landscape;
-        margin: 0;
-      }
+    /* Content Area */
+    .slide-content {
+      display: flex;
+      gap: 50px;
+      align-items: center;
+      flex: 1;
+      margin: 30px 0;
+      position: relative;
+      z-index: 2;
+    }
+    .col-left {
+      flex: 1.1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    .col-right {
+      flex: 1.4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* Titles */
+    .slide-title {
+      font-size: 42px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.25;
+    }
+    .slide-subtitle {
+      font-size: 20px;
+      color: #94a3b8;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    /* Feature Cards */
+    .feature-card {
+      background: rgba(30, 41, 59, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 18px;
+      padding: 22px 26px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+    }
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .feature-title {
+      font-size: 19px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
+    .feature-desc {
+      font-size: 15px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    /* Screen Frame */
+    .screen-mockup {
+      width: 100%;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(18, 140, 126, 0.15);
+      background: #0f172a;
+      position: relative;
+    }
+    .screen-mockup-header {
+      background: #1e293b;
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .mockup-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .mockup-dot.red { background: #ef4444; }
+    .mockup-dot.yellow { background: #f59e0b; }
+    .mockup-dot.green { background: #10b981; }
+    .mockup-title {
+      font-size: 12px;
+      color: #94a3b8;
+      margin-right: 12px;
+      font-weight: 600;
+      font-family: monospace;
+    }
+    .screen-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Badges */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .pill-emerald {
+      background: rgba(16, 185, 129, 0.15);
+      color: #34d399;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+    .pill-cyan {
+      background: rgba(6, 182, 212, 0.15);
+      color: #38bdf8;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+    }
+    .pill-amber {
+      background: rgba(245, 158, 11, 0.15);
+      color: #fbbf24;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+    }
+
+    /* Footer */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 18px;
+      font-size: 13px;
+      color: #64748b;
+      position: relative;
+      z-index: 2;
+    }
+    .footer-highlight {
+      color: #10b981;
+      font-weight: 700;
+    }
+
+    /* Cover Slide Specifics */
+    .cover-slide {
+      background: radial-gradient(circle at 75% 30%, #132b35 0%, #0b1120 50%, #050811 100%);
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px 140px;
+    }
+    .cover-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(18, 140, 126, 0.15);
+      border: 1px solid rgba(18, 140, 126, 0.4);
+      color: #34d399;
+      padding: 10px 24px;
+      border-radius: 9999px;
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 30px;
+    }
+    .cover-title {
+      font-size: 64px;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .cover-title span {
+      background: linear-gradient(135deg, #10b981 0%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .cover-sub {
+      font-size: 26px;
+      color: #cbd5e1;
+      max-width: 1200px;
+      margin: 0 auto 50px;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+    .cover-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      width: 100%;
+      max-width: 1200px;
+      margin-top: 20px;
+    }
+    .cover-card {
+      background: rgba(30, 41, 59, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 26px;
+      text-align: right;
+    }
+    .cover-card-num {
+      font-size: 32px;
+      font-weight: 900;
+      color: #34d399;
+      margin-bottom: 6px;
+    }
+    .cover-card-label {
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .cover-card-sub {
+      font-size: 14px;
+      color: #94a3b8;
+    }
+
+    /* Grid for Comparison / ROI slides */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      width: 100%;
+    }
+    .stat-box {
+      background: rgba(30, 41, 59, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 24px;
+      border-top: 4px solid #10b981;
+    }
+    .stat-box.cyan { border-top-color: #06b6d4; }
+    .stat-box.amber { border-top-color: #f59e0b; }
+    .stat-box.indigo { border-top-color: #6366f1; }
+    .stat-value {
+      font-size: 38px;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .stat-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #e2e8f0;
+      margin-bottom: 8px;
+    }
+    .stat-desc {
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 1.5;
     }
   </style>
 </head>
-<body class="py-10 px-4">
+<body>
 
-  <!-- Floating Sticky Action Header -->
-  <header class="no-print fixed top-5 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 bg-slate-900/90 backdrop-blur-md border border-slate-700/80 px-5 py-2.5 rounded-2xl shadow-2xl">
-    <div class="flex items-center gap-2 text-white text-xs font-semibold mr-2">
-      <span class="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-      <span>ClientBot Pitch Deck</span>
+  <!-- ==================== SLIDE 1: الغلاف ==================== -->
+  <section class="slide cover-slide">
+    <div class="glow-top-right"></div>
+    <div class="glow-bottom-left"></div>
+
+    <div class="cover-badge">
+      <span>🚀 العرض التقديمي التنفيذي والتقني الموجه للإدارة العليا</span>
     </div>
-    <button onclick="window.print()" class="flex items-center gap-2 bg-[#128C7E] hover:bg-[#0d6e63] text-white px-4 py-2 rounded-xl text-xs font-bold shadow transition">
-      <i data-lucide="download" class="h-4 w-4"></i> Save / Export as PDF
-    </button>
-    <a href="/index.html" class="flex items-center gap-1.5 text-slate-300 hover:text-white px-3 py-2 rounded-xl text-xs font-medium transition">
-      <i data-lucide="layout-dashboard" class="h-4 w-4"></i> Dashboard
-    </a>
-  </header>
 
-  <div class="pt-8 no-print text-center mb-8">
-    <p class="text-xs text-slate-400 font-medium uppercase tracking-widest">ClientBot Enterprise Presentation Deck · 12 Slides</p>
-    <h1 class="text-xl font-bold text-slate-200 mt-1">WhatsApp AI Assistant &amp; Business Operating System</h1>
-    <p class="text-xs text-slate-400 mt-1">Scroll down to preview slides or click <strong class="text-emerald-400">Save / Export as PDF</strong> for a presentation export.</p>
-  </div>
+    <h1 class="cover-title">
+      منصة <span>الفارس موتورز</span> للذكاء الاصطناعي<br>
+      Automotive AI Growth Engine
+    </h1>
 
-  <!-- ==================== SLIDE 1: COVER ==================== -->
-  <section class="slide slide-dark">
-    <!-- Top Branding -->
-    <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
-      <div class="flex items-center gap-2.5">
-        <div class="h-9 w-9 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-          <i data-lucide="message-square" class="h-5 w-5"></i>
-        </div>
+    <p class="cover-sub">
+      المنظومة الرقمية الشاملة لأتمتة مبيعات السيارات، وخدمة العملاء على مدار 24 ساعة عبر واتساب، وإدارة صالة العرض، والاستبدال والتثمين الفوري.
+    </p>
+
+    <div class="cover-grid">
+      <div class="cover-card">
+        <div class="cover-card-num">24 / 7</div>
+        <div class="cover-card-label">مستشار مبيعات فوري</div>
+        <div class="cover-card-sub">رد احترافي في أقل من ثانيتين على واتساب بأسعار 65 سيارة والأقساط.</div>
+      </div>
+      <div class="cover-card">
+        <div class="cover-card-num">+35%</div>
+        <div class="cover-card-label">زيادة تجارب القيادة</div>
+        <div class="cover-card-sub">حجز ومتابعة تجارب القيادة آلياً بفرعي التجمع الأول ومدينة نصر.</div>
+      </div>
+      <div class="cover-card">
+        <div class="cover-card-num">150 نقطة</div>
+        <div class="cover-card-label">تثمين واستبدال معتمد</div>
+        <div class="cover-card-sub">حاسبة Trade-In فورية لتحويل سيارة العميل القديمة لمقدم شراء.</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 40px; display: flex; align-items: center; justify-content: center; gap: 30px; font-size: 15px; color: #94a3b8;">
+      <div><strong>المستهدف:</strong> معارض الفارس موتورز مصر — إدارة الأستاذ هاني مسعود</div>
+      <div>•</div>
+      <div><strong>الفروع:</strong> التجمع الأول (مول 5) &amp; مدينة نصر (شارع المشروع)</div>
+      <div>•</div>
+      <div><strong>الخط الساخن:</strong> 01501511117</div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SLIDE 2: التحديات والحل ==================== -->
+  <section class="slide">
+    <div class="glow-top-right"></div>
+    <div class="slide-header">
+      <div class="brand-group">
+        <div class="brand-logo"><img src="images/logo.png" alt="Logo"></div>
         <div>
-          <span class="text-base font-extrabold text-white tracking-tight">ClientBot <span class="text-emerald-400">Enterprise</span></span>
-          <p class="text-[10px] text-slate-400 uppercase tracking-widest">WhatsApp Cloud AI System</p>
+          <div class="brand-title">Al-Fares Motors مصر</div>
+          <div class="brand-sub">إدارة هاني مسعود</div>
         </div>
       </div>
-      <span class="text-xs text-slate-400 font-medium">System Overview &amp; Capabilities</span>
-    </div>
-
-    <!-- Center Hero -->
-    <div class="my-auto py-4">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold mb-4">
-        <i data-lucide="sparkles" class="h-3.5 w-3.5"></i>
-        <span>Next-Generation Conversational Commerce</span>
-      </div>
-      <h2 class="text-4xl sm:text-5xl font-extrabold text-white leading-tight tracking-tight">
-        Turn WhatsApp into your <br>
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
-          #1 24/7 Automated Revenue Engine
-        </span>
-      </h2>
-      <p class="mt-4 text-base text-slate-300 max-w-2xl leading-relaxed">
-        An all-in-one AI assistant, live chat takeover suite, direct cart ordering system, and executive analytics dashboard built on the official Meta Cloud API.
-      </p>
-    </div>
-
-    <!-- Bottom Metrics Preview -->
-    <div class="grid grid-cols-4 gap-4 pt-4 border-t border-slate-800/80">
-      <div>
-        <p class="text-2xl font-bold text-emerald-400">92%+</p>
-        <p class="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">Automation Rate</p>
-      </div>
-      <div>
-        <p class="text-2xl font-bold text-white">&lt; 1.2s</p>
-        <p class="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">Avg Response Latency</p>
-      </div>
-      <div>
-        <p class="text-2xl font-bold text-white">24 / 7</p>
-        <p class="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">Always Online</p>
-      </div>
-      <div>
-        <p class="text-2xl font-bold text-teal-400">Bilingual</p>
-        <p class="text-[11px] text-slate-400 uppercase tracking-wider mt-0.5">Arabic, Franco &amp; English</p>
+      <div class="slide-meta">
+        <div class="slide-category">تحليل السوق والتحديات</div>
+        <div class="slide-number">01 / 10</div>
       </div>
     </div>
-  </section>
 
-  <!-- ==================== SLIDE 2: THE PROBLEM ==================== -->
-  <section class="slide">
-    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-      <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">The Market Challenge</span>
-      <span class="text-xs font-semibold text-slate-600">Slide 02</span>
-    </div>
+    <div class="slide-content">
+      <div class="col-left">
+        <div class="pill pill-amber">فرصة السوق المضاعفة</div>
+        <h2 class="slide-title">لماذا تحتاج معارض السيارات الحديثة نظام ذكاء اصطناعي فوري؟</h2>
+        <p class="slide-subtitle">سوق السيارات في مصر يتسم بالمنافسة وسرعة القرار. تأخر الرد على العميل لعشر دقائق يعني انتقاله لمعرض منافس فوراً.</p>
 
-    <div class="my-auto py-2">
-      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">The Cost of Manual WhatsApp Customer Service</h2>
-      <p class="text-sm text-slate-500 mt-1 max-w-xl">Businesses lose high-intent clients every day due to operational bottlenecks on chat channels.</p>
-
-      <div class="grid grid-cols-3 gap-6 mt-6">
-        <div class="p-5 rounded-2xl bg-rose-50/60 border border-rose-100 flex flex-col justify-between">
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(239, 68, 68, 0.15); color: #f87171;">⏳</div>
           <div>
-            <div class="h-10 w-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold mb-3">
-              <i data-lucide="clock-alert" class="h-5 w-5"></i>
-            </div>
-            <h3 class="text-base font-bold text-rose-950">Slow Response Times</h3>
-            <p class="text-xs text-rose-800/80 mt-2 leading-relaxed">
-              78% of customers buy from the company that replies first. Delayed responses at night or during rush hours result in immediate drop-offs.
-            </p>
+            <div class="feature-title">ضياع الاستفسارات خارج أوقات العمل</div>
+            <div class="feature-desc">أكثر من 40% من رسائل واتساب تأتي بعد منتصف الليل أو صباحاً قبل فتح المعرض. المنصة ترد فوراً وتحجز الموعد دون انتظار.</div>
           </div>
-          <p class="text-xs font-semibold text-rose-600 mt-4">Average response delay: 28+ minutes</p>
         </div>
 
-        <div class="p-5 rounded-2xl bg-amber-50/60 border border-amber-100 flex flex-col justify-between">
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(59, 130, 246, 0.15); color: #60a5fa;">📊</div>
           <div>
-            <div class="h-10 w-10 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center font-bold mb-3">
-              <i data-lucide="repeat" class="h-5 w-5"></i>
-            </div>
-            <h3 class="text-base font-bold text-amber-950">Repetitive Workload</h3>
-            <p class="text-xs text-amber-800/80 mt-2 leading-relaxed">
-              Staff spend over 65% of their working hours answering the exact same questions: opening hours, menu prices, delivery fees, and branch addresses.
-            </p>
+            <div class="feature-title">تعقيد حساب الأقساط والمقدمات</div>
+            <div class="feature-desc">العميل يسأل: "لو هدفع 30% قسطي كام على 5 سنين؟". الذكاء الاصطناعي يحسب الفائدة والمقدم والقسط في ثانية واحدة ويدعوه للمعرض.</div>
           </div>
-          <p class="text-xs font-semibold text-amber-600 mt-4">40+ hours wasted per employee / month</p>
         </div>
 
-        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col justify-between">
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">🔄</div>
           <div>
-            <div class="h-10 w-10 rounded-xl bg-slate-200 text-slate-700 flex items-center justify-center font-bold mb-3">
-              <i data-lucide="file-x" class="h-5 w-5"></i>
-            </div>
-            <h3 class="text-base font-bold text-slate-900">Zero Analytics &amp; Lost Data</h3>
-            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-              Standard WhatsApp Business lacks unified customer CRM, sales tracking, rush-hour volume heatmaps, and structured order pipelines.
-            </p>
+            <div class="feature-title">تنشيط حركة الاستبدال (Trade-In)</div>
+            <div class="feature-desc">تثمين مبدئي مباشر لسيارة العميل القديمة وحجز موعد الفحص الفني يحفز العميل على اتخاذ قرار الشراء واستبدال سيارته فوراً.</div>
           </div>
-          <p class="text-xs font-semibold text-slate-700 mt-4">Untracked revenue &amp; lost customer history</p>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div class="stats-row" style="grid-template-columns: 1fr; gap: 20px;">
+          <div class="stat-box">
+            <div class="stat-value">68%</div>
+            <div class="stat-title">من مشتري السيارات في مصر يبدأون بواتساب</div>
+            <div class="stat-desc">واتساب هو قناة البيع الأولى، والرد السريع المتضمن المواصفات الدقيقة والأسعار يرفع معدل إتمام الصفقات بمقدار 3 أضعاف.</div>
+          </div>
+          <div class="stat-box cyan">
+            <div class="stat-value">أقل من 2 ثانية</div>
+            <div class="stat-title">سرعة الاستجابة الذكية 24/7</div>
+            <div class="stat-desc">توفير تجربة استثنائية للعميل في أي وقت ومن أي مكان، مع التحدث باللهجة المصرية الراقية والخبرة الفنية المتخصصة.</div>
+          </div>
+          <div class="stat-box amber">
+            <div class="stat-value">صفر فرصة مهدرة</div>
+            <div class="stat-title">تحويل كل زائر إلى عميل محتمل في الـ CRM</div>
+            <div class="stat-desc">حفظ أرقام الهواتف واهتمامات كل عميل وميزانيته أوتوماتيكياً لإتاحة متابعته لاحقاً من قبل مستشاري المبيعات.</div>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-      <span>ClientBot Enterprise WhatsApp Architecture</span>
-      <span>Problem Definition</span>
+    <div class="slide-footer">
+      <div>منصة الفارس موتورز الذكية — تحويل صالة العرض إلى منظومة رقمية متكاملة</div>
+      <div class="footer-highlight">حل تقني تم تصميمه خصيصاً لسوق السيارات المصري</div>
     </div>
   </section>
 
-  <!-- ==================== SLIDE 3: THE SOLUTION & ARCHITECTURE ==================== -->
+
+  <!-- ==================== SLIDE 3: لوحة التحكم ==================== -->
   <section class="slide">
-    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">The Solution</span>
-      <span class="text-xs font-semibold text-slate-600">Slide 03</span>
-    </div>
-
-    <div class="my-auto py-2">
-      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">The Complete Autonomous Business Operating System</h2>
-      <p class="text-sm text-slate-500 mt-1">ClientBot bridges WhatsApp with powerful backend automation and team orchestration.</p>
-
-      <div class="grid grid-cols-4 gap-4 mt-6">
-        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between">
-          <div>
-            <div class="h-8 w-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center mb-3">
-              <i data-lucide="bot" class="h-4 w-4"></i>
-            </div>
-            <h4 class="text-sm font-bold text-slate-900">Meta Cloud API</h4>
-            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
-              Official enterprise integration. Zero risk of account bans. High-speed webhook listeners handle high concurrent messages seamlessly.
-            </p>
-          </div>
-          <span class="mt-3 text-[10px] font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded w-max">Official Gateway</span>
-        </div>
-
-        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between">
-          <div>
-            <div class="h-8 w-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center mb-3">
-              <i data-lucide="brain-circuit" class="h-4 w-4"></i>
-            </div>
-            <h4 class="text-sm font-bold text-slate-900">Bilingual AI Brain</h4>
-            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
-              Advanced language engine trained on your business profile, products, policies, and dialect nuances (Egyptian Arabic, Franco, MSA, English).
-            </p>
-          </div>
-          <span class="mt-3 text-[10px] font-bold text-teal-600 bg-teal-50 px-2 py-0.5 rounded w-max">Semantic NLP</span>
-        </div>
-
-        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between">
-          <div>
-            <div class="h-8 w-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center mb-3">
-              <i data-lucide="users" class="h-4 w-4"></i>
-            </div>
-            <h4 class="text-sm font-bold text-slate-900">Live Team Takeover</h4>
-            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
-              Shared team inbox. Human staff can pause the bot and step in with 1-click whenever high-touch VIP assistance or complex handling is needed.
-            </p>
-          </div>
-          <span class="mt-3 text-[10px] font-bold text-sky-600 bg-sky-50 px-2 py-0.5 rounded w-max">Unified Inbox</span>
-        </div>
-
-        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm flex flex-col justify-between">
-          <div>
-            <div class="h-8 w-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center mb-3">
-              <i data-lucide="bar-chart-3" class="h-4 w-4"></i>
-            </div>
-            <h4 class="text-sm font-bold text-slate-900">Command Center</h4>
-            <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
-              Full visual SPA dashboard. Tracks orders, booking calendars, revenue, response latencies, peak hours, and customer retention metrics.
-            </p>
-          </div>
-          <span class="mt-3 text-[10px] font-bold text-purple-600 bg-purple-50 px-2 py-0.5 rounded w-max">Real-time Analytics</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-      <span>Platform Overview</span>
-      <span>Architecture &amp; Core Layers</span>
-    </div>
-  </section>
-
-  <!-- ==================== SLIDE 4: IN-CHAT DIRECT ORDERS & CART ==================== -->
-  <section class="slide">
-    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Feature Spotlight · Commerce</span>
-      <span class="text-xs font-semibold text-slate-600">Slide 04</span>
-    </div>
-
-    <div class="grid grid-cols-2 gap-8 my-auto py-2 items-center">
-      <div>
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-3">
-          <i data-lucide="shopping-bag" class="h-3.5 w-3.5"></i> In-Chat Orders &amp; Checkout
-        </div>
-        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Turn Conversations Directly into Completed Sales</h2>
-        <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
-          Clients do not want to download another app or fill out clumsy website forms. ClientBot lets them order meals, specialty drinks, retail products, or services directly inside WhatsApp with zero friction.
-        </p>
-
-        <ul class="mt-4 space-y-2.5 text-xs text-slate-700">
-          <li class="flex items-center gap-2">
-            <i data-lucide="check-circle-2" class="h-4 w-4 text-emerald-600"></i>
-            <span><strong>Smart Menu &amp; Catalog:</strong> Displays real-time prices, stock status, and item descriptions.</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <i data-lucide="check-circle-2" class="h-4 w-4 text-emerald-600"></i>
-            <span><strong>Automatic Cart Calculation:</strong> Computes subtotals, delivery fees, and order totals.</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <i data-lucide="check-circle-2" class="h-4 w-4 text-emerald-600"></i>
-            <span><strong>Address &amp; Note Capture:</strong> Validates delivery address and custom preparation requests.</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <i data-lucide="check-circle-2" class="h-4 w-4 text-emerald-600"></i>
-            <span><strong>Sequential Tracking:</strong> Generates unique order numbers (<code>ORD-0001</code>) with status lifecycle.</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Preview Mockup Card -->
-      <div class="bg-slate-900 rounded-2xl p-5 text-white shadow-xl border border-slate-800">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
-          <div class="flex items-center gap-2">
-            <span class="h-2 w-2 rounded-full bg-emerald-400"></span>
-            <span class="text-xs font-bold">WhatsApp Car Booking Flow</span>
-          </div>
-          <span class="text-[10px] text-emerald-400 font-semibold bg-emerald-950 px-2 py-0.5 rounded">CAR-0001</span>
-        </div>
-        <div class="space-y-2 text-xs">
-          <div class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
-            <p class="text-slate-400 text-[10px]">Client (201012345678):</p>
-            <p class="text-slate-200 mt-0.5">"عايز احجز موعد لمعاينة مرسيدس C200 زيرو ودفع جدية الحجز"</p>
-          </div>
-          <div class="bg-teal-900/40 p-2.5 rounded-xl border border-teal-700/60">
-            <p class="text-teal-400 font-bold text-[10px]">Al-Fares Motors AI:</p>
-            <p class="text-slate-200 mt-0.5">"أهلاً بحضرتك في الفارس للسيارات! تم تسجيل طلب حجز سيارة Mercedes C200 AMG 2024 (جدية حجز 100,000 ج.م). تم تخصيص مستشار مبيعات لاستقبال حضرتك بصالة العرض بالتجمع الخامس. 🚗"</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-      <span>Order Fulfillment Pipeline</span>
-      <span>Conversational Commerce</span>
-    </div>
-  </section>
-
-  <!-- ==================== SLIDE 5: TABLE BOOKINGS & APPOINTMENTS ==================== -->
-  <section class="slide">
-    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Feature Spotlight · Bookings</span>
-      <span class="text-xs font-semibold text-slate-600">Slide 05</span>
-    </div>
-
-    <div class="grid grid-cols-2 gap-8 my-auto py-2 items-center">
-      <div>
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold mb-3">
-          <i data-lucide="calendar-check" class="h-3.5 w-3.5"></i> Table Reservations &amp; Scheduling
-        </div>
-        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Hands-Free Booking Management for Hospitality &amp; Clinics</h2>
-        <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">
-          Stop taking reservations on sticky notes or missing client booking requests during evening shifts. ClientBot coordinates dates, party sizes, and seat preferences automatically.
-        </p>
-
-        <div class="grid grid-cols-2 gap-3 mt-4 text-xs">
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <p class="font-bold text-slate-900">Party Size Confirmation</p>
-            <p class="text-[11px] text-slate-500 mt-1">Extracts exact guest counts and applies reservation policies automatically.</p>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <p class="font-bold text-slate-900">Date &amp; Time Parsing</p>
-            <p class="text-[11px] text-slate-500 mt-1">Understands relative dates: "Tomorrow at 7:30 PM", "الجمعة الساعة 8".</p>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <p class="font-bold text-slate-900">Instant Confirmations</p>
-            <p class="text-[11px] text-slate-500 mt-1">Sends immediate confirmation templates with branch location pin.</p>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <p class="font-bold text-slate-900">Reservation Status Life</p>
-            <p class="text-[11px] text-slate-500 mt-1">Staff can mark bookings as Confirmed, Completed, or Cancelled in 1 click.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-slate-900 rounded-2xl p-5 text-white shadow-xl border border-slate-800">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
-          <div class="flex items-center gap-2">
-            <i data-lucide="calendar" class="h-4 w-4 text-sky-400"></i>
-            <span class="text-xs font-bold">Upcoming WhatsApp Bookings</span>
-          </div>
-          <span class="text-[10px] text-sky-400 font-semibold bg-sky-950 px-2 py-0.5 rounded">Live Calendar</span>
-        </div>
-        <div class="space-y-2.5 text-xs">
-          <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
-            <div>
-              <p class="font-bold text-slate-100">Table for 4 · Ahmed Hassan</p>
-              <p class="text-[11px] text-slate-400 mt-0.5">Tomorrow at 7:30 PM · Quiet table for business talk</p>
-            </div>
-            <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">Confirmed</span>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-800/80 border border-slate-700/60 flex items-center justify-between">
-            <div>
-              <p class="font-bold text-slate-100">Table for 2 · Fatima Zahra</p>
-              <p class="text-[11px] text-slate-400 mt-0.5">Friday at 8:00 PM · Window seat preferred</p>
-            </div>
-            <span class="bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded text-[10px] font-bold">Confirmed</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-      <span>Reservation Operations</span>
-      <span>Automated Scheduling</span>
-    </div>
-  </section>
-
-  <!-- ==================== SLIDE 6: BILINGUAL AI & AUTO-LEARNING ==================== -->
-  <section class="slide">
-    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Feature Spotlight · AI Brain</span>
-      <span class="text-xs font-semibold text-slate-600">Slide 06</span>
-    </div>
-
-    <div class="my-auto py-2">
-      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Fluent Arabic &amp; English AI That Continuously Learns</h2>
-      <p class="text-sm text-slate-500 mt-1 max-w-2xl">
-        Unlike rigid rule-based bots with limited button menus, ClientBot uses contextual natural language processing to understand real human speech.
-      </p>
-
-      <div class="grid grid-cols-3 gap-6 mt-6">
-        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
-          <div class="h-8 w-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center mb-3">
-            <i data-lucide="languages" class="h-4 w-4"></i>
-          </div>
-          <h4 class="text-sm font-bold text-slate-900">Bilingual &amp; Dialect Fluent</h4>
-          <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
-            Automatically replies in the client's language: Egyptian Arabic, Franco-Arab, Standard Arabic, or English. Mirrors customer tone respectfully.
-          </p>
-        </div>
-
-        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
-          <div class="h-8 w-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center mb-3">
-            <i data-lucide="sparkles" class="h-4 w-4"></i>
-          </div>
-          <h4 class="text-sm font-bold text-slate-900">1-Click Auto-Learning</h4>
-          <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
-            Unanswered questions are tracked automatically. A single tap in the dashboard converts any repeated client inquiry into a saved, verified FAQ answer.
-          </p>
-        </div>
-
-        <div class="p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
-          <div class="h-8 w-8 rounded-lg bg-purple-50 text-purple-700 flex items-center justify-center mb-3">
-            <i data-lucide="book-open" class="h-4 w-4"></i>
-          </div>
-          <h4 class="text-sm font-bold text-slate-900">Company Knowledge Base</h4>
-          <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
-            Equipped with refund policies, delivery radius rules, payment options (Cash, Visa, InstaPay), and Wi-Fi credentials for instant accuracy.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-      <span>Knowledge Engine</span>
-      <span>Continuous Self-Optimization</span>
-    </div>
-  </section>
-
-  <!-- ==================== SLIDE 7: LIVE CHAT & HUMAN TAKEOVER ==================== -->
-  <section class="slide">
-    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Feature Spotlight · Collaboration</span>
-      <span class="text-xs font-semibold text-slate-600">Slide 07</span>
-    </div>
-
-    <div class="grid grid-cols-2 gap-8 my-auto py-2 items-center">
-      <div>
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold mb-3">
-          <i data-lucide="user-check" class="h-3.5 w-3.5"></i> Shared Team Live Chat &amp; Takeover
-        </div>
-        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">The Best of Both Worlds: AI Speed + Human Empathy</h2>
-        <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-          AI handles 90%+ of repetitive inquiries, but when a client requests a manager or needs special handling, your staff takes over seamlessly with zero bot disruption.
-        </p>
-
-        <ul class="mt-4 space-y-2 text-xs text-slate-700">
-          <li class="flex items-center gap-2">
-            <i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i>
-            <span><strong>1-Click Takeover Toggle:</strong> Instantly pauses AI replies for a configurable duration (e.g. 60 min).</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i>
-            <span><strong>Smart Handoff Escalation Tickets:</strong> Automatically logs client sentiment and reason for escalation.</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i>
-            <span><strong>Canned Message Templates:</strong> Insert welcome notes, location pins, and closing hours with 1 tap.</span>
-          </li>
-          <li class="flex items-center gap-2">
-            <i data-lucide="check-circle" class="h-4 w-4 text-emerald-600"></i>
-            <span><strong>Multi-Agent Visibility:</strong> All team members view real-time chat history without sharing personal phones.</span>
-          </li>
-        </ul>
-      </div>
-
-      <div class="bg-slate-900 rounded-2xl p-5 text-white shadow-xl border border-slate-800">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
-          <span class="text-xs font-bold">Two-Way Team Live Inbox</span>
-          <span class="text-[10px] text-amber-400 font-semibold bg-amber-950 px-2 py-0.5 rounded">Human Takeover Active</span>
-        </div>
-        <div class="space-y-3 text-xs">
-          <div class="flex items-center justify-between p-2.5 bg-slate-800/80 rounded-xl">
-            <div>
-              <p class="font-bold text-slate-200">Omar Sherif (+201255556666)</p>
-              <p class="text-[11px] text-slate-400">"Can I speak with a store manager please?"</p>
-            </div>
-            <button class="bg-rose-600 text-white text-[10px] font-bold px-2.5 py-1 rounded">Release to AI</button>
-          </div>
-          <div class="p-3 bg-slate-800/50 rounded-xl border border-slate-700/40 text-[11px] text-slate-300">
-            <p class="text-emerald-400 font-semibold text-xs mb-1">AI Copilot Recommendation:</p>
-            "Client requested manager assistance regarding rooftop reservation. Suggested reply: Hello Omar! This is the store manager, how can I assist you with your booking?"
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-      <span>Staff Operations</span>
-      <span>Two-Way Inbox &amp; Takeover</span>
-    </div>
-  </section>
-
-  <!-- ==================== SLIDE 8: 360 UNIFIED CUSTOMER CRM ==================== -->
-  <section class="slide">
-    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Feature Spotlight · CRM</span>
-      <span class="text-xs font-semibold text-slate-600">Slide 08</span>
-    </div>
-
-    <div class="grid grid-cols-2 gap-8 my-auto py-2 items-center">
-      <div>
-        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-purple-50 text-purple-700 text-xs font-bold mb-3">
-          <i data-lucide="contact-2" class="h-3.5 w-3.5"></i> 360° Unified Customer Intelligence
-        </div>
-        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Know Every Customer Before You Even Reply</h2>
-        <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-          ClientBot automatically constructs a rich behavioral profile for every customer phone number, linking chat dialogues, order spend, booking records, and language preference.
-        </p>
-
-        <div class="grid grid-cols-2 gap-3 mt-4 text-xs">
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <p class="font-bold text-slate-900">VIP &amp; Regular Client Badges</p>
-            <p class="text-[11px] text-slate-500 mt-1">Automatically identifies high-value clients with 3+ orders or 250+ EGP lifetime spend.</p>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <p class="font-bold text-slate-900">Sentiment &amp; Issue Tracking</p>
-            <p class="text-[11px] text-slate-500 mt-1">Detects recurring complaints (e.g. delivery delays, wrong items) and alerts staff.</p>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <p class="font-bold text-slate-900">Language Memory</p>
-            <p class="text-[11px] text-slate-500 mt-1">Remembers whether client prefers Egyptian Arabic or English for future chats.</p>
-          </div>
-          <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-            <p class="font-bold text-slate-900">Executive AI Summary</p>
-            <p class="text-[11px] text-slate-500 mt-1">Generates a concise 2-sentence dossier to give staff instant context.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="bg-slate-900 rounded-2xl p-5 text-white shadow-xl border border-slate-800">
-        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
-          <div class="flex items-center gap-2">
-            <div class="h-6 w-6 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-xs">AH</div>
-            <span class="text-xs font-bold">Ahmed Hassan (+201012345678)</span>
-          </div>
-          <span class="bg-purple-500/20 text-purple-400 text-[10px] font-bold px-2 py-0.5 rounded">VIP Client</span>
-        </div>
-        <div class="grid grid-cols-3 gap-2 text-center mb-3">
-          <div class="bg-slate-800/80 p-2 rounded-xl">
-            <p class="text-slate-400 text-[10px]">Lifetime Spend</p>
-            <p class="text-sm font-bold text-emerald-400">480 EGP</p>
-          </div>
-          <div class="bg-slate-800/80 p-2 rounded-xl">
-            <p class="text-slate-400 text-[10px]">Orders</p>
-            <p class="text-sm font-bold text-white">3 Orders</p>
-          </div>
-          <div class="bg-slate-800/80 p-2 rounded-xl">
-            <p class="text-slate-400 text-[10px]">Reservations</p>
-            <p class="text-sm font-bold text-sky-400">2 Bookings</p>
-          </div>
-        </div>
-        <div class="p-2.5 rounded-xl bg-slate-800/60 text-[11px] text-slate-300 border border-slate-700/60">
-          <p class="text-purple-400 font-semibold mb-0.5">AI Executive Summary:</p>
-          "Ahmed is a verified car buyer with 2 vehicle bookings and 1 test drive appointment. Interested in Mercedes C200 AMG 2024 with 30% bank installment plan. High satisfaction rating."
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-      <span>Customer Intelligence</span>
-      <span>360° Profile CRM</span>
-    </div>
-  </section>
-
-  <!-- ==================== SLIDE 9: EXECUTIVE COMMAND CENTER DASHBOARD ==================== -->
-  <section class="slide">
-    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Feature Spotlight · Analytics</span>
-      <span class="text-xs font-semibold text-slate-600">Slide 09</span>
-    </div>
-
-    <div class="my-auto py-2">
-      <div class="flex items-center justify-between">
+    <div class="glow-top-right"></div>
+    <div class="slide-header">
+      <div class="brand-group">
+        <div class="brand-logo"><img src="images/logo.png" alt="Logo"></div>
         <div>
-          <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Executive Command Center &amp; Visual Analytics</h2>
-          <p class="text-xs text-slate-500 mt-1">Real-time visibility into business volume, revenue, response latency, and peak customer traffic.</p>
+          <div class="brand-title">Al-Fares Motors مصر</div>
+          <div class="brand-sub">إدارة هاني مسعود</div>
         </div>
-        <div class="flex gap-2">
-          <span class="bg-emerald-50 text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-lg">8 Live KPIs</span>
-          <span class="bg-slate-100 text-slate-700 text-xs font-semibold px-2.5 py-1 rounded-lg">CSV &amp; PDF Exports</span>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-category">القيادة التنفيذية</div>
+        <div class="slide-number">02 / 10</div>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="col-left">
+        <div class="pill pill-emerald">الرؤية الشاملة 360°</div>
+        <h2 class="slide-title">لوحة التحكم والقيادة التنفيذية (Live Executive Dashboard)</h2>
+        <p class="slide-subtitle">شاشة واحدة تمنح صاحب المعرض ومدير المبيعات رؤية فورية لكافة مؤشرات الأداء الحيوية لحركة المبيعات والتفاعل.</p>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">📈</div>
+          <div>
+            <div class="feature-title">متابعة الإيرادات وحجم المبيعات اللحظي</div>
+            <div class="feature-desc">عرض إجمالي قيمة الحجوزات النشطة (اكثر من 15 حجز بيع)، ومتوسط قيمة الصفقة، ومعدل تحويل الزوار لعملاء فعليين.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4;">🕒</div>
+          <div>
+            <div class="feature-title">توزيع الرسائل على مدار 24 ساعة</div>
+            <div class="feature-desc">رسم بياني يوضح ساعات ذروة دخول العملاء ونشاطهم، مما يساعد في جدولة أوقات تواجد فريق المبيعات بكفاءة.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">📑</div>
+          <div>
+            <div class="feature-title">تصدير تقارير PDF و CSV بضغطة زر</div>
+            <div class="feature-desc">تصدير تقارير الأداء المالي، سجلات المحادثات، وقوائم السيارات مباشرة بضغطة زر لمراجعتها مع مجلس الإدارة.</div>
+          </div>
         </div>
       </div>
 
-      <div class="grid grid-cols-4 gap-3 mt-4">
-        <div class="p-3 rounded-xl border border-slate-200 bg-white">
-          <p class="text-[11px] font-semibold text-slate-500">Messages Handled</p>
-          <p class="text-xl font-bold text-slate-900 mt-1">523</p>
-          <p class="text-[10px] text-emerald-600 font-medium mt-0.5">▲ +18% vs prior period</p>
-        </div>
-        <div class="p-3 rounded-xl border border-slate-200 bg-white">
-          <p class="text-[11px] font-semibold text-slate-500">AI Automation Rate</p>
-          <p class="text-xl font-bold text-emerald-600 mt-1">94%</p>
-          <p class="text-[10px] text-slate-400 mt-0.5">377 automated · 27 escalated</p>
-        </div>
-        <div class="p-3 rounded-xl border border-slate-200 bg-white">
-          <p class="text-[11px] font-semibold text-slate-500">WhatsApp Direct Sales</p>
-          <p class="text-xl font-bold text-slate-900 mt-1">21,450 EGP</p>
-          <p class="text-[10px] text-slate-400 mt-0.5">Direct cart checkout sales</p>
-        </div>
-        <div class="p-3 rounded-xl border border-slate-200 bg-white">
-          <p class="text-[11px] font-semibold text-slate-500">Client Satisfaction (CSAT)</p>
-          <p class="text-xl font-bold text-teal-600 mt-1">98%</p>
-          <p class="text-[10px] text-emerald-600 font-medium mt-0.5">370 positive client signals</p>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-3 gap-4 mt-4 text-xs">
-        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 col-span-2">
-          <p class="font-bold text-slate-900 mb-1">24-Hour Peak Activity Distribution Chart</p>
-          <p class="text-[11px] text-slate-500">
-            Identifies peak showroom visiting and buying inquiry hours (e.g. 5 PM – 9 PM) so dealership managers can optimize sales advisors, test drive cars, and finance specialists.
-          </p>
-        </div>
-        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
-          <p class="font-bold text-slate-900 mb-1">One-Click Executive Reports</p>
-          <p class="text-[11px] text-slate-500">
-            Export structured CSV data for Excel or print formatted PDF executive reports for stakeholder audits.
-          </p>
+      <div class="col-right">
+        <div class="screen-mockup">
+          <div class="screen-mockup-header">
+            <div class="mockup-dot red"></div>
+            <div class="mockup-dot yellow"></div>
+            <div class="mockup-dot green"></div>
+            <div class="mockup-title">alfarismotors.ai/dashboard — لوحة التحكم العامة</div>
+          </div>
+          <img src="presentation_assets/01_dashboard.png" class="screen-img" alt="Executive Dashboard">
         </div>
       </div>
     </div>
 
-    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-      <span>Command Dashboard</span>
-      <span>Executive Performance Insights</span>
+    <div class="slide-footer">
+      <div>لوحة تحكم ذكية تعمل على الكمبيوتر والموبايل والتابلت للتحكم في صالة العرض من أي مكان</div>
+      <div class="footer-highlight">Live Showroom Telemetry &amp; Financial KPIs</div>
     </div>
   </section>
 
-  <!-- ==================== SLIDE 10: TEAM ROLES & BROADCAST MARKETING ==================== -->
+
+  <!-- ==================== SLIDE 4: أسطول السيارات ==================== -->
   <section class="slide">
-    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Feature Spotlight · Growth</span>
-      <span class="text-xs font-semibold text-slate-600">Slide 10</span>
-    </div>
-
-    <div class="my-auto py-2">
-      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Team Role Security &amp; Broadcast Marketing Campaigns</h2>
-      <p class="text-sm text-slate-500 mt-1">Scale your business operations while protecting sensitive company settings.</p>
-
-      <div class="grid grid-cols-2 gap-6 mt-6">
-        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
-          <div class="h-9 w-9 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold mb-3">
-            <i data-lucide="shield-check" class="h-5 w-5"></i>
-          </div>
-          <h3 class="text-base font-bold text-slate-900">Role-Based Access Control (RBAC)</h3>
-          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-            Invite team members with clear permission tiers:
-          </p>
-          <div class="mt-3 space-y-2 text-xs">
-            <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200">
-              <span class="font-bold text-slate-800">Admin</span>
-              <span class="text-slate-500 text-[11px]">Full access, config, team management, API keys</span>
-            </div>
-            <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200">
-              <span class="font-bold text-slate-800">Editor</span>
-              <span class="text-slate-500 text-[11px]">Live chat, edit FAQs, manage orders &amp; reservations</span>
-            </div>
-            <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-200">
-              <span class="font-bold text-slate-800">Viewer</span>
-              <span class="text-slate-500 text-[11px]">Read-only auditing, view metrics &amp; export reports</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200">
-          <div class="h-9 w-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold mb-3">
-            <i data-lucide="megaphone" class="h-5 w-5"></i>
-          </div>
-          <h3 class="text-base font-bold text-slate-900">Broadcast Marketing &amp; Re-Engagement</h3>
-          <p class="text-xs text-slate-600 mt-2 leading-relaxed">
-            Send targeted announcement campaigns to re-activate past buyers:
-          </p>
-          <div class="mt-3 space-y-2 text-xs">
-            <div class="p-2.5 rounded-lg bg-white border border-slate-200">
-              <p class="font-bold text-slate-800">Audience Segmentation</p>
-              <p class="text-[11px] text-slate-500 mt-0.5">Filter by tags: All Clients, VIP Regulars, Reservation Guests, or Inactive Leads.</p>
-            </div>
-            <div class="p-2.5 rounded-lg bg-white border border-slate-200">
-              <p class="font-bold text-slate-800">Promotions &amp; Tasting Events</p>
-              <p class="text-[11px] text-slate-500 mt-0.5">Announce seasonal menu launches, weekend discounts, and special invitations.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-      <span>Enterprise Operations</span>
-      <span>Security &amp; Growth Engines</span>
-    </div>
-  </section>
-
-  <!-- ==================== SLIDE 11: PROVEN BUSINESS ROI ==================== -->
-  <section class="slide">
-    <div class="flex items-center justify-between border-b border-slate-200 pb-3">
-      <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Business Impact</span>
-      <span class="text-xs font-semibold text-slate-600">Slide 11</span>
-    </div>
-
-    <div class="my-auto py-2">
-      <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Quantifiable ROI from Day One</h2>
-      <p class="text-sm text-slate-500 mt-1">How ClientBot translates into tangible cost savings and revenue growth.</p>
-
-      <div class="grid grid-cols-4 gap-5 mt-6">
-        <div class="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-100 text-center">
-          <p class="text-4xl font-extrabold text-emerald-600">35%+</p>
-          <h4 class="text-sm font-bold text-slate-900 mt-2">Increase in After-Hours Sales</h4>
-          <p class="text-xs text-slate-500 mt-1">Converts late-night and early-morning orders when competitors are closed.</p>
-        </div>
-
-        <div class="p-5 rounded-2xl bg-teal-50/70 border border-teal-100 text-center">
-          <p class="text-4xl font-extrabold text-teal-600">70%</p>
-          <h4 class="text-sm font-bold text-slate-900 mt-2">Labor Time Saved</h4>
-          <p class="text-xs text-slate-500 mt-1">Frees up front-desk and support staff from answering repetitive questions.</p>
-        </div>
-
-        <div class="p-5 rounded-2xl bg-sky-50/70 border border-sky-100 text-center">
-          <p class="text-4xl font-extrabold text-sky-600">98%</p>
-          <h4 class="text-sm font-bold text-slate-900 mt-2">Client Satisfaction</h4>
-          <p class="text-xs text-slate-500 mt-1">Instant, polite answers in natural language build immediate trust.</p>
-        </div>
-
-        <div class="p-5 rounded-2xl bg-purple-50/70 border border-purple-100 text-center">
-          <p class="text-4xl font-extrabold text-purple-600">0 min</p>
-          <h4 class="text-sm font-bold text-slate-900 mt-2">Downtime or Delays</h4>
-          <p class="text-xs text-slate-500 mt-1">Continuous uptime without coffee breaks, shift changes, or holidays.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-      <span>Value Proposition</span>
-      <span>Executive Financial Summary</span>
-    </div>
-  </section>
-
-  <!-- ==================== SLIDE 12: GETTING STARTED / CTA ==================== -->
-  <section class="slide slide-dark">
-    <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
-      <div class="flex items-center gap-2.5">
-        <div class="h-8 w-8 rounded-xl bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-          <i data-lucide="check-circle" class="h-4 w-4"></i>
-        </div>
-        <span class="text-sm font-bold text-white">ClientBot Implementation Timeline</span>
-      </div>
-      <span class="text-xs text-emerald-400 font-semibold bg-emerald-950 px-2.5 py-1 rounded-full">Ready in 15 Minutes</span>
-    </div>
-
-    <div class="my-auto py-2">
-      <h2 class="text-4xl font-extrabold text-white tracking-tight">Deploy in Under 15 Minutes</h2>
-      <p class="text-sm text-slate-300 mt-1 max-w-xl">No complex coding or hardware needed. Connect your official Meta Cloud API and start taking automated orders today.</p>
-
-      <div class="grid grid-cols-3 gap-5 mt-6">
-        <div class="p-4 rounded-xl bg-slate-800/70 border border-slate-700/60">
-          <span class="text-xs font-bold text-emerald-400 uppercase">Step 01</span>
-          <h4 class="text-sm font-bold text-white mt-1">Connect Meta WhatsApp</h4>
-          <p class="text-xs text-slate-400 mt-1">Input your Phone Number ID and Access Token. Official webhook connects instantly.</p>
-        </div>
-        <div class="p-4 rounded-xl bg-slate-800/70 border border-slate-700/60">
-          <span class="text-xs font-bold text-emerald-400 uppercase">Step 02</span>
-          <h4 class="text-sm font-bold text-white mt-1">Add Products &amp; FAQs</h4>
-          <p class="text-xs text-slate-400 mt-1">Upload your menu items, opening hours, delivery fees, and locations.</p>
-        </div>
-        <div class="p-4 rounded-xl bg-slate-800/70 border border-slate-700/60">
-          <span class="text-xs font-bold text-emerald-400 uppercase">Step 03</span>
-          <h4 class="text-sm font-bold text-white mt-1">Go Live 24/7</h4>
-          <p class="text-xs text-slate-400 mt-1">Your AI bot handles customer chats while staff monitor the shared dashboard.</p>
-        </div>
-      </div>
-
-      <div class="mt-8 p-5 rounded-2xl bg-gradient-to-r from-emerald-600 via-[#128C7E] to-teal-700 flex items-center justify-between text-white shadow-xl">
+    <div class="glow-top-right"></div>
+    <div class="slide-header">
+      <div class="brand-group">
+        <div class="brand-logo"><img src="images/logo.png" alt="Logo"></div>
         <div>
-          <h3 class="text-lg font-bold">Ready to see ClientBot in action for your business?</h3>
-          <p class="text-xs text-emerald-100 mt-0.5">Test live orders, interactive bookings, and chat simulations right now.</p>
+          <div class="brand-title">Al-Fares Motors مصر</div>
+          <div class="brand-sub">إدارة هاني مسعود</div>
         </div>
-        <div class="bg-white text-slate-950 px-5 py-2.5 rounded-xl font-extrabold text-xs tracking-wide uppercase shrink-0 shadow">
-          Book a 5-Minute Live Demo 🚀
+      </div>
+      <div class="slide-meta">
+        <div class="slide-category">إدارة الأسطول والمخزون</div>
+        <div class="slide-number">03 / 10</div>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="col-left">
+        <div class="pill pill-cyan">قاعدة بيانات السيارات المعتمدة</div>
+        <h2 class="slide-title">أسطول متكامل يضم 65 سيارة مع حاسبة أقساط ومشاركة واتساب</h2>
+        <p class="slide-subtitle">إدارة احترافية لكامل سيارات المعرض الزيرو والمستعملة كسر زيرو فابريكا مع فحص فني وصور وأسعار محدثة لحظياً.</p>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(14, 165, 233, 0.15); color: #38bdf8;">🚗</div>
+          <div>
+            <div class="feature-title">تنوع شامل لكافة العلامات العالمية</div>
+            <div class="feature-desc">تغطية لكافة موديلات مرسيدس، بي إم دابليو، رينج روفر، كيا، هيونداي، ميتسوبيشي، شيري، سكودا، جيتور، أوبل، بيجو.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">🧮</div>
+          <div>
+            <div class="feature-title">حاسبة أقساط ذكية مدمجة لكل سيارة</div>
+            <div class="feature-desc">زر مباشر بجانب كل سيارة لحساب القسط الشهري بمقدم 20% أو 30% لـ 3 و 5 و 7 سنوات ومشاركته فوراً مع العميل.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(168, 85, 247, 0.15); color: #c084fc;">🔍</div>
+          <div>
+            <div class="feature-title">فلترة وبحث ذكي متعدد المعايير</div>
+            <div class="feature-desc">فلترة سريعة حسب الفئة (SUV / سيدان / كسر زيرو)، الماركة، أو النطاق السعري (أقل من مليون، 1-2 مليون، فئات فاخرة).</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div class="screen-mockup">
+          <div class="screen-mockup-header">
+            <div class="mockup-dot red"></div>
+            <div class="mockup-dot yellow"></div>
+            <div class="mockup-dot green"></div>
+            <div class="mockup-title">alfarismotors.ai/cars — قاعدة بيانات أسطول السيارات (65 سيارة)</div>
+          </div>
+          <img src="presentation_assets/02_inventory_cars.png" class="screen-img" alt="Cars Inventory">
         </div>
       </div>
     </div>
 
-    <div class="pt-4 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
-      <span>ClientBot WhatsApp Enterprise AI Platform</span>
-      <span>support@clientbot.com · +20 100 000 0000</span>
+    <div class="slide-footer">
+      <div>بيانات السيارات مربوطة مباشرة بالذكاء الاصطناعي لتقديم أدق الأسعار والمواصفات للعملاء فوراً</div>
+      <div class="footer-highlight">تحديث فوري للأسعار وحالة التوفر في المعرض</div>
     </div>
   </section>
 
-  <script>
-    lucide.createIcons();
-  </script>
+
+  <!-- ==================== SLIDE 5: مستشار المبيعات الذكي ==================== -->
+  <section class="slide">
+    <div class="glow-top-right"></div>
+    <div class="slide-header">
+      <div class="brand-group">
+        <div class="brand-logo"><img src="images/logo.png" alt="Logo"></div>
+        <div>
+          <div class="brand-title">Al-Fares Motors مصر</div>
+          <div class="brand-sub">إدارة هاني مسعود</div>
+        </div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-category">الذكاء الاصطناعي والمبيعات</div>
+        <div class="slide-number">04 / 10</div>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="col-left">
+        <div class="pill pill-emerald">المستشار الذكي 24/7</div>
+        <h2 class="slide-title">مستشار مبيعات واتساب: مقارنات، أقساط، وحجز مواعيد بلباقة مصرية</h2>
+        <p class="slide-subtitle">ليس مجرد بوت تقليدي، بل خبير سيارات متخصص يفهم أسئلة العميل المعقدة ويرد بتوصيات دقيقة كأفضل رجل مبيعات بالمعرض.</p>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">⚖️</div>
+          <div>
+            <div class="feature-title">مقارنة فنية ومالية ذكية بين السيارات</div>
+            <div class="feature-desc">عند سؤال العميل: "قارن بين كيا سبورتاج وتوسان"، يعرض مقارنة مفصلة بالأسعار، وسنة الصنع، وقسط كل سيارة، والفارق المالي، وتوصية فنية.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(14, 165, 233, 0.15); color: #38bdf8;">🏎️</div>
+          <div>
+            <div class="feature-title">تحفيز وتثبيت حجز تجارب القيادة فوراً</div>
+            <div class="feature-desc">يختتم كل إجابة بدعوة لبقة لتجربة القيادة بالمعرض، ويحدد الفرع (التجمع الأول أو مدينة نصر) والمستندات المطلوبة.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24;">👨‍💼</div>
+          <div>
+            <div class="feature-title">تحويل بشري سلس عند الحاجة (Human Handover)</div>
+            <div class="feature-desc">إذا رغب العميل في التحدث لموظف مبيعات أو كان لديه طلب خاص، يتم تحويل الشات فوراً مع إرسال ملخص المحادثة للموظف.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div class="screen-mockup">
+          <div class="screen-mockup-header">
+            <div class="mockup-dot red"></div>
+            <div class="mockup-dot yellow"></div>
+            <div class="mockup-dot green"></div>
+            <div class="mockup-title">WhatsApp Live Simulator — محاكاة محادثة واتساب الحية</div>
+          </div>
+          <img src="presentation_assets/05_smart_chat.png" class="screen-img" alt="Smart WhatsApp Chat">
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div>مبني بأحدث تقنيات المعالجة اللغوية الطبيعية ومتصل بقاعدة بيانات السيارات اللحظية</div>
+      <div class="footer-highlight">إجابات دقيقة موثوقة بنسبة 100% دون تأليف أو تخمين</div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SLIDE 6: استبدال وتثمين السيارات ==================== -->
+  <section class="slide">
+    <div class="glow-top-right"></div>
+    <div class="slide-header">
+      <div class="brand-group">
+        <div class="brand-logo"><img src="images/logo.png" alt="Logo"></div>
+        <div>
+          <div class="brand-title">Al-Fares Motors مصر</div>
+          <div class="brand-sub">إدارة هاني مسعود</div>
+        </div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-category">خدمات الاستبدال والتثمين</div>
+        <div class="slide-number">05 / 10</div>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="col-left">
+        <div class="pill pill-cyan">خدمة Trade-In المعتمدة</div>
+        <h2 class="slide-title">حاسبة التثمين الفوري وفحص الـ 150 نقطة لاستبدال السيارات</h2>
+        <p class="slide-subtitle">أقوى أداة تسويقية لمضاعفة مبيعات السيارات: العميل يقدم سيارته القديمة كمقدم شراء ويقسط الفارق بسهولة حتى 7 سنوات.</p>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4;">💰</div>
+          <div>
+            <div class="feature-title">تقدير سعري عادل وفوري خلال المحادثة</div>
+            <div class="feature-desc">تقييم مبدئي لسيارة العميل بناءً على ماركتها وموديلها وسنة صنعها وحالة الدهان (فابريكا بالكامل أو راشة).</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.15); color: #10b981;">🔍</div>
+          <div>
+            <div class="feature-title">جدولة مواعيد الفحص الفني لـ 150 نقطة</div>
+            <div class="feature-desc">حجز موعد فحص فني معتمد يستغرق 30 دقيقة فقط داخل مركز الفحص بفرعي المعرض (التجمع الأول أو مدينة نصر).</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">📋</div>
+          <div>
+            <div class="feature-title">إدارة دورة حياة طلبات الاستبدال في الـ CRM</div>
+            <div class="feature-desc">لوحة تحكم تتبع جميع سيارات العملاء المعروضة للاستبدال، مع تسجيل أرقام هواتفهم، والتقييم، والسيارة المستهدفة للشراء.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div class="screen-mockup">
+          <div class="screen-mockup-header">
+            <div class="mockup-dot red"></div>
+            <div class="mockup-dot yellow"></div>
+            <div class="mockup-dot green"></div>
+            <div class="mockup-title">alfarismotors.ai/tradeins — نظام استبدال وتثمين السيارات</div>
+          </div>
+          <img src="presentation_assets/03_tradeins.png" class="screen-img" alt="Trade-in System">
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div>تفعيل خدمة الاستبدال يساهم في إتمام صفقتين في صفقة واحدة (شراء سيارة العميل وبيعه سيارة جديدة)</div>
+      <div class="footer-highlight">Trade-In Pipeline &amp; Technical Valuation</div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SLIDE 7: قاعدة بيانات العملاء CRM ==================== -->
+  <section class="slide">
+    <div class="glow-top-right"></div>
+    <div class="slide-header">
+      <div class="brand-group">
+        <div class="brand-logo"><img src="images/logo.png" alt="Logo"></div>
+        <div>
+          <div class="brand-title">Al-Fares Motors مصر</div>
+          <div class="brand-sub">إدارة هاني مسعود</div>
+        </div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-category">إدارة علاقات العملاء</div>
+        <div class="slide-number">06 / 10</div>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="col-left">
+        <div class="pill pill-emerald">Customer 360° Profile</div>
+        <h2 class="slide-title">قاعدة بيانات العملاء CRM: تصنيف ذكي وسجل شامل لكل عميل</h2>
+        <p class="slide-subtitle">كل شخص يتواصل عبر واتساب يُسجل تلقائياً في قاعدة بيانات المعرض، مع تحديد مرحلته في دورة الشراء واهتماماته وميزانيته.</p>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(139, 92, 246, 0.15); color: #a78bfa;">👤</div>
+          <div>
+            <div class="feature-title">ملف متكامل موحد لكل عميل (Unified Profile)</div>
+            <div class="feature-desc">عرض تاريخ تفاعل العميل، عدد رسائله، السيارات التي استفسر عنها، وطلبات الحجز السابقة أو المواعيد المسجلة.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">🏷️</div>
+          <div>
+            <div class="feature-title">تصنيف تلقائي بالوسوم الذكية (Smart Tags)</div>
+            <div class="feature-desc">تصنيف أوتوماتيكي: (عميل مهتم بالتقسيط، عميل VIP، باحث عن SUV، عميل استبدال Trade-in، عميل كاش).</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(6, 182, 212, 0.15); color: #38bdf8;">📢</div>
+          <div>
+            <div class="feature-title">إعادة الاستهداف بالحملات الإعلانية الموجهة</div>
+            <div class="feature-desc">إرسال عروض خاصة عبر واتساب للعملاء المهتمين بفئة معينة فور وصول سيارات جديدة مطابقة لاهتماماتهم بالمعرض.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div class="screen-mockup">
+          <div class="screen-mockup-header">
+            <div class="mockup-dot red"></div>
+            <div class="mockup-dot yellow"></div>
+            <div class="mockup-dot green"></div>
+            <div class="mockup-title">alfarismotors.ai/customers — قاعدة بيانات العملاء (CRM 360)</div>
+          </div>
+          <img src="presentation_assets/04_customers_crm.png" class="screen-img" alt="Customers CRM">
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div>قاعدة بيانات العملاء هي الأصل الأثمن للمعرض — حفظ واستثمار كل جهة اتصال إلى أقصى حد</div>
+      <div class="footer-highlight">أكثر من 30 ملف عميل مسجل بنشاط وتصنيف فوري</div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SLIDE 8: الحجوزات وتجارب القيادة ==================== -->
+  <section class="slide">
+    <div class="glow-top-right"></div>
+    <div class="slide-header">
+      <div class="brand-group">
+        <div class="brand-logo"><img src="images/logo.png" alt="Logo"></div>
+        <div>
+          <div class="brand-title">Al-Fares Motors مصر</div>
+          <div class="brand-sub">إدارة هاني مسعود</div>
+        </div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-category">إدارة العمليات والمواعيد</div>
+        <div class="slide-number">07 / 10</div>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="col-left">
+        <div class="pill pill-amber">أتمتة الحجوزات والمواعيد</div>
+        <h2 class="slide-title">حجوزات السيارات وتجارب القيادة: من الشات إلى صالة العرض</h2>
+        <p class="slide-subtitle">إدارة سلسة لحجوزات الشراء وتجارب القيادة تؤكد الجدية وتضمن استعداد فريق المبيعات والسيارة قبل وصول العميل للمعرض.</p>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(99, 102, 241, 0.15); color: #818cf8;">🚘</div>
+          <div>
+            <div class="feature-title">حجز السيارات وتثبيت السعر بالعربون</div>
+            <div class="feature-desc">تسجيل طلبات الحجز المبدئية للسيارة مع إصدار رقم حجز رسمي وتحديد قيمة العربون المبدئي (50,000 ج.م) لضمان جدية الشراء.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(14, 165, 233, 0.15); color: #38bdf8;">📅</div>
+          <div>
+            <div class="feature-title">جدولة تجارب القيادة (Test Drives)</div>
+            <div class="feature-desc">تحديد اليوم والتوقيت والفرع المستهدف، مع تنبيه العميل بشروط التجربة (رخصة قيادة سارية وبطاقة الرقم القومي).</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">🔔</div>
+          <div>
+            <div class="feature-title">تذكيرات ومتابعات تلقائية للعملاء</div>
+            <div class="feature-desc">إرسال رسائل تذكير تلقائية للعميل قبل موعده لتقليل نسبة الغياب وضمان حضور العملاء في المواعيد المحددة.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+          <div class="screen-mockup">
+            <div class="screen-mockup-header">
+              <div class="mockup-dot red"></div>
+              <div class="mockup-dot yellow"></div>
+              <div class="mockup-dot green"></div>
+              <div class="mockup-title">alfarismotors.ai/orders — حجوزات الشراء والعربون</div>
+            </div>
+            <img src="presentation_assets/06_orders.png" class="screen-img" alt="Car Orders">
+          </div>
+          <div class="screen-mockup">
+            <div class="screen-mockup-header">
+              <div class="mockup-dot red"></div>
+              <div class="mockup-dot yellow"></div>
+              <div class="mockup-dot green"></div>
+              <div class="mockup-title">alfarismotors.ai/reservations — جدول تجارب القيادة</div>
+            </div>
+            <img src="presentation_assets/07_reservations.png" class="screen-img" alt="Test Drive Reservations">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div>تنظيم كامل لحركة صالة العرض يمنع الازدحام ويمنح كل عميل تجربة استقبال VIP تليق بمعارض الفارس</div>
+      <div class="footer-highlight">Seamless Showroom Operations &amp; Test Drive Log</div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SLIDE 9: مركز الذكاء والأسئلة الشائعة ==================== -->
+  <section class="slide">
+    <div class="glow-top-right"></div>
+    <div class="slide-header">
+      <div class="brand-group">
+        <div class="brand-logo"><img src="images/logo.png" alt="Logo"></div>
+        <div>
+          <div class="brand-title">Al-Fares Motors مصر</div>
+          <div class="brand-sub">إدارة هاني مسعود</div>
+        </div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-category">التحكم وضبط الجودة</div>
+        <div class="slide-number">08 / 10</div>
+      </div>
+    </div>
+
+    <div class="slide-content">
+      <div class="col-left">
+        <div class="pill pill-cyan">مركز التحكم والتعلم الذاتي</div>
+        <h2 class="slide-title">بنك الأسئلة المعتمدة (50 FAQ) والتعلم من إجابات الأستاذ هاني مسعود</h2>
+        <p class="slide-subtitle">أعلى معايير الدقة والأمان: إجابات معتمدة 100% تغطي كافة استفسارات التمويل البنكي، الفحص الفني، والشهر العقاري.</p>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(244, 63, 94, 0.15); color: #fb7185;">🧠</div>
+          <div>
+            <div class="feature-title">لوحة تحكم الذكاء الاصطناعي (AI Brain Control)</div>
+            <div class="feature-desc">مراقبة دقة الإجابات، كشف الفجوات المعرفية التلقائي (Knowledge Gaps)، وسرعة استجابة المحرك بالمللي ثانية.</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(16, 185, 129, 0.15); color: #34d399;">🎓</div>
+          <div>
+            <div class="feature-title">ميزة التعلم المباشر من المالك (Owner Learning)</div>
+            <div class="feature-desc">عندما يجيب الأستاذ هاني مسعود أو مدير المبيعات على سؤال غير مألوف، يحفظ الذكاء الاصطناعي الإجابة ويطبقها تلقائياً للأبد!</div>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b;">📚</div>
+          <div>
+            <div class="feature-title">50 سؤالاً وجواباً شاملاً يغطي كافة اللوائح</div>
+            <div class="feature-desc">إجابات قانونية وتمويلية جاهزة لأوراق الموظفين والمهن الحرة، حظر البيع، استرداد العربون، ومصاريف الترخيص.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-right">
+        <div style="display: flex; flex-direction: column; gap: 20px; width: 100%;">
+          <div class="screen-mockup">
+            <div class="screen-mockup-header">
+              <div class="mockup-dot red"></div>
+              <div class="mockup-dot yellow"></div>
+              <div class="mockup-dot green"></div>
+              <div class="mockup-title">alfarismotors.ai/admin-ai — مركز مراقبة جودة الذكاء الاصطناعي</div>
+            </div>
+            <img src="presentation_assets/08_admin_ai.png" class="screen-img" alt="AI Brain Control">
+          </div>
+          <div class="screen-mockup">
+            <div class="screen-mockup-header">
+              <div class="mockup-dot red"></div>
+              <div class="mockup-dot yellow"></div>
+              <div class="mockup-dot green"></div>
+              <div class="mockup-title">alfarismotors.ai/faq — بنك المعرفة والأسئلة الشائعة (50 سؤال معتمد)</div>
+            </div>
+            <img src="presentation_assets/09_faq.png" class="screen-img" alt="FAQ Knowledge Base">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div>نظام آمن ومحكم يضمن التزام البوت بسياسات المعرض الرسمية دون أي خطأ بشري أو عشوائية</div>
+      <div class="footer-highlight">Continuous AI Learning &amp; Enterprise Governance</div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SLIDE 10: دراسة الجدوى والعائد ==================== -->
+  <section class="slide">
+    <div class="glow-top-right"></div>
+    <div class="slide-header">
+      <div class="brand-group">
+        <div class="brand-logo"><img src="images/logo.png" alt="Logo"></div>
+        <div>
+          <div class="brand-title">Al-Fares Motors مصر</div>
+          <div class="brand-sub">إدارة هاني مسعود</div>
+        </div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-category">دراسة الجدوى والعائد المالي</div>
+        <div class="slide-number">09 / 10</div>
+      </div>
+    </div>
+
+    <div class="slide-content" style="flex-direction: column; align-items: stretch; justify-content: center; gap: 35px;">
+      <div>
+        <div class="pill pill-emerald" style="margin-bottom: 12px;">العائد المباشر على الاستثمار (ROI)</div>
+        <h2 class="slide-title">كيف يحقق النظام أرباحاً وتوفيراً مادياً مباشراً لمعارض الفارس موتورز؟</h2>
+        <p class="slide-subtitle">استثمار تقني منخفض التكلفة يحقق عائداً مضاعفاً من خلال تسريع دورة البيع وتقليل تكاليف التشغيل.</p>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-box">
+          <div class="stat-value">+80 ساعة</div>
+          <div class="stat-title">توفير شهري في وقت فريق المبيعات</div>
+          <div class="stat-desc">التخلص من الرد اليدوي المتكرر على استفسارات الأسعار ومواقع الفروع وحساب الأقساط، ليتفرغ فريق المبيعات بالكامل لإغلاق الصفقات داخل المعرض.</div>
+        </div>
+
+        <div class="stat-box cyan">
+          <div class="stat-value">25% إلى 30%</div>
+          <div class="stat-title">زيادة في مبيعات السيارات عبر الاستبدال</div>
+          <div class="stat-desc">تسهيل عملية التثمين الفوري لسيارات العملاء القديمة يزيل العائق الأكبر أمام العميل لشراء سيارة جديدة أو كسر زيرو من المعرض.</div>
+        </div>
+
+        <div class="stat-box amber">
+          <div class="stat-value">صفر هدر إعلاني</div>
+          <div class="stat-title">تعظيم العائد من إعلانات السوشيال ميديا</div>
+          <div class="stat-desc">كل جنيه يُصرف على إعلانات فيسبوك وتيك توك يؤتي ثماره، لأن العميل الذي يضغط على إعلان واتساب يجد رداً فورياً ذكياً في ثانية واحدة حتى لو كان في الثالثة فجراً!</div>
+        </div>
+      </div>
+
+      <div style="background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 20px; padding: 26px 36px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+          <h4 style="font-size: 22px; font-weight: 800; color: #ffffff; margin-bottom: 6px;">💡 الخلاصة التنفيذية للأستاذ هاني مسعود:</h4>
+          <p style="font-size: 16px; color: #cbd5e1; max-width: 1200px; line-height: 1.5;">
+            بيع <strong>سيارة واحدة إضافية فقط شهرياً</strong> عبر النظام يغطي تكاليف تشغيله لأكثر من سنة كاملة! النظام لا يحل محل رجال المبيعات بل يمنحهم أداة خارقة تضاعف مبيعاتهم وتجعل معارض الفارس موتورز سابقة لكل المنافسين في السوق المصري.
+          </p>
+        </div>
+        <div style="text-align: left; flex-shrink: 0; padding-right: 30px;">
+          <div style="font-size: 28px; font-weight: 900; color: #34d399;">10x+</div>
+          <div style="font-size: 14px; color: #94a3b8;">العائد التقديري على الاستثمار</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div>حسابات مبنية على متوسط مبيعات صالات عرض السيارات في القاهرة الجديدة ومدينة نصر</div>
+      <div class="footer-highlight">Measurable Business Impact &amp; Revenue Growth</div>
+    </div>
+  </section>
+
+
+  <!-- ==================== SLIDE 11: خطة التدشين والانطلاق ==================== -->
+  <section class="slide">
+    <div class="glow-top-right"></div>
+    <div class="slide-header">
+      <div class="brand-group">
+        <div class="brand-logo"><img src="images/logo.png" alt="Logo"></div>
+        <div>
+          <div class="brand-title">Al-Fares Motors مصر</div>
+          <div class="brand-sub">إدارة هاني مسعود</div>
+        </div>
+      </div>
+      <div class="slide-meta">
+        <div class="slide-category">خطة الإطلاق والخطوات القادمة</div>
+        <div class="slide-number">10 / 10</div>
+      </div>
+    </div>
+
+    <div class="slide-content" style="gap: 40px;">
+      <div class="col-left" style="flex: 1.2;">
+        <div class="pill pill-emerald">جاهزية تشغيلية 100%</div>
+        <h2 class="slide-title">خطة التدشين السريعة لمعارض الفارس موتورز (Next Steps)</h2>
+        <p class="slide-subtitle">النظام مبرمج ومختبر بالكامل ويعمل حالياً على أسطول المعرض الحقيقي (65 سيارة). خطوات الإطلاق تستغرق أقل من 24 ساعة.</p>
+
+        <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 10px;">
+          <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 18px 22px; display: flex; align-items: center; gap: 16px;">
+            <div style="background: #10b981; color: #0f172a; font-weight: 900; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px;">1</div>
+            <div>
+              <div style="font-size: 17px; font-weight: 800; color: #ffffff;">الربط المباشر برقم واتساب المعرض الرسمي (01501511117)</div>
+              <div style="font-size: 14px; color: #94a3b8;">توصيل الـ WhatsApp Cloud API بالرقم المعتمد لبدء استقبال رسائل العملاء فوراً.</div>
+            </div>
+          </div>
+
+          <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 18px 22px; display: flex; align-items: center; gap: 16px;">
+            <div style="background: #0ea5e9; color: #0f172a; font-weight: 900; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px;">2</div>
+            <div>
+              <div style="font-size: 17px; font-weight: 800; color: #ffffff;">جلسة تدريب سريعة لمستشاري المبيعات بالمعرض (ساعة واحدة)</div>
+              <div style="font-size: 14px; color: #94a3b8;">تدريب الفريق على متابعة الحجوزات، تجارب القيادة، وطلبات الاستبدال عبر لوحة التحكم.</div>
+            </div>
+          </div>
+
+          <div style="background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 18px 22px; display: flex; align-items: center; gap: 16px;">
+            <div style="background: #f59e0b; color: #0f172a; font-weight: 900; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px;">3</div>
+            <div>
+              <div style="font-size: 17px; font-weight: 800; color: #ffffff;">إطلاق الحملة التسويقية الترويجية "أول معرض ذكي في مصر"</div>
+              <div style="font-size: 14px; color: #94a3b8;">إعلان ممول على فيسبوك وتيك توك يوجه العملاء لتجربة التثمين وحساب الأقساط الفورية عبر واتساب.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-right" style="flex: 1;">
+        <div style="background: linear-gradient(135deg, rgba(18, 140, 126, 0.25) 0%, rgba(15, 23, 42, 0.8) 100%); border: 1px solid rgba(18, 140, 126, 0.4); border-radius: 24px; padding: 40px; text-align: center; width: 100%;">
+          <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: #0f172a; border-radius: 20px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+            <img src="images/logo.png" style="max-height: 80%; max-width: 80%; object-fit: contain;" alt="Logo">
+          </div>
+          <h3 style="font-size: 28px; font-weight: 900; color: #ffffff; margin-bottom: 8px;">جاهزون للانطلاق معكم!</h3>
+          <p style="font-size: 16px; color: #cbd5e1; margin-bottom: 24px; line-height: 1.6;">
+            معارض الفارس موتورز تستحق التكنولوجيا الأقوى التي تعكس مكانتها الرائدة في السوق المصري.
+          </p>
+
+          <div style="background: rgba(15, 23, 42, 0.8); border-radius: 16px; padding: 20px; text-align: right; margin-bottom: 24px; font-size: 14px; color: #cbd5e1; line-height: 1.8;">
+            <div>📍 <strong>فرع التجمع الأول:</strong> مول 5، المجاورة الخامسة، القاهرة الجديدة</div>
+            <div>📍 <strong>فرع مدينة نصر:</strong> 17 شارع المشروع، متفرع من مصطفى النحاس</div>
+            <div>📞 <strong>الخط الساخن والمبيعات:</strong> 01501511117 / +201501511117</div>
+            <div>🌐 <strong>الموقع الرسمي:</strong> alfarismotors.ai</div>
+          </div>
+
+          <div style="font-size: 15px; font-weight: 700; color: #34d399;">
+            الفارس موتورز مصر — الريادة في عالم السيارات الذكية 🚗✨
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide-footer">
+      <div>تم إعداد وتجهيز العرض التقديمي بالكامل ليتوافق مع هوية وأسطول معارض الفارس موتورز</div>
+      <div class="footer-highlight">Al-Fares Motors Executive Technology Proposal</div>
+    </div>
+  </section>
+
 </body>
 </html>

@@ -73,6 +73,9 @@ export function initTradeIns() {
     searchQuery = e.target.value.toLowerCase().trim();
     renderTradeIns();
   });
+
+  // Auto-load trade-ins on module initialization
+  loadTradeIns();
 }
 
 export async function loadTradeIns() {
@@ -176,7 +179,7 @@ export function renderTradeIns() {
         ${t.notes ? `<p class="text-xs text-slate-600 dark:text-slate-400 italic">ملاحظات: ${esc(t.notes)}</p>` : ''}
 
         <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
-          <span class="text-[11px] text-slate-400">${new Date(t.at).toLocaleDateString('ar-EG', { dateStyle: 'medium', timeStyle: 'short' })}</span>
+          <span class="text-[11px] text-slate-400">${new Date(t.at || Date.now()).toLocaleDateString('ar-EG', { year: 'numeric', month: 'short', day: 'numeric' })}</span>
           <div class="flex items-center gap-2">
             ${cleanPhone ? `
               <a href="https://wa.me/${cleanPhone}?text=${encodeURIComponent(`أهلاً بك أستاذ ${t.clientName} في الفارس موتورز بخصوص تثمين سيارتك (${t.carModel || ''})، يسعدنا التنسيق معك...`)}" target="_blank" class="flex items-center gap-1 rounded-lg bg-emerald-600 text-white font-bold px-3 py-1.5 hover:bg-emerald-700 transition">

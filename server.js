@@ -106,8 +106,15 @@ app.use((err, req, res, next) => {
   }
   next(err);
 });
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {
+  etag: false,
+  maxAge: 0,
+  setHeaders: (res) => {
+    res.set('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.set('Pragma', 'no-cache');
+    res.set('Expires', '0');
+  }
+}));
 
 const processedMessageIds = new Set();
 
@@ -368,7 +375,8 @@ app.post('/webhook', async (req, res) => {
               clientName,
               items: answer.intentData.items,
               total: answer.intentData.total,
-              address: answer.intentData.address
+              address: answer.intentData.address,
+              notes: answer.intentData.deposit ? `عربون تثبيت الحجز المبدئي: ${answer.intentData.deposit}` : ''
             });
           } else if (answer.intentType === 'BOOKING_CREATE' && answer.intentData) {
             await createReservation({
@@ -376,12 +384,17 @@ app.post('/webhook', async (req, res) => {
               clientName,
               partySize: answer.intentData.partySize,
               date: answer.intentData.time,
-              time: answer.intentData.time
+              time: answer.intentData.time,
+              notes: answer.intentData.branch ? `الفرع المفضل: ${answer.intentData.branch}` : 'موعد تجربة قيادة ومعاينة'
             });
           } else if (answer.intentType === 'TRADE_IN_REQUEST') {
             await createTradeIn({
               clientPhone: fromPhone,
               clientName,
+              carMake: answer.tradeInEstimate?.make || '',
+              carModel: answer.tradeInEstimate?.model || '',
+              carYear: answer.tradeInEstimate?.year || null,
+              paintStatus: answer.tradeInEstimate?.paintStatus || 'فابريكا بالكامل',
               notes: incomingText,
               estimatedValue: answer.tradeInEstimate?.formattedRange || 'في انتظار الفحص والمعاينة'
             });
@@ -471,6 +484,8 @@ app.get('/api/status', (req, res) => {
     ordersCount: getOrders().length,
     reservationsCount: getReservations().length,
     remindersCount: getReminders().filter(r => r.status === 'pending').length,
+    customersCount: getAllCustomers().length,
+    tradeInsCount: getTradeIns().length,
     whatsapp: {
       phoneNumberId: w.phoneNumberId || '',
       verifyToken: w.verifyToken || 'my-secret-verify-token',
@@ -533,7 +548,8 @@ app.post('/api/chat', async (req, res) => {
         clientName: 'Preview Client',
         items: result.intentData.items,
         total: result.intentData.total,
-        address: result.intentData.address
+        address: result.intentData.address,
+        notes: result.intentData.deposit ? `عربون تثبيت الحجز المبدئي: ${result.intentData.deposit}` : ''
       });
       result.order = order;
     } else if (result.intentType === 'BOOKING_CREATE' && result.intentData) {
@@ -542,13 +558,18 @@ app.post('/api/chat', async (req, res) => {
         clientName: 'Preview Client',
         partySize: result.intentData.partySize,
         date: result.intentData.time,
-        time: result.intentData.time
+        time: result.intentData.time,
+        notes: result.intentData.branch ? `الفرع المفضل: ${result.intentData.branch}` : 'موعد تجربة قيادة ومعاينة'
       });
       result.reservation = reservation;
     } else if (result.intentType === 'TRADE_IN_REQUEST') {
       const tradeIn = await createTradeIn({
         clientPhone: '201012345678',
         clientName: 'Preview Client',
+        carMake: result.tradeInEstimate?.make || '',
+        carModel: result.tradeInEstimate?.model || '',
+        carYear: result.tradeInEstimate?.year || null,
+        paintStatus: result.tradeInEstimate?.paintStatus || 'فابريكا بالكامل',
         notes: message,
         estimatedValue: result.tradeInEstimate?.formattedRange || 'في انتظار الفحص والمعاينة'
       });
@@ -653,7 +674,7 @@ app.post('/api/reminders/:id/send', async (req, res) => {
     const phoneId = w.phoneNumberId || process.env.WHATSAPP_PHONE_NUMBER_ID;
     const token = w.accessToken || process.env.WHATSAPP_ACCESS_TOKEN;
     if (phoneId && token && sent.clientPhone) {
-      await sendWhatsAppTextMessage(phoneId, token, sent.clientPhone, sent.message);
+      await sendWhatsAppText(phoneId, token, sent.clientPhone, sent.message);
     }
     res.json({ ok: true, reminder: sent });
   } catch (err) {
@@ -1258,11 +1279,12 @@ app.post('/api/ai/faq-gap', async (req, res) => {
 /* ================= Auto Financing & Installment Calculator API ================= */
 app.post('/api/calculator/installment', (req, res) => {
   try {
-    const { price, downPaymentPct, tenureYears, annualInterestRate } = req.body;
+    const { price, carPrice, downPaymentPct, tenureYears, years, annualInterestRate } = req.body;
+    const finalPrice = price !== undefined ? price : carPrice;
     const result = calculateCarInstallment({
-      price,
+      price: finalPrice,
       downPaymentPct: Number(downPaymentPct) || 20,
-      tenureYears: Number(tenureYears) || 5,
+      tenureYears: Number(tenureYears || years) || 5,
       annualInterestRate: Number(annualInterestRate) || 12
     });
     if (!result) return res.status(400).json({ error: 'Invalid car price' });

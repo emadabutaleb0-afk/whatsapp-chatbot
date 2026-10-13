@@ -108,9 +108,10 @@ async function boot() {
   initCalculator((state.config && state.config.products) || []);
   initCustomers();
 
-  await Promise.all([loadConfig(), loadConversations()]);
+  await Promise.all([loadConfig(), loadConversations(), loadCustomers(), loadTradeIns()]);
 
   setView('dashboard');
+  pollStatus();
   setInterval(pollStatus, 25000);
 }
 
@@ -186,6 +187,16 @@ function updateStatusChips(statusData) {
     if (ordBadge && statusData.ordersCount !== undefined) {
       ordBadge.textContent = String(statusData.ordersCount);
       ordBadge.classList.toggle('hidden', statusData.ordersCount === 0);
+    }
+    const custBadge = $('customersCountBadge');
+    if (custBadge && statusData.customersCount !== undefined) {
+      custBadge.textContent = String(statusData.customersCount);
+      custBadge.classList.toggle('hidden', statusData.customersCount === 0);
+    }
+    const tiBadge = $('tradeInsCountBadge');
+    if (tiBadge && statusData.tradeInsCount !== undefined) {
+      tiBadge.textContent = String(statusData.tradeInsCount);
+      tiBadge.classList.toggle('hidden', statusData.tradeInsCount === 0);
     }
   }
 }
@@ -425,6 +436,13 @@ function renderProducts() {
     counter.textContent = `عرض ${filtered.length} سيارة من أصل ${allList.length}`;
   }
 
+  if (!allList.length) {
+    if (!host.children.length) {
+      host.innerHTML = '<p class="text-sm text-slate-400 py-8 text-center">جاري تحميل أسطول ومعرض السيارات...</p>';
+    }
+    return;
+  }
+
   if (!filtered.length) {
     host.innerHTML = `
     <div class="rounded-2xl border border-dashed border-slate-300 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-12 text-center">
@@ -533,6 +551,8 @@ async function refreshLogs() {
 /* ============================== Views Navigation ============================== */
 
 function setView(view) {
+  if (view === 'trade-ins') view = 'tradeins';
+  if (view === 'admin_ai') view = 'admin-ai';
   state.view = view;
   document.querySelectorAll('.pane').forEach((p) => {
     const on = p.dataset.pane === view;
@@ -555,7 +575,13 @@ function setView(view) {
     if (view === 'dashboard') loadMetrics();
     else if (view === 'admin-ai') loadAdminAI();
     else if (view === 'faq') renderFaq();
-    else if (view === 'products') renderProducts();
+    else if (view === 'products') {
+      if (!state.config || !state.config.products || !state.config.products.length) {
+        loadConfig();
+      } else {
+        renderProducts();
+      }
+    }
     else if (view === 'orders') loadOrders();
     else if (view === 'reservations') loadReservations();
     else if (view === 'tradeins') loadTradeIns();
@@ -581,6 +607,31 @@ function setView(view) {
 /* ============================== Wiring UI Events ============================== */
 
 function wireUI() {
+  // Global navigation handler for all [data-nav] elements across panes
+  document.addEventListener('click', (e) => {
+    const nav = e.target.closest('[data-nav]');
+    if (nav && nav.dataset.nav) {
+      setView(nav.dataset.nav);
+    }
+  });
+
+  // Global modal backdrop close: clicking outside a modal card dismisses the modal
+  document.addEventListener('click', (e) => {
+    if (e.target.classList && e.target.classList.contains('fixed') && e.target.id && (e.target.id.endsWith('Modal') || e.target.id.includes('Modal'))) {
+      e.target.classList.add('hidden');
+    }
+  });
+
+  // Global Escape key: closes open modals and mobile drawers
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.fixed.inset-0:not(.hidden)').forEach((m) => {
+        m.classList.add('hidden');
+      });
+      $('mobileMenuDrawer')?.classList.add('hidden');
+    }
+  });
+
   // Theme (Night Mode) toggle
   const toggleTheme = () => {
     const isDark = document.documentElement.classList.toggle('dark');

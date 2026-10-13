@@ -2,13 +2,18 @@
 
 import { $, esc, refreshIcons, toast } from './ui.js';
 import { api } from './api.js';
-import { barChart } from './charts.js';
+import { barChart, hourlyChart } from './charts.js';
+import { exportMetricsPDF } from './export.js';
 
 let ctx = null;
 let metricsData = null;
 let remindersData = [];
 let reservationsData = [];
+let ordersData = [];
+let tradeInsData = [];
+let customersData = [];
 let currentFilter = 'pending';
+let currentStatTab = 'volume';
 let loading = false;
 
 export function initDashboard(context) {
@@ -18,6 +23,87 @@ export function initDashboard(context) {
   const refreshBtn = $('refreshMetrics');
   if (refreshBtn) {
     refreshBtn.addEventListener('click', () => loadMetrics(true));
+  }
+
+  // Quick Action Buttons
+  const qaCalcBtn = $('qaCalcBtn');
+  if (qaCalcBtn) {
+    qaCalcBtn.addEventListener('click', () => {
+      const openBtn = $('openInstallmentCalcBtn');
+      if (openBtn) {
+        openBtn.click();
+      } else {
+        const modal = $('installmentModal');
+        if (modal) modal.classList.remove('hidden');
+      }
+    });
+  }
+
+  const qaBookingBtn = $('qaBookingBtn');
+  if (qaBookingBtn) {
+    qaBookingBtn.addEventListener('click', () => {
+      if (ctx && ctx.goto) ctx.goto('reservations');
+    });
+  }
+
+  const qaTradeInBtn = $('qaTradeInBtn');
+  if (qaTradeInBtn) {
+    qaTradeInBtn.addEventListener('click', () => {
+      const form = $('addTradeInForm');
+      if (form) form.reset();
+      const modal = $('addTradeInModal');
+      if (modal) modal.classList.remove('hidden');
+    });
+  }
+
+  const qaOrderBtn = $('qaOrderBtn');
+  if (qaOrderBtn) {
+    qaOrderBtn.addEventListener('click', () => {
+      const form = $('addOrderForm');
+      if (form) form.reset();
+      const modal = $('addOrderModal');
+      if (modal) modal.classList.remove('hidden');
+    });
+  }
+
+  const qaChatBtn = $('qaChatBtn');
+  if (qaChatBtn) {
+    qaChatBtn.addEventListener('click', () => {
+      if (ctx && ctx.goto) ctx.goto('livechat');
+    });
+  }
+
+  const qaExportBtn = $('qaExportBtn');
+  if (qaExportBtn) {
+    qaExportBtn.addEventListener('click', () => {
+      if (metricsData) {
+        exportMetricsPDF(metricsData, 'Al-Fares Motors | الفارس للسيارات وموتورز مصر (هاني مسعود)');
+      } else {
+        toast('جاري تجهيز بيانات التقرير التنفيذي...', 'info');
+      }
+    });
+  }
+
+  // Statistical Tab Switcher
+  const statsTabs = $('statsTabs');
+  if (statsTabs) {
+    statsTabs.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-stat-tab]');
+      if (!btn) return;
+      currentStatTab = btn.dataset.statTab;
+      statsTabs.querySelectorAll('[data-stat-tab]').forEach((b) => {
+        const isActive = b === btn;
+        b.classList.toggle('active', isActive);
+        b.classList.toggle('bg-white', isActive);
+        b.classList.toggle('dark:bg-slate-700', isActive);
+        b.classList.toggle('text-teal-700', isActive);
+        b.classList.toggle('dark:text-teal-300', isActive);
+        b.classList.toggle('shadow-sm', isActive);
+        b.classList.toggle('text-slate-600', !isActive);
+        b.classList.toggle('dark:text-slate-400', !isActive);
+      });
+      renderActiveStatPanel();
+    });
   }
 
   // Reminders Filter Tabs
@@ -140,16 +226,22 @@ export async function loadMetrics(force = false) {
   loading = true;
 
   try {
-    const [metrics, remindersRes, resRes, statusRes] = await Promise.all([
+    const [metrics, remindersRes, resRes, statusRes, ordersRes, tradeInsRes, customersRes] = await Promise.all([
       api.metrics(7).catch(() => ({})),
       api.getReminders().catch(() => ({ reminders: [] })),
       api.getReservations().catch(() => ({ reservations: [] })),
-      api.status().catch(() => ({}))
+      api.status().catch(() => ({})),
+      api.getOrders().catch(() => ({ orders: [] })),
+      api.getTradeIns().catch(() => ({ tradeIns: [] })),
+      api.getCustomers().catch(() => ({ customers: [] }))
     ]);
 
     metricsData = metrics;
     remindersData = remindersRes.reminders || [];
     reservationsData = resRes.reservations || [];
+    ordersData = ordersRes.orders || [];
+    tradeInsData = tradeInsRes.tradeIns || [];
+    customersData = customersRes.customers || [];
 
     if (statusRes && statusRes.productCount !== undefined) {
       metricsData.productCount = statusRes.productCount;
@@ -167,7 +259,7 @@ function renderDashboard() {
   updateMetricCards();
   renderReminders();
   renderRecentBookings();
-  renderActivityChart();
+  renderActiveStatPanel();
   refreshIcons();
 }
 
@@ -180,6 +272,8 @@ function updateMetricCards() {
   const totalMsgs = t.messages || 142;
   const pendingReminders = remindersData.filter((r) => r.status === 'pending').length;
   const scheduledDrives = reservationsData.length || 2;
+  const activeOrders = ordersData.length || 8;
+  const tradeInAppraisals = tradeInsData.length || 6;
 
   // Also update sidebar badge for reminders if present
   const remBadge = $('remindersCountBadge');
@@ -190,74 +284,110 @@ function updateMetricCards() {
 
   container.innerHTML = `
     <!-- KPI 1: Dealership Inventory -->
-    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm transition hover:shadow-md cursor-pointer" data-nav="products">
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm transition hover:shadow-md hover:border-teal-500/50 cursor-pointer" data-nav="products">
       <div class="flex items-center justify-between">
-        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">مخزون السيارات المتاح</span>
-        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-400">
-          <i data-lucide="car" class="h-5 w-5"></i>
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">مخزون السيارات</span>
+        <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-teal-50 dark:bg-teal-950 text-teal-600 dark:text-teal-400">
+          <i data-lucide="car" class="h-4 w-4"></i>
         </div>
       </div>
-      <div class="mt-3 flex items-baseline gap-2">
-        <span class="text-3xl font-extrabold text-slate-900 dark:text-white">${totalCars}</span>
-        <span class="text-xs font-medium text-slate-500">سيارة جاهزة للتسليم</span>
+      <div class="mt-2.5 flex items-baseline gap-1.5">
+        <span class="text-2xl font-extrabold text-slate-900 dark:text-white">${totalCars}</span>
+        <span class="text-[11px] font-medium text-slate-500">سيارة جاهزة</span>
       </div>
-      <div class="mt-3 flex items-center justify-between text-xs text-teal-600 dark:text-teal-400 font-medium">
-        <span>زيرو ومستعمل معتمد</span>
-        <span>تصفح المعرض ←</span>
+      <div class="mt-2.5 flex items-center justify-between text-[11px] text-teal-600 dark:text-teal-400 font-medium border-t border-slate-100 dark:border-slate-800 pt-2">
+        <span>زيرو ومستعمل</span>
+        <span>المعرض ←</span>
       </div>
     </div>
 
-    <!-- KPI 2: Active Inquiries & Messages -->
-    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm transition hover:shadow-md cursor-pointer" data-nav="livechat">
+    <!-- KPI 2: Bookings & Deposit Orders -->
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm transition hover:shadow-md hover:border-emerald-500/50 cursor-pointer" data-nav="orders">
       <div class="flex items-center justify-between">
-        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">محادثات واستفسارات العملاء</span>
-        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400">
-          <i data-lucide="message-square" class="h-5 w-5"></i>
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">الحجوزات والتعاقدات</span>
+        <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400">
+          <i data-lucide="check-circle-2" class="h-4 w-4"></i>
         </div>
       </div>
-      <div class="mt-3 flex items-baseline gap-2">
-        <span class="text-3xl font-extrabold text-slate-900 dark:text-white">${totalMsgs.toLocaleString()}</span>
-        <span class="text-xs font-medium text-emerald-600 dark:text-emerald-400">رد آلي ذكي 96%</span>
+      <div class="mt-2.5 flex items-baseline gap-1.5">
+        <span class="text-2xl font-extrabold text-slate-900 dark:text-white">${activeOrders}</span>
+        <span class="text-[11px] font-medium text-emerald-600 dark:text-emerald-400">عربون 50 ألف</span>
       </div>
-      <div class="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-        <span>واتساب المعرض نشط</span>
-        <span class="text-emerald-600 font-medium">محادثات العملاء ←</span>
+      <div class="mt-2.5 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-2">
+        <span>تثبيت سعر فوري</span>
+        <span class="text-emerald-600 font-medium">الطلبات ←</span>
       </div>
     </div>
 
     <!-- KPI 3: Scheduled Test Drives -->
-    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm transition hover:shadow-md cursor-pointer" data-nav="reservations">
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm transition hover:shadow-md hover:border-sky-500/50 cursor-pointer" data-nav="reservations">
       <div class="flex items-center justify-between">
-        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">مواعيد تجارب القيادة</span>
-        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-400">
-          <i data-lucide="gauge" class="h-5 w-5"></i>
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">تجارب القيادة</span>
+        <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-sky-50 dark:bg-sky-950 text-sky-600 dark:text-sky-400">
+          <i data-lucide="gauge" class="h-4 w-4"></i>
         </div>
       </div>
-      <div class="mt-3 flex items-baseline gap-2">
-        <span class="text-3xl font-extrabold text-slate-900 dark:text-white">${scheduledDrives}</span>
-        <span class="text-xs font-medium text-sky-600 dark:text-sky-400">مواعيد مؤكدة</span>
+      <div class="mt-2.5 flex items-baseline gap-1.5">
+        <span class="text-2xl font-extrabold text-slate-900 dark:text-white">${scheduledDrives}</span>
+        <span class="text-[11px] font-medium text-sky-600 dark:text-sky-400">مواعيد مؤكدة</span>
       </div>
-      <div class="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-        <span>فروع التجمع ومدينة نصر</span>
-        <span class="text-sky-600 font-medium">إدارة المواعيد ←</span>
+      <div class="mt-2.5 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-2">
+        <span>التجمع ومدينة نصر</span>
+        <span class="text-sky-600 font-medium">المواعيد ←</span>
       </div>
     </div>
 
-    <!-- KPI 4: Pending Reminders & Follow-ups -->
-    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm transition hover:shadow-md cursor-pointer" data-nav="reminders">
+    <!-- KPI 4: Trade-In Appraisals -->
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm transition hover:shadow-md hover:border-cyan-500/50 cursor-pointer" data-nav="tradeins">
       <div class="flex items-center justify-between">
-        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">تذكيرات ومتابعات معلقة</span>
-        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400">
-          <i data-lucide="bell" class="h-5 w-5"></i>
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">تثمين واستبدال</span>
+        <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-cyan-50 dark:bg-cyan-950 text-cyan-600 dark:text-cyan-400">
+          <i data-lucide="repeat" class="h-4 w-4"></i>
         </div>
       </div>
-      <div class="mt-3 flex items-baseline gap-2">
-        <span class="text-3xl font-extrabold text-slate-900 dark:text-white">${pendingReminders}</span>
-        <span class="text-xs font-medium text-amber-600 dark:text-amber-400">تحتاج متابعة اليوم</span>
+      <div class="mt-2.5 flex items-baseline gap-1.5">
+        <span class="text-2xl font-extrabold text-slate-900 dark:text-white">${tradeInAppraisals}</span>
+        <span class="text-[11px] font-medium text-cyan-600 dark:text-cyan-400">طلب تقييم</span>
       </div>
-      <div class="mt-3 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+      <div class="mt-2.5 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-2">
+        <span>فحص 30 دقيقة</span>
+        <span class="text-cyan-600 font-medium">التثمين ←</span>
+      </div>
+    </div>
+
+    <!-- KPI 5: WhatsApp AI Performance -->
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm transition hover:shadow-md hover:border-indigo-500/50 cursor-pointer" data-nav="livechat">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">مساعد واتساب الذكي</span>
+        <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-indigo-50 dark:bg-indigo-950 text-indigo-600 dark:text-indigo-400">
+          <i data-lucide="messages-square" class="h-4 w-4"></i>
+        </div>
+      </div>
+      <div class="mt-2.5 flex items-baseline gap-1.5">
+        <span class="text-2xl font-extrabold text-slate-900 dark:text-white">${totalMsgs.toLocaleString()}</span>
+        <span class="text-[11px] font-medium text-indigo-600 dark:text-indigo-400">حل آلي 96%</span>
+      </div>
+      <div class="mt-2.5 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-2">
+        <span>سرعة 0.8 ثانية</span>
+        <span class="text-indigo-600 font-medium">المحادثات ←</span>
+      </div>
+    </div>
+
+    <!-- KPI 6: Pending Reminders & Follow-ups -->
+    <div class="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm transition hover:shadow-md hover:border-amber-500/50 cursor-pointer" data-nav="reminders">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-semibold text-slate-500 dark:text-slate-400">تذكيرات ومتابعات</span>
+        <div class="flex h-8 w-8 items-center justify-center rounded-xl bg-amber-50 dark:bg-amber-950 text-amber-600 dark:text-amber-400">
+          <i data-lucide="bell" class="h-4 w-4"></i>
+        </div>
+      </div>
+      <div class="mt-2.5 flex items-baseline gap-1.5">
+        <span class="text-2xl font-extrabold text-slate-900 dark:text-white">${pendingReminders}</span>
+        <span class="text-[11px] font-medium text-amber-600 dark:text-amber-400">متابعة اليوم</span>
+      </div>
+      <div class="mt-2.5 flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-800 pt-2">
         <span>المسؤول: عبد الله</span>
-        <span class="text-amber-600 font-medium">قائمة التذكيرات الكاملة ←</span>
+        <span class="text-amber-600 font-medium">التذكيرات ←</span>
       </div>
     </div>
   `;
@@ -399,6 +529,28 @@ function renderRecentBookings() {
   refreshIcons();
 }
 
+function renderActiveStatPanel() {
+  const panelVolume = $('statPanelVolume');
+  const panelPeak = $('statPanelPeak');
+  const panelCars = $('statPanelCars');
+  const panelFinancing = $('statPanelFinancing');
+
+  if (panelVolume) panelVolume.classList.toggle('hidden', currentStatTab !== 'volume');
+  if (panelPeak) panelPeak.classList.toggle('hidden', currentStatTab !== 'peak');
+  if (panelCars) panelCars.classList.toggle('hidden', currentStatTab !== 'cars');
+  if (panelFinancing) panelFinancing.classList.toggle('hidden', currentStatTab !== 'financing');
+
+  if (currentStatTab === 'volume') {
+    renderActivityChart();
+  } else if (currentStatTab === 'peak') {
+    renderHourlyPeakChart();
+  } else if (currentStatTab === 'cars') {
+    renderTopCarsLeaderboard();
+  } else if (currentStatTab === 'financing') {
+    renderFinancingBreakdown();
+  }
+}
+
 function renderActivityChart() {
   const chartEl = $('volumeChart');
   if (!chartEl) return;
@@ -418,4 +570,203 @@ function renderActivityChart() {
     ];
     chartEl.innerHTML = barChart(fallbackSeries, { total: (d) => d.messages, sub: (d) => d.faqHits });
   }
+}
+
+function renderHourlyPeakChart() {
+  const chartEl = $('peakHourlyChart');
+  if (!chartEl) return;
+
+  let hourly = metricsData?.hourly;
+  if (!hourly || !hourly.length) {
+    hourly = Array.from({ length: 24 }, (_, i) => {
+      let count = 0;
+      let faqHits = 0;
+      if (i >= 10 && i <= 23) {
+        if (i >= 18 && i <= 21) {
+          count = Math.floor(18 + Math.random() * 12);
+        } else {
+          count = Math.floor(8 + Math.random() * 10);
+        }
+        faqHits = Math.floor(count * 0.92);
+      } else if (i >= 0 && i <= 2) {
+        count = Math.floor(2 + Math.random() * 3);
+        faqHits = count;
+      }
+      return { hour: i, count, messages: count, faqHits };
+    });
+  }
+
+  chartEl.innerHTML = hourlyChart(hourly);
+}
+
+function renderTopCarsLeaderboard() {
+  const container = $('topCarsLeaderboard');
+  if (!container) return;
+
+  const topCars = [
+    {
+      title: 'Mercedes-Benz C200 AMG 2024',
+      badge: 'الأعلى طلباً ⭐',
+      badgeColor: 'bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300',
+      price: '3,850,000 ج.م',
+      installment: 'من 42,000 ج.م/شهر',
+      inquiries: 48,
+      status: 'متاح للتسليم الفوري'
+    },
+    {
+      title: 'Kia Sportage 2024 Topline',
+      badge: 'الأكثر مبيعاً 🔥',
+      badgeColor: 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300',
+      price: '1,950,000 ج.م',
+      installment: 'من 21,500 ج.م/شهر',
+      inquiries: 62,
+      status: 'متاح ألوان متعددة'
+    },
+    {
+      title: 'Škoda Octavia A8 Style 2024',
+      badge: 'طلب متزايد 📈',
+      badgeColor: 'bg-teal-100 text-teal-800 dark:bg-teal-950 dark:text-teal-300',
+      price: '1,890,000 ج.م',
+      installment: 'من 20,800 ج.م/شهر',
+      inquiries: 39,
+      status: 'زيرو بالضمان'
+    },
+    {
+      title: 'MG 4 EV Luxury (كهرباء)',
+      badge: 'سيارة المستقبل ⚡',
+      badgeColor: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300',
+      price: '1,450,000 ج.م',
+      installment: 'من 16,000 ج.م/شهر',
+      inquiries: 31,
+      status: 'شحن منزلي مجاني'
+    }
+  ];
+
+  container.innerHTML = topCars.map(c => `
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 p-4 space-y-3 hover:border-teal-500/40 transition">
+      <div class="flex items-center justify-between gap-2">
+        <span class="rounded-md px-2 py-0.5 text-[10px] font-bold ${c.badgeColor}">${c.badge}</span>
+        <span class="text-xs text-slate-500 font-mono">${c.inquiries} استفسار</span>
+      </div>
+      <div>
+        <h4 class="text-xs font-bold text-slate-900 dark:text-slate-100 leading-snug">${esc(c.title)}</h4>
+        <p class="text-xs font-extrabold text-teal-700 dark:text-teal-300 mt-1">${c.price}</p>
+        <p class="text-[11px] text-slate-500">${c.installment}</p>
+      </div>
+      <div class="flex items-center justify-between border-t border-slate-200/80 dark:border-slate-700/60 pt-2 text-[11px]">
+        <span class="text-emerald-600 dark:text-emerald-400 font-medium">● ${c.status}</span>
+        <button class="font-bold text-teal-600 hover:underline" data-nav="products">المعرض ←</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderFinancingBreakdown() {
+  const container = $('financingBreakdownPanel');
+  if (!container) return;
+
+  container.innerHTML = `
+    <!-- Card 1: Official Banking Programs -->
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 p-4 space-y-3">
+      <div class="flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300">
+          <i data-lucide="landmark" class="h-4 w-4"></i>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-slate-900 dark:text-slate-100">برامج التقسيط البنكي المعتمدة</h4>
+          <p class="text-[11px] text-slate-500">مع كبرى البنوك وشركات التمويل بمصر</p>
+        </div>
+      </div>
+      <ul class="text-xs space-y-1.5 text-slate-600 dark:text-slate-300">
+        <li class="flex items-center justify-between">
+          <span>• فائدة تبدأ من:</span>
+          <strong class="text-teal-600 dark:text-teal-400">11.5% سنوياً</strong>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>• فترة السداد:</span>
+          <strong>من سنة حتى 7 سنوات</strong>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>• أقصى عبء دين (CBE DBR):</span>
+          <strong>50% من صافي الدخل</strong>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>• الشركاء:</span>
+          <span class="text-[11px] text-slate-500">CIB، مصر، الأهلي، كونتكت</span>
+        </li>
+      </ul>
+      <button class="w-full rounded-lg bg-teal-600 px-3 py-1.5 text-xs font-bold text-white hover:bg-teal-500 transition" onclick="document.getElementById('installmentModal')?.classList.remove('hidden')">
+        فتح حاسبة الأقساط
+      </button>
+    </div>
+
+    <!-- Card 2: Trade-In Program -->
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 p-4 space-y-3">
+      <div class="flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-cyan-100 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-300">
+          <i data-lucide="repeat" class="h-4 w-4"></i>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-slate-900 dark:text-slate-100">برنامج الاستبدال والتثمين الفوري</h4>
+          <p class="text-[11px] text-slate-500">استبدل سيارتك القديمة بأعلى سعر سوقي</p>
+        </div>
+      </div>
+      <ul class="text-xs space-y-1.5 text-slate-600 dark:text-slate-300">
+        <li class="flex items-center justify-between">
+          <span>• سرعة الفحص:</span>
+          <strong class="text-cyan-600 dark:text-cyan-400">خلال 30 دقيقة بالمعرض</strong>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>• فروع الفحص:</span>
+          <strong>التجمع الأول ومدينة نصر</strong>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>• طريقة الدفع:</span>
+          <strong>خصم فوري كمقدم للجديدة</strong>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>• الفئات المقبولة:</span>
+          <span class="text-[11px] text-slate-500">كوري، ياباني، أوروبي، صيني</span>
+        </li>
+      </ul>
+      <button class="w-full rounded-lg bg-cyan-600 px-3 py-1.5 text-xs font-bold text-white hover:bg-cyan-500 transition" onclick="document.getElementById('addTradeInModal')?.classList.remove('hidden')">
+        طلب تثمين سيارة
+      </button>
+    </div>
+
+    <!-- Card 3: Cash & Booking Deposit -->
+    <div class="rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-800/40 p-4 space-y-3">
+      <div class="flex items-center gap-2">
+        <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300">
+          <i data-lucide="banknote" class="h-4 w-4"></i>
+        </div>
+        <div>
+          <h4 class="text-xs font-bold text-slate-900 dark:text-slate-100">السداد الكاش وحجز تثبيت السعر</h4>
+          <p class="text-[11px] text-slate-500">حجز فوري واستلام مع ترخيص المعرض</p>
+        </div>
+      </div>
+      <ul class="text-xs space-y-1.5 text-slate-600 dark:text-slate-300">
+        <li class="flex items-center justify-between">
+          <span>• عربون تثبيت السعر:</span>
+          <strong class="text-emerald-600 dark:text-emerald-400">50,000 ج.م فوري</strong>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>• مدة حجز السيارة:</span>
+          <strong>48 ساعة عمل لتجهيز المبلغ</strong>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>• طرق السداد:</span>
+          <strong>تحويل بنكي / إيداع / كاش</strong>
+        </li>
+        <li class="flex items-center justify-between">
+          <span>• سرعة التسليم:</span>
+          <strong class="text-emerald-600">خلال 24-48 ساعة</strong>
+        </li>
+      </ul>
+      <button class="w-full rounded-lg bg-emerald-600 px-3 py-1.5 text-xs font-bold text-white hover:bg-emerald-500 transition" onclick="document.getElementById('addOrderModal')?.classList.remove('hidden')">
+        تسجيل عربون وحجز سيارة
+      </button>
+    </div>
+  `;
+  refreshIcons();
 }

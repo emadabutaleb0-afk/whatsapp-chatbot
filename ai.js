@@ -151,6 +151,11 @@ export function calculateCarInstallment({ price, downPaymentPct = 20, tenureYear
     };
   });
 
+  // Egyptian Banking DBR limit (Max 50% debt-burden ratio)
+  const minNetSalary = Math.round(monthlyInstallment / 0.50);
+  const adminFee = Math.round(financedAmount * 0.015);
+  const approxAnnualInsurance = Math.round(numPrice * 0.0225);
+
   return {
     price: numPrice,
     formattedPrice: numPrice.toLocaleString() + ' EGP',
@@ -168,6 +173,12 @@ export function calculateCarInstallment({ price, downPaymentPct = 20, tenureYear
     formattedMonthlyInstallment: monthlyInstallment.toLocaleString() + ' EGP',
     totalPayable: downPayment + totalFinancedWithInterest,
     formattedTotalPayable: (downPayment + totalFinancedWithInterest).toLocaleString() + ' EGP',
+    minNetSalary,
+    formattedMinNetSalary: minNetSalary.toLocaleString() + ' EGP',
+    adminFee,
+    formattedAdminFee: adminFee.toLocaleString() + ' EGP',
+    approxAnnualInsurance,
+    formattedApproxAnnualInsurance: approxAnnualInsurance.toLocaleString() + ' EGP',
     alternatives
   };
 }
@@ -374,14 +385,20 @@ export function estimateTradeInValue({ make, model, year, mileage, condition, pa
   const age = Math.max(0, currentYear - y);
 
   // Heuristic baseline depreciation model for Egyptian used car market:
-  let baseEstimate = 500000;
+  let baseEstimate = 550000;
   const brand = (make || '').toLowerCase();
-  if (brand.includes('mercedes') || brand.includes('مرسيدس') || brand.includes('bmw') || brand.includes('بي ام')) {
+  if (brand.includes('porsche') || brand.includes('بورش') || brand.includes('range rover') || brand.includes('رينج روفر') || brand.includes('رنج روفر')) {
+    baseEstimate = 3500000;
+  } else if (brand.includes('mercedes') || brand.includes('مرسيدس') || brand.includes('bmw') || brand.includes('بي ام') || brand.includes('audi') || brand.includes('اودي')) {
     baseEstimate = 2200000;
+  } else if (brand.includes('skoda') || brand.includes('سكودا') || brand.includes('volkswagen') || brand.includes('فولكس') || brand.includes('jetour') || brand.includes('جيتور')) {
+    baseEstimate = 1350000;
   } else if (brand.includes('kia') || brand.includes('hyundai') || brand.includes('toyota') || brand.includes('كيا') || brand.includes('هيونداي') || brand.includes('تويوتا')) {
     baseEstimate = 950000;
-  } else if (brand.includes('mg') || brand.includes('chery') || brand.includes('ام جي') || brand.includes('شيري')) {
-    baseEstimate = 750000;
+  } else if (brand.includes('nissan') || brand.includes('نيسان') || brand.includes('mg') || brand.includes('chery') || brand.includes('ام جي') || brand.includes('شيري') || brand.includes('peugeot') || brand.includes('بيجو')) {
+    baseEstimate = 780000;
+  } else if (brand.includes('renault') || brand.includes('رينو') || brand.includes('fiat') || brand.includes('فيات') || brand.includes('chevrolet') || brand.includes('شيفروليه')) {
+    baseEstimate = 600000;
   }
 
   // Age factor
@@ -562,12 +579,19 @@ export function analyzeIntent(text, config = {}, history = []) {
   }
 
   // 2. Dealership Location Pin Request Intent
-  const locationTriggers = [
+  const locationPhraseTriggers = [
     'اللوكيشن', 'لوكيشن', 'ابعثلي اللوكيشن', 'ابعتلي اللوكيشن', 'موقع المعرض', 'عنوان المعرض', 'مكان المعرض',
     'gps', 'send location', 'location pin', 'share location', 'feen el ma3rad', 'feen el mkan', 'where is showroom',
-    'where are you located', 'المكان', 'مكان', 'العنوان', 'عنوان', 'فين', 'فروعكم', 'الفروع', 'فرعكم'
+    'where are you located', 'فين المعرض', 'مكانكم فين', 'عنوانكم فين', 'فروعكم', 'الفروع', 'فرعكم'
   ].map(normalize);
-  if (locationTriggers.some(t => norm.includes(t))) {
+
+  const locationWordTriggers = ['المكان', 'مكان', 'العنوان', 'عنوان', 'فين'];
+  const hasStandaloneLocationWord = locationWordTriggers.some(w => {
+    const nw = normalize(w);
+    return new RegExp(`(^|\\s)${nw}(\\s|$)`, 'u').test(norm);
+  });
+
+  if (locationPhraseTriggers.some(t => norm.includes(t)) || hasStandaloneLocationWord) {
     const b = config.business || {};
     return {
       type: 'SEND_LOCATION',
@@ -579,19 +603,59 @@ export function analyzeIntent(text, config = {}, history = []) {
     };
   }
 
-  // Helper matching for automotive brands and models
-  const carAliases = {
-    'Mercedes-Benz C200 2024 AMG (Zero / New)': ['mercedes', 'c200', 'مرسيدس', 'مرسيدس c200', 'مرسيدس زيرو', 'c 200'],
-    'BMW 320i 2023 M-Sport (Certified Used)': ['bmw', '320', '320i', 'بي ام', 'بي ام دبليو', 'بي ام 320', 'بي ام مستعمل'],
-    'Toyota Corolla 2024 Smart (Zero / New)': ['toyota', 'corolla', 'تويوتا', 'كورولا', 'تويوتا كورولا', 'كورولا زيرو'],
-    'Hyundai Tucson 2022 Turbo NX4 (Certified Used)': ['tucson', 'hyundai', 'توسان', 'هيونداي توسان', 'توسان تيربو', 'توسان مستعمل'],
-    'Kia Sportage 2024 GT-Line (Zero / New)': ['sportage', 'kia', 'سبورتاج', 'كيا سبورتاج', 'سبورتاج زيرو', 'كيا'],
-    'Range Rover Sport 2021 HSE Dynamic (Certified Used)': ['range rover', 'رينج روفر', 'رنج روفر', 'رينج روفر سبورت', 'rover']
-  };
+  // Comprehensive automotive model knowledge for Egyptian automotive market
+  const knownModels = [
+    { ar: 'سبورتاج', en: 'sportage', brandAr: 'كيا', brandEn: 'kia' },
+    { ar: 'توسان', en: 'tucson', brandAr: 'هيونداي', brandEn: 'hyundai' },
+    { ar: 'فيرنا', en: 'verna', brandAr: 'هيونداي', brandEn: 'hyundai' },
+    { ar: 'النترا', en: 'elantra', brandAr: 'هيونداي', brandEn: 'hyundai' },
+    { ar: 'سيراتو', en: 'cerato', brandAr: 'كيا', brandEn: 'kia' },
+    { ar: 'كورولا', en: 'corolla', brandAr: 'تويوتا', brandEn: 'toyota' },
+    { ar: 'صني', en: 'sunny', brandAr: 'نيسان', brandEn: 'nissan' },
+    { ar: 'قشقاي', en: 'qashqai', brandAr: 'نيسان', brandEn: 'nissan' },
+    { ar: 'تيجو', en: 'tiggo', brandAr: 'شيري', brandEn: 'chery' },
+    { ar: 'اريزو', en: 'arrizo', brandAr: 'شيري', brandEn: 'chery' },
+    { ar: 'داستر', en: 'duster', brandAr: 'رينو', brandEn: 'renault' },
+    { ar: 'ميجان', en: 'megane', brandAr: 'رينو', brandEn: 'renault' },
+    { ar: 'ميغان', en: 'megane', brandAr: 'رينو', brandEn: 'renault' },
+    { ar: 'اوكتافيا', en: 'octavia', brandAr: 'سكودا', brandEn: 'skoda' },
+    { ar: 'كودياك', en: 'kodiaq', brandAr: 'سكودا', brandEn: 'skoda' },
+    { ar: 'رينج روفر', en: 'range rover', brandAr: 'لاند روفر', brandEn: 'land rover' },
+    { ar: 'رنج روفر', en: 'range rover', brandAr: 'لاند روفر', brandEn: 'land rover' },
+    { ar: 'جيتور', en: 'jetour', brandAr: 'جيتور', brandEn: 'jetour' },
+    { ar: 'داشينج', en: 'dashing', brandAr: 'جيتور', brandEn: 'jetour' },
+    { ar: 'اكس 70', en: 'x70', brandAr: 'جيتور', brandEn: 'jetour' },
+    { ar: 'مرسيدس c200', en: 'c200', brandAr: 'مرسيدس', brandEn: 'mercedes' },
+    { ar: 'c200', en: 'c 200', brandAr: 'مرسيدس', brandEn: 'mercedes' },
+    { ar: 'بي ام 320', en: '320i', brandAr: 'بي ام', brandEn: 'bmw' },
+    { ar: '320i', en: '320', brandAr: 'بي ام', brandEn: 'bmw' },
+    { ar: 'اكليبس', en: 'eclipse', brandAr: 'ميتسوبيشي', brandEn: 'mitsubishi' },
+    { ar: 'لانسر', en: 'lancer', brandAr: 'ميتسوبيشي', brandEn: 'mitsubishi' },
+    { ar: 'اتراج', en: 'attrage', brandAr: 'ميتسوبيشي', brandEn: 'mitsubishi' },
+    { ar: 'اكسباندر', en: 'xpander', brandAr: 'ميتسوبيشي', brandEn: 'mitsubishi' },
+    { ar: 'استرا', en: 'astra', brandAr: 'اوبل', brandEn: 'opel' },
+    { ar: 'كورسا', en: 'corsa', brandAr: 'اوبل', brandEn: 'opel' },
+    { ar: 'جراند لاند', en: 'grandland', brandAr: 'اوبل', brandEn: 'opel' },
+    { ar: '3008', en: '3008', brandAr: 'بيجو', brandEn: 'peugeot' },
+    { ar: '5008', en: '5008', brandAr: 'بيجو', brandEn: 'peugeot' },
+    { ar: '2008', en: '2008', brandAr: 'بيجو', brandEn: 'peugeot' }
+  ];
 
   const getCarMatches = (car) => {
-    const aliases = carAliases[car.name] || [];
-    return [normalize(car.name), ...aliases.map(normalize)];
+    const normName = normalize(car.name);
+    const keywords = new Set();
+    const parts = car.name.split('|').map(p => normalize(p).trim());
+    parts.forEach(p => { if (p) keywords.add(p); });
+
+    for (const m of knownModels) {
+      if (normName.includes(m.ar) || normName.includes(m.en)) {
+        keywords.add(m.ar);
+        keywords.add(m.en);
+        keywords.add(m.brandAr + ' ' + m.ar);
+        keywords.add(m.brandEn + ' ' + m.en);
+      }
+    }
+    return Array.from(keywords);
   };
 
   const cars = config.products || [];
@@ -642,14 +706,24 @@ export function analyzeIntent(text, config = {}, history = []) {
     else if (norm.includes('الجمعه') || norm.includes('friday')) timeDesc = 'يوم الجمعة بعد صلاة الظهر';
     else if (norm.includes('السبت') || norm.includes('saturday')) timeDesc = 'يوم السبت';
 
-    const hourMatch = raw.match(/(\d{1,2})(:00)?\s*(pm|am|مساء|صباحا)?/i);
-    if (hourMatch) timeDesc += ` الساعة ${hourMatch[0]}`;
+    let branchName = 'فرع التجمع الأول (مول 5) أو فرع مدينة نصر (17 شارع المشروع)';
+    if (norm.includes('تجمع') || norm.includes('قاهره جديده') || norm.includes('new cairo')) {
+      branchName = 'فرع التجمع الأول: مول 5، المجاورة الخامسة، القاهرة الجديدة';
+    } else if (norm.includes('مدينة نصر') || norm.includes('نصر') || norm.includes('nasr city')) {
+      branchName = 'فرع مدينة نصر: 17 شارع المشروع، متفرع من مصطفى النحاس';
+    }
 
     return {
       type: 'BOOKING_CREATE',
       partySize: 1,
       time: `${carName} — ${timeDesc}`,
-      reply: `تم تأكيد حجز موعد تجربة القيادة والمعاينة بنجاح! 🏎️📅\n• السيارة: ${carName}\n• الموعد: ${timeDesc}\n• موقع المعرض: التجمع / سوق السيارات\nيسعدنا استقبال حضرتك ونتمنى لك تجربة ممتعة!`
+      branch: branchName,
+      intentData: {
+        partySize: 1,
+        time: `${carName} — ${timeDesc}`,
+        branch: branchName
+      },
+      reply: `تم تأكيد حجز موعد تجربة القيادة والمعاينة بنجاح! 🏎️📅\n• السيارة: ${carName}\n• الموعد: ${timeDesc}\n• فرع المعرض: ${branchName}\n• شروط التجربة: رخصة قيادة سارية وبطاقة الرقم القومي.\nيسعدنا استقبال حضرتك ونتمنى لك تجربة ممتعة! 🌟`
     };
   }
 
@@ -676,34 +750,47 @@ export function analyzeIntent(text, config = {}, history = []) {
 
   if (buyTriggers.some(t => norm.includes(t)) && foundCars.length > 0) {
     const targetCar = foundCars[0];
+    const depositFormatted = '50,000 EGP';
     return {
       type: 'ORDER_CREATE',
       items: [targetCar],
       total: targetCar.price,
-      address: 'تسليم وترخيص المعرض',
+      deposit: depositFormatted,
+      address: 'تسليم وترخيص المعرض (التجمع الأول / مدينة نصر)',
       intentData: {
         items: [targetCar],
         total: targetCar.price,
-        address: 'تسليم وترخيص المعرض'
+        deposit: depositFormatted,
+        address: 'تسليم وترخيص المعرض (التجمع الأول / مدينة نصر)'
       },
-      reply: `تم تسجيل طلب حجز سيارتك المبدئي بنجاح! 🚘🎉\n• السيارة: ${targetCar.name}\n• السعر الإجمالي: ${targetCar.price}\n• نظام الدفع: كاش أو تقسيط بنكي بمقدم يبدأ من 20%.\nمن فضلك أرسل رقم هاتفك واسمك بالكامل وسيتواصل معك مدير المبيعات فوراً لتجهيز أوراق التعاقد والاستلام!`
+      reply: `تم تسجيل طلب حجز سيارتك المبدئي بنجاح! 🚘🎉\n• السيارة: ${targetCar.name}\n• السعر الإجمالي المعلن: ${targetCar.price}\n• عربون تثبيت السعر المبدئي: ${depositFormatted} (يُخصم بالكامل من ثمن السيارة)\n• أنظمة السداد: متاح كاش أو تقسيط بنكي بمقدم يبدأ من 20% وفترات سداد حتى 7 سنوات.\n\nمن فضلك أرسل رقم هاتفك واسمك بالكامل وسيتواصل معك مستشار المبيعات فوراً لتأكيد الحجز وتجهيز أوراق التعاقد والاستلام! 👨‍💼`
     };
   }
 
   // 6. Interactive Auto Financing & Installment Intent (حاسبة الأقساط والتمويل الذكية)
-  const installmentTriggers = [
-    'احسبلي قسط', 'احسب القسط', 'احسب قسط', 'قسط', 'تقسيط', 'كام قسط', 'كم قسط', 'حساب قسط', 'حساب القسط',
-    'installment', 'calculate installment', 'monthly installment', 'down payment'
+  const isDocOrPolicyInquiry = /(اوراق|أوراق|ورق|مستندات|شروط|كيف يتم|ازاي|هل يمكن|هل متاح|هل يوجد|برامج|انظمة|أنظمة|مطلوبة|خطوات|وثائق)/u.test(norm);
+  const explicitCalcTriggers = [
+    'احسبلي قسط', 'احسب القسط', 'احسب قسط', 'احسبلي', 'احسب', 'كام قسط', 'كم قسط', 'قسطها كام', 'قسطه كام', 'حساب قسط', 'حساب القسط', 'القسط الشهري',
+    'calculate installment', 'monthly installment', 'how much per month'
   ];
-  if (installmentTriggers.some(t => norm.includes(t))) {
-    let targetCar = null;
-    for (const c of cars) {
-      const candidates = getCarMatches(c);
-      if (candidates.some(cand => norm.includes(cand))) {
-        targetCar = c;
-        break;
-      }
+  const hasExplicitCalc = explicitCalcTriggers.some(t => norm.includes(t));
+
+  let calcTargetCar = null;
+  for (const c of cars) {
+    const candidates = getCarMatches(c);
+    if (candidates.some(cand => norm.includes(cand))) {
+      calcTargetCar = c;
+      break;
     }
+  }
+
+  const shouldTriggerInstallment = !isDocOrPolicyInquiry && (
+    hasExplicitCalc ||
+    (calcTargetCar && (norm.includes('قسط') || norm.includes('تقسيط') || norm.includes('مقدم')))
+  );
+
+  if (shouldTriggerInstallment) {
+    let targetCar = calcTargetCar;
 
     if (!targetCar && Array.isArray(history) && history.length > 0) {
       const lastText = history.map(h => h.content || '').join(' ');
@@ -760,20 +847,45 @@ export function analyzeIntent(text, config = {}, history = []) {
   // 7. Car Comparison Intent (مقارنة المواصفات والأسعار بين سيارتين)
   const compareTriggers = ['قارن', 'مقارنة', 'مقارنه', 'الفرق بين', 'احسن ولا', 'افضل ولا', 'compare', 'versus', ' vs '];
   if (compareTriggers.some(t => norm.includes(t))) {
-    let carA = null;
-    let carB = null;
-    for (const c of cars) {
+    const detectedCars = [];
+    const seenFamilies = new Set();
+
+    const qYearMatch = raw.match(/\b(19\d\d|20[0-2]\d)\b/);
+    const queryYear = qYearMatch ? Number(qYearMatch[1]) : null;
+
+    // Prefer newer/relevant model years
+    const sortedCars = [...cars].sort((a, b) => {
+      const yA = Number(a.specs?.year) || 0;
+      const yB = Number(b.specs?.year) || 0;
+      if (queryYear) {
+        return Math.abs(yA - queryYear) - Math.abs(yB - queryYear);
+      }
+      return yB - yA;
+    });
+
+    for (const c of sortedCars) {
       const candidates = getCarMatches(c);
-      if (candidates.some(cand => norm.includes(cand))) {
-        if (!carA) carA = c;
-        else if (!carB && carA.id !== c.id) { carB = c; break; }
+      for (const cand of candidates) {
+        if (cand.length >= 3 && norm.includes(cand)) {
+          const family = cand.replace(/^(كيا|هيونداي|تويوتا|مرسيدس|بي ام|نيسان|شيري|ام جي|سكودا|رينو)\s+/, '');
+          if (!seenFamilies.has(family)) {
+            seenFamilies.add(family);
+            detectedCars.push(c);
+          }
+          break;
+        }
       }
     }
 
-    if (carA && carB) {
+    if (detectedCars.length >= 2) {
+      const carA = detectedCars[0];
+      const carB = detectedCars[1];
       const comp = compareCars(carA.name, carB.name, cars);
       if (comp) {
-        const reply = `مقارنة سريعة بين ${carA.name} و ${carB.name}: ⚖️🚗\n\n1️⃣ ${carA.name}:\n• السعر: ${carA.price}\n• الفئة/الحالة: ${carA.category || 'متوفرة بالمعرض'}\n• القسط الشهري (بمقدم 20% على 5 سنين): ${comp.carA.installment?.formattedMonthlyInstallment || 'متاح عند الطلب'}\n\n2️⃣ ${carB.name}:\n• السعر: ${carB.price}\n• الفئة/الحالة: ${carB.category || 'متوفرة بالمعرض'}\n• القسط الشهري (بمقدم 20% على 5 سنين): ${comp.carB.installment?.formattedMonthlyInstallment || 'متاح عند الطلب'}\n\n💡 الفارق المالي: ${comp.formattedPriceDiff}\n📌 التوصية: ${comp.recommendation}\n\nتحب تحجز موعد لتجربة قيادة أي منهما بالمعرض للمقارنة على الطبيعة؟ 🏎️`;
+        const specA = carA.specs || {};
+        const specB = carB.specs || {};
+
+        const reply = `مقارنة شاملة بين ${carA.name} و ${carB.name}: ⚖️🚗\n\n1️⃣ *${carA.name}*:\n• السعر المعلن: ${carA.price}\n• الحالة: ${carA.category || 'متوفرة بالمعرض'}\n• المواصفات: سنة الصنع ${specA.year || 'حديث'} | المحرك ${specA.engine || 'تيربو'} | الفتيس ${specA.transmission || 'أوتوماتيك'} | العداد ${specA.mileage || 'فابريكا'}\n• نظام التقسيط (مقدم 20% تقسيط 5 سنوات): ${comp.carA.installment?.formattedMonthlyInstallment || 'متاح عند الطلب'} شهرياً\n\n2️⃣ *${carB.name}*:\n• السعر المعلن: ${carB.price}\n• الحالة: ${carB.category || 'متوفرة بالمعرض'}\n• المواصفات: سنة الصنع ${specB.year || 'حديث'} | المحرك ${specB.engine || 'تيربو'} | الفتيس ${specB.transmission || 'أوتوماتيك'} | العداد ${specB.mileage || 'فابريكا'}\n• نظام التقسيط (مقدم 20% تقسيط 5 سنوات): ${comp.carB.installment?.formattedMonthlyInstallment || 'متاح عند الطلب'} شهرياً\n\n💡 *الفارق المالي:* ${comp.formattedPriceDiff}\n📌 *التوصية الفنية:* ${comp.recommendation}\n\n🌟 كلا السيارتين متوفرتان حالياً بالمعرض ومفحوصتان 150 نقطة بجهاز قياس الدهان. تحب نحجز لحضرتك موعد لتجربة قيادة السيارتين معاً في فرع (التجمع الأول أو مدينة نصر) للمقارنة على الطبيعة؟ 🏎️`;
         return {
           type: 'CAR_COMPARE',
           comparison: comp,
@@ -786,16 +898,59 @@ export function analyzeIntent(text, config = {}, history = []) {
   // 8. Trade-In Valuation Request Intent (تثمين واستبدال السيارات المستعملة)
   const tradeInTriggers = ['ابدل', 'استبدال', 'تبديل', 'بدل عربيتي', 'ابدل عربيتي', 'trade in', 'تثمين', 'سعر عربيتي', 'تقييم عربيتي'];
   if (tradeInTriggers.some(t => norm.includes(t))) {
+    const yearMatch = raw.match(/\b(19\d\d|20[0-2]\d)\b/);
+    const detectedYear = yearMatch ? Number(yearMatch[1]) : null;
+
+    let detectedMake = '';
+    const knownBrands = [
+      { ar: 'مرسيدس', en: 'Mercedes' },
+      { ar: 'بي ام', en: 'BMW' },
+      { ar: 'تويوتا', en: 'Toyota' },
+      { ar: 'هيونداي', en: 'Hyundai' },
+      { ar: 'كيا', en: 'Kia' },
+      { ar: 'نيسان', en: 'Nissan' },
+      { ar: 'ام جي', en: 'MG' },
+      { ar: 'شيري', en: 'Chery' },
+      { ar: 'سكودا', en: 'Skoda' },
+      { ar: 'جيتور', en: 'Jetour' },
+      { ar: 'رينو', en: 'Renault' },
+      { ar: 'بيجو', en: 'Peugeot' },
+      { ar: 'فيات', en: 'Fiat' },
+      { ar: 'ميتسوبيشي', en: 'Mitsubishi' },
+      { ar: 'رينج روفر', en: 'Range Rover' },
+      { ar: 'بورش', en: 'Porsche' }
+    ];
+
+    for (const b of knownBrands) {
+      if (norm.includes(normalize(b.ar)) || norm.includes(b.en.toLowerCase())) {
+        detectedMake = b.ar;
+        break;
+      }
+    }
+
+    const isFabrika = norm.includes('فابريكا') || norm.includes('فبريكا') || !norm.includes('راشة');
+    const paintStatus = isFabrika ? 'فابريكا بالكامل' : (norm.includes('حزام') ? 'راشة حزام' : 'راشة خارجي');
+
     const est = estimateTradeInValue({
-      make: raw.slice(0, 50),
-      paintStatus: norm.includes('راشة') ? 'راشة خارجي' : 'فابريكا بالكامل'
+      make: detectedMake || raw.slice(0, 50),
+      year: detectedYear,
+      paintStatus
     });
 
-    const reply = `أهلاً بك يا فندم! نوفر خدمة الاستبدال المباشر (Trade-In) بأعلى سعر سوقي عادل: 🔄🚗\n\n• نثمن سيارتك القديمة ونعتبر قيمتها مقدم لشراء أي سيارة زيرو أو كسر زيرو بالمعرض.\n• إمكانية تقسيط الفارق حتى 7 سنوات.\n• فحص فني معتمد مجاني لـ 150 نقطة.\n\nمن فضلك أرسل لنا:\n1. ماركة وموديل وسنة صنع سيارتك الحالية\n2. العداد التقريبي وحالة الدهان (فابريكا ولا راشة؟)\n3. رقم هاتفك للتواصل\nوسيقوم خبير التثمين بالمعرض بتقدير السعر المبدئي لحضرتك فوراً! 📞`;
+    const isSpecific = detectedMake || detectedYear;
+    const reply = isSpecific
+      ? `أهلاً بك يا فندم! بخصوص استبدال وتثمين سيارتك (${detectedMake || 'السيارة'}${detectedYear ? ' موديل ' + detectedYear : ''} - حالة الدهان: ${paintStatus}): 🔄🚗\n\n• التقييم المبدئي التقديري: ${est.formattedRange}\n• يُحتسب هذا المبلغ كدفعة أولى أو مقدم لشراء أي سيارة زيرو أو كسر زيرو بالمعرض، مع تقسيط الفارق حتى 7 سنوات.\n• الفحص الفني المعتمد (150 نقطة بجهاز قياس الدهان والكمبيوتر) يستغرق 30 دقيقة فقط داخل مركز الفحص بفرعي المعرض (التجمع الأول أو مدينة نصر).\n\nتحب نحدد موعد لفحص وتثمين السيارة بالمعرض اليوم؟ 📞`
+      : `أهلاً بك يا فندم! نوفر خدمة الاستبدال المباشر (Trade-In) بأعلى سعر سوقي عادل: 🔄🚗\n\n• نثمن سيارتك القديمة ونعتبر قيمتها مقدم لشراء أي سيارة زيرو أو كسر زيرو بالمعرض.\n• إمكانية تقسيط الفارق حتى 7 سنوات.\n• فحص فني معتمد مجاني لـ 150 نقطة.\n\nمن فضلك أرسل لنا:\n1. ماركة وموديل وسنة صنع سيارتك الحالية\n2. العداد التقريبي وحالة الدهان (فابريكا ولا راشة؟)\n3. رقم هاتفك للتواصل\nوسيقوم خبير التثمين بالمعرض بتقدير السعر المبدئي لحضرتك فوراً! 📞`;
 
     return {
       type: 'TRADE_IN_REQUEST',
-      tradeInEstimate: est,
+      tradeInEstimate: {
+        ...est,
+        make: detectedMake || 'سيارة العميل',
+        model: raw.slice(0, 40),
+        year: detectedYear || new Date().getFullYear() - 4,
+        paintStatus
+      },
       reply
     };
   }
@@ -906,17 +1061,57 @@ export function analyzeIntent(text, config = {}, history = []) {
     const lastBotText = lastBotMsg ? String(lastBotMsg.content || lastBotMsg.reply || '') : '';
     const normBot = normalize(lastBotText);
 
-    // If last bot message proposed a test drive
+    // 6a. If last bot message proposed trade-in appraisal & inspection appointment
+    if (normBot.includes('تثمين') || normBot.includes('فحص') || normBot.includes('استبدال') || normBot.includes('trade in') || normBot.includes('تقييم')) {
+      const isAr = /[\u0600-\u06FF]/.test(raw) || /[\u0600-\u06FF]/.test(lastBotText);
+      return {
+        type: 'BOOKING_CREATE',
+        partySize: 1,
+        time: 'موعد فحص وتثمين سيارة بالمعرض',
+        intentData: {
+          partySize: 1,
+          time: 'موعد فحص وتثمين سيارة بالمعرض',
+          type: 'trade_in_appraisal'
+        },
+        reply: isAr
+          ? `تنورنا وتشرفنا يا فندم! 🤝🚗 تم تسجيل طلب تحديد موعد الفحص الفني الشامل والتثمين المعتمد لسيارتك بالمعرض.\n\n📍 مراكز الفحص المعتمدة لدينا:\n1️⃣ فرع التجمع الأول (القاهرة الجديدة): مول 5، المجاورة الخامسة، بجوار موقف الأتوبيس.\n2️⃣ فرع مدينة نصر (القاهرة): 17 شارع المشروع، متفرع من مصطفى النحاس.\n\n⏰ المواعيد: يومياً من 2:00 ظهراً حتى 12:00 منتصف الليل (يوم الجمعة من 3:00 عصراً حتى منتصف الليل).\n• الفحص يستغرق 30 دقيقة فقط بجهاز قياس الدهان والكمبيوتر لـ 150 نقطة.\n\nمن فضلك تحب الموعد اليوم أم غداً، وفي أي فرع (التجمع الأول أم مدينة نصر) والساعة كم تناسبك حتى نجهز جهاز الفحص ونكون في استقبال حضرتك؟ 📞`
+          : `You are very welcome! 🤝🚗 Your trade-in appraisal & 150-point technical inspection appointment has been registered.\nWhich branch (First Settlement or Nasr City) and what time suits you best today or tomorrow?`
+      };
+    }
+
+    // 6b. If last bot message proposed a test drive or showroom viewing
     if (normBot.includes('تجرب') || normBot.includes('test drive') || normBot.includes('معاين')) {
       const isAr = /[\u0600-\u06FF]/.test(raw) || /[\u0600-\u06FF]/.test(lastBotText);
       return {
         type: 'BOOKING_CREATE',
         partySize: 1,
-        time: 'موعد تجربة قيادة بالمعرض',
-        intentData: { partySize: 1, time: 'موعد تجربة قيادة بالمعرض' },
+        time: 'موعد تجربة قيادة ومعاينة بالمعرض',
+        intentData: { partySize: 1, time: 'موعد تجربة قيادة ومعاينة بالمعرض' },
         reply: isAr
-          ? `تنورنا بكل سرور! 🚗 تم تأكيد موعد زيارتك لمعاينة وتجربة القيادة. في أي يوم أو ساعة تفضل الزيارة حتى نجهز السيارة لحضرتك؟`
-          : `We look forward to welcoming you! 🚗 For what day and time would you like to schedule your test drive?`
+          ? `تنورنا بكل سرور! 🏎️📅 تم تسجيل طلب حجز موعد زيارتك لمعاينة وتجربة القيادة بالمعرض.\n\n📍 فروع المعرض: التجمع الأول (مول 5) أو مدينة نصر (17 شارع المشروع).\n⏰ المواعيد: يومياً من 2:00 ظهراً حتى 12:00 منتصف الليل (الجمعة من 3:00 عصراً).\n\nفي أي يوم أو ساعة تفضل الزيارة حتى نجهز السيارة لحضرتك؟`
+          : `We look forward to welcoming you! 🏎️📅 For what day and time would you like to schedule your test drive?`
+      };
+    }
+
+    // 6c. If last bot message proposed financing or loan specialist consultation
+    if (normBot.includes('تمويل') || normBot.includes('مسؤول التمويل') || normBot.includes('اوراقك') || normBot.includes('حساب الحسبة')) {
+      const isAr = /[\u0600-\u06FF]/.test(raw) || /[\u0600-\u06FF]/.test(lastBotText);
+      return {
+        type: 'FINANCE_CONSULTATION',
+        reply: isAr
+          ? `ممتاز جداً يا فندم! 💳 تم تحويل طلبك لمستشار التمويل والائتمان بالمعرض لتجهيز أفضل برنامج بنكي يناسب دخلك وميزانيتك بأقل فائدة.\nمن فضلك أرسل رقم هاتفك واسمك الكريم وسيقوم مسؤول التمويل بالتواصل معك هاتفياً أو عبر واتساب لمراجعة الأوراق وحساب الحسبة الدقيقة فوراً. 👨‍💼`
+          : `Excellent! 💳 Your financing request has been forwarded to our auto loan specialist. Please provide your full name and phone number to finalize your plan.`
+      };
+    }
+
+    // 6d. If last bot message proposed car booking or purchase
+    if (normBot.includes('حجز') || normBot.includes('عربون') || normBot.includes('شراء')) {
+      const isAr = /[\u0600-\u06FF]/.test(raw) || /[\u0600-\u06FF]/.test(lastBotText);
+      return {
+        type: 'ORDER_CONFIRM',
+        reply: isAr
+          ? `على بركة الله يا فندم! 🚘🎉 تم تسجيل رغبتك في حجز السيارة. من فضلك أرسل الاسم بالكامل ورقم الهاتف حتى يتم تجهيز إيصال الحجز المبدئي وتثبيت السعر لك والتواصل معك فوراً لتأكيد الاستلام. 👨‍💼`
+          : `Wonderful! 🚘🎉 Your purchase intent is registered. Please share your full name and phone number to finalize paperwork.`
       };
     }
 
@@ -1244,24 +1439,152 @@ function localSmartCarAnswer(question, config) {
       : `We would love to arrange a test drive for you! 🏎️ Please share the car model and your preferred date/time, and we will have it ready for you!`;
   }
 
-  // General Car Catalog / Prices / What do you have? ("اسعار", "سعر", "عار", "الاسعار", "عربيات", "سيارات")
-  if (norm.includes('اسعار') || norm.includes('سعر') || norm.includes('الاسعار') || norm.includes('قائمه الاسعار') || norm.includes('عار') || norm.includes('عندكم ايه') || norm.includes('انواع') || norm.includes('سيارات') || norm.includes('عربيات') || norm.includes('cars') || norm.includes('models') || norm.includes('list') || norm.includes('الكتالوج') || norm.includes('كتالوج') || norm.includes('المتاح') || norm.includes('المعروض')) {
+  // 1. Specific Model Match (requires specific model name, e.g. "توسان", "سبورتاج", "فيرنا", "كورولا", "تيبو")
+  const specificModels = [
+    { ar: 'سبورتاج', en: 'sportage' },
+    { ar: 'توسان', en: 'tucson' },
+    { ar: 'فيرنا', en: 'verna' },
+    { ar: 'النترا', en: 'elantra' },
+    { ar: 'إلنترا', en: 'elantra' },
+    { ar: 'سيراتو', en: 'cerato' },
+    { ar: 'ريو', en: 'rio' },
+    { ar: 'اكسيد', en: 'xceed' },
+    { ar: 'إكسيد', en: 'xceed' },
+    { ar: 'كورولا', en: 'corolla' },
+    { ar: 'صني', en: 'sunny' },
+    { ar: 'قشقاي', en: 'qashqai' },
+    { ar: 'جوك', en: 'juke' },
+    { ar: 'تيجو', en: 'tiggo' },
+    { ar: 'اريزو', en: 'arrizo' },
+    { ar: 'داستر', en: 'duster' },
+    { ar: 'ميجان', en: 'megane' },
+    { ar: 'ميغان', en: 'megane' },
+    { ar: 'اوكتافيا', en: 'octavia' },
+    { ar: 'أوكتافيا', en: 'octavia' },
+    { ar: 'كودياك', en: 'kodiaq' },
+    { ar: 'سوبيرب', en: 'superb' },
+    { ar: 'تيبو', en: 'tipo' },
+    { ar: 'رينج روفر', en: 'range rover' },
+    { ar: 'رينج روڤر', en: 'range rover' },
+    { ar: 'ايفوك', en: 'evoque' },
+    { ar: 'إيفوك', en: 'evoque' },
+    { ar: 'داشينج', en: 'dashing' },
+    { ar: 'x90', en: 'x90' },
+    { ar: 'c200', en: 'c200' },
+    { ar: 'c180', en: 'c180' },
+    { ar: 'c 180', en: 'c 180' },
+    { ar: 'e200', en: 'e200' },
+    { ar: 'e 200', en: 'e 200' },
+    { ar: 'e180', en: 'e180' },
+    { ar: 'e 180', en: 'e 180' },
+    { ar: 'b160', en: 'b160' },
+    { ar: '320i', en: '320' },
+    { ar: '320', en: '320' },
+    { ar: 'اكليبس', en: 'eclipse' },
+    { ar: 'إكليبس', en: 'eclipse' },
+    { ar: 'لانسر', en: 'lancer' },
+    { ar: 'اتراج', en: 'attrage' },
+    { ar: 'اكسباندر', en: 'xpander' },
+    { ar: 'إكسباندر', en: 'xpander' },
+    { ar: 'استرا', en: 'astra' },
+    { ar: 'كورسا', en: 'corsa' },
+    { ar: 'انسيجنيا', en: 'insignia' },
+    { ar: 'إنسيجنيا', en: 'insignia' },
+    { ar: 'جراند لاند', en: 'grandland' },
+    { ar: '3008', en: '3008' },
+    { ar: '2008', en: '2008' },
+    { ar: '5008', en: '5008' },
+    { ar: 'ستاراي', en: 'starray' },
+    { ar: 'اتيكا', en: 'ateca' },
+    { ar: 'أتيكا', en: 'ateca' },
+    { ar: 'شيروكي', en: 'cherokee' },
+    { ar: 'رانجلر', en: 'wrangler' },
+    { ar: 'كروز', en: 'cruze' },
+    { ar: 'اكسنت', en: 'accent' },
+    { ar: 'أكسنت', en: 'accent' },
+    { ar: 'ix35', en: 'ix35' },
+    { ar: 'zs', en: 'zs' },
+    { ar: 'c4', en: 'c4' },
+    { ar: 'a4', en: 'a4' }
+  ];
+
+  const matchedModel = specificModels.find(m => norm.includes(m.ar) || norm.includes(m.en));
+  if (matchedModel) {
+    const targetCars = cars.filter(c => {
+      const cNorm = normalize(c.name);
+      return cNorm.includes(matchedModel.ar) || cNorm.includes(matchedModel.en);
+    });
+
+    if (targetCars.length === 1) {
+      const c = targetCars[0];
+      const desc = c.description ? `\n• المواصفات: ${c.description}` : '';
+      return isArabic
+        ? `سعر ${c.name} هو ${c.price || 'متاح عند الطلب'}.\n• الحالة: ${c.stock || 'متوفرة بالمعرض'} (${c.category || ''}).${desc}\n\nتحب تحجز موعد لتجربة قيادتها أو تستفسر عن نظام تقسيطها؟ 🚗`
+        : `Our ${c.name} is quoted at ${c.price || 'available upon request'}.\n• Status: ${c.stock || 'In Stock'} (${c.category || ''}).${desc}\n\nWould you like to schedule a test drive or check out installment options? 🚗`;
+    } else if (targetCars.length > 1) {
+      const list = targetCars.map(c => `• ${c.name}: ${c.price}`).join('\n');
+      return isArabic
+        ? `الموديلات المتوفرة لدينا حالياً من (${matchedModel.ar}): 🚗\n\n${list}\n\nجميع السيارات فابريكا ومفحوصة بالكامل ومتاحة كاش وبالتقسيط البنكي حتى 7 سنوات. تحب تفاصيل أي سيارة منها؟`
+        : `Available models for (${matchedModel.en}): 🚗\n\n${list}\n\nAll vehicles certified and available with installment plans. Which one would you like details for?`;
+    } else {
+      return isArabic
+        ? `بخصوص استفسارك عن (${matchedModel.ar}): هذا الموديل غير متوفر حالياً بالمعرض للتسليم الفوري، ولكن يمكننا توفيره لحضرتك بالطلب أو ترشيح بدائل فابريكا كسر زيرو ممتازة في نفس الفئة والميزانية.\n\nتواصل مباشرة مع فريق المبيعات على 01501511117 لحجز طلب خاص، أو تصفح سياراتنا المتاحة: https://alfarismotors.ai/cars 🚗`
+        : `Regarding (${matchedModel.en}): This model is currently not in stock for immediate delivery, but we can source it upon request or recommend excellent certified alternatives in the same class.\nContact sales directly at +201501511117 or view available cars: https://alfarismotors.ai/cars 🚗`;
+    }
+  }
+
+  // 2. Brand Inventory Query (e.g. "عندكم هيونداي؟", "اسعار كيا", "مرسيدس المتاحة")
+  const brandKeywords = [
+    { ar: 'مرسيدس', en: 'mercedes' },
+    { ar: 'بي ام', en: 'bmw' },
+    { ar: 'هيونداي', en: 'hyundai' },
+    { ar: 'كيا', en: 'kia' },
+    { ar: 'تويوتا', en: 'toyota' },
+    { ar: 'نيسان', en: 'nissan' },
+    { ar: 'شيري', en: 'chery' },
+    { ar: 'ام جي', en: 'mg' },
+    { ar: 'سكودا', en: 'skoda' },
+    { ar: 'رينو', en: 'renault' },
+    { ar: 'جيتور', en: 'jetour' },
+    { ar: 'ميتسوبيشي', en: 'mitsubishi' },
+    { ar: 'بيجو', en: 'peugeot' },
+    { ar: 'اوبل', en: 'opel' },
+    { ar: 'فيات', en: 'fiat' },
+    { ar: 'سيات', en: 'seat' },
+    { ar: 'جيب', en: 'jeep' },
+    { ar: 'جيلي', en: 'geely' },
+    { ar: 'سيتروين', en: 'citroen' },
+    { ar: 'شيفورليه', en: 'chevrolet' },
+    { ar: 'لاند روفر', en: 'land rover' },
+    { ar: 'رينج روفر', en: 'range rover' },
+    { ar: 'اودي', en: 'audi' }
+  ];
+
+  const matchedBrand = brandKeywords.find(b => norm.includes(b.ar) || norm.includes(b.en));
+  if (matchedBrand) {
+    const brandCars = cars.filter(c => {
+      const cNorm = normalize(c.name);
+      return cNorm.includes(matchedBrand.ar) || cNorm.includes(matchedBrand.en);
+    });
+    if (brandCars.length > 0) {
+      const list = brandCars.slice(0, 6).map(c => `• ${c.name}: ${c.price}`).join('\n');
+      return isArabic
+        ? `سيارات ${matchedBrand.ar} المتاحة حالياً لدى الفارس موتورز: 🚗\n\n${list}\n\nمتاحة للتسليم الفوري والمعاينة في فرعينا (التجمع الأول ومدينة نصر). كاش أو تقسيط بمقدم يبدأ من 20%. تحب تفاصيل موديل معين؟`
+        : `Currently available ${matchedBrand.en} models at Al-Fares Motors: 🚗\n\n${list}\n\nAvailable immediately for test drive and bank financing. Which model would you like to explore?`;
+    } else {
+      return isArabic
+        ? `بخصوص استفسارك عن سيارات (${matchedBrand.ar}): لا يتوفر لدينا حالياً موديلات من هذه الماركة للتسليم الفوري بالمعرض، ولكن يمكننا توفير الموديل المطلوب لحضرتك بالطلب أو ترشيح بدائل فابريكا ممتازة في نفس الفئة السعرية.\n\nتواصل مباشرة مع فريق المبيعات على 01501511117 لحجز طلب خاص، أو تصفح كامل المعرض: https://alfarismotors.ai/cars 🚗`
+        : `Regarding (${matchedBrand.en}): We currently have no immediate stock for this brand, but we can source any requested model or recommend great certified alternatives in the same price range.\nContact sales directly at +201501511117 or view all cars: https://alfarismotors.ai/cars 🚗`;
+    }
+  }
+
+  // 3. General Car Catalog / Prices / What do you have? ("اسعار", "سعر", "الاسعار", "عربيات", "سيارات")
+  if (norm.includes('اسعار') || norm.includes('سعر') || norm.includes('الاسعار') || norm.includes('قائمه الاسعار') || norm.includes('عندكم ايه') || norm.includes('انواع') || norm.includes('سيارات') || norm.includes('عربيات') || norm.includes('cars') || norm.includes('models') || norm.includes('list') || norm.includes('الكتالوج') || norm.includes('كتالوج') || norm.includes('المتاح') || norm.includes('المعروض')) {
     if (cars.length) {
       const list = cars.slice(0, 6).map(c => `• ${c.name}: ${c.price} (${c.category})`).join('\n');
       return isArabic
         ? `أهلاً بك في الفارس موتورز مصر! 🚗 لدينا تشكيلة تضم أكثر من 65 سيارة زيرو ومستعملة فابريكا بالكامل بأسعار معلنة وضمان معتمد. إليك عينة من أبرز السيارات المتاحة وأسعارها:\n\n${list}\n\n• إجمالي المعروض: أكثر من 65 سيارة تشمل مرسيدس، كيا، هيونداي، بي إم دابليو، رينج روفر، ميتسوبيشي، شيري، سكودا، جيتور، أوبل، بيجو، وغيرها.\n• جميع السيارات متوفرة كاش وبالتقسيط البنكي بمقدم يبدأ من 20%.\n🌐 تصفح كامل المعرض على موقعنا: https://alfarismotors.ai/cars\nتحب تستفسر عن سيارة معينة أو فئة سعرية محددة؟`
         : `Welcome to Al-Fares Motors! 🚗 We offer over 65 certified new & pre-owned vehicles:\n\n${list}\n\n🌐 View our entire live catalog: https://alfarismotors.ai/cars\nWhich vehicle or price range would you like to explore? 🚗`;
-    }
-  }
-
-  // Specific Car Specs and Pricing Match
-  for (const c of cars) {
-    const cName = normalize(c.name);
-    if (cName && (norm.includes(cName) || cName.split(' ').some(tok => tok.length > 3 && norm.includes(tok)))) {
-      const desc = c.description ? `\n• المواصفات: ${c.description}` : '';
-      return isArabic
-        ? `سعر ${c.name} هو ${c.price || 'متاح عند الطلب'}.\n• الحالة: ${c.stock || 'متوفرة بالمعرض'} (${c.category || ''}).${desc}\n\nتحب تحجز موعد لتجربة قيادتها أو تستفسر عن نظام تقسيطها؟ 🚗`
-        : `Our ${c.name} is quoted at ${c.price || 'available upon request'}.\n• Status: ${c.stock || 'In Stock'} (${c.category || ''}).${desc}\n\nWould you like to schedule a test drive or check out installment options? 🚗`;
     }
   }
 
@@ -1275,7 +1598,7 @@ function localSmartCarAnswer(question, config) {
   }
 
   return isArabic
-    ? 'أهلاً بك! لم أتمكن من معرفة التفاصيل بدقة، تم تسجيل استفسارك وسيقوم أحد مستشاري المبيعات بالمعرض بالتواصل معك وتزويدك بكافة التفاصيل. 🚗'
+    ? 'سؤال ممتاز يا فندم! 🚗 حرصاً على تزويدك بأدق التفاصيل والأسعار الحالية، تم تسجيل استفسارك وإخطار مستشار المبيعات للتواصل معك فوراً ومساعدتك. يمكنك أيضاً تشريفنا يومياً بالمعرض (فرعي التجمع الأول ومدينة نصر) من 2 ظهراً حتى منتصف الليل، أو الاتصال مباشرة على 01501511117.'
     : fallback;
 }
 
